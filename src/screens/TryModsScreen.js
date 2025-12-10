@@ -1,10 +1,12 @@
 // src/screens/TryModsScreen.js
 // Smart 2D Part Positioning System with Zone Calibration
 
+import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
+  Animated,
   Dimensions,
   Image,
   Modal,
@@ -12,16 +14,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
-  Animated,
+  View
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useCarContext } from "../services/carContext";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const CAR_VIEW_HEIGHT = 400; // Increased from 280 for larger view
+const CAR_VIEW_HEIGHT = 500; // Increased from 400 for larger, more detailed view
 
 // Default zones - can be calibrated per car
 const DEFAULT_ZONES = {
@@ -106,7 +105,7 @@ const CAR_VIEWS = [
 
 export default function TryModsScreen({ navigation }) {
   const { activeCar } = useCarContext();
-  
+
   const [carView, setCarView] = useState("front_quarter");
   const [selectedCategory, setSelectedCategory] = useState("wheels");
   const [installedParts, setInstalledParts] = useState({});
@@ -140,8 +139,8 @@ export default function TryModsScreen({ navigation }) {
     const newInstalled = { ...installedParts };
     part.zones.forEach(zone => {
       if (currentZones[zone]) {
-        newInstalled[zone] = { 
-          ...part, 
+        newInstalled[zone] = {
+          ...part,
           customImage: customPartImage,
           zoneId: zone,
         };
@@ -185,7 +184,7 @@ export default function TryModsScreen({ navigation }) {
   const [zonePan, setZonePan] = useState({ x: 0, y: 0 });
   const [zoneScale, setZoneScale] = useState(1);
   const zoneStartPos = useRef({ x: 0, y: 0 });
-  
+
   const zonePanResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -200,10 +199,10 @@ export default function TryModsScreen({ navigation }) {
         const carHeight = 200; // Calibration car height
         const dxPercent = (gestureState.dx / carWidth) * 100;
         const dyPercent = (gestureState.dy / carHeight) * 100;
-        
+
         const newX = Math.max(0, Math.min(100 - (calibratingZone?.width || 0) * zoneScale, zoneStartPos.current.x + dxPercent));
         const newY = Math.max(0, Math.min(100 - (calibratingZone?.height || 0) * zoneScale, zoneStartPos.current.y + dyPercent));
-        
+
         setZonePan({ x: newX, y: newY });
       },
       onPanResponderRelease: () => {
@@ -223,7 +222,7 @@ export default function TryModsScreen({ navigation }) {
 
   const handleSaveCalibration = () => {
     if (!calibratingZone) return;
-    
+
     const newZone = {
       ...calibratingZone,
       x: Math.max(0, Math.min(100 - calibratingZone.width, zonePan.x)),
@@ -231,7 +230,7 @@ export default function TryModsScreen({ navigation }) {
       width: calibratingZone.width * zoneScale,
       height: calibratingZone.height * zoneScale,
     };
-    
+
     const viewZones = { ...(customZones[carView] || DEFAULT_ZONES[carView]) };
     viewZones[calibratingZone.id] = newZone;
     setCustomZones({ ...customZones, [carView]: viewZones });
@@ -254,7 +253,7 @@ export default function TryModsScreen({ navigation }) {
             <Text style={styles.calibrationHint}>
               Drag the zone to match your car's part location
             </Text>
-            
+
             {/* Car Preview with Draggable Zone */}
             <View style={styles.calibrationCarContainer}>
               {carImageUri ? (
@@ -288,14 +287,14 @@ export default function TryModsScreen({ navigation }) {
             <View style={styles.calibrationControls}>
               <Text style={styles.calibrationControlLabel}>Size</Text>
               <View style={styles.calibrationSizeButtons}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.calibrationSizeBtn}
                   onPress={() => setZoneScale(Math.max(0.5, zoneScale - 0.1))}
                 >
                   <Text style={styles.calibrationSizeBtnText}>−</Text>
                 </TouchableOpacity>
                 <Text style={styles.calibrationSizeValue}>{Math.round(zoneScale * 100)}%</Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.calibrationSizeBtn}
                   onPress={() => setZoneScale(Math.min(2, zoneScale + 0.1))}
                 >
@@ -305,7 +304,7 @@ export default function TryModsScreen({ navigation }) {
             </View>
 
             <View style={styles.calibrationButtons}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.calibrationCancel}
                 onPress={() => {
                   setCalibrationMode(false);
@@ -314,7 +313,7 @@ export default function TryModsScreen({ navigation }) {
               >
                 <Text style={styles.calibrationCancelText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.calibrationSave}
                 onPress={handleSaveCalibration}
               >
@@ -383,8 +382,8 @@ export default function TryModsScreen({ navigation }) {
       >
         {part.customImage ? (
           <View style={styles.customPartContainer}>
-            <Image 
-              source={{ uri: part.customImage }} 
+            <Image
+              source={{ uri: part.customImage }}
               style={styles.customPartImage}
               resizeMode="cover"
             />
@@ -432,7 +431,7 @@ export default function TryModsScreen({ navigation }) {
     if (activeCar?.renderingPreviewUrl) {
       return activeCar.renderingPreviewUrl;
     }
-    
+
     // Then try anglePhotos based on view
     if (activeCar?.anglePhotos) {
       if (carView === "front_quarter" && activeCar.anglePhotos.front34) return activeCar.anglePhotos.front34;
@@ -441,14 +440,14 @@ export default function TryModsScreen({ navigation }) {
       if (carView === "front_quarter" && activeCar.anglePhotos.front) return activeCar.anglePhotos.front;
       if (carView === "rear" && activeCar.anglePhotos.rear34) return activeCar.anglePhotos.rear34;
     }
-    
+
     // Fallback to legacy images
     if (activeCar?.images) {
       if (carView === "front_quarter" && activeCar.images.front) return activeCar.images.front;
       if (carView === "side" && activeCar.images.side) return activeCar.images.side;
       if (carView === "rear" && activeCar.images.rear) return activeCar.images.rear;
     }
-    
+
     // Final fallback to main image
     return activeCar?.imageUrl;
   };
@@ -474,11 +473,11 @@ export default function TryModsScreen({ navigation }) {
                 style={[styles.categoryTab, selectedCategory === cat.id && styles.categoryTabActive]}
                 onPress={() => setSelectedCategory(cat.id)}
               >
-                <Ionicons 
-                  name={cat.icon} 
-                  size={16} 
-                  color={selectedCategory === cat.id ? "#ffffff" : "#666"} 
-                  style={{ marginRight: 6 }} 
+                <Ionicons
+                  name={cat.icon}
+                  size={16}
+                  color={selectedCategory === cat.id ? "#ffffff" : "#666"}
+                  style={{ marginRight: 6 }}
                 />
                 <Text style={[styles.categoryTabText, selectedCategory === cat.id && styles.categoryTabTextActive]}>
                   {cat.name}
@@ -526,7 +525,7 @@ export default function TryModsScreen({ navigation }) {
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Part Visualizer</Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => setCalibrationMode(!calibrationMode)}
           style={styles.calibrateButton}
         >
@@ -547,11 +546,11 @@ export default function TryModsScreen({ navigation }) {
               style={[styles.viewTab, carView === view.id && styles.viewTabActive]}
               onPress={() => setCarView(view.id)}
             >
-              <Ionicons 
-                name={view.icon} 
-                size={16} 
-                color={carView === view.id ? "#ffffff" : "#666"} 
-                style={{ marginRight: 6 }} 
+              <Ionicons
+                name={view.icon}
+                size={16}
+                color={carView === view.id ? "#ffffff" : "#666"}
+                style={{ marginRight: 6 }}
               />
               <Text style={[styles.viewTabText, carView === view.id && styles.viewTabTextActive]}>
                 {view.name}
@@ -565,10 +564,10 @@ export default function TryModsScreen({ navigation }) {
           {carImageUri ? (
             <>
               <Image source={{ uri: carImageUri }} style={styles.carImage} />
-              
+
               {/* Installed Parts Overlay - Always visible */}
               <View style={styles.installedPartsOverlay}>
-                {Object.entries(installedParts).map(([zoneId, part]) => 
+                {Object.entries(installedParts).map(([zoneId, part]) =>
                   renderInstalledPart(zoneId, part)
                 )}
               </View>
@@ -599,7 +598,7 @@ export default function TryModsScreen({ navigation }) {
               <Text style={styles.carPlaceholderText}>
                 {activeCar ? `${activeCar.year} ${activeCar.make} ${activeCar.model}` : "Add a car first"}
               </Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.addCarButton}
                 onPress={() => navigation.navigate("AddCar")}
               >
@@ -692,7 +691,7 @@ const styles = StyleSheet.create({
   backButtonText: { color: "#4a9eff", fontSize: 16 },
   title: { color: "#fff", fontSize: 18, fontWeight: "700" },
   calibrateButton: { width: 60, alignItems: "flex-end" },
-  
+
   viewSelector: {
     flexDirection: "row",
     margin: 16,
@@ -745,7 +744,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   addCarButtonText: { color: "#fff", fontSize: 14, fontWeight: "600" },
-  
+
   zonesOverlay: {
     ...StyleSheet.absoluteFillObject,
     pointerEvents: "box-none",
@@ -796,7 +795,7 @@ const styles = StyleSheet.create({
     color: "#888",
     fontSize: 9,
   },
-  
+
   installedPartVisual: {
     width: "100%",
     height: "100%",
@@ -944,7 +943,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
   },
-  
+
   instructions: {
     marginHorizontal: 16,
     marginTop: 20,
@@ -971,7 +970,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
   },
-  
+
   quickCategories: {
     marginTop: 24,
     paddingLeft: 16,
@@ -993,7 +992,7 @@ const styles = StyleSheet.create({
     borderColor: "#1a1a1a",
   },
   quickCategoryName: { color: "#fff", fontSize: 13, fontWeight: "600" },
-  
+
   summarySection: {
     marginHorizontal: 16,
     marginTop: 24,
@@ -1032,7 +1031,7 @@ const styles = StyleSheet.create({
   },
   totalCostLabel: { color: "#888", fontSize: 14 },
   totalCostValue: { color: "#22c55e", fontSize: 24, fontWeight: "800" },
-  
+
   mlInfo: {
     marginHorizontal: 16,
     marginTop: 24,
@@ -1057,7 +1056,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 20,
   },
-  
+
   // Modal
   modalBackdrop: {
     flex: 1,
@@ -1129,7 +1128,7 @@ const styles = StyleSheet.create({
   partItemBrand: { color: "#4a9eff", fontSize: 11, fontWeight: "600" },
   partItemName: { color: "#fff", fontSize: 15, fontWeight: "500", marginTop: 2 },
   partItemPrice: { color: "#22c55e", fontSize: 16, fontWeight: "700" },
-  
+
   // Calibration
   calibrationBackdrop: {
     flex: 1,

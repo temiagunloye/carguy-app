@@ -3,16 +3,16 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
@@ -29,7 +29,7 @@ const FILTER_CATEGORIES = [
 ];
 
 export default function InventoryScreen({ navigation }) {
-  const { user, activeCar, loading: contextLoading, refreshActiveCar, demoCars, demoMode } = useCarContext();
+  const { user, plan, activeCar, loading: contextLoading, refreshActiveCar, demoCars, demoMode } = useCarContext();
   const [cars, setCars] = useState([]);
   const [carStats, setCarStats] = useState({});
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ export default function InventoryScreen({ navigation }) {
   const loadCars = async () => {
     // Set loading immediately to show UI
     setLoading(true);
-    
+
     // Quick return if no user (demo mode will have user)
     if (!user) {
       setCars([]);
@@ -51,7 +51,7 @@ export default function InventoryScreen({ navigation }) {
       setLoading(false);
       return;
     }
-    
+
     try {
       // Check if demo mode first (faster check)
       if (demoMode || user.isAnonymous || user.uid.startsWith("demo_") || user.uid.startsWith("guest_")) {
@@ -68,21 +68,21 @@ export default function InventoryScreen({ navigation }) {
             totalValue += part.totalCost || 0;
             if (part.hasWarranty) warrantyCount++;
           });
-          demoStats[car.id] = { 
-            partsCount: parts.length, 
-            totalValue, 
-            warrantyCount 
+          demoStats[car.id] = {
+            partsCount: parts.length,
+            totalValue,
+            warrantyCount
           };
         });
         setCarStats(demoStats);
         setLoading(false);
         return;
       }
-      
+
       // Firebase mode - load cars first, then stats
       const list = await getAllCarsForUser(user.uid);
       setCars(list); // Show cars immediately
-      
+
       // Load stats in background (non-blocking)
       if (list.length > 0) {
         const statsPromises = list.map(async (car) => {
@@ -91,13 +91,13 @@ export default function InventoryScreen({ navigation }) {
             const snapshot = await getDocs(partsRef);
             let totalValue = 0;
             let warrantyCount = 0;
-            
+
             snapshot.docs.forEach(doc => {
               const data = doc.data();
               totalValue += data.totalCost || 0;
               if (data.hasWarranty) warrantyCount++;
             });
-            
+
             return {
               carId: car.id,
               stats: {
@@ -113,7 +113,7 @@ export default function InventoryScreen({ navigation }) {
             };
           }
         });
-        
+
         const results = await Promise.all(statsPromises);
         const stats = {};
         results.forEach(({ carId, stats: carStats }) => {
@@ -155,7 +155,7 @@ export default function InventoryScreen({ navigation }) {
     // Prefer renderingPreviewUrl, fallback to imageUrl
     const imgSource = (item.renderingPreviewUrl || item.imageUrl) ? { uri: item.renderingPreviewUrl || item.imageUrl } : null;
     const stats = carStats[item.id] || { partsCount: 0, totalValue: 0, warrantyCount: 0 };
-    
+
     // Check if this car can be edited based on plan
     const { maxCars } = getPlanConfig(plan || "free");
     const canEdit = cars.length <= maxCars || isActive;
@@ -193,13 +193,13 @@ export default function InventoryScreen({ navigation }) {
           <Text style={styles.cardTitle}>
             {item.year} {item.make} {item.model}
           </Text>
-          
+
           <View style={styles.cardStats}>
             <Text style={styles.cardStatText}>
               {stats.partsCount} parts{stats.warrantyCount > 0 ? ` · ${stats.warrantyCount} active ${stats.warrantyCount === 1 ? 'warranty' : 'warranties'}` : ''}
             </Text>
           </View>
-          
+
           <Text style={styles.cardValue}>
             Total value: ${stats.totalValue.toLocaleString()}
           </Text>
@@ -236,8 +236,8 @@ export default function InventoryScreen({ navigation }) {
       </View>
 
       {/* Filter Buttons */}
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.filterScroll}
         contentContainerStyle={styles.filterContent}

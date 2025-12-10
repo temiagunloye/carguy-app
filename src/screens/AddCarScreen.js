@@ -1,5 +1,6 @@
 // src/screens/AddCarScreen.js
 
+import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
@@ -11,17 +12,19 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  Animated,
+  View
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useCarContext } from "../services/carContext";
 import {
-  getCarCount,
   saveCarForUser,
   setActiveCar,
-  uploadCarImage,
+  uploadCarImage
 } from "../services/carService";
+import {
+  canAddCar,
+  getPlanConfig,
+  getPlanLimitMessage,
+} from "../services/plans";
 
 // NOTE: This is a DEMO simulation. Real AI detection would use:
 // - Google Cloud Vision API
@@ -30,8 +33,11 @@ import {
 // For now, we show placeholder data to demonstrate the concept
 
 export default function AddCarScreen({ navigation }) {
-  const { user, plan, refreshActiveCar, demoMode, addDemoCar, setActiveCarState } = useCarContext();
+  const { user, plan, refreshActiveCar, demoMode, addDemoCar, setActiveCarState, demoCars } = useCarContext();
   const [renderStatus, setRenderStatus] = useState({ status: 'idle', previewUrl: null });
+
+  // Get current car count for plan enforcement
+  const currentCarCount = demoMode ? (demoCars || []).length : 0;
 
   const [step, setStep] = useState(1); // 1: Basic Info (nickname/model/year), 2: 10-Photo Capture, 3: Success
   const [nickname, setNickname] = useState("");
@@ -53,7 +59,7 @@ export default function AddCarScreen({ navigation }) {
   const [detectionConfidence, setDetectionConfidence] = useState(null);
   const [savedCarId, setSavedCarId] = useState(null);
   const [savedBuildId, setSavedBuildId] = useState(null);
-  
+
   // Check if user can upload multiple photos
   const canUploadMultiplePhotos = plan === "pro" || plan === "premium";
 
@@ -112,20 +118,20 @@ export default function AddCarScreen({ navigation }) {
     }
 
     setDetecting(true);
-    
+
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     setDetecting(false);
-    
+
     // Show demo message - let user fill in details
     Alert.alert(
       "AI Detection (Demo)",
       "In the full version, AI will automatically identify your car's make, model, year, and more from your photo.\n\nFor now, please enter your car details manually.",
       [
-        { 
-          text: "Enter Details", 
-          onPress: () => setStep(2) 
+        {
+          text: "Enter Details",
+          onPress: () => setStep(2)
         }
       ]
     );
@@ -140,6 +146,20 @@ export default function AddCarScreen({ navigation }) {
 
     if (!localImageUri) {
       Alert.alert("Main Photo Required", "Please add a main photo before continuing.");
+      return;
+    }
+
+    // Check plan limits before adding car
+    const planConfig = getPlanConfig(plan || 'free');
+    if (!canAddCar(plan || 'free', currentCarCount)) {
+      Alert.alert(
+        "Plan Limit Reached",
+        getPlanLimitMessage(plan || 'free', 'car'),
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Upgrade", onPress: () => navigation.navigate("Upgrade") },
+        ]
+      );
       return;
     }
 
@@ -187,7 +207,7 @@ export default function AddCarScreen({ navigation }) {
         // Save car locally
         const newCar = addDemoCar(carData);
         carId = newCar.id;
-        
+
         // Create default build for this car
         const defaultBuild = {
           id: `build_${Date.now()}`,
@@ -203,7 +223,7 @@ export default function AddCarScreen({ navigation }) {
             renderUrl: null,
           },
         };
-        
+
         // Add build to car
         const updatedCar = {
           ...newCar,
@@ -218,12 +238,12 @@ export default function AddCarScreen({ navigation }) {
           uid: user.uid,
           data: carData,
         });
-        
+
         // Create default build
         const { createBuild, setActiveBuild } = await import("../services/buildService");
         buildId = await createBuild(user.uid, carId, nickname.trim() || "Main build");
         await setActiveBuild(user.uid, buildId);
-        
+
         await setActiveCar(user.uid, carId);
         await refreshActiveCar();
       }
@@ -231,9 +251,9 @@ export default function AddCarScreen({ navigation }) {
       setSavedCarId(carId);
       setSavedBuildId(buildId);
       setSaving(false);
-      
+
       // Auto-transition directly to 10-photo capture
-      navigation.navigate("CarScanCapture", { 
+      navigation.navigate("CarScanCapture", {
         carId,
         buildId,
         isOnboarding: true,
@@ -462,64 +482,53 @@ export default function AddCarScreen({ navigation }) {
           />
         </View>
 
-        {/* Car Rendering (Preview) */}
+        {/* Main Photo Upload Section */}
         <View style={styles.section}>
-          <Text style={styles.label}>Car Rendering (Preview)</Text>
+          <Text style={styles.label}>Main Photo *</Text>
           <Text style={styles.sectionSubtext}>
-            We'll generate a visual preview of your car using your 10-angle photos.
+            This will be your car's hero image on the home screen.
           </Text>
-          
-          {renderStatus.status === 'complete' && renderStatus.previewUrl ? (
-            <View style={styles.renderingPreview}>
-              <Image source={{ uri: renderStatus.previewUrl }} style={styles.renderingImage} />
-              <View style={styles.renderingOverlay}>
-                <Ionicons name="checkmark-circle" size={20} color="#22c55e" style={{ marginRight: 6 }} />
-                <Text style={styles.renderingStatusText}>Rendering Complete</Text>
-              </View>
-            </View>
-          ) : renderStatus.status === 'processing' || renderStatus.status === 'queued' ? (
-            <View style={styles.renderingPreview}>
-              {localImageUri && (
-                <Image source={{ uri: localImageUri }} style={styles.renderingImage} />
-              )}
-              <View style={styles.renderingOverlay}>
-                <ActivityIndicator color="#4a9eff" size="small" style={{ marginRight: 8 }} />
-                <Text style={styles.renderingStatusText}>Rendering in progress...</Text>
-                <Text style={styles.renderingStatusSubtext}>
-                  This may take a moment for the most accurate result
-                </Text>
-              </View>
-            </View>
-          ) : localImageUri ? (
-            <View style={styles.renderingPreview}>
-              <Image source={{ uri: localImageUri }} style={styles.renderingImage} />
-              <View style={styles.renderingOverlay}>
-                <Text style={styles.renderingStatusText}>Temporary Preview</Text>
-                <Text style={styles.renderingStatusSubtext}>
-                  Complete 10-angle capture for full rendering
-                </Text>
+
+          {localImageUri ? (
+            <View style={styles.mainPhotoPreview}>
+              <Image source={{ uri: localImageUri }} style={styles.mainPhotoImage} />
+              <View style={styles.mainPhotoOverlay}>
+                <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
+                <Text style={styles.mainPhotoLabel}>Main Photo Set</Text>
               </View>
               <TouchableOpacity
-                style={styles.changePhotoButton}
+                style={styles.changeMainPhotoButton}
                 onPress={() => {
-                  Alert.alert("Change Photo", "", [
+                  Alert.alert("Change Main Photo", "", [
                     { text: "Take Photo", onPress: handleTakePhoto },
                     { text: "Choose from Gallery", onPress: handleChoosePhoto },
                     { text: "Cancel", style: "cancel" },
                   ]);
                 }}
               >
-                <Ionicons name="camera-outline" size={20} color="#fff" />
-                <Text style={styles.changePhotoButtonText}>Change Photo</Text>
+                <Ionicons name="camera-outline" size={18} color="#fff" />
+                <Text style={styles.changeMainPhotoText}>Change Photo</Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={styles.renderingPlaceholder}>
-              <Ionicons name="car-outline" size={48} color="#666" />
-              <Text style={styles.renderingPlaceholderTitle}>No rendering yet</Text>
-              <Text style={styles.renderingPlaceholderText}>
-                Complete your 10-angle photo capture to generate a preview.
+            <View style={styles.mainPhotoPlaceholder}>
+              <Ionicons name="image-outline" size={48} color="#666" />
+              <Text style={styles.mainPhotoPlaceholderTitle}>Add Your Car's Main Photo</Text>
+              <Text style={styles.mainPhotoPlaceholderText}>
+                This photo will appear on your home screen
               </Text>
+
+              <View style={styles.mainPhotoButtons}>
+                <TouchableOpacity style={styles.mainPhotoButton} onPress={handleTakePhoto}>
+                  <Ionicons name="camera-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
+                  <Text style={styles.mainPhotoButtonText}>Take Photo</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.mainPhotoButton} onPress={handleChoosePhoto}>
+                  <Ionicons name="images-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
+                  <Text style={styles.mainPhotoButtonText}>From Gallery</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </View>
@@ -548,13 +557,13 @@ export default function AddCarScreen({ navigation }) {
   // Legacy Step 1: Photo Upload (kept for backward compatibility)
   const renderStep1Legacy = () => {
     const hasAnyPhoto = localImageUri || Object.values(localImages).some(img => img);
-    
+
     return (
       <View style={styles.stepContainer}>
         <View style={styles.stepHeader}>
           <Text style={styles.stepTitle}>Scan Your Car</Text>
           <Text style={styles.stepSubtitle}>
-            {canUploadMultiplePhotos 
+            {canUploadMultiplePhotos
               ? "Upload photos from different angles (Pro/Premium feature)"
               : "Take or upload a photo of your car"}
           </Text>
@@ -569,7 +578,7 @@ export default function AddCarScreen({ navigation }) {
               {localImages.front ? (
                 <View style={styles.photoSlotPreview}>
                   <Image source={{ uri: localImages.front }} style={styles.photoSlotImage} />
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.photoSlotRemove}
                     onPress={() => setLocalImages({ ...localImages, front: null })}
                   >
@@ -577,7 +586,7 @@ export default function AddCarScreen({ navigation }) {
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.photoSlotEmpty}
                   onPress={() => Alert.alert("Select Source", "", [
                     { text: "Camera", onPress: () => handleUploadPhoto("front", true) },
@@ -597,7 +606,7 @@ export default function AddCarScreen({ navigation }) {
               {localImages.side ? (
                 <View style={styles.photoSlotPreview}>
                   <Image source={{ uri: localImages.side }} style={styles.photoSlotImage} />
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.photoSlotRemove}
                     onPress={() => setLocalImages({ ...localImages, side: null })}
                   >
@@ -605,7 +614,7 @@ export default function AddCarScreen({ navigation }) {
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.photoSlotEmpty}
                   onPress={() => Alert.alert("Select Source", "", [
                     { text: "Camera", onPress: () => handleUploadPhoto("side", true) },
@@ -625,7 +634,7 @@ export default function AddCarScreen({ navigation }) {
               {localImages.rear ? (
                 <View style={styles.photoSlotPreview}>
                   <Image source={{ uri: localImages.rear }} style={styles.photoSlotImage} />
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.photoSlotRemove}
                     onPress={() => setLocalImages({ ...localImages, rear: null })}
                   >
@@ -633,7 +642,7 @@ export default function AddCarScreen({ navigation }) {
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.photoSlotEmpty}
                   onPress={() => Alert.alert("Select Source", "", [
                     { text: "Camera", onPress: () => handleUploadPhoto("rear", true) },
@@ -659,7 +668,7 @@ export default function AddCarScreen({ navigation }) {
             {localImageUri ? (
               <View style={styles.imagePreviewContainer}>
                 <Image source={{ uri: localImageUri }} style={styles.imagePreview} />
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.changePhotoButton}
                   onPress={() => setLocalImageUri(null)}
                 >
@@ -687,7 +696,7 @@ export default function AddCarScreen({ navigation }) {
             </View>
 
             {/* Upgrade Prompt */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.upgradePrompt}
               onPress={() => navigation.navigate("Upgrade")}
             >
@@ -701,53 +710,53 @@ export default function AddCarScreen({ navigation }) {
           </>
         )}
 
-      {/* AI Detection Button */}
-      {localImageUri && (
-        <TouchableOpacity 
-          style={styles.aiButton}
-          onPress={handleAIDetect}
-          disabled={detecting}
-        >
-          {detecting ? (
-            <View style={styles.aiButtonContent}>
-              <ActivityIndicator color="#fff" style={{ marginRight: 10 }} />
-              <Text style={styles.aiButtonText}>Analyzing Image...</Text>
-            </View>
-          ) : (
-            <View style={styles.aiButtonContent}>
-              <Ionicons name="sparkles-outline" size={24} color="#fff" style={{ marginRight: 8 }} />
-              <View>
-                <Text style={styles.aiButtonText}>Auto-Detect Car</Text>
-                <Text style={styles.aiButtonSubtext}>Coming Soon • Demo Preview</Text>
+        {/* AI Detection Button */}
+        {localImageUri && (
+          <TouchableOpacity
+            style={styles.aiButton}
+            onPress={handleAIDetect}
+            disabled={detecting}
+          >
+            {detecting ? (
+              <View style={styles.aiButtonContent}>
+                <ActivityIndicator color="#fff" style={{ marginRight: 10 }} />
+                <Text style={styles.aiButtonText}>Analyzing Image...</Text>
               </View>
-              <View style={styles.demoBadge}>
-                <Text style={styles.demoBadgeText}>DEMO</Text>
+            ) : (
+              <View style={styles.aiButtonContent}>
+                <Ionicons name="sparkles-outline" size={24} color="#fff" style={{ marginRight: 8 }} />
+                <View>
+                  <Text style={styles.aiButtonText}>Auto-Detect Car</Text>
+                  <Text style={styles.aiButtonSubtext}>Coming Soon • Demo Preview</Text>
+                </View>
+                <View style={styles.demoBadge}>
+                  <Text style={styles.demoBadgeText}>DEMO</Text>
+                </View>
               </View>
-            </View>
-          )}
-        </TouchableOpacity>
-      )}
+            )}
+          </TouchableOpacity>
+        )}
 
-      {/* Manual Entry Option */}
-      {hasAnyPhoto && (
-        <TouchableOpacity 
-          style={styles.manualButton}
-          onPress={() => setStep(2)}
-        >
-          <Text style={styles.manualButtonText}>Enter Details Manually →</Text>
-        </TouchableOpacity>
-      )}
+        {/* Manual Entry Option */}
+        {hasAnyPhoto && (
+          <TouchableOpacity
+            style={styles.manualButton}
+            onPress={() => setStep(2)}
+          >
+            <Text style={styles.manualButtonText}>Enter Details Manually →</Text>
+          </TouchableOpacity>
+        )}
 
-      {/* Skip Photo Option */}
-      {!hasAnyPhoto && (
-        <TouchableOpacity 
-          style={styles.skipButton}
-          onPress={() => setStep(2)}
-        >
-          <Text style={styles.skipButtonText}>Skip photo for now →</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+        {/* Skip Photo Option */}
+        {!hasAnyPhoto && (
+          <TouchableOpacity
+            style={styles.skipButton}
+            onPress={() => setStep(2)}
+          >
+            <Text style={styles.skipButtonText}>Skip photo for now →</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     );
   };
 
@@ -757,7 +766,7 @@ export default function AddCarScreen({ navigation }) {
       <View style={styles.stepHeader}>
         <Text style={styles.stepTitle}>Car Details</Text>
         <Text style={styles.stepSubtitle}>
-          {detectionConfidence 
+          {detectionConfidence
             ? `AI detected with ${detectionConfidence}% confidence - verify below`
             : "Enter your car's information"}
         </Text>
@@ -869,13 +878,13 @@ export default function AddCarScreen({ navigation }) {
 
       {/* Navigation Buttons */}
       <View style={styles.navButtons}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backStepButton}
           onPress={() => setStep(1)}
         >
           <Text style={styles.backStepButtonText}>← Back</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.saveButton, saving && styles.saveButtonDisabled]}
           onPress={handleSave}
@@ -909,7 +918,7 @@ export default function AddCarScreen({ navigation }) {
 
         {/* Action Buttons */}
         <View style={styles.successActions}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.primaryAction}
             onPress={() => navigation.navigate("TryMods")}
           >
@@ -920,7 +929,7 @@ export default function AddCarScreen({ navigation }) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.secondaryAction}
             onPress={() => navigation.navigate("AddPart")}
           >
@@ -928,7 +937,7 @@ export default function AddCarScreen({ navigation }) {
             <Text style={styles.secondaryActionText}>Add Parts to Inventory</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.secondaryAction}
             onPress={() => navigation.navigate("CarDetail", { car: { id: savedCarId, year, make, model, trim, drivetrain, paintColor, imageUrl: localImageUri } })}
           >
@@ -936,7 +945,7 @@ export default function AddCarScreen({ navigation }) {
             <Text style={styles.secondaryActionText}>View Car Details</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.doneButton}
             onPress={() => navigation.goBack()}
           >
