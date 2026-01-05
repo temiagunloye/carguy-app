@@ -1,73 +1,59 @@
 // src/features/rendering/RenderingProcessingScreen.js
-// Placeholder screen for 360° rendering processing
+// 3D Reconstruction Processing Screen - Calls Cloud Function for real photogrammetry
 
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   ActivityIndicator,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { useCarContext } from "../../services/carContext";
+import { getKiriStatusDisplay } from "../../services/kiri";
 
 export default function RenderingProcessingScreen({ navigation, route }) {
   const { carId, buildId, photoSet } = route.params || {};
   const { activeCar, demoMode, setActiveCarState } = useCarContext();
-  const [processing, setProcessing] = useState(true);
-  const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    // Simulate rendering process
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setProcessing(false);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 500);
+  // Read KIRI status from activeCar (updated in real-time by startKiriScan callback)
+  const kiriStatus = activeCar?.kiriStatus || 'idle';
+  const kiriProgress = activeCar?.kiriProgress || 0;
+  const kiriViewerUrl = activeCar?.kiriViewerUrl;
+  const kiriError = activeCar?.kiriError;
 
-    // Complete after 5 seconds
-    setTimeout(() => {
-      clearInterval(interval);
-      setProcessing(false);
-      setProgress(100);
-      
-      // Update car with rendering status
-      if (demoMode && activeCar && carId === activeCar.id) {
-        const updatedCar = {
-          ...activeCar,
-          rendering: {
-            status: "READY",
-            renderUrl: null, // Placeholder - would be actual 3D model URL
-            progress: 100,
-          },
-        };
-        setActiveCarState(updatedCar);
-      }
-    }, 5000);
+  const statusDisplay = getKiriStatusDisplay(kiriStatus);
 
-    return () => clearInterval(interval);
-  }, []);
+  const isProcessing = kiriStatus === 'uploading' || kiriStatus === 'processing';
+  const isComplete = kiriStatus === 'complete';
+  const hasError = kiriStatus === 'error';
 
   const handleContinue = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "MainTabs" }],
-    });
+    if (isComplete && kiriViewerUrl) {
+      // Navigate to 3D model viewer
+      navigation.navigate("ModelViewer", {
+        viewerUrl: kiriViewerUrl,
+        carName: activeCar?.nickname || `${activeCar?.year} ${activeCar?.make} ${activeCar?.model}`,
+      });
+    } else {
+      // Go to home
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainTabs" }],
+      });
+    }
   };
+
+
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View style={{ width: 24 }} />
-        <Text style={styles.headerTitle}>Creating 360° View</Text>
+        <Text style={styles.headerTitle}>3D Model Generation</Text>
         <View style={{ width: 24 }} />
       </View>
 
@@ -80,34 +66,84 @@ export default function RenderingProcessingScreen({ navigation, route }) {
               style={styles.carImage}
               resizeMode="cover"
             />
-            <View style={styles.blurOverlay} />
-            <View style={styles.carFocus}>
-              <Ionicons name="car-outline" size={64} color="#22c55e" />
-            </View>
+            {isProcessing && <View style={styles.blurOverlay} />}
+            {isProcessing && (
+              <View style={styles.carFocus}>
+                <ActivityIndicator color="#22c55e" size="large" />
+              </View>
+            )}
           </View>
         )}
 
-        {/* Processing Status */}
+        {/* Status Display */}
         <View style={styles.statusContainer}>
-          {processing ? (
+          {isProcessing && (
             <>
-              <ActivityIndicator color="#22c55e" size="large" />
-              <Text style={styles.statusTitle}>Processing Your Car</Text>
-              <Text style={styles.statusSubtitle}>
-                Creating realistic 360° rendering...
-              </Text>
-              <View style={styles.progressBar}>
-                <View style={[styles.progressFill, { width: `${progress}%` }]} />
+              <View style={styles.statusHeader}>
+                <Ionicons name={statusDisplay.icon} size={32} color={statusDisplay.color} />
+                <Text style={[styles.statusText, { color: statusDisplay.color }]}>
+                  {statusDisplay.text}
+                </Text>
               </View>
-              <Text style={styles.progressText}>{progress}%</Text>
+
+              {/* Progress Bar */}
+              {kiriProgress > 0 && (
+                <View style={styles.progressSection}>
+                  <View style={styles.progressBar}>
+                    <View style={[styles.progressFill, { width: `${kiriProgress}%` }]} />
+                  </View>
+                  <Text style={styles.progressText}>{kiriProgress}%</Text>
+                </View>
+              )}
+
+              {kiriStatus === 'uploading' && (
+                <Text style={styles.statusSubtext}>
+                  Uploading your 10 photos to KIRI Engine...
+                </Text>
+              )}
+
+              {kiriStatus === 'processing' && (
+                <>
+                  <Text style={styles.statusSubtext}>
+                    KIRI is generating your 3D model. This typically takes 5-15 minutes.
+                  </Text>
+                  <ActivityIndicator color="#4a9eff" size="large" style={{ marginTop: 20 }} />
+                </>
+              )}
             </>
-          ) : (
+          )}
+
+          {isComplete && kiriViewerUrl && (
             <>
-              <Ionicons name="checkmark-circle" size={64} color="#22c55e" />
-              <Text style={styles.statusTitle}>Rendering Complete!</Text>
-              <Text style={styles.statusSubtitle}>
-                Your car is ready for part visualization
-              </Text>
+              <View style={styles.successHeader}>
+                <Ionicons name="checkmark-circle" size={64} color="#22c55e" />
+                <Text style={styles.successTitle}>3D Model Ready!</Text>
+                <Text style={styles.successSubtext}>
+                  Your car has been reconstructed in 3D
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.viewModelButton}
+                onPress={() => {
+                  navigation.navigate('ModelViewer', {
+                    viewerUrl: kiriViewerUrl,
+                    carName: activeCar?.nickname || `${activeCar?.year} ${activeCar?.make} ${activeCar?.model}`,
+                  });
+                }}
+              >
+                <Ionicons name="cube" size={24} color="#fff" style={{ marginRight: 10 }} />
+                <Text style={styles.viewModelButtonText}>View 3D Model</Text>
+              </TouchableOpacity>
+            </>
+          )}
+
+          {hasError && (
+            <>
+              <Ionicons name="alert-circle" size={48} color="#ef4444" />
+              <Text style={styles.errorText}>3D Generation Failed</Text>
+              {kiriError && <Text style={styles.errorSubtext}>{kiriError}</Text>}
+              <Text style={styles.errorSubtext}>You can still view your car with 2D photos</Text>
             </>
           )}
         </View>
@@ -116,20 +152,30 @@ export default function RenderingProcessingScreen({ navigation, route }) {
         <View style={styles.infoBox}>
           <Ionicons name="information-circle-outline" size={20} color="#4a9eff" />
           <Text style={styles.infoText}>
-            The background has been blurred to focus on your car. You can now visualize parts on your build.
+            {isComplete
+              ? "Your 3D model is ready! Tap 'View 3D Model' to explore it."
+              : isProcessing
+                ? "KIRI Engine is processing your photos. This typically takes 5-15 minutes."
+                : "Your 10-angle scan has been uploaded to KIRI Engine for 3D reconstruction."}
           </Text>
         </View>
 
+
+
         {/* Continue Button */}
-        {!processing && (
-          <TouchableOpacity
-            style={styles.continueButton}
-            onPress={handleContinue}
-          >
-            <Text style={styles.continueButtonText}>Continue to App</Text>
-            <Ionicons name="arrow-forward" size={20} color="#fff" style={{ marginLeft: 8 }} />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.continueButton}
+          onPress={handleContinue}
+        >
+          <Text style={styles.continueButtonText}>
+            {isComplete ? 'Continue to Garage' : 'Continue to App'}
+          </Text>
+          <Ionicons
+            name={isComplete ? 'checkmark' : 'arrow-forward'}
+            size={20}
+            color="#fff"
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -240,7 +286,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   continueButton: {
-    backgroundColor: "#22c55e",
+    backgroundColor: "#4a9eff",
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 8,
@@ -252,6 +298,37 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  generateButton: {
+    backgroundColor: "#22c55e",
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
+  },
+  generateButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  errorBox: {
+    flexDirection: "row",
+    backgroundColor: "#ef444415",
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: "#ef444430",
+    alignItems: "center",
+  },
+  errorText: {
+    color: "#ef4444",
+    fontSize: 13,
+    marginLeft: 8,
+    flex: 1,
   },
 });
 

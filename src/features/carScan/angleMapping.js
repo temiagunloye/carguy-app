@@ -83,3 +83,4 @@ export const mapShotToAnglePhotos = (shots) => {
   return anglePhotos;
 };
 
+

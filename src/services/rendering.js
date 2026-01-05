@@ -1,127 +1,213 @@
 // src/services/rendering.js
-// Rendering pipeline helpers for car 3D rendering
+// 3D Car Rendering Service - Frontend Integration with Cloud Functions
 
-import { updateCarRendering } from "./carService";
+import { doc, onSnapshot } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
+import { useEffect, useState } from 'react';
+import { db, functions } from './firebaseConfig';
 
 /**
- * Request car rendering to start
- * For now, this is a client-side mock that simulates the rendering process
- * Later, this should call a Cloud Function: startCarRenderJob
+ * Request 3D reconstruction for a car
+ * Calls the Cloud Function to start the photogrammetry process
+ * 
+ * @param {string} carId - The car document ID
+ * @returns {Promise<Object>} - { success, jobId, message }
  */
-export const requestCarRendering = async (userId, carId, carData) => {
+export const requestCarReconstruction = async (carId) => {
   try {
-    // Update status to 'queued'
-    await updateCarRendering(userId, carId, {
-      renderJobStatus: 'queued',
-    });
+    const callable = httpsCallable(functions, 'requestCarReconstruction');
+    const result = await callable({ carId });
+    return result.data;
+  } catch (error) {
+    console.error('Error requesting car reconstruction:', error);
+    throw new Error(error.message || 'Failed to start 3D reconstruction');
+  }
+};
 
-    // Simulate processing (in production, this would be handled by Cloud Function)
-    // For now, we'll use the first available angle photo as a placeholder
-    const anglePhotos = carData.anglePhotos || {};
-    const firstAvailablePhoto = 
-      anglePhotos.front34 || 
-      anglePhotos.side || 
-      anglePhotos.front || 
-      anglePhotos.rear34 ||
-      anglePhotos.driverSide45 ||
-      anglePhotos.passengerSide45 ||
-      anglePhotos.lowFront ||
-      anglePhotos.lowRear ||
-      anglePhotos.rear ||
-      anglePhotos.roof ||
-      null;
+/**
+ * React Hook: Subscribe to car rendering status
+ * 
+ * Provides real-time updates on the 3D reconstruction progress
+ * and access to the generated 3D model and preview renders
+ * 
+ * @param {string} carId - The car document ID to monitor
+ * @returns {Object} - {
+ *   status: 'idle' | 'queued' | 'processing' | 'complete' | 'failed',
+ *   previewUrl: string | null,
+ *   meshUrl: string | null,
+ *   previewAngles: Array<{angle: string, url: string}>,
+ *   error: string | null,
+ *   loading: boolean
+ * }
+ * 
+ * @example
+ * const { status, previewUrl, meshUrl } = useCarRendering(carId);
+ * 
+ * if (status === 'complete') {
+ *   // Show 3D model or preview renders
+ * }
+ */
+export const useCarRendering = (carId) => {
+  const [rendering, setRendering] = useState({
+    status: 'idle',
+    previewUrl: null,
+    meshUrl: null,
+    previewAngles: [],
+    error: null,
+    loading: true,
+  });
 
-    if (firstAvailablePhoto) {
-      // Simulate processing delay
-      setTimeout(async () => {
-        await updateCarRendering(userId, carId, {
-          renderJobStatus: 'processing',
-        });
-
-        // After another delay, mark as complete with placeholder
-        setTimeout(async () => {
-          await updateCarRendering(userId, carId, {
-            renderJobStatus: 'complete',
-            renderingPreviewUrl: firstAvailablePhoto, // Placeholder - would be actual render
-            renderLastUpdatedAt: new Date(),
-          });
-        }, 2000);
-      }, 1000);
-    } else {
-      // No photos available
-      await updateCarRendering(userId, carId, {
-        renderJobStatus: 'error',
-      });
+  useEffect(() => {
+    if (!carId) {
+      setRendering(prev => ({ ...prev, loading: false }));
+      return;
     }
-  } catch (error) {
-    console.error("Error requesting rendering:", error);
-    await updateCarRendering(userId, carId, {
-      renderJobStatus: 'error',
-    });
-  }
-};
 
-/**
- * Listen to rendering status changes for a car
- * @param {string} userId - The user ID
- * @param {string} carId - The car ID
- * @param {function} callback - Callback with { status, previewUrl }
- * @param {boolean} demoMode - Whether we're in demo mode
- * @returns {function} Unsubscribe function
- */
-export const listenToRenderStatus = async (userId, carId, callback, demoMode = false) => {
-  // In demo mode, don't try to connect to Firebase
-  if (demoMode) {
-    // Return a no-op unsubscribe function
-    return () => {};
-  }
+    // Subscribe to car document for real-time updates
+    const carRef = doc(db, 'cars', carId);
+    const unsubscribe = onSnapshot(
+      carRef,
+      (snapshot) => {
+        if (!snapshot.exists()) {
+          setRendering({
+            status: 'idle',
+            previewUrl: null,
+            meshUrl: null,
+            previewAngles: [],
+            error: 'Car not found',
+            loading: false,
+          });
+          return;
+        }
 
-  try {
-    // Dynamically import Firebase only when not in demo mode
-    const { doc, onSnapshot } = await import("firebase/firestore");
-    const { db } = await import("./firebaseConfig");
-    
-    const carRef = doc(db, "users", userId, "cars", carId);
-    
-    return onSnapshot(carRef, (snap) => {
-      if (!snap.exists()) {
-        callback({ status: 'idle', previewUrl: null });
-        return;
+        const car = snapshot.data();
+        setRendering({
+          status: car.renderJobStatus || 'idle',
+          previewUrl: car.renderingPreviewUrl || null,
+          meshUrl: car.renderMeshUrl || null,
+          previewAngles: car.previewAngles || [],
+          error: car.renderError || null,
+          loading: false,
+        });
+      },
+      (error) => {
+        console.error('Error subscribing to car rendering:', error);
+        setRendering(prev => ({
+          ...prev,
+          error: error.message,
+          loading: false,
+        }));
       }
+    );
 
-      const data = snap.data();
-      callback({
-        status: data.renderJobStatus || 'idle',
-        previewUrl: data.renderingPreviewUrl || null,
-        meshUrl: data.renderMeshUrl || null,
-      });
-    });
-  } catch (error) {
-    console.error("Error setting up render status listener:", error);
-    // Return no-op unsubscribe on error
-    return () => {};
+    return () => unsubscribe();
+  }, [carId]);
+
+  return rendering;
+};
+
+/**
+ * Get the best available car image
+ * Priority: rendering preview > main photo > placeholder
+ * 
+ * @param {Object} car - Car document data
+ * @returns {string | null} - Image URL or null
+ */
+export const getCarDisplayImage = (car) => {
+  if (!car) return null;
+
+  // Priority 1: 3D rendered preview (if reconstruction is complete)
+  if (car.renderingPreviewUrl) {
+    return car.renderingPreviewUrl;
+  }
+
+  // Priority 2: Main photo
+  if (car.imageUrl) {
+    return car.imageUrl;
+  }
+
+  // Priority 3: Any angle photo as fallback
+  if (car.anglePhotos) {
+    const angles = Object.values(car.anglePhotos);
+    if (angles.length > 0 && angles[0]) {
+      return angles[0];
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Get render status display text
+ * 
+ * @param {string} status - Render job status
+ * @returns {Object} - { text: string, color: string, icon: string }
+ */
+export const getRenderStatusDisplay = (status) => {
+  switch (status) {
+    case 'queued':
+      return {
+        text: 'Queued for 3D processing...',
+        color: '#f59e0b', // orange
+        icon: 'time-outline',
+      };
+    case 'processing':
+      return {
+        text: 'Generating 3D model...',
+        color: '#4a9eff', // blue
+        icon: 'construct-outline',
+      };
+    case 'complete':
+      return {
+        text: '3D Model Ready',
+        color: '#22c55e', // green
+        icon: 'checkmark-circle',
+      };
+    case 'failed':
+      return {
+        text: 'Reconstruction failed',
+        color: '#ef4444', // red
+        icon: 'alert-circle',
+      };
+    case 'idle':
+    default:
+      return {
+        text: 'Not generated',
+        color: '#666',
+        icon: 'cube-outline',
+      };
   }
 };
 
 /**
- * Check if all required angles are captured
+ * Check if a car is ready for 3D reconstruction
+ * 
+ * @param {Object} car - Car document data
+ * @returns {Object} - { ready: boolean, missingAngles: string[] }
  */
-export const areAllAnglesCaptured = (anglePhotos) => {
-  if (!anglePhotos) return false;
-  
+export const isReadyForReconstruction = (car) => {
+  if (!car) {
+    return { ready: false, missingAngles: [] };
+  }
+
   const requiredAngles = [
-    'front34',
-    'rear34',
-    'side',
-    'front',
-    'rear',
-    'roof',
-    'driverSide45',
-    'passengerSide45',
-    'lowFront',
-    'lowRear',
+    'driver_front',
+    'passenger_front',
+    'driver_rear',
+    'passenger_rear',
+    'full_driver_side',
+    'full_passenger_side',
+    'front_center',
+    'rear_center',
+    'front_low',
+    'rear_low'
   ];
 
-  return requiredAngles.every(angle => anglePhotos[angle] !== null && anglePhotos[angle] !== undefined);
-};
+  const anglePhotos = car.anglePhotos || {};
+  const missingAngles = requiredAngles.filter(angle => !anglePhotos[angle]);
 
+  return {
+    ready: missingAngles.length === 0,
+    missingAngles,
+  };
+};

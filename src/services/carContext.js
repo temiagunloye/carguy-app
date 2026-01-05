@@ -1,9 +1,9 @@
 // src/services/carContext.js
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 // Demo mode flag - set to true to skip Firebase entirely
-const DEMO_MODE = true;
+const DEMO_MODE = false; // ✅ FALSE = Use real Firebase Auth (required for Storage uploads!)
 
 const CarContext = createContext(null);
 
@@ -70,7 +70,7 @@ export function CarProvider({ children }) {
           } catch (error) {
             console.error("Error loading user data:", error);
           }
-          
+
           setLoading(false);
         });
 

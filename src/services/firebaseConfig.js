@@ -1,7 +1,7 @@
 // src/services/firebaseConfig.js
 
 // Demo mode flag - set to true to skip Firebase entirely
-const DEMO_MODE = true;
+const DEMO_MODE = false; // ✅ Changed to false - Firebase is now ENABLED
 
 // Use a closure to store Firebase instances
 const firebaseState = {
@@ -34,14 +34,15 @@ const initializeFirebase = () => {
     const { getStorage: getFirebaseStorage } = require("firebase/storage");
     const ReactNativeAsyncStorage = require("@react-native-async-storage/async-storage").default;
 
-    // TODO: replace with YOUR Firebase config values
+    // Firebase configuration from carguy-app-demo project
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID",
+      apiKey: "AIzaSyCEFvcV4MKlxtXOiZXRFTL8xVSGuKsPme8",
+      authDomain: "carguy-app-demo.firebaseapp.com",
+      projectId: "carguy-app-demo",
+      storageBucket: "carguy-app-demo.firebasestorage.app",
+      messagingSenderId: "869343833766",
+      appId: "1:869343833766:web:d80b4034b146525a588e67",
+      measurementId: "G-VK9ENC9J54"
     };
 
     firebaseState.app = initializeApp(firebaseConfig);

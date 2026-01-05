@@ -98,3 +98,4 @@ export const getPlanLimitMessage = (plan, feature) => {
 
   return `This feature requires a plan upgrade.`;
 };
+

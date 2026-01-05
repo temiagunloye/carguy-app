@@ -222,3 +222,4 @@ export function getAllShotIds() {
   return CAR_SCAN_SHOTS.map(shot => shot.id);
 }
 
+

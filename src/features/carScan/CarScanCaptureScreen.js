@@ -1,8 +1,9 @@
 // src/features/carScan/CarScanCaptureScreen.js
 // AR-style guided 10-angle car photo capture
 
+import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -13,11 +14,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useCarContext } from "../../services/carContext";
-import { CAR_SCAN_SHOTS, getShotConfig } from "./carScanConfig";
-import { startCarScanSession, saveCarScanShot, resumeIncompleteCarScanSession } from "./carScanStorage";
+import { createOrUpdateCarDoc, setRenderStatus } from "../../services/cars";
+import { generateCarModel } from "../../services/cloudFunctions";
+import { uploadAllCarPhotos } from "../../services/photoUpload";
+import { CAR_SCAN_SHOTS } from "./carScanConfig";
 import CarScanGlareTipModal from "./CarScanGlareTipModal";
+import { resumeIncompleteCarScanSession, saveCarScanShot, startCarScanSession } from "./carScanStorage";
 
 export default function CarScanCaptureScreen({ navigation, route }) {
   const { carId, buildId, isOnboarding } = route.params || {};
@@ -32,7 +35,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
   const currentShot = CAR_SCAN_SHOTS[currentShotIndex];
   const progress = ((currentShotIndex + 1) / CAR_SCAN_SHOTS.length) * 100;
   const isComplete = Object.keys(shots).length === CAR_SCAN_SHOTS.length;
-  
+
   // Simplified shot title for display
   const getShotDisplayTitle = (shot) => {
     const simpleTitles = {
@@ -65,14 +68,14 @@ export default function CarScanCaptureScreen({ navigation, route }) {
     try {
       // Try to resume incomplete session
       let existingSession = await resumeIncompleteCarScanSession(carId);
-      
+
       if (!existingSession) {
         // Start new session
         existingSession = await startCarScanSession(carId);
       }
 
       setSession(existingSession);
-      
+
       // Load existing shots
       const existingShots = {};
       existingSession.shots.forEach(shot => {
@@ -96,7 +99,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
   const handleCapturePhoto = async (fromCamera = false) => {
     try {
       let result;
-      
+
       if (fromCamera) {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== "granted") {
@@ -123,7 +126,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
 
       if (!result.canceled && result.assets?.[0]?.uri) {
         const asset = result.assets[0];
-        
+
         const shot = {
           id: currentShot.id,
           label: currentShot.label,
@@ -135,7 +138,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
 
         // Save shot
         await saveCarScanShot(session.sessionId, shot);
-        
+
         // Update local state
         setShots(prev => ({ ...prev, [currentShot.id]: shot }));
 
@@ -272,7 +275,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
           ]}
           onPress={async () => {
             const shotArray = Object.values(shots);
-            
+
             // Save photos to car/build (even if empty or partial)
             if (demoMode && activeCar && carId === activeCar.id) {
               const updatedCar = {
@@ -282,8 +285,8 @@ export default function CarScanCaptureScreen({ navigation, route }) {
                   shots: shotArray,
                   createdAt: new Date().toISOString(),
                 },
-                builds: activeCar.builds?.map(b => 
-                  b.id === buildId 
+                builds: activeCar.builds?.map(b =>
+                  b.id === buildId
                     ? { ...b, photoSet: { shots: shotArray } }
                     : b
                 ) || [],
@@ -326,7 +329,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
         >
           <Ionicons name="save-outline" size={20} color="#fff" style={{ marginRight: 8 }} />
           <Text style={styles.saveButtonText}>
-            {Object.keys(shots).length > 0 
+            {Object.keys(shots).length > 0
               ? `Save (${Object.keys(shots).length}/${CAR_SCAN_SHOTS.length})`
               : "Save (0 photos)"}
           </Text>
@@ -337,43 +340,71 @@ export default function CarScanCaptureScreen({ navigation, route }) {
           <TouchableOpacity
             style={styles.finishButton}
             onPress={async () => {
-              const allShots = Object.values(shots);
-              
-              // Save all photos to car/build
-              if (demoMode && activeCar && carId === activeCar.id) {
-                const updatedCar = {
-                  ...activeCar,
-                  photoSet: {
-                    buildId,
-                    shots: allShots,
-                    createdAt: new Date().toISOString(),
-                  },
-                  builds: activeCar.builds?.map(b => 
-                    b.id === buildId 
-                      ? { ...b, photoSet: { shots: allShots } }
-                      : b
-                  ) || [],
-                  rendering: {
-                    status: "PROCESSING",
-                    renderUrl: null,
-                  },
-                };
-                setActiveCarState(updatedCar);
-              }
+              try {
+                setProcessing(true);
+                const allShots = Object.values(shots);
 
-              // Navigate to rendering processing
-              if (isOnboarding) {
-                navigation.navigate("RenderingProcessing", {
-                  carId,
-                  buildId,
-                  photoSet: { shots: allShots },
+                // Validate count
+                if (allShots.length !== 10) {
+                  Alert.alert('Error', `Need 10 photos, have ${allShots.length}`);
+                  setProcessing(false);
+                  return;
+                }
+
+                // Build photo map
+                const photoMap = {};
+                allShots.forEach(shot => { photoMap[shot.id] = shot.imageUri; });
+
+                // Get user & tier
+                if (!user?.uid) {
+                  Alert.alert('Error', 'Not authenticated');
+                  setProcessing(false);
+                  return;
+                }
+                const tier = activeCar?.tier || 'free';
+
+                // Upload to Firebase Storage
+                console.log('[Phase2] Uploading photos...');
+                const photoAngles = await uploadAllCarPhotos(user.uid, carId, photoMap);
+
+                // Update Firestore
+                await createOrUpdateCarDoc(carId, {
+                  userId: user.uid,
+                  make: activeCar?.make || '',
+                  model: activeCar?.model || '',
+                  year: activeCar?.year || 2024,
+                  trim: activeCar?.trim || null,
+                  tier,
+                  photoAngles,
+                  renderStatus: 'draft',
+                  renderError: null,
+                  modelUrl: null,
                 });
-              } else {
-                navigation.navigate("RenderingProcessing", {
-                  carId,
-                  buildId,
-                  photoSet: { shots: allShots },
-                });
+
+                // Tier logic
+                if (tier === 'pro' || tier === 'premium') {
+                  await setRenderStatus(carId, 'pending');
+                  try {
+                    await generateCarModel(carId);
+                    Alert.alert('Processing Started', 'Custom 3D model generating (10-30 min). Accuracy over speed.');
+                  } catch (err) {
+                    await setRenderStatus(carId, 'error', err.message);
+                    Alert.alert('Error', `3D generation failed: ${err.message}`);
+                  }
+                } else {
+                  Alert.alert('Uploaded', 'Photos saved! Upgrade to Pro for 3D.');
+                }
+
+                setProcessing(false);
+                if (isOnboarding) {
+                  navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+                } else {
+                  navigation.goBack();
+                }
+              } catch (err) {
+                console.error('[Phase2] Error:', err);
+                setProcessing(false);
+                Alert.alert('Upload Failed', err.message);
               }
             }}
           >

@@ -204,3 +204,4 @@ export function validatePartDimensions(vehicle, part) {
   };
 }
 
+

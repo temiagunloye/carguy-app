@@ -153,3 +153,4 @@ export async function deleteCarScanSession(sessionId) {
   await AsyncStorage.setItem(SESSIONS_KEY, JSON.stringify(filtered));
 }
 
+

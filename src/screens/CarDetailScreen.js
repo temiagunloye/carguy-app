@@ -1,22 +1,20 @@
 // src/screens/CarDetailScreen.js
 
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Alert,
+  View
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { db } from "../services/firebaseConfig";
 import { useCarContext } from "../services/carContext";
+import { getKiriStatusDisplay } from "../services/kiri";
 
 const CATEGORIES = [
   { id: "all", name: "All Parts", icon: "cube-outline" },
@@ -67,7 +65,7 @@ function getShotDisplayTitle(shot) {
 export default function CarDetailScreen({ navigation, route }) {
   const { user, demoMode, activeCar, demoCars } = useCarContext();
   const routeCar = route?.params?.car;
-  
+
   // In demo mode, always get the latest car from activeCar or demoCars
   // This ensures we have the updated parts array
   // Use useMemo to make it reactive to activeCar and demoCars changes
@@ -86,7 +84,7 @@ export default function CarDetailScreen({ navigation, route }) {
     }
     return routeCar || activeCar;
   }, [demoMode, activeCar, routeCar, demoCars]);
-  
+
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -141,16 +139,16 @@ export default function CarDetailScreen({ navigation, route }) {
         setLoading(false);
         return;
       }
-      
+
       const partsRef = collection(db, "users", user.uid, "cars", car.id, "parts");
       const q = query(partsRef, orderBy("createdAt", "desc"));
       const snapshot = await getDocs(q);
-      
+
       const partsList = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
       }));
-      
+
       setParts(partsList);
     } catch (e) {
       console.error("Error loading parts:", e);
@@ -175,7 +173,7 @@ export default function CarDetailScreen({ navigation, route }) {
   const activeWarranties = parts.filter(p => p.hasWarranty).length;
 
   const renderPartCard = ({ item }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.partCard}
       onPress={() => navigation.navigate("PartDetail", { part: item, car })}
     >
@@ -189,7 +187,7 @@ export default function CarDetailScreen({ navigation, route }) {
             </Text>
           </View>
         )}
-        
+
         <View style={styles.partInfo}>
           <View style={styles.partHeader}>
             <Text style={styles.partName} numberOfLines={1}>{item.name}</Text>
@@ -200,11 +198,11 @@ export default function CarDetailScreen({ navigation, route }) {
               </Text>
             </View>
           </View>
-          
+
           {item.brand && (
             <Text style={styles.partBrand}>{item.brand}</Text>
           )}
-          
+
           <View style={styles.partMeta}>
             {item.installDate && (
               <Text style={styles.partMetaText}>
@@ -218,7 +216,7 @@ export default function CarDetailScreen({ navigation, route }) {
             )}
           </View>
         </View>
-        
+
         <View style={styles.partPriceContainer}>
           <Text style={styles.partPrice}>${item.totalCost || 0}</Text>
           <Text style={styles.partChevron}>›</Text>
@@ -243,7 +241,7 @@ export default function CarDetailScreen({ navigation, route }) {
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Parts Inventory</Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate("AddPart")}
         >
@@ -274,48 +272,48 @@ export default function CarDetailScreen({ navigation, route }) {
           </View>
         </View>
 
-                {/* 10-Angle Scan Button */}
-                <TouchableOpacity
-                  style={styles.scanButton}
-                  onPress={() => navigation.navigate("CarScanCapture", { carId: car.id, buildId: car.activeBuildId })}
-                >
-                  <Ionicons name="camera-outline" size={20} color="#22c55e" style={{ marginRight: 12 }} />
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.scanButtonText}>10-Angle Car Scan</Text>
-                    <Text style={styles.scanButtonSubtext}>Capture all angles for 3D reconstruction</Text>
-                  </View>
-                  <Ionicons name="chevron-forward" size={20} color="#666" />
-                </TouchableOpacity>
+        {/* 10-Angle Scan Button */}
+        <TouchableOpacity
+          style={styles.scanButton}
+          onPress={() => navigation.navigate("CarScanCapture", { carId: car.id, buildId: car.activeBuildId })}
+        >
+          <Ionicons name="camera-outline" size={20} color="#22c55e" style={{ marginRight: 12 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.scanButtonText}>10-Angle Car Scan</Text>
+            <Text style={styles.scanButtonSubtext}>Capture all angles for 3D reconstruction</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color="#666" />
+        </TouchableOpacity>
 
-                {/* Show Captured Photos */}
-                {car.photoSet?.shots && car.photoSet.shots.length > 0 && (
-                  <View style={styles.photosSection}>
-                    <Text style={styles.photosSectionTitle}>Captured Photos ({car.photoSet.shots.length}/10)</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.photosScroll}>
-                      {car.photoSet.shots.map((shot, index) => (
-                        <TouchableOpacity
-                          key={shot.id || index}
-                          style={styles.photoThumbnail}
-                          onPress={() => {
-                            // TODO: Open full screen photo viewer
-                            Alert.alert("Photo", getShotDisplayTitle(shot));
-                          }}
-                        >
-                          <Image
-                            source={{ uri: shot.imageUri }}
-                            style={styles.photoThumbnailImage}
-                            resizeMode="cover"
-                          />
-                          <View style={styles.photoThumbnailLabel}>
-                            <Text style={styles.photoThumbnailText} numberOfLines={1}>
-                              {getShotDisplayTitle(shot)}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
+        {/* Show Captured Photos */}
+        {car.photoSet?.shots && car.photoSet.shots.length > 0 && (
+          <View style={styles.photosSection}>
+            <Text style={styles.photosSectionTitle}>Captured Photos ({car.photoSet.shots.length}/10)</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.photosScroll}>
+              {car.photoSet.shots.map((shot, index) => (
+                <TouchableOpacity
+                  key={shot.id || index}
+                  style={styles.photoThumbnail}
+                  onPress={() => {
+                    // TODO: Open full screen photo viewer
+                    Alert.alert("Photo", getShotDisplayTitle(shot));
+                  }}
+                >
+                  <Image
+                    source={{ uri: shot.imageUri }}
+                    style={styles.photoThumbnailImage}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.photoThumbnailLabel}>
+                    <Text style={styles.photoThumbnailText} numberOfLines={1}>
+                      {getShotDisplayTitle(shot)}
+                    </Text>
                   </View>
-                )}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
         {/* Stats Row */}
         <View style={styles.statsRow}>
@@ -337,15 +335,56 @@ export default function CarDetailScreen({ navigation, route }) {
           </View>
         </View>
 
+        {/* KIRI 3D Model Status */}
+        {car.kiriStatus && car.kiriStatus !== 'idle' && (
+          <View style={styles.kiriCard}>
+            <View style={styles.kiriHeader}>
+              <Ionicons
+                name={getKiriStatusDisplay(car.kiriStatus).icon}
+                size={24}
+                color={getKiriStatusDisplay(car.kiriStatus).color}
+              />
+              <Text style={styles.kiriTitle}>3D Model</Text>
+            </View>
+
+            <Text style={[styles.kiriStatus, { color: getKiriStatusDisplay(car.kiriStatus).color }]}>
+              {getKiriStatusDisplay(car.kiriStatus).text}
+            </Text>
+
+            {car.kiriStatus === 'processing' && car.kiriProgress && (
+              <View style={styles.progressBar}>
+                <View style={[styles.progressFill, { width: `${car.kiriProgress}%` }]} />
+              </View>
+            )}
+
+            {car.kiriStatus === 'complete' && car.kiriViewerUrl && (
+              <TouchableOpacity
+                style={styles.open3DButton}
+                onPress={() => navigation.navigate('ModelViewer', {
+                  viewerUrl: car.kiriViewerUrl,
+                  carName: car.nickname || `${car.year} ${car.make} ${car.model}`,
+                })}
+              >
+                <Ionicons name="cube" size={20} color="#fff" style={{ marginRight: 8 }} />
+                <Text style={styles.open3DButtonText}>Open 3D Model</Text>
+              </TouchableOpacity>
+            )}
+
+            {car.kiriStatus === 'error' && car.kiriError && (
+              <Text style={styles.kiriError}>{car.kiriError}</Text>
+            )}
+          </View>
+        )}
+
         {/* Folder Grid - Google Drive Style */}
         <View style={styles.folderGridSection}>
           <Text style={styles.folderGridTitle}>Parts Folders</Text>
           <View style={styles.folderGrid}>
             {CATEGORIES.map((cat) => {
-              const count = cat.id === "all" 
-                ? parts.length 
+              const count = cat.id === "all"
+                ? parts.length
                 : parts.filter(p => p.category === cat.id).length;
-              
+
               return (
                 <TouchableOpacity
                   key={cat.id}
@@ -356,10 +395,10 @@ export default function CarDetailScreen({ navigation, route }) {
                   onPress={() => setSelectedCategory(cat.id)}
                 >
                   <View style={styles.folderIconContainer}>
-                    <Ionicons 
-                      name={cat.icon} 
-                      size={32} 
-                      color={selectedCategory === cat.id ? "#4a9eff" : "#666"} 
+                    <Ionicons
+                      name={cat.icon}
+                      size={32}
+                      color={selectedCategory === cat.id ? "#4a9eff" : "#666"}
                     />
                   </View>
                   <Text style={[
@@ -412,11 +451,11 @@ export default function CarDetailScreen({ navigation, route }) {
             <Text style={styles.emptyIcon}>📦</Text>
             <Text style={styles.emptyTitle}>No parts yet</Text>
             <Text style={styles.emptySubtitle}>
-              {selectedCategory === "all" 
+              {selectedCategory === "all"
                 ? "Start building your inventory by adding parts"
                 : `No ${CATEGORIES.find(c => c.id === selectedCategory)?.name.toLowerCase()} parts`}
             </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.emptyButton}
               onPress={() => navigation.navigate("AddPart")}
             >
@@ -437,7 +476,7 @@ export default function CarDetailScreen({ navigation, route }) {
       </ScrollView>
 
       {/* Floating Add Button */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.fab}
         onPress={() => navigation.navigate("AddPart")}
       >
@@ -860,5 +899,60 @@ const styles = StyleSheet.create({
     color: "#a0a0a0",
     fontSize: 11,
   },
+  // KIRI 3D Model Card Styles
+  kiriCard: {
+    backgroundColor: "#111",
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#222",
+  },
+  kiriHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  kiriTitle: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+    marginLeft: 8,
+  },
+  kiriStatus: {
+    fontSize: 14,
+    marginBottom: 12,
+  },
+  progressBar: {
+    height: 6,
+    backgroundColor: "#222",
+    borderRadius: 3,
+    overflow: "hidden",
+    marginBottom: 16,
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#4a9eff",
+    borderRadius: 3,
+  },
+  open3DButton: {
+    backgroundColor: "#22c55e",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  open3DButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  kiriError: {
+    color: "#ef4444",
+    fontSize: 13,
+    marginTop: 8,
+  },
 });
-
