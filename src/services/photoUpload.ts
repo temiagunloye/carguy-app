@@ -60,7 +60,7 @@ export async function uploadCarPhoto(
  * @param carId - Car document ID
  * @param photoMap - Map of angleKey -> localUri
  * @param onProgress - Optional progress callback (currentIndex, total, angleKey)
- * @returns PhotoAngles map with all download URLs
+ * @returns Object with photoAngles (URLs) and photoPaths (storage paths)
  * @throws Error if any upload fails (stops immediately)
  */
 export async function uploadAllCarPhotos(
@@ -68,7 +68,7 @@ export async function uploadAllCarPhotos(
     carId: string,
     photoMap: Record<string, string>,
     onProgress?: (current: number, total: number, angleKey: string) => void
-): Promise<PhotoAngles> {
+): Promise<{ photoAngles: PhotoAngles; photoPaths: string[] }> {
     const angleKeys = Object.keys(photoMap);
     const total = angleKeys.length;
 
@@ -87,6 +87,8 @@ export async function uploadAllCarPhotos(
         rear_low: null,
     };
 
+    const photoPaths: string[] = [];
+
     // Upload each photo sequentially
     for (let i = 0; i < angleKeys.length; i++) {
         const angleKey = angleKeys[i] as PhotoAngleKey;
@@ -98,12 +100,16 @@ export async function uploadAllCarPhotos(
         // Upload and get download URL
         const downloadUrl = await uploadCarPhoto(userId, carId, angleKey, localUri);
 
-        // Store in photoAngles map
+        // Store download URL
         photoAngles[angleKey] = downloadUrl;
+
+        // Store storage path for 3D reconstruction
+        const storagePath = getCarPhotoPath(userId, carId, angleKey);
+        photoPaths.push(storagePath);
     }
 
     console.log(`[PhotoUpload] ✓ All ${total} photos uploaded successfully`);
-    return photoAngles;
+    return { photoAngles, photoPaths };
 }
 
 /**

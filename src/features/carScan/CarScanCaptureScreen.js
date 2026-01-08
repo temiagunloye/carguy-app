@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import { useCarContext } from "../../services/carContext";
-import { createOrUpdateCarDoc, setRenderStatus } from "../../services/cars";
+import { createOrUpdateCarDoc } from "../../services/cars";
 import { generateCarModel } from "../../services/cloudFunctions";
 import { uploadAllCarPhotos } from "../../services/photoUpload";
 import { CAR_SCAN_SHOTS } from "./carScanConfig";
@@ -365,7 +365,7 @@ export default function CarScanCaptureScreen({ navigation, route }) {
 
                 // Upload to Firebase Storage
                 console.log('[Phase2] Uploading photos...');
-                const photoAngles = await uploadAllCarPhotos(user.uid, carId, photoMap);
+                const { photoAngles, photoPaths } = await uploadAllCarPhotos(user.uid, carId, photoMap);
 
                 // Update Firestore
                 await createOrUpdateCarDoc(carId, {
@@ -381,26 +381,16 @@ export default function CarScanCaptureScreen({ navigation, route }) {
                   modelUrl: null,
                 });
 
-                // Tier logic
-                if (tier === 'pro' || tier === 'premium') {
-                  await setRenderStatus(carId, 'pending');
-                  try {
-                    await generateCarModel(carId);
-                    Alert.alert('Processing Started', 'Custom 3D model generating (10-30 min). Accuracy over speed.');
-                  } catch (err) {
-                    await setRenderStatus(carId, 'error', err.message);
-                    Alert.alert('Error', `3D generation failed: ${err.message}`);
-                  }
-                } else {
-                  Alert.alert('Uploaded', 'Photos saved! Upgrade to Pro for 3D.');
-                }
 
+                // Create render job
+                console.log('[Phase2] Creating render job...');
+                const { jobId } = await generateCarModel({ carId, photoPaths });
+
+                console.log('[Phase2] ✓ Render job created:', jobId);
                 setProcessing(false);
-                if (isOnboarding) {
-                  navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
-                } else {
-                  navigation.goBack();
-                }
+
+                // Navigate to processing screen
+                navigation.navigate('RenderProcessing', { jobId, carId });
               } catch (err) {
                 console.error('[Phase2] Error:', err);
                 setProcessing(false);

@@ -21,14 +21,15 @@ interface Props {
     navigation: any;
     route: {
         params: {
-            carId: string;
+            carId?: string;
             carName?: string;
+            modelUrl?: string;  // Direct URL bypasses Firestore
         };
     };
 }
 
 export default function CarModelViewerScreen({ navigation, route }: Props) {
-    const { carId, carName } = route.params;
+    const { carId, carName, modelUrl: paramModelUrl } = route.params;
 
     // Car document subscription
     const [renderStatus, setRenderStatus] = useState<RenderStatus>('draft');
@@ -36,8 +37,16 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
     const [renderError, setRenderError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // SUBSCRIBE TO CAR DOCUMENT
+    // SUBSCRIBE TO CAR DOCUMENT (skip if modelUrl provided)
     useEffect(() => {
+        // If modelUrl provided directly, use it
+        if (paramModelUrl) {
+            setModelUrl(paramModelUrl);
+            setRenderStatus('ready');
+            setLoading(false);
+            return;
+        }
+
         if (!carId) return;
 
         const carRef = doc(db, 'cars', carId);
@@ -59,7 +68,7 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
         });
 
         return () => unsubscribe();
-    }, [carId]);
+    }, [carId, paramModelUrl]);
 
     // RETRY GENERATION
     const handleRetry = async () => {

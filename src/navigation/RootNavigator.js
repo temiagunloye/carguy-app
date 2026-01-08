@@ -12,6 +12,7 @@ import AddCarScreen from "../screens/AddCarScreen";
 import AddPartScreen from "../screens/AddPartScreen";
 import BuildHistoryScreen from "../screens/BuildHistoryScreen";
 import CarDetailScreen from "../screens/CarDetailScreen";
+import CarModelViewerScreen from "../screens/CarModelViewerScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import HelpCenterScreen from "../screens/HelpCenterScreen";
@@ -21,6 +22,7 @@ import ModelViewerScreen from "../screens/ModelViewerScreen";
 import PartDetailScreen from "../screens/PartDetailScreen";
 import PartTryOnScreen from "../screens/PartTryOnScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import RenderProcessingScreen from "../screens/RenderProcessingScreen";
 import ShopScreen from "../screens/ShopScreen";
 import TermsPrivacyScreen from "../screens/TermsPrivacyScreen";
 import TryModsScreen from "../screens/TryModsScreen";
@@ -138,6 +140,16 @@ export default function RootNavigator() {
       <Stack.Screen
         name="RenderingProcessing"
         component={RenderingProcessingScreen}
+      />
+      <Stack.Screen
+        name="RenderProcessing"
+        component={RenderProcessingScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CarModelViewer"
+        component={CarModelViewerScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ModelViewer"
