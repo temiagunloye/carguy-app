@@ -10,20 +10,28 @@ import MainPhotoSelectScreen from "../features/carScan/MainPhotoSelectScreen";
 import RenderingProcessingScreen from "../features/rendering/RenderingProcessingScreen";
 import AddCarScreen from "../screens/AddCarScreen";
 import AddPartScreen from "../screens/AddPartScreen";
+import BaseModelPickerScreen from "../screens/BaseModelPickerScreen";
 import BuildHistoryScreen from "../screens/BuildHistoryScreen";
 import CarDetailScreen from "../screens/CarDetailScreen";
 import CarModelViewerScreen from "../screens/CarModelViewerScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
+import CreateVehicleScreen from "../screens/CreateVehicleScreen";
+import DemoCarsGalleryScreen from "../screens/DemoCarsGalleryScreen";
+import DemoCarViewerScreen from "../screens/DemoCarViewerScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import HelpCenterScreen from "../screens/HelpCenterScreen";
 import HomeScreen from "../screens/HomeScreen";
 import InventoryScreen from "../screens/InventoryScreen";
 import ModelViewerScreen from "../screens/ModelViewerScreen";
+import MyVehiclesScreen from "../screens/MyVehiclesScreen";
 import PartDetailScreen from "../screens/PartDetailScreen";
 import PartTryOnScreen from "../screens/PartTryOnScreen";
+import PhotoUploadChecklistScreen from "../screens/PhotoUploadChecklistScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import RenderProcessingScreen from "../screens/RenderProcessingScreen";
 import ShopScreen from "../screens/ShopScreen";
+import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 import TermsPrivacyScreen from "../screens/TermsPrivacyScreen";
 import TryModsScreen from "../screens/TryModsScreen";
 import UpgradeScreen from "../screens/UpgradeScreen";
@@ -93,6 +101,31 @@ export default function RootNavigator() {
         component={BuildHistoryScreen}
       />
       <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyVehicles"
+        component={MyVehiclesScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateVehicle"
+        component={CreateVehicleScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PhotoUploadChecklist"
+        component={PhotoUploadChecklistScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="AddPart"
         component={AddPartScreen}
         options={{ presentation: "modal" }}
@@ -159,6 +192,26 @@ export default function RootNavigator() {
       <Stack.Screen
         name="PartTryOn"
         component={PartTryOnScreen}
+      />
+      <Stack.Screen
+        name="BaseModelPicker"
+        component={BaseModelPickerScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DemoCarsGallery"
+        component={DemoCarsGalleryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DemoCarViewer"
+        component={DemoCarViewerScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CarModelViewerScreen"
+        component={CarModelViewerScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

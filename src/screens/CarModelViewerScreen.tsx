@@ -24,30 +24,95 @@ interface Props {
             carId?: string;
             carName?: string;
             modelUrl?: string;  // Direct URL bypasses Firestore
+            baseModelId?: string;  // Load from baseModels collection
+            photos?: string[];  // Optional photos from upload flow
         };
     };
 }
 
 export default function CarModelViewerScreen({ navigation, route }: Props) {
-    const { carId, carName, modelUrl: paramModelUrl } = route.params;
+    const { carId, carName, modelUrl: paramModelUrl, baseModelId, photos } = route.params;
+
+    console.log('[CarModelViewer] Params:', { carId, carName, baseModelId, photoCount: photos?.length });
 
     // Car document subscription
     const [renderStatus, setRenderStatus] = useState<RenderStatus>('draft');
     const [modelUrl, setModelUrl] = useState<string | null>(null);
+    const [modelDataUrl, setModelDataUrl] = useState<string | null>(null);
     const [renderError, setRenderError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // SUBSCRIBE TO CAR DOCUMENT (skip if modelUrl provided)
+    // Fetch GLB and convert to data URL (bypass CORS)
+    useEffect(() => {
+        if (!modelUrl) return;
+
+        console.log('[CarModelViewer] Fetching GLB from:', modelUrl);
+        setLoading(true);
+
+        fetch(modelUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64 = reader.result as string;
+                    console.log('[CarModelViewer] GLB converted to data URL');
+                    setModelDataUrl(base64);
+                    setLoading(false);
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch(error => {
+                console.error('[CarModelViewer] Failed to fetch GLB:', error);
+                setRenderError('Failed to load 3D model');
+                setLoading(false);
+            });
+    }, [modelUrl]);
+
+    // FETCH BASE MODEL if baseModelId provided
+    useEffect(() => {
+        if (!baseModelId || !db) return;
+
+        console.log('[CarModelViewer] Fetching base model:', baseModelId);
+
+        const baseModelRef = doc(db, 'baseModels', baseModelId);
+        const unsubscribe = onSnapshot(baseModelRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const baseModel = snapshot.data();
+                console.log('[CarModelViewer] Base model loaded:', baseModel.displayName);
+                setModelUrl(baseModel.glbUrl);
+                setRenderStatus('ready');
+                setLoading(false);
+            } else {
+                console.error('[CarModelViewer] Base model not found:', baseModelId);
+                setLoading(false);
+                setRenderError('Base model not found');
+            }
+        }, (error) => {
+            console.error('[CarModelViewer] Error fetching base model:', error);
+            setLoading(false);
+            setRenderError(error.message);
+        });
+
+        return () => unsubscribe();
+    }, [baseModelId]);
+
+    // SUBSCRIBE TO CAR DOCUMENT (skip if modelUrl or baseModelId provided)
     useEffect(() => {
         // If modelUrl provided directly, use it
         if (paramModelUrl) {
+            console.log('[CarModelViewer] Using param modelUrl:', paramModelUrl);
             setModelUrl(paramModelUrl);
             setRenderStatus('ready');
             setLoading(false);
             return;
         }
 
-        if (!carId) return;
+        // If baseModelId provided, skip car document subscription
+        if (baseModelId) {
+            return;
+        }
+
+        if (!carId || !db) return;
 
         const carRef = doc(db, 'cars', carId);
         const unsubscribe = onSnapshot(carRef, (snapshot) => {
@@ -72,9 +137,13 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
 
     // RETRY GENERATION
     const handleRetry = async () => {
+        if (!carId) {
+            Alert.alert('Error', 'Car ID is missing');
+            return;
+        }
         try {
             setLoading(true);
-            await generateCarModel(carId);
+            await generateCarModel({ carId, photoPaths: photos || [] });
             Alert.alert('Processing Restarted', 'Your 3D model generation has been restarted.');
         } catch (error: any) {
             console.error('[CarModelViewer] Retry failed:', error);
@@ -143,6 +212,7 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script>
@@ -191,40 +261,85 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.target.set(0, 0.5, 0);
+    
+    // Lock vertical rotation - only allow horizontal 360° spin
+    const polarAngle = Math.PI / 2.5; // Fixed angle ~75 degrees
+    controls.minPolarAngle = polarAngle;
+    controls.maxPolarAngle = polarAngle;
+    
     controls.update();
+
+    // Setup Draco decoder for compressed models
+    const dracoLoader = new THREE.DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
+    dracoLoader.setDecoderConfig({ type: 'wasm' });
+    dracoLoader.preload();
 
     // Load GLB model
     const loader = new THREE.GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
     let carModel = null;
     let autoRotate = true;
+
+    // Send messages to React Native
+    function sendMessage(msg) {
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(msg);
+      }
+      console.log(msg);
+    }
+
+    sendMessage('[WebView] Starting to load model from: ${glbUrl}');
 
     loader.load(
       '${glbUrl}',
       (gltf) => {
+        sendMessage('[WebView] Model loaded successfully!');
         carModel = gltf.scene;
 
-        // Center and scale model
+        // Calculate bounding box BEFORE any transformations
         const box = new THREE.Box3().setFromObject(carModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
 
+        // Create a container group for proper centering
+        const container = new THREE.Group();
+        
+        // Move model so its center is at the container's origin
         carModel.position.x = -center.x;
-        carModel.position.y = -box.min.y; // Place on platform
+        carModel.position.y = -center.y;
         carModel.position.z = -center.z;
+        
+        // Add model to container
+        container.add(carModel);
 
-        // Scale to fit
+        // Scale the container to fit
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 2 / maxDim;
-        carModel.scale.setScalar(scale);
+        container.scale.setScalar(scale);
+        
+        // Position container so bottom sits on platform
+        // After scaling, the model height is size.y * scale
+        const scaledHeight = size.y * scale;
+        container.position.y = scaledHeight / 2;
 
-        carModel.castShadow = true;
-        carModel.receiveShadow = true;
+        container.castShadow = true;
+        container.receiveShadow = true;
 
-        scene.add(carModel);
+        scene.add(container);
+        
+        // Update carModel reference to container for rotation
+        carModel = container;
         document.getElementById('loading').style.display = 'none';
+        sendMessage('[WebView] Model added to scene');
       },
-      undefined,
+      (progress) => {
+        const percent = (progress.loaded / progress.total) * 100;
+        sendMessage('[WebView] Loading progress: ' + percent.toFixed(0) + '%');
+      },
       (error) => {
+        const errorMsg = '[WebView] GLB load error: ' + (error.message || error.toString());
+        sendMessage(errorMsg);
         console.error('GLB load error:', error);
         document.getElementById('loading').innerHTML = 
           '<div>Failed to load 3D model</div><div style="font-size: 12px; margin-top: 8px;">Check console for details</div>';
@@ -347,21 +462,32 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
             {/* 3D Viewer or Status */}
             {statusView ? (
                 statusView
-            ) : (
+            ) : modelDataUrl ? (
                 <WebView
                     style={styles.webView}
-                    source={{ html: generateViewerHTML(modelUrl!) }}
+                    source={{ html: generateViewerHTML(modelDataUrl) }}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     allowFileAccess={true}
+                    onMessage={(event) => {
+                        console.log('[CarModelViewer] WebView message:', event.nativeEvent.data);
+                    }}
                     onError={(e) => {
                         console.error('[CarModelViewer] WebView error:', e.nativeEvent);
                     }}
+                    onHttpError={(e) => {
+                        console.error('[CarModelViewer] WebView HTTP error:', e.nativeEvent);
+                    }}
                 />
+            ) : (
+                <View style={styles.statusContainer}>
+                    <ActivityIndicator size="large" color="#4a9eff" />
+                    <Text style={styles.statusText}>Loading 3D model...</Text>
+                </View>
             )}
 
             {/* Info */}
-            {renderStatus === 'ready' && modelUrl && (
+            {renderStatus === 'ready' && modelDataUrl && (
                 <View style={styles.infoBox}>
                     <Ionicons name="information-circle-outline" size={18} color="#4a9eff" />
                     <Text style={styles.infoText}>

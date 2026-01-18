@@ -7,12 +7,11 @@ import {
   Alert,
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
@@ -235,33 +234,28 @@ export default function InventoryScreen({ navigation }) {
         />
       </View>
 
-      {/* Filter Buttons */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.filterScroll}
-        contentContainerStyle={styles.filterContent}
-      >
+      {/* Filter Categories Grid */}
+      <View style={styles.categoriesGrid}>
         {FILTER_CATEGORIES.map((filter) => (
           <TouchableOpacity
             key={filter.id}
             style={[
-              styles.filterButton,
-              selectedFilter === filter.id && styles.filterButtonActive,
+              styles.categoryCard,
+              selectedFilter === filter.id && styles.categoryCardActive,
             ]}
             onPress={() => setSelectedFilter(filter.id)}
           >
             <Text
               style={[
-                styles.filterButtonText,
-                selectedFilter === filter.id && styles.filterButtonTextActive,
+                styles.categoryText,
+                selectedFilter === filter.id && styles.categoryTextActive,
               ]}
             >
               {filter.name}
             </Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
+      </View>
 
       {/* Car List */}
       {cars.length === 0 ? (
@@ -339,33 +333,33 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingVertical: 12,
   },
-  filterScroll: {
-    marginBottom: 16,
-  },
-  filterContent: {
+  categoriesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
     paddingHorizontal: 16,
-    gap: 8,
+    marginBottom: 16,
+    gap: 12,
   },
-  filterButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
+  categoryCard: {
+    width: "47%",
+    paddingVertical: 20,
+    borderRadius: 12,
     backgroundColor: "#0a0a0a",
     borderWidth: 1,
     borderColor: "#1a1a1a",
-    minWidth: 100,
     alignItems: "center",
+    justifyContent: "center",
   },
-  filterButtonActive: {
+  categoryCardActive: {
     backgroundColor: "#1a1a1a",
     borderColor: "#2a2a2a",
   },
-  filterButtonText: {
+  categoryText: {
     color: "#a0a0a0",
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
-  filterButtonTextActive: {
+  categoryTextActive: {
     color: "#ffffff",
   },
   listContent: {

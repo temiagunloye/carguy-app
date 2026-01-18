@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Car Guy App - Scan your car, organize your build, and preview upgrades before you buy. The premium garage-style experience for car enthusiasts.">
+    <meta name="keywords" content="car app, car build planner, car modification, parts tracker, car visualization">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://carguy.app">
+    <meta property="og:title" content="Car Guy App - See Your Build Before You Buy">
+    <meta property="og:description"
+        content="Scan, organize, and preview your car build with Car Guy App. Never guess on wheels or parts again.">
+    <meta property="og:image" content="/assets/images/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://carguy.app">
+    <meta property="twitter:title" content="Car Guy App - See Your Build Before You Buy">
+    <meta property="twitter:description" content="Scan, organize, and preview your car build with Car Guy App.">
+    <meta property="twitter:image" content="/assets/images/og-image.png">
+
+    <title>Car Guy App - See Your Build Before You Buy | ThatAppCompany</title>
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span style="color: var(--accent-primary);">CAR GUY</span>
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="support.html" class="nav-link">Support</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="#get-app" class="btn btn-primary">Get the App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>WHO DOESN'T<br>WANT TO SEE IT ON<br>BBS'S</h1>
+            <p class="hero-subtitle">
+                Your new way to preview what your car build will look like. Never guess on wrap colors, wheels, or front
+                lips again.
+            </p>
+            <div class="hero-cta">
+                <a href="#get-app" class="btn btn-primary btn-lg">Try on New Parts Now!</a>
+                <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Value Proposition Section -->
+    <section class="value-prop">
+        <div class="container">
+            <div class="value-prop-content">
+                <div class="value-prop-text">
+                    <h2>Your new way to preview what your car build will look like.</h2>
+                    <p>
+                        Never guess on wrap colors, wheels, or front lips again. Car Guy App lets you scan your car,
+                        organize your parts, and visualize upgrades before you commit.
+                    </p>
+                    <a href="#get-app" class="btn btn-primary btn-lg">Try on New Parts Now!</a>
+                </div>
+                <div class="value-prop-visual">
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <img src="/assets/images/app-visualizer.png" alt="Car Guy App Visualizer"
+                                    loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B2B / Shop Section -->
+    <section class="b2b-section" id="for-shops">
+        <div class="container">
+            <h2>Help your clients see what you can do.</h2>
+            <p class="b2b-subtitle">
+                Click to find out about being in our dealer network!
+            </p>
+            <div class="b2b-mockups">
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <img src="/assets/images/app-shop-1.png" alt="Car Guy Shop Feature" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <img src="/assets/images/app-shop-2.png" alt="Car Guy Shop Feature" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <img src="/assets/images/app-shop-3.png" alt="Car Guy Shop Feature" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-xl">
+                <a href="support.html" class="btn btn-primary btn-lg">Join Dealer Network</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>Your 4-Step Path to Unlocking Your Builds</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Upload and Scan your car in.</h3>
+                    <p class="step-description">
+                        Capture your car's details in seconds. Upload photos and let our AI identify your make, model,
+                        and key specs.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Input which parts you have installed.</h3>
+                    <p class="step-description">
+                        Track what's already on your car. Organize installed parts, planned upgrades, and saved ideas
+                        all in one place.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Test out new products.</h3>
+                    <p class="step-description">
+                        Preview wheels, wraps, lips, and more on your actual car. See upgrades before you buy with
+                        Pro/Premium visualization.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Save those builds for when you build that dream car.</h3>
+                    <p class="description">
+                        Keep all your build ideas organized. Switch between vehicles, track progress, and never lose a
+                        parts list again.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Everything you need to build smarter.</h2>
+            <div class="grid grid-3 mt-2xl">
+                <div class="feature-card card">
+                    <div class="feature-icon">🚗</div>
+                    <h3 class="feature-title">Car Scan & Details</h3>
+                    <p class="feature-description">
+                        Capture your car's info fast. Upload photos and let AI do the heavy lifting.
+                    </p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Build Tracker</h3>
+                    <p class="feature-description">
+                        Track what's planned, owned, and installed. Never lose track of your build progress.
+                    </p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">Parts Library</h3>
+                    <p class="feature-description">
+                        Save links, notes, and categories. Organize every part in your build journey.
+                    </p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">
+                        Visualization
+                        <span class="badge badge-primary ml-sm">Pro/Premium</span>
+                    </h3>
+                    <p class="feature-description">
+                        Preview upgrades on your actual car. See wheels, wraps, and parts before you buy.
+                    </p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI Build Assistant</h3>
+                    <p class="feature-description">
+                        Get smart suggestions and auto-organization. Let AI help you build better.
+                    </p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">🏎️</div>
+                    <h3 class="feature-title">
+                        Multi-Vehicle
+                        <span class="badge badge-primary ml-sm">Premium</span>
+                    </h3>
+                    <p class="feature-description">
+                        Manage multiple builds. Track your entire garage in one premium experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="text-center mb-2xl">Frequently Asked Questions</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What do I need to upload?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Just photos of your car! Upload a few clear shots and our AI will identify your make, model,
+                            and key details. You can add more info manually if needed.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How accurate is the visualization?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our visualization uses advanced rendering to preview upgrades on your actual car. While not
+                            100% perfect, it gives you a realistic idea of how parts will look before you buy.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I track multiple cars?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Basic plan includes 1 vehicle. Premium plan lets you manage unlimited vehicles and switch
+                            between builds easily.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Does it work with any car?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! Car Guy App works with any make and model. Our AI is trained on a massive database of
+                            vehicles and parts.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What's included in Basic vs Pro vs Premium?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Basic (Free): 1 vehicle, build tracker, parts saving. Pro: adds visualization features.
+                            Premium: multi-vehicle, full feature set, priority support. <a href="pricing.html">See full
+                                pricing</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can shops use Car Guy App?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely! We have a dealer network program for shops who want to use Car Guy with their
+                            clients. <a href="support.html">Contact us</a> to learn more.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I save part links?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! Save links, notes, prices, and organize everything by category. Never lose track of
+                            where you found that perfect part.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is my data stored securely?</span>
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Your privacy and security are our top priority. All data is encrypted and stored securely.
+                            We never share your information. See our <a href="privacy.html">Privacy Policy</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Banner -->
+    <section class="cta-banner" id="get-app">
+        <div class="container">
+            <div class="cta-banner-content">
+                <h2>Ready to build smarter?</h2>
+                <p>Scan, organize, and preview your build with Car Guy App.</p>
+                <a href="#" class="btn btn-primary btn-lg">Get the App</a>
+                <p class="mt-md" style="font-size: var(--text-sm); opacity: 0.8;">Available on iOS and Android</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h6>Product</h6>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h6>Company</h6>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="support.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h6>Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h6>Follow Us</h6>
+                    <ul class="footer-links">
+                        <li><a href="https://instagram.com/carguyapp" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="https://tiktok.com/@carguyapp" target="_blank" rel="noopener">TikTok</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 ThatAppCompany. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="https://instagram.com/carguyapp" target="_blank" rel="noopener"
+                        aria-label="Instagram">📷</a>
+                    <a href="https://tiktok.com/@carguyapp" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

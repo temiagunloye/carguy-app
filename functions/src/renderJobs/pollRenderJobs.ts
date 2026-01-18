@@ -89,13 +89,14 @@ export const pollRenderJobs = functions.pubsub
                     },
                 });
 
+                // Make file publicly readable
+                await file.makePublic();
+
                 // Generate public download URL
-                const [downloadUrl] = await file.getSignedUrl({
-                    action: 'read',
-                    expires: '03-01-2500', // Far future
-                });
+                const downloadUrl = `https://storage.googleapis.com/${storage.name}/${modelPath}`;
 
                 console.log(`[pollRenderJobs] ✓ Model uploaded to ${modelPath}`);
+                console.log(`[pollRenderJobs] ✓ Public URL: ${downloadUrl}`);
 
                 // Update job as complete
                 await doc.ref.update({

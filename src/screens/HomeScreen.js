@@ -3,19 +3,52 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import AddCarModal from "../components/AddCarModal";
+import TierLimitModal from "../components/TierLimitModal";
+import { useAppMode } from "../contexts/AppModeContext";
 import { useCarContext } from "../services/carContext";
 
 export default function HomeScreen({ navigation }) {
-  const { activeCar, loading } = useCarContext();
+  const { activeCar, loading, user, plan } = useCarContext();
   const [showAddCar, setShowAddCar] = useState(false);
+  const { isDemoSession } = useAppMode();
+  const [showLimitModal, setShowLimitModal] = useState(false);
+  const [limitModalConfig, setLimitModalConfig] = useState({
+    title: '',
+    message: '',
+  });
+
+  // Simple tier from plan (defaults to 'free' if no user/plan)
+  const tier = plan || 'free';
+
+  const handleAddNewCar = async () => {
+    // In demo mode, allow access
+    if (isDemoSession) {
+      navigation.navigate("AddCar");
+      return;
+    }
+
+    // Free tier: block scan, show paywall
+    if (tier === 'free') {
+      setLimitModalConfig({
+        title: 'Upgrade Required',
+        message: 'Scan My Car is available for Pro and Premium members. Upgrade to unlock this feature.',
+      });
+      setShowLimitModal(true);
+      return;
+    }
+
+    // Check vehicle count (simplified - actual count would come from firestore)
+    // For now, allow if tier is pro or premium
+    navigation.navigate("AddCar");
+  };
 
   if (loading) {
     return (
@@ -39,10 +72,14 @@ export default function HomeScreen({ navigation }) {
         {heroImageSource ? (
           <Image source={heroImageSource} style={styles.heroImage} resizeMode="cover" />
         ) : (
-          <View style={styles.heroPlaceholder}>
+          <TouchableOpacity
+            style={styles.heroPlaceholder}
+            onPress={() => navigation.navigate("AddCar")}
+            activeOpacity={0.8}
+          >
             <Ionicons name="car-outline" size={48} color="#666" />
-            <Text style={styles.heroPlaceholderText}>No car image yet</Text>
-          </View>
+            <Text style={styles.heroPlaceholderText}>Tap to add your car</Text>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -55,30 +92,31 @@ export default function HomeScreen({ navigation }) {
 
       <Text style={styles.carSubtitle}>
         {hasCar
-          ? `${activeCar.paintColor || ""}${activeCar.drivetrain ? ` • ${activeCar.drivetrain}` : ""}${
-              activeCar.mileage ? ` • ${activeCar.mileage.toLocaleString()} miles` : ""
-            }`
+          ? `${activeCar.paintColor || ""}${activeCar.drivetrain ? ` • ${activeCar.drivetrain}` : ""}${activeCar.mileage ? ` • ${activeCar.mileage.toLocaleString()} miles` : ""
+          }`
           : "Start by adding your vehicle."}
       </Text>
 
       {/* MAIN BUTTONS */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
-          style={styles.primaryButton}
-          onPress={() => navigation.navigate("AddCar")}
+          style={[styles.primaryButton, { backgroundColor: '#4CAF50' }]}
+          onPress={() => navigation.navigate("DemoCarsGallery")}
         >
-          <Ionicons name="camera-outline" size={18} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Scan My Car</Text>
+          <Ionicons name="car-sport-outline" size={18} color="#fff" style={styles.buttonIcon} />
+          <Text style={styles.primaryButtonText}>Browse Demo Cars</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => navigation.navigate("TryMods")}
+          onPress={handleAddNewCar}
         >
-          <Ionicons name="eye-outline" size={18} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Try Mods</Text>
+          <Ionicons name="add-circle-outline" size={18} color="#fff" style={styles.buttonIcon} />
+          <Text style={styles.primaryButtonText}>Add New Car</Text>
         </TouchableOpacity>
       </View>
+
+
 
       {/* QUICK ACTIONS */}
       <View style={styles.quickActions}>
@@ -111,6 +149,19 @@ export default function HomeScreen({ navigation }) {
 
       {/* POPUP - only show when user taps the button */}
       <AddCarModal visible={showAddCar} onClose={() => setShowAddCar(false)} />
+
+      {/* Tier Limit Modal */}
+      <TierLimitModal
+        visible={showLimitModal}
+        onClose={() => setShowLimitModal(false)}
+        onUpgrade={() => {
+          setShowLimitModal(false);
+          navigation.navigate("Upgrade");
+        }}
+        title={limitModalConfig.title}
+        message={limitModalConfig.message}
+        currentTier={tier}
+      />
     </View>
   );
 }

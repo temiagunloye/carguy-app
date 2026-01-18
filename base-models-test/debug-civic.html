@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Debug Single Model</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            background: #e0e0e0;
+        }
+
+        .log {
+            background: #fff;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Honda Civic Debug</h1>
+    <model-viewer id="viewer" src="./honda_civic.glb" alt="Honda Civic" camera-controls></model-viewer>
+
+    <div class="log" id="log"></div>
+
+    <script>
+        const viewer = document.getElementById('viewer');
+        const log = document.getElementById('log');
+
+        function addLog(msg, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'black';
+            log.innerHTML += `<div style="color: ${color}">[${time}] ${msg}</div>`;
+            console.log(msg);
+        }
+
+        addLog('Starting load...');
+
+        viewer.addEventListener('progress', (event) => {
+            const progress = (event.detail.totalProgress * 100).toFixed(1);
+            addLog(`Progress: ${progress}%`);
+        });
+
+        viewer.addEventListener('load', () => {
+            addLog('✅ Model loaded successfully!', 'success');
+
+            const model = viewer.model;
+            if (model) {
+                addLog(`Materials: ${model.materials.length}`);
+                addLog(`Has scene: ${!!viewer.model.scene}`);
+            }
+        });
+
+        viewer.addEventListener('error', (event) => {
+            addLog(`❌ ERROR: ${event.detail || 'Unknown error'}`, 'error');
+            addLog(`Error type: ${event.type}`, 'error');
+        });
+
+        // Log any console errors
+        window.addEventListener('error', (e) => {
+            addLog(`❌ JS Error: ${e.message}`, 'error');
+        });
+
+        // Timeout check
+        setTimeout(() => {
+            if (!viewer.loaded) {
+                addLog('⏱️ Model not loaded after 10 seconds - likely stuck or corrupted', 'error');
+            }
+        }, 10000);
+    </script>
+</body>
+
+</html>

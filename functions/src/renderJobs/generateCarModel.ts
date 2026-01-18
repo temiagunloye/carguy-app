@@ -52,7 +52,8 @@ export const generateCarModel = functions.https.onCall(async (data, context) => 
 
     await jobRef.set({
         jobId,
-        uid,
+        uid,                // For Firestore security rules
+        userId: uid,        // Backward compatibility
         carId,
         status: 'queued',
         photoPaths,
@@ -68,7 +69,7 @@ export const generateCarModel = functions.https.onCall(async (data, context) => 
         error: null,
     });
 
-    console.log(`[generateCarModel] ✓ Job created: ${jobId}, provider: ${provider}`);
+    console.log(`[generateCarModel] ✓ Job created: ${jobId}, uid: ${uid}, provider: ${provider}`);
 
     return {
         jobId,

@@ -11,9 +11,59 @@ service cloud.firestore {
     
     // USERS COLLECTION
     // Users can read/write their own user document
+    // Tier is set to 'free' on signup, can be upgraded via admin/billing (future)
     match /users/{userId} {
-      allow read, write: if request.auth != null && 
-                            request.auth.uid == userId;
+      allow read: if request.auth != null && 
+                     request.auth.uid == userId;
+      // Allow create with tier='free' only
+      allow create: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       request.resource.data.tier == 'free' &&
+                       request.resource.data.extraVehicleSlots == 0;
+      // Allow update of non-tier fields only (tier changes via admin/cloud functions)
+      allow update: if request.auth != null && 
+                       request.auth.uid == userId &&
+                       request.resource.data.tier == resource.data.tier &&
+                       request.resource.data.extraVehicleSlots == resource.data.extraVehicleSlots;
+    }
+    
+    // RENDER JOBS COLLECTION
+    // Users can read render jobs for their own cars
+    match /renderJobs/{jobId} {
+      allow read: if request.auth != null && 
+                     resource.data.userId == request.auth.uid;
+      // Only Cloud Functions can write to render jobs
+      allow write: if false;
+    }
+    
+    // BASE MODELS COLLECTION
+    // All authenticated users can read base models
+    match /baseModels/{baseModelId} {
+      allow read: if request.auth != null;
+      // Only admins/functions can write
+      allow write: if false;
+    }
+    
+    // VEHICLES COLLECTION (Pro/Premium only)
+    // Users can read/write their own vehicles
+    match /vehicles/{vehicleId} {
+      allow read: if request.auth != null && 
+                     resource.data.ownerUid == request.auth.uid;
+      allow create: if request.auth != null && 
+                       request.resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && 
+                               resource.data.ownerUid == request.auth.uid;
+    }
+    
+    // BUILDS COLLECTION
+    // Users can read/write their own builds
+    match /builds/{buildId} {
+      allow read: if request.auth != null && 
+                     resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && 
+                       request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null && 
+                               resource.data.userId == request.auth.uid;
     }
   }
 }

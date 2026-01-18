@@ -14,9 +14,9 @@ import {
   View,
 } from "react-native";
 import { useCarContext } from "../../services/carContext";
+import { uploadCarImage } from "../../services/carService";
+import { areAllAnglesCaptured, requestCarRendering } from "../../services/rendering";
 import { mapShotToAnglePhotos } from "./angleMapping";
-import { requestCarRendering, areAllAnglesCaptured } from "../../services/rendering";
-import { updateCarAngles, uploadCarImage } from "../../services/carService";
 
 export default function MainPhotoSelectScreen({ navigation, route }) {
   const { carId, buildId, isOnboarding, shots } = route.params || {};
@@ -25,7 +25,7 @@ export default function MainPhotoSelectScreen({ navigation, route }) {
   const [saving, setSaving] = useState(false);
 
   const shotArray = shots ? Object.values(shots) : [];
-  
+
   // Default to front_center if available
   React.useEffect(() => {
     const frontCenter = shotArray.find(s => s.id === 'front_center');
@@ -63,8 +63,8 @@ export default function MainPhotoSelectScreen({ navigation, route }) {
             mainPhotoId: selectedPhotoId,
             createdAt: new Date().toISOString(),
           },
-          builds: activeCar.builds?.map(b => 
-            b.id === buildId 
+          builds: activeCar.builds?.map(b =>
+            b.id === buildId
               ? { ...b, photoSet: { shots: shotArray, mainPhotoId: selectedPhotoId } }
               : b
           ) || [],
@@ -80,7 +80,7 @@ export default function MainPhotoSelectScreen({ navigation, route }) {
       } else if (user && carId) {
         // Upload main photo to Firebase Storage
         const mainPhotoUrl = await uploadCarImage(user.uid, carId, selectedPhoto.imageUri);
-        
+
         // Upload all angle photos and get URLs
         const uploadedAnglePhotos = {};
         for (const [key, uri] of Object.entries(anglePhotos)) {
@@ -93,15 +93,15 @@ export default function MainPhotoSelectScreen({ navigation, route }) {
 
         // Update car's main image and anglePhotos
         const { saveCarForUser } = await import("../../services/carService");
-        await saveCarForUser({ 
-          uid: user.uid, 
-          carId, 
-          data: { 
+        await saveCarForUser({
+          uid: user.uid,
+          carId,
+          data: {
             imageUrl: mainPhotoUrl,
             anglePhotos: uploadedAnglePhotos,
-          } 
+          }
         });
-        
+
         // Trigger rendering if all angles captured
         if (areAllAnglesCaptured(uploadedAnglePhotos)) {
           const { getActiveCar } = await import("../../services/carService");
@@ -112,28 +112,12 @@ export default function MainPhotoSelectScreen({ navigation, route }) {
 
       setSaving(false);
 
-      // Navigate to rendering processing if 10 photos, otherwise to success
-      if (areAllAnglesCaptured(anglePhotos)) {
-        // Navigate to rendering processing
-        navigation.navigate("RenderingProcessing", {
-          carId,
-          buildId,
-          photoSet: { shots: shotArray },
-        });
-      } else if (isOnboarding) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "MainTabs" }],
-        });
-        Alert.alert(
-          "Car Added!",
-          `Your car has been saved with ${shotArray.length} photo${shotArray.length > 1 ? 's' : ''}. Add more photos later for 360° rendering.`,
-          [{ text: "OK" }]
-        );
-      } else {
-        navigation.goBack();
-        Alert.alert("Success", "Main photo updated!");
-      }
+      // Navigate to base model picker for user to select closest match
+      console.log('[MainPhotoSelect] Navigating to BaseModelPicker with', shotArray.length, 'photos');
+      navigation.navigate("BaseModelPicker", {
+        carId,
+        photos: shotArray.map(shot => shot.imageUri),
+      });
     } catch (error) {
       console.error("Error saving main photo:", error);
       Alert.alert("Error", "Failed to save main photo. Please try again.");

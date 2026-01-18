@@ -13,8 +13,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useCarContext } from "../services/carContext";
 import { categoryToFolderName } from "../services/buildService";
+import { useCarContext } from "../services/carContext";
 
 const CATEGORIES = [
   { id: "wheels", name: "Wheels & Tires", icon: "disc-outline" },
@@ -61,7 +61,7 @@ export default function PartTryOnScreen({ navigation, route }) {
     };
 
     setSimulatedParts(prev => [...prev, newSimulatedPart]);
-    
+
     // Clear input fields
     setPartName("");
     setProductLink("");
@@ -81,16 +81,16 @@ export default function PartTryOnScreen({ navigation, route }) {
   const handleSaveToBuild = async () => {
     const activeParts = simulatedParts.filter(p => p.isActive);
     if (activeParts.length === 0) {
-      Alert.alert("No Active Parts", "Toggle parts on to save them to your build.");
+      Alert.alert("No Saveable Parts", "Toggle parts on to save them to your build.");
       return;
     }
 
     // Save first part directly to build and create inventory item (no confirmation)
     const firstPart = activeParts[0];
-    
+
     // Get build ID
     const buildId = targetBuildId || activeCar?.activeBuildId || activeCar?.builds?.find(b => b.isActive)?.id;
-    
+
     // Navigate to AddPart with pre-filled data - it will auto-save
     navigation.navigate("AddPart", {
       fromShop: true,
@@ -105,7 +105,7 @@ export default function PartTryOnScreen({ navigation, route }) {
       buildId: buildId,
       autoSave: true, // Flag to auto-save without confirmation
     });
-    
+
     // Remove saved part from simulated list
     setSimulatedParts(prev => prev.filter(p => p.id !== firstPart.id));
   };
@@ -135,7 +135,7 @@ export default function PartTryOnScreen({ navigation, route }) {
         {/* Part Input Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Part Details</Text>
-          
+
           <Text style={styles.label}>Part/Product Name *</Text>
           <TextInput
             style={styles.input}
@@ -219,7 +219,7 @@ export default function PartTryOnScreen({ navigation, route }) {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Parts in Rendering</Text>
             <Text style={styles.sectionSubtitle}>Toggle parts on/off to see them in the visualizer</Text>
-            
+
             {simulatedParts.map((part) => (
               <View key={part.id} style={styles.simulatedPartItem}>
                 <View style={styles.simulatedPartInfo}>

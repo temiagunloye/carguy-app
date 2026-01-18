@@ -27,30 +27,39 @@ export const onRenderJobCreated = functions.firestore
 
             // Generate signed URLs for photos (24-hour expiry)
             const storage = admin.storage().bucket();
-            const signedUrls: string[] = [];
+            const photoUrls: string[] = [];
 
             for (const photoPath of job.photoPaths) {
                 try {
                     const file = storage.file(photoPath);
-                    const [url] = await file.getSignedUrl({
-                        action: 'read',
-                        expires: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
-                    });
-                    signedUrls.push(url);
+
+                    // Check if file exists
+                    const [exists] = await file.exists();
+                    if (!exists) {
+                        throw new Error(`Photo does not exist: ${photoPath}`);
+                    }
+
+                    // Make file publicly readable (temporary)
+                    await file.makePublic();
+
+                    // Get public URL
+                    const publicUrl = `https://storage.googleapis.com/${storage.name}/${photoPath}`;
+                    photoUrls.push(publicUrl);
+
                 } catch (error) {
-                    console.error(`[onRenderJobCreated] Failed to generate signed URL for ${photoPath}:`, error);
+                    console.error(`[onRenderJobCreated] Failed to access photo ${photoPath}:`, error);
                     throw new Error(`Failed to access photo: ${photoPath}`);
                 }
             }
 
-            console.log(`[onRenderJobCreated] Generated ${signedUrls.length} signed URLs`);
+            console.log(`[onRenderJobCreated] Generated ${photoUrls.length} photo URLs`);
 
             // Get provider adapter
             const provider = getProviderAdapter(job.provider || 'test');
 
             // Submit to provider
             console.log(`[onRenderJobCreated] Submitting to provider: ${job.provider}`);
-            const result = await provider.submit(signedUrls);
+            const result = await provider.submit(photoUrls);
 
             // Update job with provider job ID and status
             await snapshot.ref.update({

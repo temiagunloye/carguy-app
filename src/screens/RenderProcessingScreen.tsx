@@ -46,6 +46,7 @@ export default function RenderProcessingScreen({ navigation, route }: Props) {
                     // Navigate to viewer when complete
                     if (data.status === 'complete' && data.result.modelUrl) {
                         console.log(`[RenderProcessing] Job complete, navigating to viewer`);
+                        console.log(`[RenderProcessing] Model URL: ${data.result.modelUrl}`);
                         navigation.replace('CarModelViewer', {
                             carId,
                             modelUrl: data.result.modelUrl,

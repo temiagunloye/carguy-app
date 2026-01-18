@@ -84,6 +84,9 @@ export interface CarDocument {
     // Photo uploads (keys from carScanConfig.js, values are Firebase Storage URLs)
     photoAngles: PhotoAngles;
 
+    // Base model reference (for garage cars)
+    baseModelId: string | null;  // Reference to baseModels/{baseModelId}
+
     // 3D rendering state
     renderStatus: RenderStatus;
     renderError: string | null;

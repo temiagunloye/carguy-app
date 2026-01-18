@@ -1,7 +1,6 @@
 // src/screens/BuildHistoryScreen.js
 
 import { Ionicons } from "@expo/vector-icons";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -81,7 +80,7 @@ export default function BuildHistoryScreen({ navigation }) {
         const partsRef = collection(db, "users", user.uid, "cars", activeCar.id, "parts");
         const q = query(partsRef, orderBy("installDate", "desc"));
         const snapshot = await getDocs(q);
-        
+
         const history = snapshot.docs
           .map(doc => {
             const data = doc.data();
@@ -142,12 +141,22 @@ export default function BuildHistoryScreen({ navigation }) {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Vehicle Selector */}
+        {activeCar && (
+          <View style={styles.vehicleSelector}>
+            <Text style={styles.selectorLabel}>Vehicle:</Text>
+            <TouchableOpacity style={styles.dropdown} onPress={() => {/* TODO: implement vehicle switcher */ }}>
+              <Text style={styles.dropdownText}>
+                {activeCar.year} {activeCar.make} {activeCar.model}
+              </Text>
+              <Ionicons name="chevron-down" size={20} color="#888" />
+            </TouchableOpacity>
+          </View>
+        )}
+
         {/* Car Info */}
         {activeCar && (
           <View style={styles.carCard}>
-            <Text style={styles.carName}>
-              {activeCar.year} {activeCar.make} {activeCar.model}
-            </Text>
             <Text style={styles.carSpecs}>
               {activeCar.paintColor || ""} {activeCar.paintColor && activeCar.drivetrain ? "•" : ""} {activeCar.drivetrain || ""}
             </Text>
@@ -188,23 +197,23 @@ export default function BuildHistoryScreen({ navigation }) {
             {/* Timeline */}
             <View style={styles.timelineSection}>
               <Text style={styles.sectionTitle}>Timeline</Text>
-              
+
               {buildHistory.map((item, index) => (
                 <View key={item.id} style={styles.timelineItem}>
                   {/* Line connector */}
                   {index < buildHistory.length - 1 && (
                     <View style={styles.timelineLine} />
                   )}
-                  
+
                   {/* Dot */}
                   <View style={[styles.timelineDot, { backgroundColor: TYPE_COLORS[item.type] || TYPE_COLORS.default }]}>
-                    <Ionicons 
-                      name={TYPE_ICONS[item.type] || TYPE_ICONS.default} 
-                      size={20} 
-                      color="#ffffff" 
+                    <Ionicons
+                      name={TYPE_ICONS[item.type] || TYPE_ICONS.default}
+                      size={20}
+                      color="#ffffff"
                     />
                   </View>
-                  
+
                   {/* Content */}
                   <View style={styles.timelineContent}>
                     <Text style={styles.timelineDate}>
@@ -223,7 +232,7 @@ export default function BuildHistoryScreen({ navigation }) {
             </View>
 
             {/* Add Entry Button */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.addButton}
               onPress={() => navigation.navigate("AddPart")}
             >
@@ -264,6 +273,32 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 28,
     fontWeight: "700",
+  },
+  vehicleSelector: {
+    marginHorizontal: 16,
+    marginBottom: 12,
+  },
+  selectorLabel: {
+    color: "#888",
+    fontSize: 12,
+    marginBottom: 6,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  dropdown: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#0a0a0a",
+    padding: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+  },
+  dropdownText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
   carCard: {
     backgroundColor: "#0a0a0a",

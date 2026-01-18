@@ -4,25 +4,25 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { categoryToFolderName } from "../services/buildService";
 import { useCarContext } from "../services/carContext";
 import { getDefaultPlacementForPart } from "../shop/placementUtils";
 import { canAddActivePart, canCreateBuild, getTierLimits } from "../shop/subscriptionLimits";
 import {
-    createTestBuild,
-    getTestBuilds,
-    setCurrentTestBuild,
-    updateTestBuild
+  createTestBuild,
+  getTestBuilds,
+  setCurrentTestBuild,
+  updateTestBuild
 } from "../shop/testBuildStorage";
 
 const CATEGORY_ICONS = {
@@ -66,8 +66,8 @@ export default function ShopScreen({ navigation }) {
           "Create a vehicle and build to start trying parts.",
           [
             { text: "Cancel", style: "cancel", onPress: () => navigation.goBack() },
-            { 
-              text: "Add Car", 
+            {
+              text: "Add Car",
               onPress: () => navigation.navigate("AddCar")
             },
           ]
@@ -113,7 +113,7 @@ export default function ShopScreen({ navigation }) {
           const partsRef = collection(db, "users", user.uid, "cars", activeCar.id, "parts");
           const q = query(partsRef, orderBy("createdAt", "desc"));
           const snapshot = await getDocs(q);
-          
+
           const partsList = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
@@ -126,7 +126,7 @@ export default function ShopScreen({ navigation }) {
       if (!demoMode && user) {
         const testBuilds = await getTestBuilds(user.uid, activeCar.id);
         setBuilds(testBuilds);
-        
+
         const current = testBuilds.find(b => b.isCurrent) || testBuilds[0];
         if (current) {
           setCurrentBuild(current);
@@ -239,10 +239,10 @@ export default function ShopScreen({ navigation }) {
     try {
       const buildNumber = builds.length + 1;
       const newBuildId = await createTestBuild(user.uid, activeCar.id, `Build ${buildNumber}`);
-      
+
       // Set as current
       await setCurrentTestBuild(user.uid, activeCar.id, newBuildId);
-      
+
       // Reload builds
       await loadData();
     } catch (error) {
@@ -253,12 +253,12 @@ export default function ShopScreen({ navigation }) {
 
   const handleAddAllToBuild = () => {
     if (activePlacements.filter(p => p.active).length === 0) {
-      Alert.alert("No Active Parts", "Toggle parts on to add them to your build.");
+      Alert.alert("No Saveable Parts", "Toggle parts on to add them to your build.");
       return;
     }
 
     // Navigate to TryMods screen with current build
-    navigation.navigate("TryMods", { 
+    navigation.navigate("TryMods", {
       buildId: currentBuild?.id,
       placements: activePlacements.filter(p => p.active),
     });
@@ -364,10 +364,10 @@ export default function ShopScreen({ navigation }) {
                 {simulatedParts.map((part) => (
                   <View key={part.id} style={styles.partItem}>
                     <View style={styles.partIconContainer}>
-                      <Ionicons 
-                        name={CATEGORY_ICONS[part.category] || "cube-outline"} 
-                        size={24} 
-                        color={part.isActive ? "#22c55e" : "#666"} 
+                      <Ionicons
+                        name={CATEGORY_ICONS[part.category] || "cube-outline"}
+                        size={24}
+                        color={part.isActive ? "#22c55e" : "#666"}
                       />
                     </View>
                     <View style={styles.partInfo}>
@@ -393,7 +393,7 @@ export default function ShopScreen({ navigation }) {
                   onPress={async () => {
                     const activeSimParts = simulatedParts.filter(p => p.isActive);
                     if (activeSimParts.length === 0) {
-                      Alert.alert("No Active Parts", "Toggle parts on to save them.");
+                      Alert.alert("No Saveable Parts", "Toggle parts on to save them.");
                       return;
                     }
 
@@ -423,7 +423,7 @@ export default function ShopScreen({ navigation }) {
             <View style={styles.partsHeader}>
               <Text style={styles.partsTitle}>Parts</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate("PartTryOn", { 
+                onPress={() => navigation.navigate("PartTryOn", {
                   buildId: currentBuild?.id || activeCar?.activeBuildId,
                 })}
                 style={styles.addPartButton}

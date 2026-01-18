@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base Model Validation Test</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@3.3.0/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .test-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-card h2 {
+      margin-top: 0;
+      color: #444;
+      font-size: 20px;
+    }
+    model-viewer {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(#e0e0e0, #f5f5f5);
+      border-radius: 4px;
+    }
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .status.loading {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #666;
+    }
+    .stat-item {
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .stat-label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .instructions {
+      background: #e3f2fd;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+    }
+    .instructions h3 {
+      margin-top: 0;
+      color: #1976D2;
+    }
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .checklist li {
+      padding: 5px 0;
+      color: #555;
+    }
+    .checklist li:before {
+      content: "☐ ";
+      margin-right: 8px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚗 Base Model Validation Test</h1>
+  <p class="subtitle">Testing 3 Sketchfab GLB models for mobile performance</p>
+
+  <div class="instructions">
+    <h3>📋 What to Check:</h3>
+    <ul class="checklist">
+      <li>All 3 models load without errors</li>
+      <li>Textures visible (not pink/missing)</li>
+      <li>Load time under 3 seconds</li>
+      <li>Smooth rotation at 60 FPS</li>
+      <li>No console errors (open DevTools)</li>
+    </ul>
+  </div>
+
+  <div class="test-card">
+    <h2>1️⃣ Honda Civic</h2>
+    <model-viewer 
+      id="civic"
+      src="./honda_civic.glb"
+      alt="Honda Civic"
+      auto-rotate 
+      camera-controls
+      camera-orbit="45deg 75deg 4m"
+    ></model-viewer>
+    <div id="civic-status" class="status loading">⏳ Waiting for model...</div>
+    <div id="civic-stats" class="stats"></div>
+  </div>
+
+  <div class="test-card">
+    <h2>2️⃣ Toyota Camry</h2>
+    <model-viewer 
+      id="camry"
+      src="./toyota_camry.glb"
+      alt="Toyota Camry"
+      auto-rotate 
+      camera-controls
+      camera-orbit="45deg 75deg 4m"
+    ></model-viewer>
+    <div id="camry-status" class="status loading">⏳ Waiting for model...</div>
+    <div id="camry-stats" class="stats"></div>
+  </div>
+
+  <div class="test-card">
+    <h2>3️⃣ Mercedes E-Class W211</h2>
+    <model-viewer 
+      id="mercedes"
+      src="./mercedes_eclass.glb"
+      alt="Mercedes E-Class"
+      auto-rotate 
+      camera-controls
+      camera-orbit="45deg 75deg 4m"
+    ></model-viewer>
+    <div id="mercedes-status" class="status loading">⏳ Waiting for model...</div>
+    <div id="mercedes-stats" class="stats"></div>
+  </div>
+
+  <script>
+    const models = ['civic', 'camry', 'mercedes'];
+    const loadTimes = {};
+
+    models.forEach(modelId => {
+      const viewer = document.getElementById(modelId);
+      const statusDiv = document.getElementById(`${modelId}-status`);
+      const statsDiv = document.getElementById(`${modelId}-stats`);
+      const startTime = performance.now();
+
+      viewer.addEventListener('load', () => {
+        const loadTime = (performance.now() - startTime) / 1000;
+        loadTimes[modelId] = loadTime;
+
+        statusDiv.className = 'status success';
+        statusDiv.innerHTML = `✅ Loaded successfully in ${loadTime.toFixed(2)}s`;
+
+        // Get model stats
+        const model = viewer.model;
+        if (model) {
+          statsDiv.innerHTML = `
+            <div class="stat-item">
+              <span class="stat-label">Load Time</span>
+              ${loadTime.toFixed(2)}s
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Status</span>
+              Ready
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Performance</span>
+              ${loadTime < 3 ? '🟢 Good' : '🟡 Slow'}
+            </div>
+          `;
+        }
+
+        console.log(`✅ ${modelId} loaded in ${loadTime.toFixed(2)}s`);
+      });
+
+      viewer.addEventListener('error', (event) => {
+        statusDiv.className = 'status error';
+        statusDiv.innerHTML = `❌ Failed to load: ${event.detail || 'Unknown error'}`;
+        console.error(`❌ ${modelId} failed:`, event);
+      });
+
+      viewer.addEventListener('progress', (event) => {
+        const progress = event.detail.totalProgress;
+        if (progress < 1) {
+          statusDiv.innerHTML = `⏳ Loading... ${(progress * 100).toFixed(0)}%`;
+        }
+      });
+    });
+
+    // Summary after 10 seconds
+    setTimeout(() => {
+      const loaded = Object.keys(loadTimes).length;
+      console.log(`\n📊 Summary: ${loaded}/3 models loaded`);
+      if (loaded === 3) {
+        const avgTime = Object.values(loadTimes).reduce((a, b) => a + b, 0) / loaded;
+        console.log(`✅ All models loaded! Average: ${avgTime.toFixed(2)}s`);
+      } else {
+        console.log(`⚠️ Only ${loaded}/3 models loaded successfully`);
+      }
+    }, 10000);
+  </script>
+</body>
+</html>

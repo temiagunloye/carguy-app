@@ -49,3 +49,7 @@ app-example
 /android
 .env
 .env.*
+**/service-account-key.json
+**/*service-account*.json
+*.pem
+*.key

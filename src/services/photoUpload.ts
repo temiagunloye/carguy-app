@@ -25,6 +25,10 @@ export async function uploadCarPhoto(
     localUri: string
 ): Promise<string> {
     try {
+        if (!storage) {
+            throw new Error('Firebase Storage not initialized');
+        }
+
         console.log(`[PhotoUpload] Uploading ${angleKey} for car ${carId}`);
 
         // Get storage path using Phase 1 helper
@@ -36,7 +40,9 @@ export async function uploadCarPhoto(
         const blob = await response.blob();
 
         // Upload to Firebase Storage
-        await uploadBytes(storageRef, blob);
+        await uploadBytes(storageRef, blob, {
+            contentType: 'image/jpeg'
+        });
 
         // Get download URL
         const downloadUrl = await getDownloadURL(storageRef);
@@ -44,7 +50,7 @@ export async function uploadCarPhoto(
         console.log(`[PhotoUpload] ✓ ${angleKey} uploaded successfully`);
         return downloadUrl;
 
-    } catch (error) {
+    } catch (error: any) {
         console.error(`[PhotoUpload] ✗ Failed to upload ${angleKey}:`, error);
         throw new Error(`Failed to upload ${angleKey}: ${error.message}`);
     }
