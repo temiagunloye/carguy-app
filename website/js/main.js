@@ -88,3 +88,24 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.feature-card, .step-card, .pricing-card').forEach(el => {
     observer.observe(el);
 });
+
+// Analytics Tracking
+document.querySelectorAll('a[href="#get-app"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (window.trackEvent) {
+            window.trackEvent('nav_get_app_click', {
+                location: btn.closest('.nav') ? 'navbar' : 'body'
+            });
+        }
+    });
+});
+
+document.querySelectorAll('.hero-cta .btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (window.trackEvent) {
+            window.trackEvent('hero_cta_click', {
+                text: btn.innerText
+            });
+        }
+    });
+});

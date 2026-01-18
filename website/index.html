@@ -26,6 +26,7 @@
     <title>Car Guy App - See Your Build Before You Buy | ThatAppCompany</title>
     <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/analytics.js" defer></script>
 </head>
 
 <body>
@@ -61,10 +62,9 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>WHO DOESN'T<br>WANT TO SEE IT ON<br>BBS'S</h1>
+            <h1>Scan. Organize.<br>Preview.</h1>
             <p class="hero-subtitle">
-                Your new way to preview what your car build will look like. Never guess on wrap colors, wheels, or front
-                lips again.
+                For drivers, shops, and dealers—Car Guy makes builds easy to track and easy to visualize.
             </p>
             <div class="hero-cta">
                 <a href="#get-app" class="btn btn-primary btn-lg">Try on New Parts Now!</a>
@@ -88,12 +88,10 @@
                 </div>
                 <div class="value-prop-visual">
                     <div class="phone-mockup">
-                        <div class="phone-frame">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <img src="/assets/images/app-visualizer.png" alt="Car Guy App Visualizer"
-                                    loading="lazy">
-                            </div>
+                        <!-- Removed frame for cleaner look with new render -->
+                        <div class="phone-screen-clean">
+                            <img src="/assets/mockups/hero-visualizer.png" alt="Car Guy App Visualizer - The Shop"
+                                loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -106,33 +104,11 @@
         <div class="container">
             <h2>Help your clients see what you can do.</h2>
             <p class="b2b-subtitle">
-                Click to find out about being in our dealer network!
+                Shops & dealers: join early access.
             </p>
-            <div class="b2b-mockups">
-                <div class="phone-mockup">
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <img src="/assets/images/app-shop-1.png" alt="Car Guy Shop Feature" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-                <div class="phone-mockup">
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <img src="/assets/images/app-shop-2.png" alt="Car Guy Shop Feature" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-                <div class="phone-mockup">
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <img src="/assets/images/app-shop-3.png" alt="Car Guy Shop Feature" loading="lazy">
-                        </div>
-                    </div>
-                </div>
+            <div class="b2b-mockups-clean">
+                <img src="/assets/mockups/tri-home-inventory-parts.png" alt="Car Guy App - Home, Inventory, and Parts"
+                    loading="lazy" class="img-fluid">
             </div>
             <div class="mt-xl">
                 <a href="support.html" class="btn btn-primary btn-lg">Join Dealer Network</a>
@@ -364,9 +340,47 @@
         <div class="container">
             <div class="cta-banner-content">
                 <h2>Ready to build smarter?</h2>
-                <p>Scan, organize, and preview your build with Car Guy App.</p>
-                <a href="#" class="btn btn-primary btn-lg">Get the App</a>
-                <p class="mt-md" style="font-size: var(--text-sm); opacity: 0.8;">Available on iOS and Android</p>
+                <p>Join the waitlist for early access.</p>
+
+                <div class="waitlist-container">
+                    <form id="waitlist-form" class="waitlist-form">
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required
+                                class="form-input">
+                        </div>
+                        <div class="form-group sh-split">
+                            <select id="role" name="role" required class="form-input form-select">
+                                <option value="" disabled selected>I am a...</option>
+                                <option value="Enthusiast">Car Enthusiast</option>
+                                <option value="Shop">Shop Owner/Tech</option>
+                                <option value="Dealer">Dealer</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" id="carBuild" name="carBuild" placeholder="What are you building?"
+                                class="form-input">
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <!-- Honeypot or hidden fields if needed -->
+                            <input type="text" id="phone" name="phone" placeholder="Phone number (optional)">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="waitlist-submit">
+                            <span class="btn-text">Join Waitlist</span>
+                            <span class="btn-loader" style="display:none;"></span>
+                        </button>
+
+                        <div id="waitlist-message" class="waitlist-message" style="display: none;"></div>
+                    </form>
+
+                    <div id="waitlist-success" class="waitlist-success" style="display: none;">
+                        <div class="success-icon">Check</div>
+                        <h3>You're on the list!</h3>
+                        <p>We'll notify you when your spot opens up.</p>
+                        <button id="share-btn" class="btn btn-secondary btn-sm">Copy Link to Share</button>
+                    </div>
+                </div>
+
+                <p class="mt-md" style="font-size: var(--text-sm); opacity: 0.8;">Limited beta spots available.</p>
             </div>
         </div>
     </section>
@@ -423,6 +437,7 @@
     </footer>
 
     <script src="/js/main.js"></script>
+    <script src="/js/waitlist.js"></script>
 </body>
 
 </html>

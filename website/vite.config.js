@@ -11,6 +11,7 @@ export default defineConfig({
                 support: resolve(__dirname, 'support.html'),
                 privacy: resolve(__dirname, 'privacy.html'),
                 terms: resolve(__dirname, 'terms.html'),
+                dashboard: resolve(__dirname, 'dashboard.html'),
             },
         },
     },
