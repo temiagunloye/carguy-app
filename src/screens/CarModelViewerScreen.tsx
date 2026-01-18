@@ -1,9 +1,10 @@
 // src/screens/CarModelViewerScreen.tsx
 // 3D car model viewer with turntable display using WebView + Three.js
+// Updated to support Anchor-based Part Attachment
 
 import { Ionicons } from '@expo/vector-icons';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
@@ -15,6 +16,7 @@ import {
 import { WebView } from 'react-native-webview';
 import { generateCarModel } from '../services/cloudFunctions';
 import { db } from '../services/firebaseConfig';
+import { Part, partService } from '../services/PartService';
 import type { RenderStatus } from '../types/car';
 
 interface Props {
@@ -26,14 +28,16 @@ interface Props {
             modelUrl?: string;  // Direct URL bypasses Firestore
             baseModelId?: string;  // Load from baseModels collection
             photos?: string[];  // Optional photos from upload flow
+            installedParts?: any[]; // Initial parts to load
         };
     };
 }
 
 export default function CarModelViewerScreen({ navigation, route }: Props) {
-    const { carId, carName, modelUrl: paramModelUrl, baseModelId, photos } = route.params;
+    const { carId, carName, modelUrl: paramModelUrl, baseModelId, photos, installedParts } = route.params;
+    const webViewRef = useRef<WebView>(null);
 
-    console.log('[CarModelViewer] Params:', { carId, carName, baseModelId, photoCount: photos?.length });
+    console.log('[CarModelViewer] Params:', { carId, carName, baseModelId, photoCount: photos?.length, parts: installedParts?.length });
 
     // Car document subscription
     const [renderStatus, setRenderStatus] = useState<RenderStatus>('draft');
@@ -135,6 +139,45 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
         return () => unsubscribe();
     }, [carId, paramModelUrl]);
 
+    // LOAD INSTALLED PARTS
+    useEffect(() => {
+        if (!installedParts || installedParts.length === 0 || loading || !webViewRef.current) return;
+
+        // This effect runs when installedParts prop changes, but we likely need to 
+        // trigger this from the onLoad handler of the WebView to ensure scene is ready.
+        // See generateViewerHTML sendMessage handlers.
+    }, [installedParts, loading]);
+
+    // Load parts function to call from WebView onload
+    const loadInitialParts = async () => {
+        if (installedParts && installedParts.length > 0) {
+            console.log('[CarModelViewer] Loading initial parts...', installedParts);
+            for (const item of installedParts) {
+                try {
+                    const part = await partService.getPartById(item.partId);
+                    if (part) {
+                        const glbUrl = await partService.resolvePartGlbUrl(part);
+                        injectPart(part, glbUrl, item.config);
+                    }
+                } catch (e) {
+                    console.error('Failed to load part:', item.partId, e);
+                }
+            }
+        }
+    };
+
+    const injectPart = (part: Part, glbUrl: string, config: any) => {
+        if (!webViewRef.current) return;
+
+        const payload = {
+            type: 'LOAD_PART',
+            part,
+            glbUrl,
+            config
+        };
+        webViewRef.current.postMessage(JSON.stringify(payload));
+    };
+
     // RETRY GENERATION
     const handleRetry = async () => {
         if (!carId) {
@@ -163,44 +206,12 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3D Car Viewer</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: #1a1a1a;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-    #canvas-container {
-      width: 100%;
-      height: 100%;
-    }
-    #loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      font-size: 16px;
-      text-align: center;
-    }
-    .spinner {
-      border: 3px solid rgba(255,255,255,0.1);
-      border-top: 3px solid #4a9eff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 16px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 100vw; height: 100vh; overflow: hidden; background: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    #canvas-container { width: 100%; height: 100%; }
+    #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 16px; text-align: center; }
+    .spinner { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid #4a9eff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -216,26 +227,18 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script>
-    // Setup scene
+    // --- SETUP ---
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a1a);
 
-    // Camera
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(4, 2, 6);
 
-    // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-    // Lights
     const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
     scene.add(hemisphereLight);
 
@@ -244,135 +247,195 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
-    // Turntable platform
     const platformGeometry = new THREE.CylinderGeometry(3, 3, 0.2, 32);
-    const platformMaterial = new THREE.MeshStandardMaterial({
-      color: 0x333333,
-      metalness: 0.3,
-      roughness: 0.7,
-    });
+    const platformMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.3, roughness: 0.7 });
     const platform = new THREE.Mesh(platformGeometry, platformMaterial);
     platform.position.y = -0.1;
     platform.receiveShadow = true;
     scene.add(platform);
 
-    // Orbit controls
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.target.set(0, 0.5, 0);
-    
-    // Lock vertical rotation - only allow horizontal 360° spin
-    const polarAngle = Math.PI / 2.5; // Fixed angle ~75 degrees
+    const polarAngle = Math.PI / 2.5; 
     controls.minPolarAngle = polarAngle;
     controls.maxPolarAngle = polarAngle;
-    
     controls.update();
 
-    // Setup Draco decoder for compressed models
     const dracoLoader = new THREE.DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
     dracoLoader.setDecoderConfig({ type: 'wasm' });
     dracoLoader.preload();
 
-    // Load GLB model
     const loader = new THREE.GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
+
+    // --- STATE ---
     let carModel = null;
     let autoRotate = true;
+    const anchorMap = {}; // { anchorName: Object3D } (The actual anchor nodes in the car)
+    const attachedParts = {}; // { partId: Object3D }
 
-    // Send messages to React Native
+    // --- MESSAGING ---
     function sendMessage(msg) {
-      if (window.ReactNativeWebView) {
-        window.ReactNativeWebView.postMessage(msg);
-      }
+      if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify(msg));
       console.log(msg);
     }
+    
+    function sendLog(text) { sendMessage({ type: 'LOG', message: text }); }
 
-    sendMessage('[WebView] Starting to load model from: ${glbUrl}');
+    // --- PART LOADING LOGIC ---
+    function findAnchors(object) {
+        object.traverse((node) => {
+            if (node.name && node.name.startsWith('ANCHOR_')) {
+                anchorMap[node.name] = node;
+                // Visualize anchor (debug)
+                // const helper = new THREE.AxesHelper(0.2);
+                // node.add(helper);
+                sendLog('Found anchor: ' + node.name);
+            }
+        });
+    }
 
+    function attachPart(partData, glbUrl, config) {
+        sendLog('Attaching part: ' + partData.name);
+        
+        loader.load(glbUrl, (gltf) => {
+            const partScene = gltf.scene;
+            const placement = partData.placementDefaults;
+            const targetAnchorName = placement.anchorName;
+
+            // Find matching anchors
+            const targets = [];
+            if (targetAnchorName.endsWith('*')) {
+                const prefix = targetAnchorName.replace('*', '');
+                Object.keys(anchorMap).forEach(key => {
+                    if (key.startsWith(prefix)) targets.push(anchorMap[key]);
+                });
+            } else {
+                if (anchorMap[targetAnchorName]) targets.push(anchorMap[targetAnchorName]);
+            }
+
+            if (targets.length === 0) {
+                sendLog('No matching anchors found for ' + targetAnchorName);
+                // Fallback: Add to scene root for debugging
+                // scene.add(partScene);
+                return;
+            }
+
+            // Clone part for multiple anchors (e.g. 4 wheels)
+            targets.forEach(anchor => {
+                const instance = partScene.clone();
+                
+                // --- SCALING ---
+                let scale = partData.meta.defaultScale || 1.0;
+                
+                // TODO: Implement sophisticated scaling modes
+                // if (placement.scaleMode === 'relativeToWheelAnchors') ...
+
+                // Apply transforms
+                instance.scale.setScalar(scale);
+                instance.rotation.set(
+                    placement.rotation.x,
+                    placement.rotation.y,
+                    placement.rotation.z
+                );
+                instance.position.set(
+                    placement.offset.x,
+                    placement.offset.y,
+                    placement.offset.z
+                );
+
+                // Parent to anchor
+                anchor.add(instance);
+                attachedParts[partData.partId] = instance; // Store ref
+            });
+
+            sendLog('Part attached successfully!');
+
+        }, undefined, (err) => {
+            sendLog('Error loading part GLB: ' + err.message);
+        });
+    }
+
+    // --- CAR LOADING ---
     loader.load(
       '${glbUrl}',
       (gltf) => {
-        sendMessage('[WebView] Model loaded successfully!');
         carModel = gltf.scene;
-
-        // Calculate bounding box BEFORE any transformations
+        
+        // 1. Center and Scale Car
         const box = new THREE.Box3().setFromObject(carModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
-
-        // Create a container group for proper centering
         const container = new THREE.Group();
-        
-        // Move model so its center is at the container's origin
         carModel.position.x = -center.x;
         carModel.position.y = -center.y;
         carModel.position.z = -center.z;
-        
-        // Add model to container
         container.add(carModel);
-
-        // Scale the container to fit
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 2 / maxDim;
         container.scale.setScalar(scale);
-        
-        // Position container so bottom sits on platform
-        // After scaling, the model height is size.y * scale
-        const scaledHeight = size.y * scale;
-        container.position.y = scaledHeight / 2;
-
+        container.position.y = (size.y * scale) / 2;
         container.castShadow = true;
         container.receiveShadow = true;
-
         scene.add(container);
-        
-        // Update carModel reference to container for rotation
-        carModel = container;
+        carModel = container; // Update ref for rotation
+
+        // 2. Find Anchors
+        findAnchors(carModel);
+
+        // 3. Signal Ready
         document.getElementById('loading').style.display = 'none';
-        sendMessage('[WebView] Model added to scene');
+        sendMessage({ type: 'SCENE_READY' });
       },
-      (progress) => {
-        const percent = (progress.loaded / progress.total) * 100;
-        sendMessage('[WebView] Loading progress: ' + percent.toFixed(0) + '%');
+      (xhr) => {
+        const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+        sendMessage({ type: 'PROGRESS', value: percent });
       },
       (error) => {
-        const errorMsg = '[WebView] GLB load error: ' + (error.message || error.toString());
-        sendMessage(errorMsg);
-        console.error('GLB load error:', error);
-        document.getElementById('loading').innerHTML = 
-          '<div>Failed to load 3D model</div><div style="font-size: 12px; margin-top: 8px;">Check console for details</div>';
+        sendMessage({ type: 'ERROR', message: error.message });
+        document.getElementById('loading').innerHTML = 'Failed to load model';
       }
     );
 
-    // Animation loop
+    // --- MAIN LOOP ---
     function animate() {
       requestAnimationFrame(animate);
-
-      // Auto-rotate platform
       if (autoRotate) {
         platform.rotation.y += 0.005;
-        if (carModel) {
-          carModel.rotation.y += 0.005;
-        }
+        if (carModel) carModel.rotation.y += 0.005;
       }
-
       controls.update();
       renderer.render(scene, camera);
     }
     animate();
 
-    // Handle resize
+    // --- EVENT LISTENERS ---
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // Disable auto-rotate on user interaction
-    controls.addEventListener('start', () => {
-      autoRotate = false;
+    controls.addEventListener('start', () => { autoRotate = false; });
+
+    // --- RN BRIDGE ---
+    document.addEventListener("message", function(event) {
+       try {
+           const data = JSON.parse(event.data);
+           if (data.type === 'LOAD_PART') {
+               attachPart(data.part, data.glbUrl, data.config);
+           }
+       } catch (e) {
+           sendLog('Message parse error: ' + e.message);
+       }
+    });
+
+    // iOS specific bridge
+    window.addEventListener("message", function(event) {
+        // Handle if sent via window (sometimes different on platforms)
     });
   </script>
 </body>
@@ -387,30 +450,6 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
                 <View style={styles.statusContainer}>
                     <ActivityIndicator size="large" color="#4a9eff" />
                     <Text style={styles.statusText}>Loading...</Text>
-                </View>
-            );
-        }
-
-        if (renderStatus === 'pending') {
-            return (
-                <View style={styles.statusContainer}>
-                    <Ionicons name="time-outline" size={64} color="#f59e0b" />
-                    <Text style={styles.statusText}>Queued</Text>
-                    <Text style={styles.statusSubtext}>
-                        Your 3D model is queued for processing
-                    </Text>
-                </View>
-            );
-        }
-
-        if (renderStatus === 'processing') {
-            return (
-                <View style={styles.statusContainer}>
-                    <ActivityIndicator size="large" color="#4a9eff" />
-                    <Text style={styles.statusText}>Generating accurate model...</Text>
-                    <Text style={styles.statusSubtext}>
-                        This may take 10-30 minutes.{'\n'}We prioritize accuracy over speed.
-                    </Text>
                 </View>
             );
         }
@@ -436,9 +475,6 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
                 <View style={styles.statusContainer}>
                     <Ionicons name="alert-circle" size={64} color="#f59e0b" />
                     <Text style={styles.statusText}>Model URL Missing</Text>
-                    <Text style={styles.statusSubtext}>
-                        Status is ready but modelUrl is null
-                    </Text>
                 </View>
             );
         }
@@ -447,6 +483,24 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
     };
 
     const statusView = renderStatusView();
+
+    // Handle WebView messages
+    const onWebViewMessage = (event: any) => {
+        try {
+            const data = JSON.parse(event.nativeEvent.data);
+            if (data.type === 'LOG') {
+                console.log('[WebView Log]', data.message);
+            } else if (data.type === 'SCENE_READY') {
+                console.log('[CarModelViewer] Scene ready, loading parts...');
+                loadInitialParts();
+            } else if (data.type === 'ERROR') {
+                console.error('[WebView Error]', data.message);
+            }
+        } catch (e) {
+            // Might be a raw string
+            console.log('[WebView Raw]', event.nativeEvent.data);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -464,20 +518,15 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
                 statusView
             ) : modelDataUrl ? (
                 <WebView
+                    ref={webViewRef}
                     style={styles.webView}
                     source={{ html: generateViewerHTML(modelDataUrl) }}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     allowFileAccess={true}
-                    onMessage={(event) => {
-                        console.log('[CarModelViewer] WebView message:', event.nativeEvent.data);
-                    }}
-                    onError={(e) => {
-                        console.error('[CarModelViewer] WebView error:', e.nativeEvent);
-                    }}
-                    onHttpError={(e) => {
-                        console.error('[CarModelViewer] WebView HTTP error:', e.nativeEvent);
-                    }}
+                    originWhitelist={['*']}
+                    onMessage={onWebViewMessage}
+                    onError={(e) => console.error('[CarModelViewer] WebView error:', e.nativeEvent)}
                 />
             ) : (
                 <View style={styles.statusContainer}>
@@ -500,89 +549,17 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#0a0a0a',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        paddingTop: 60,
-        paddingBottom: 20,
-        backgroundColor: '#000',
-    },
-    headerTitle: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: '600',
-    },
-    webView: {
-        flex: 1,
-        backgroundColor: '#1a1a1a',
-    },
-    statusContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 32,
-    },
-    statusText: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: '600',
-        marginTop: 16,
-        textAlign: 'center',
-    },
-    statusSubtext: {
-        color: '#999',
-        fontSize: 14,
-        marginTop: 8,
-        textAlign: 'center',
-        lineHeight: 20,
-    },
-    errorText: {
-        color: '#ef4444',
-        fontSize: 20,
-        fontWeight: '600',
-        marginTop: 16,
-    },
-    errorSubtext: {
-        color: '#ef4444',
-        fontSize: 14,
-        marginTop: 8,
-        textAlign: 'center',
-    },
-    retryButton: {
-        backgroundColor: '#4a9eff',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        marginTop: 24,
-    },
-    retryButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-        marginLeft: 8,
-    },
-    infoBox: {
-        flexDirection: 'row',
-        backgroundColor: '#0a0a0a',
-        borderRadius: 8,
-        padding: 12,
-        margin: 16,
-        borderWidth: 1,
-        borderColor: '#1a1a1a',
-        alignItems: 'center',
-    },
-    infoText: {
-        flex: 1,
-        color: '#a0a0a0',
-        fontSize: 12,
-        marginLeft: 10,
-    },
+    container: { flex: 1, backgroundColor: '#0a0a0a' },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 60, paddingBottom: 20, backgroundColor: '#000' },
+    headerTitle: { color: '#fff', fontSize: 18, fontWeight: '600' },
+    webView: { flex: 1, backgroundColor: '#1a1a1a' },
+    statusContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32 },
+    statusText: { color: '#fff', fontSize: 20, fontWeight: '600', marginTop: 16, textAlign: 'center' },
+    statusSubtext: { color: '#999', fontSize: 14, marginTop: 8, textAlign: 'center', lineHeight: 20 },
+    errorText: { color: '#ef4444', fontSize: 20, fontWeight: '600', marginTop: 16 },
+    errorSubtext: { color: '#ef4444', fontSize: 14, marginTop: 8, textAlign: 'center' },
+    retryButton: { backgroundColor: '#4a9eff', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 24, borderRadius: 8, marginTop: 24 },
+    retryButtonText: { color: '#fff', fontSize: 16, fontWeight: '600', marginLeft: 8 },
+    infoBox: { flexDirection: 'row', backgroundColor: '#0a0a0a', borderRadius: 8, padding: 12, margin: 16, borderWidth: 1, borderColor: '#1a1a1a', alignItems: 'center' },
+    infoText: { flex: 1, color: '#a0a0a0', fontSize: 12, marginLeft: 10 },
 });

@@ -2,6 +2,7 @@
 
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -13,7 +14,9 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
+import { saveBuild } from "../services/builds";
 import { useCarContext } from "../services/carContext";
+import { db } from "../services/firebaseConfig";
 import { getKiriStatusDisplay } from "../services/kiri";
 
 const CATEGORIES = [
@@ -172,6 +175,87 @@ export default function CarDetailScreen({ navigation, route }) {
   const installedParts = parts.filter(p => p.status === "installed").length;
   const activeWarranties = parts.filter(p => p.hasWarranty).length;
 
+  const handleToggleInstall = async (part) => {
+    if (demoMode) {
+      // Demo mode logic (local state update)
+      const newStatus = part.status === 'installed' ? 'in_storage' : 'installed';
+      const updatedParts = parts.map(p =>
+        p.id === part.id ? { ...p, status: newStatus } : p
+      );
+      setParts(updatedParts);
+      // Update car.parts in context if needed (omitted for brevity)
+      return;
+    }
+
+    if (!activeCar?.activeBuildId) {
+      Alert.alert("No Active Build", "Please create a build first.");
+      return;
+    }
+
+    try {
+      const isInstalling = part.status !== 'installed';
+      const newStatus = isInstalling ? 'installed' : 'in_storage';
+
+      // 1. Update part status in users/.../parts
+      const partRef = doc(db, "users", user.uid, "cars", car.id, "parts", part.id);
+      await updateDoc(partRef, { status: newStatus });
+
+      // 2. Update Active Build
+      // Load current builds to find the active one
+      // (assuming activeBuildId points to a valid build)
+      // Note: loadBuilds returns array, we need to filter or get specifically
+      // Ideally we should use getDoc on the build directly if we have ID, but let's use loadBuilds for tier check safety or direct doc update if simpler.
+      // Let's reuse saveBuild to ensure consistency, but we need current build data.
+
+      // Simpler approach: Read the build doc directly
+      const buildRef = doc(db, "builds", activeCar.activeBuildId);
+      const { getDoc } = await import("firebase/firestore"); // verify import availability
+      const buildSnap = await getDoc(buildRef);
+
+      if (buildSnap.exists()) {
+        const buildData = buildSnap.data();
+        let currentInstalled = buildData.installedParts || [];
+
+        if (isInstalling) {
+          // Add to installedParts
+          // Check if already there
+          if (!currentInstalled.find(p => p.partId === part.partId)) { // match by global partId
+            // Create install config (default)
+            const newInstall = {
+              partId: part.partId || part.id, // Fallback if no global ID
+              instanceId: part.id,
+              anchorId: part.placement?.anchorName || `ANCHOR_GENERIC`, // TODO: Resolve real anchor
+              config: part.placement || { scale: 1, offset: { x: 0, y: 0, z: 0 } },
+              addedAt: new Date().toISOString()
+            };
+            currentInstalled.push(newInstall);
+          }
+        } else {
+          // Remove from installedParts
+          currentInstalled = currentInstalled.filter(p => p.instanceId !== part.id);
+        }
+
+        // Save back
+        await saveBuild(
+          car.id,
+          buildData.activeParts || [],
+          buildData.name,
+          plan || 'free',
+          currentInstalled
+        );
+      }
+
+      // 3. Update local state
+      setParts(prev => prev.map(p =>
+        p.id === part.id ? { ...p, status: newStatus } : p
+      ));
+
+    } catch (error) {
+      console.error("Error toggling install:", error);
+      Alert.alert("Error", "Failed to update part status");
+    }
+  };
+
   const renderPartCard = ({ item }) => (
     <TouchableOpacity
       style={styles.partCard}
@@ -209,11 +293,15 @@ export default function CarDetailScreen({ navigation, route }) {
                 <Ionicons name="calendar-outline" size={12} color="#666" /> {item.installDate}
               </Text>
             )}
-            {item.hasWarranty && (
-              <Text style={styles.partMetaText}>
-                <Ionicons name="shield-checkmark-outline" size={12} color="#666" /> Warranty
+            {/* Action Button */}
+            <TouchableOpacity
+              style={[styles.actionButton, item.status === 'installed' ? styles.uninstallBtn : styles.installBtn]}
+              onPress={() => handleToggleInstall(item)}
+            >
+              <Text style={styles.actionBtnText}>
+                {item.status === 'installed' ? 'Uninstall' : 'Install'}
               </Text>
-            )}
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -357,18 +445,39 @@ export default function CarDetailScreen({ navigation, route }) {
               </View>
             )}
 
-            {car.kiriStatus === 'complete' && car.kiriViewerUrl && (
+            {/* 3D Model Viewer Button */}
+            {(car.kiriStatus === 'complete' && car.kiriViewerUrl) || car.baseModelId ? (
               <TouchableOpacity
                 style={styles.open3DButton}
-                onPress={() => navigation.navigate('ModelViewer', {
-                  viewerUrl: car.kiriViewerUrl,
-                  carName: car.nickname || `${car.year} ${car.make} ${car.model}`,
-                })}
+                onPress={() => {
+                  if (car.baseModelId) {
+                    // Use new 3D Viewer for standard cars
+                    navigation.navigate('CarModelViewer', {
+                      carId: car.id,
+                      baseModelId: car.baseModelId,
+                      installedParts: parts.filter(p => p.status === 'installed').map(p => ({
+                        partId: p.partId || p.id,
+                        instanceId: p.id,
+                        // Mock anchor/placement for now if not in doc
+                        anchorName: p.placement?.anchorName || 'ANCHOR_WHEEL_FL',
+                        config: p.placement || {}
+                      }))
+                    });
+                  } else {
+                    // Use Kiri Viewer for scanned cars
+                    navigation.navigate('ModelViewer', {
+                      viewerUrl: car.kiriViewerUrl,
+                      carName: car.nickname || `${car.year} ${car.make} ${car.model}`,
+                    });
+                  }
+                }}
               >
                 <Ionicons name="cube" size={20} color="#fff" style={{ marginRight: 8 }} />
-                <Text style={styles.open3DButtonText}>Open 3D Model</Text>
+                <Text style={styles.open3DButtonText}>
+                  {car.baseModelId ? 'Open 3D Configurator' : 'Open 3D Model'}
+                </Text>
               </TouchableOpacity>
-            )}
+            ) : null}
 
             {car.kiriStatus === 'error' && car.kiriError && (
               <Text style={styles.kiriError}>{car.kiriError}</Text>
@@ -799,8 +908,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 10,
+    paddingVertical: 2,
+    borderRadius: 8,
+  },
+  actionButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    marginLeft: 8,
+  },
+  installBtn: {
+    backgroundColor: '#22c55e20',
+    borderWidth: 1,
+    borderColor: '#22c55e',
+  },
+  uninstallBtn: {
+    backgroundColor: '#ef444420',
+    borderWidth: 1,
+    borderColor: '#ef4444',
+  },
+  actionBtnText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
   },
   statusDot: {
     width: 6,

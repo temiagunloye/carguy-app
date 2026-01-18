@@ -17,3 +17,6 @@ export { generateCarModel } from './renderJobs/generateCarModel';
 export { onRenderJobCreated } from './renderJobs/onRenderJobCreated';
 export { pollRenderJobs } from './renderJobs/pollRenderJobs';
 
+// Parts Pipeline
+export { processCandidate } from './parts/processCandidate';
+

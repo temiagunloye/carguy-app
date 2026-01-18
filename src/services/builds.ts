@@ -21,7 +21,9 @@ export interface SavedBuild {
     id: string;
     carId: string; // Demo car ID or vehicle ID
     userId: string | null; // null for demo builds
-    activeParts: PartAsset[];
+    activeParts: PartAsset[]; // Legacy/Scanned parts
+    installedParts?: any[]; // New 3D parts (PartService compatible)
+    installedPartIds?: string[]; // Index for "Examples" query
     name: string;
     createdAt: Date;
     updatedAt: Date;
@@ -34,13 +36,14 @@ export async function saveBuild(
     carId: string,
     activeParts: PartAsset[],
     name: string,
-    tier: TierName
+    tier: TierName,
+    installedParts: any[] = [] // New optional param
 ): Promise<string> {
     const user = auth?.currentUser;
 
     // Demo builds: use local storage for free tier
     if (!user || tier === 'free') {
-        return saveDemoBuild(carId, activeParts, name);
+        return saveDemoBuild(carId, activeParts, name, installedParts);
     }
 
     if (!db) throw new Error('Firestore not initialized');
@@ -57,10 +60,14 @@ export async function saveBuild(
     }
 
     const buildId = `${user.uid}_${carId}_${Date.now()}`;
+    const installedPartIds = installedParts.map(p => p.partId).filter(Boolean);
+
     await setDoc(doc(db, 'builds', buildId), {
         carId,
         userId: user.uid,
         activeParts,
+        installedParts,
+        installedPartIds,
         name,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -92,7 +99,8 @@ export async function loadBuilds(carId: string, tier: TierName): Promise<SavedBu
             id: doc.id,
             carId: data.carId,
             userId: data.userId,
-            activeParts: data.activeParts,
+            activeParts: data.activeParts || [],
+            installedParts: data.installedParts || [],
             name: data.name,
             createdAt: (data.createdAt as Timestamp).toDate(),
             updatedAt: (data.updatedAt as Timestamp).toDate(),

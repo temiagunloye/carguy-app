@@ -14,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { categoryToFolderName } from "../services/buildService";
+import { CandidateService } from "../services/CandidateService";
 import { useCarContext } from "../services/carContext";
 
 const CATEGORIES = [
@@ -43,20 +44,22 @@ export default function PartTryOnScreen({ navigation, route }) {
   // Simulated parts (for this session)
   const [simulatedParts, setSimulatedParts] = useState([]);
 
-  const handleSimulate = () => {
+  const handleSimulate = async () => {
     if (!partName.trim() || !category) {
       Alert.alert("Missing Info", "Please enter part name and select a category.");
       return;
     }
 
+    const tempId = `sim_${Date.now()}`;
     const newSimulatedPart = {
-      id: `sim_${Date.now()}`,
+      id: tempId,
       name: partName.trim(),
       productLink: productLink.trim(),
       category,
       brand: brand.trim(),
       price: parseFloat(price) || 0,
       isActive: true,
+      status: 'local', // local, pending, processing, resolved
       createdAt: new Date().toISOString(),
     };
 
@@ -69,7 +72,41 @@ export default function PartTryOnScreen({ navigation, route }) {
     setBrand("");
     setPrice("");
 
-    // No alert - just add silently
+    // Submit candidate if link exists
+    if (productLink.trim()) {
+      try {
+        const candidateId = await CandidateService.submitCandidate({
+          type: 'link',
+          url: productLink.trim()
+        });
+
+        // Update local part to track candidate
+        setSimulatedParts(prev => prev.map(p =>
+          p.id === tempId ? { ...p, status: 'pending', candidateId } : p
+        ));
+
+        // Monitor status
+        CandidateService.monitorCandidate(candidateId, (candidate) => {
+          setSimulatedParts(prev => prev.map(p => {
+            if (p.candidateId === candidate.id) {
+              return {
+                ...p,
+                status: candidate.status,
+                // If resolved, we might get better data
+                name: candidate.extracted?.title || p.name,
+                brand: candidate.extracted?.brand || p.brand,
+                // If matched to a 3D model
+                modelUrl: candidate.resolution?.modelUrl
+              };
+            }
+            return p;
+          }));
+        });
+
+      } catch (e) {
+        console.error("Failed to submit candidate:", e);
+      }
+    }
   };
 
   const handleTogglePart = (partId) => {
@@ -227,6 +264,15 @@ export default function PartTryOnScreen({ navigation, route }) {
                   <Text style={styles.simulatedPartMeta}>
                     {part.brand} • {CATEGORIES.find(c => c.id === part.category)?.name}
                   </Text>
+                  {part.status && part.status !== 'local' && (
+                    <Text style={{
+                      fontSize: 11,
+                      color: part.status === 'resolved' ? '#22c55e' : '#f59e0b',
+                      marginTop: 4
+                    }}>
+                      Analysis: {part.status.toUpperCase()}
+                    </Text>
+                  )}
                 </View>
                 <Switch
                   value={part.isActive}

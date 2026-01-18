@@ -4,15 +4,17 @@ import React, { useState } from "react";
 import {
   Alert,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Linking,
 } from "react-native";
 // Firebase imports removed - will be loaded dynamically when needed
+import { useEffect } from "react";
 import { useCarContext } from "../services/carContext";
+import { partService } from "../services/PartService";
 
 const STATUS_COLORS = {
   installed: "#22c55e",
@@ -46,6 +48,13 @@ export default function PartDetailScreen({ navigation, route }) {
   const part = route?.params?.part;
   const car = route?.params?.car || activeCar;
   const [deleting, setDeleting] = useState(false);
+  const [examples, setExamples] = useState([]);
+
+  useEffect(() => {
+    if (part?.partId && !demoMode) {
+      partService.getPartExamples(part.partId).then(setExamples).catch(console.error);
+    }
+  }, [part]);
 
   if (!part) {
     return (
@@ -108,7 +117,7 @@ export default function PartDetailScreen({ navigation, route }) {
   };
 
   const handleEdit = () => {
-    navigation.navigate("AddPart", { 
+    navigation.navigate("AddPart", {
       partToEdit: part,
       car: car,
     });
@@ -219,10 +228,10 @@ export default function PartDetailScreen({ navigation, route }) {
           <View style={styles.infoCard}>
             <InfoRow label="Install Date" value={part.installDate} icon="📅" />
             <InfoRow label="Installed By" value={part.installer} icon="👤" />
-            <InfoRow 
-              label="Mileage at Install" 
-              value={part.mileageAtInstall ? `${part.mileageAtInstall.toLocaleString()} mi` : null} 
-              icon="🛣️" 
+            <InfoRow
+              label="Mileage at Install"
+              value={part.mileageAtInstall ? `${part.mileageAtInstall.toLocaleString()} mi` : null}
+              icon="🛣️"
             />
           </View>
         </View>
@@ -266,25 +275,45 @@ export default function PartDetailScreen({ navigation, route }) {
           </View>
         )}
 
+        {/* Build Examples */}
+        {examples.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>👀 Seen on Builds</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16, paddingHorizontal: 16 }}>
+              {examples.map(ex => (
+                <View key={ex.id} style={styles.exampleCard}>
+                  <View style={styles.exampleIcon}>
+                    <Text>🏎️</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.exampleName}>{ex.name}</Text>
+                    <Text style={styles.exampleDate}>{new Date(ex.createdAt.seconds * 1000).toLocaleDateString()}</Text>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
         {/* Actions */}
         <View style={styles.actions}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.actionButton}
             onPress={handleEdit}
           >
             <Text style={styles.actionButtonIcon}>✏️</Text>
             <Text style={styles.actionButtonText}>Edit Part</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={styles.actionButton}
             onPress={() => navigation.navigate("TryMods", { preselectedPart: part })}
           >
             <Text style={styles.actionButtonIcon}>🔮</Text>
             <Text style={styles.actionButtonText}>Visualize</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={[styles.actionButton, styles.actionButtonDanger]}
             onPress={handleDelete}
           >
@@ -594,5 +623,32 @@ const styles = StyleSheet.create({
   actionButtonTextDanger: {
     color: "#ef4444",
   },
+  exampleCard: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 8,
+    padding: 12,
+    marginRight: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 200
+  },
+  exampleIcon: {
+    width: 32,
+    height: 32,
+    backgroundColor: '#333',
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12
+  },
+  exampleName: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14
+  },
+  exampleDate: {
+    color: '#888',
+    fontSize: 12
+  }
 });
 
