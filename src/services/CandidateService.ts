@@ -1,3 +1,4 @@
+import type { Auth } from 'firebase/auth';
 import {
     addDoc,
     collection,
@@ -5,7 +6,7 @@ import {
     onSnapshot,
     serverTimestamp
 } from 'firebase/firestore';
-import { auth, db } from './firebaseConfig';
+import { db, auth as firebaseAuth } from './firebaseConfig';
 
 export interface PartCandidate {
     id?: string;
@@ -34,11 +35,12 @@ export const CandidateService = {
      * Submit a new part candidate for processing
      */
     submitCandidate: async (input: PartCandidate['input']): Promise<string> => {
-        if (!auth?.currentUser) throw new Error('User must be logged in');
+        const authInstance = firebaseAuth as Auth | null;
+        if (!authInstance?.currentUser) throw new Error('User must be logged in');
         if (!db) throw new Error('Firestore not initialized');
 
         const data: Omit<PartCandidate, 'id'> = {
-            submittedByUid: auth.currentUser.uid,
+            submittedByUid: authInstance.currentUser.uid,
             input,
             status: 'pending',
             createdAt: serverTimestamp(),

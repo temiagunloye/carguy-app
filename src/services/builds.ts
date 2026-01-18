@@ -1,6 +1,7 @@
 // src/services/builds.ts
 // Build save/load service with tier limits
 
+import type { Auth } from 'firebase/auth';
 import {
     collection,
     deleteDoc,
@@ -39,7 +40,7 @@ export async function saveBuild(
     tier: TierName,
     installedParts: any[] = [] // New optional param
 ): Promise<string> {
-    const user = auth?.currentUser;
+    const user = (auth as Auth | null)?.currentUser;
 
     // Demo builds: use local storage for free tier
     if (!user || tier === 'free') {
@@ -80,7 +81,7 @@ export async function saveBuild(
  * Load builds for a car
  */
 export async function loadBuilds(carId: string, tier: TierName): Promise<SavedBuild[]> {
-    const user = auth?.currentUser;
+    const user = (auth as Auth | null)?.currentUser;
 
     if (!user || tier === 'free') {
         return loadDemoBuilds(carId);
@@ -112,7 +113,7 @@ export async function loadBuilds(carId: string, tier: TierName): Promise<SavedBu
  * Delete a build
  */
 export async function deleteBuild(buildId: string, tier: TierName): Promise<void> {
-    const user = auth?.currentUser;
+    const user = (auth as Auth | null)?.currentUser;
 
     if (!user || tier === 'free') {
         return deleteDemoBuild(buildId);
@@ -131,7 +132,8 @@ const DEMO_BUILDS_KEY = 'demo_builds';
 async function saveDemoBuild(
     carId: string,
     activeParts: PartAsset[],
-    name: string
+    name: string,
+    installedParts: any[] = []
 ): Promise<string> {
     const existingBuilds = await loadDemoBuilds(carId);
 
@@ -148,6 +150,7 @@ async function saveDemoBuild(
         carId,
         userId: null,
         activeParts,
+        installedParts,
         name,
         createdAt: new Date(),
         updatedAt: new Date(),
