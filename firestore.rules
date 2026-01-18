@@ -65,5 +65,51 @@ service cloud.firestore {
       allow update, delete: if request.auth != null && 
                                resource.data.userId == request.auth.uid;
     }
+    
+    // STANDARD CARS COLLECTION (Dealer Library)
+    // All authenticated users can read, only admins can write
+    match /standardCars/{standardCarId} {
+      allow read: if request.auth != null;
+      // Only admins (custom claim) can write
+      allow write: if request.auth != null && 
+                      request.auth.token.admin == true;
+    }
+    
+    // STANDARD CAR VARIANTS COLLECTION
+    // All authenticated users can read, only admins can write
+    match /standardCarVariants/{variantId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                      request.auth.token.admin == true;
+    }
+    
+    // STYLE PROFILES COLLECTION
+    // All authenticated users can read, only admins can write
+    match /styleProfiles/{styleProfileId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                      request.auth.token.admin == true;
+    }
+    
+    // PARTS CATALOG COLLECTION
+    // All authenticated users can read, only admins can write
+    match /partsCatalog/{partId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                      request.auth.token.admin == true;
+    }
+    
+    // USER BUILDS SUBCOLLECTION (Free Tier Enforcement)
+    // Users can only access their own builds
+    match /users/{userId}/builds/{buildId} {
+      allow read: if request.auth != null && 
+                     request.auth.uid == userId;
+      // Allow create/update with savedPartsCount validation
+      allow create, update: if request.auth != null && 
+                               request.auth.uid == userId &&
+                               request.resource.data.savedPartsCount <= 3;
+      allow delete: if request.auth != null && 
+                       request.auth.uid == userId;
+    }
   }
 }

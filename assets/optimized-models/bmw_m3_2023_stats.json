@@ -1,0 +1,9 @@
+{
+  "before": {
+    "triangles": 256008
+  },
+  "after": {
+    "triangles": 69082
+  },
+  "reduction_percent": 73.0
+}
