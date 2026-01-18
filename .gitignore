@@ -53,3 +53,35 @@ app-example
 **/*service-account*.json
 *.pem
 *.key
+
+# secrets
+**/service-account-key.json
+**/*service-account*.json
+.env
+.env.*
+*.pem
+*.key
+
+# large media / binaries
+*.heic
+*.mov
+*.mp4
+*.glb
+*.gltf
+*.fbx
+*.obj
+*.blend
+*.bin
+*.pdf
+
+# build/cache
+node_modules/
+.expo/
+.expo-shared/
+dist/
+build/
+coverage/
+.DS_Store
+
+# firebase local
+.firebase/
