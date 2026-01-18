@@ -23,6 +23,13 @@ service firebase.storage {
       allow write: if false; // Only Cloud Functions can write
     }
     
+    // BASE MODELS - PUBLIC READ ONLY
+    // Public 3D base models (demo cars, etc)
+    match /models/base/{allPaths=**} {
+      allow read: if true; // Public read for all users
+      allow write: if false; // Only admins via Firebase Console
+    }
+    
     // STANDARD DEALER CARS - PUBLIC ASSETS
     // All authenticated users can read, only admins can write
     match /public/standardCars/{standardCarId}/{allPaths=**} {

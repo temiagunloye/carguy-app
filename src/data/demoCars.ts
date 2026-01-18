@@ -14,6 +14,7 @@ export interface DemoCar {
     displayName: string;
     thumbnail: string;
     angles: DemoCarAngle[];
+    baseModelId?: string;  // Reference to baseModels collection for 3D viewer
 }
 
 // 10 required angles
@@ -47,27 +48,30 @@ export const DEMO_CARS: DemoCar[] = [
         make: 'Porsche',
         model: '911',
         year: 2024,
-        displayName: '2024 Porsche 911',
+        displayName: '2024 Porsche 911 Carrera 4S',
         thumbnail: 'https://via.placeholder.com/400x300?text=Porsche+911',
         angles: generatePlaceholderAngles('Porsche 911'),
+        baseModelId: 'porsche_911_2024',  // Links to baseModels collection
     },
     {
         id: 'demo_bmw_m3',
         make: 'BMW',
         model: 'M3',
-        year: 2024,
-        displayName: '2024 BMW M3',
+        year: 2023,
+        displayName: '2023 BMW M3 Touring',
         thumbnail: 'https://via.placeholder.com/400x300?text=BMW+M3',
         angles: generatePlaceholderAngles('BMW M3'),
+        baseModelId: 'bmw_m3_2023',  // Links to baseModels collection
     },
     {
-        id: 'demo_mercedes_amg',
-        make: 'Mercedes-Benz',
-        model: 'AMG GT',
-        year: 2024,
-        displayName: '2024 Mercedes-Benz AMG GT',
-        thumbnail: 'https://via.placeholder.com/400x300?text=Mercedes+AMG',
-        angles: generatePlaceholderAngles('Mercedes AMG'),
+        id: 'demo_subaru_brz',
+        make: 'Subaru',
+        model: 'BRZ',
+        year: 2022,
+        displayName: '2022 Subaru BRZ tS',
+        thumbnail: 'https://via.placeholder.com/400x300?text=Subaru+BRZ',
+        angles: generatePlaceholderAngles('Subaru BRZ'),
+        baseModelId: 'subaru_brz_2022',  // Links to baseModels collection
     },
     // Add 12 more demo cars (total 15)
     ...Array.from({ length: 12 }, (_, i) => ({

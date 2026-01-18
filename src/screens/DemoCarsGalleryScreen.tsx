@@ -18,10 +18,22 @@ interface Props {
 }
 
 export default function DemoCarsGalleryScreen({ navigation }: Props) {
+    const handleCarPress = (item: any) => {
+        // If the demo car has a baseModelId, use the 3D viewer
+        // Otherwise, use the 2D angles viewer
+        if (item.baseModelId) {
+            navigation.navigate('CarModelViewerScreen', {
+                baseModelId: item.baseModelId
+            });
+        } else {
+            navigation.navigate('DemoCarViewer', { carId: item.id });
+        }
+    };
+
     const renderCar = ({ item }: any) => (
         <TouchableOpacity
             style={styles.carCard}
-            onPress={() => navigation.navigate('DemoCarViewer', { carId: item.id })}
+            onPress={() => handleCarPress(item)}
         >
             <Image source={{ uri: item.thumbnail }} style={styles.carThumbnail} />
             <View style={styles.carInfo}>
