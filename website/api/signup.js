@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { email, role, phone, carBuild, source, referrer } = req.body;
+        const { email, role, phone, carBuild, planInterest, source, referrer, medium, campaign, term, content, pagePath } = req.body;
         const userAgent = req.headers['user-agent'] || '';
 
         // IP Hash
@@ -53,9 +53,15 @@ export default async function handler(req, res) {
         const payload = {
             email: emailLower,
             role: role || 'Unknown',
+            planInterest: planInterest || '',
             phone: phone || '',
             carBuild: carBuild || '',
-            source: source || '',
+            source: source || 'direct',
+            medium: medium || '',
+            campaign: campaign || '',
+            term: term || '',
+            content: content || '',
+            pagePath: pagePath || '/',
             referrer: referrer || '',
             userAgent,
             ipHash,
@@ -69,12 +75,29 @@ export default async function handler(req, res) {
 
         await docRef.set(payload, { merge: true });
 
+        // Slack Notification
+        if (process.env.SLACK_WEBHOOK_URL) {
+            try {
+                // Determine icon based on role
+                const icon = role === 'Shop' ? '🏭' : role === 'Dealer' ? '💼' : '🏎️';
+
+                await fetch(process.env.SLACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: `${icon} *New Waitlist Signup*\n*Email:* ${emailLower}\n*Role:* ${role}\n*Plan:* ${planInterest || 'Unspecified'}\n*Source:* ${source || 'Direct'}\n*Idea:* ${carBuild || 'None'}`
+                    })
+                });
+            } catch (err) {
+                console.error('Slack Notification Failed:', err);
+                // Don't block response
+            }
+        }
+
         return res.status(200).json({ ok: true, mode: 'live' });
 
     } catch (error) {
         console.error('Signup API Error:', error);
-        // Return success to client even on error if possible, or demo mode
-        // but here we fail safe
         return res.status(200).json({ ok: false, mode: 'error' });
     }
 }

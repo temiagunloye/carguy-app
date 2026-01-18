@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM - Car Guy App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* CRM Specific Styles */
+        body {
+            background-color: #050505;
+        }
+
+        .crm-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .crm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .crm-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .crm-search {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+
+        .crm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .crm-table th,
+        .crm-table td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .crm-table th {
+            font-weight: 600;
+            color: #888;
+            background: rgba(255, 255, 255, 0.02);
+            white-space: nowrap;
+        }
+
+        .crm-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-plan {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-pro {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .badge-premium {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+
+        .badge-basic {
+            background: rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 4rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="crm-container">
+        <header class="crm-header">
+            <div>
+                <h1>Lead CRM</h1>
+                <p style="opacity: 0.6;">Manage and track signups</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="/api/export" target="_blank" class="btn btn-primary btn-sm">⬇ Export CSV</a>
+                <a href="/dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            </div>
+        </header>
+
+        <div class="crm-controls">
+            <input type="text" id="searchInput" placeholder="Search emails, names, or ideas..." class="crm-search">
+            <select id="roleFilter" class="crm-search" style="flex: 0 0 150px;">
+                <option value="all">All Roles</option>
+                <option value="Enthusiast">Enthusiast</option>
+                <option value="Shop">Shop</option>
+                <option value="Dealer">Dealer</option>
+            </select>
+            <select id="planFilter" class="crm-search" style="flex: 0 0 150px;">
+                <option value="all">All Plans</option>
+                <option value="Basic">Basic</option>
+                <option value="Pro">Pro</option>
+                <option value="Premium">Premium</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table class="crm-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Plan Interest</th>
+                        <th>Build Ideas</th>
+                        <th>Source</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="crmBody">
+                    <tr>
+                        <td colspan="7" class="loading-state">Loading leads...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 1rem; text-align: right; opacity: 0.5; font-size: 0.8rem;">
+            Showing <span id="count">0</span> leads
+        </div>
+    </div>
+
+    <script src="/js/crm.js"></script>
+</body>
+
+</html>

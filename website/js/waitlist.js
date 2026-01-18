@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = {
                 email: formData.get('email'),
                 role: formData.get('role'),
+                planInterest: formData.get('planInterest'),
                 carBuild: formData.get('carBuild'),
                 phone: formData.get('phone'), // Optional/Honeypot
                 ...getUTMParams(),
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Track event
                     if (window.trackEvent) {
-                        window.trackEvent('waitlist_submit_success', { role: data.role });
+                        window.trackEvent('waitlist_submit', { role: data.role });
                     }
                 } else {
                     throw new Error(result.message || 'Something went wrong. Please try again.');

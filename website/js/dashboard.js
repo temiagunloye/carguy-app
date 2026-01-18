@@ -7,13 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Elements
     const statusBadge = document.getElementById('data-status');
     const elTotal = document.getElementById('total-signups');
-    // const elDaily = document.getElementById('daily-signups'); // Removed for new metrics space, or keep if grid allows
-    // const elConv = document.getElementById('conversion-rate');
-    // const elTopRole = document.getElementById('top-role');
     const elCurrent = document.getElementById('current-users');
     const elNew24h = document.getElementById('new-users-24h');
     const elShares24h = document.getElementById('share-links-24h');
-    const tableBody = document.getElementById('recent-table-body');
+    const elTikTok = document.getElementById('kpi-tiktok');
+    const elConversion = document.getElementById('kpi-conversion');
 
     try {
         // Fetch Data
@@ -30,67 +28,66 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // Summary Stats
-        elTotal.textContent = data.summary.totalSignups;
+        const summary = data.summary || {};
+        if (elTotal) elTotal.textContent = summary.totalSignups || 0;
+        if (elCurrent) elCurrent.textContent = summary.currentUsers || 0;
+        if (elNew24h) elNew24h.textContent = summary.newUsers24h || 0;
+        if (elShares24h) elShares24h.textContent = summary.shareLinks24h || 0;
+        if (elConversion) elConversion.textContent = (summary.conversionRate || 0) + '%';
 
-        // New Metrics
-        if (elCurrent) elCurrent.textContent = data.summary.currentUsers || 0;
-        if (elNew24h) elNew24h.textContent = data.summary.newUsers24h || 0;
-        if (elShares24h) elShares24h.textContent = data.summary.shareLinks24h || 0;
-
-        /* 
-        // Optional: Keep these if you kept the cards
-        elDaily.textContent = data.summary.dailySignups;
-        elConv.textContent = data.summary.conversionRate + '%';
-        const roles = data.roles;
-        const topRole = Object.keys(roles).reduce((a, b) => roles[a] > roles[b] ? a : b);
-        elTopRole.textContent = topRole;
-        */
+        // TikTok KPI
+        const tiktokCount = data.sources && (data.sources['TikTok'] || data.sources['tiktok'] || 0);
+        if (elTikTok) elTikTok.textContent = tiktokCount;
 
         // Render Charts
-        renderRoleChart(data.roles);
-        renderSourceChart(data.sources);
+        if (data.roles) renderRoleChart(data.roles);
+        if (data.sources) renderSourceChart(data.sources);
 
         // Render Table
-        renderTable(data.recent);
+        if (data.recent) renderTable(data.recent);
+
+        // Render New Sections
+        if (data.funnel) renderFunnel(data.funnel);
+        if (data.acquisition) renderAcquisition(data.acquisition);
 
     } catch (err) {
         console.error(err);
-        statusBadge.textContent = 'ERROR';
-        statusBadge.style.color = 'red';
+        if (statusBadge) {
+            statusBadge.textContent = 'ERROR';
+            statusBadge.style.color = 'red';
+        }
     }
 });
 
 function renderRoleChart(rolesData) {
-    const ctx = document.getElementById('roleChart').getContext('2d');
+    const canvas = document.getElementById('roleChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
     new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: Object.keys(rolesData),
             datasets: [{
                 data: Object.values(rolesData),
-                backgroundColor: [
-                    '#3b82f6', // Blue
-                    '#10b981', // Green
-                    '#8b5cf6', // Purple
-                    '#6b7280'  // Grey
-                ],
+                backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6', '#6b7280'],
                 borderWidth: 0
             }]
         },
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { color: '#9ca3af' }
-                }
+                legend: { position: 'bottom', labels: { color: '#9ca3af' } }
             }
         }
     });
 }
 
 function renderSourceChart(sourceData) {
-    const ctx = document.getElementById('sourceChart').getContext('2d');
+    const canvas = document.getElementById('sourceChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -105,35 +102,25 @@ function renderSourceChart(sourceData) {
         options: {
             responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#374151' },
-                    ticks: { color: '#9ca3af' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#9ca3af' }
-                }
+                y: { beginAtZero: true, grid: { color: '#374151' }, ticks: { color: '#9ca3af' } },
+                x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
             },
-            plugins: {
-                legend: { display: false }
-            }
+            plugins: { legend: { display: false } }
         }
     });
 }
 
 function renderTable(recentData) {
     const tableBody = document.getElementById('recent-table-body');
+    if (!tableBody) return;
+
     tableBody.innerHTML = '';
 
     recentData.forEach(row => {
         const tr = document.createElement('tr');
-
-        // Format date and time
         const dateObj = new Date(row.date);
         const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        // Smart device check
         let device = 'Desktop';
         if (row.userAgent && /mobile|android|iphone/i.test(row.userAgent)) {
             device = 'Mobile';
@@ -150,5 +137,43 @@ function renderTable(recentData) {
             <td style="font-size:12px; color:#888;">${device}</td>
         `;
         tableBody.appendChild(tr);
+    });
+}
+
+function renderFunnel(funnel) {
+    const container = document.getElementById('funnel-container');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:8px;">
+            <div style="font-size:12px; color:#888;">Visitors (Est)</div>
+            <div style="font-weight:bold;">${funnel.visitors}</div>
+        </div>
+        <div style="text-align:center; font-size:16px;">↓</div>
+        <div style="background:rgba(255,255,255,0.1); padding:10px; border-radius:8px;">
+            <div style="font-size:12px; color:#ccc;">CTA Clicks (Est)</div>
+            <div style="font-weight:bold;">${funnel.ctaClicks}</div>
+        </div>
+        <div style="text-align:center; font-size:16px;">↓</div>
+        <div style="background:var(--success); color:black; padding:10px; border-radius:8px;">
+            <div style="font-size:12px; font-weight:bold;">Signups</div>
+            <div style="font-weight:bold; font-size:18px;">${funnel.signups}</div>
+        </div>
+    `;
+}
+
+function renderAcquisition(acquisition) {
+    const list = document.getElementById('channel-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+    acquisition.slice(0, 5).forEach(channel => {
+        const li = document.createElement('li');
+        li.style.cssText = 'display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);';
+        li.innerHTML = `
+            <span>${channel.name}</span>
+            <span style="color:#aaa;">${channel.count} (${channel.percent}%)</span>
+        `;
+        list.appendChild(li);
     });
 }

@@ -22,16 +22,9 @@
 
     // Track Event
     window.trackEvent = function (eventName, properties = {}) {
-        /*
-        // Only log in dev
-        if (window.location.hostname === 'localhost') {
-            console.log('Analytics Event:', eventName, properties);
-        }
-        */
-
         const event = {
+            event: eventName,
             id: 'evt_' + Math.random().toString(36).substr(2, 9),
-            name: eventName,
             timestamp: new Date().toISOString(),
             sessionId: sessionId,
             userId: userId,
@@ -39,24 +32,30 @@
             ...properties
         };
 
-        // Store internally (could batch send to API later)
+        // 1. Push to GTM Data Layer (Priority)
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(event);
+
+        // 2. Store locally (Backup/Debug)
         try {
             const storedEvents = JSON.parse(localStorage.getItem(EVENTS_KEY) || '[]');
             storedEvents.push(event);
-            // Cap at 100 events
             if (storedEvents.length > 100) storedEvents.shift();
             localStorage.setItem(EVENTS_KEY, JSON.stringify(storedEvents));
         } catch (e) {
             console.warn('Analytics storage failed', e);
         }
 
-        // Fire GTM/GA if available (placeholder)
-        if (window.gtag) {
-            window.gtag('event', eventName, properties);
+        // 3. Dev Logging
+        if (window.location.hostname === 'localhost') {
+            console.log('📊 Analytics:', eventName, properties);
         }
     };
 
     // Auto-track pageview
-    window.trackEvent('page_view');
+    window.trackEvent('page_view', {
+        page_title: document.title,
+        page_path: window.location.pathname
+    });
 
 })();

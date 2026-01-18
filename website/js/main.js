@@ -89,23 +89,24 @@ document.querySelectorAll('.feature-card, .step-card, .pricing-card').forEach(el
     observer.observe(el);
 });
 
-// Analytics Tracking
-document.querySelectorAll('a[href="#get-app"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (window.trackEvent) {
-            window.trackEvent('nav_get_app_click', {
-                location: btn.closest('.nav') ? 'navbar' : 'body'
-            });
-        }
-    });
-});
+// Analytics Tracking - Global CTA Handler
+document.addEventListener('click', (e) => {
+    // 1. Track Button Clicks
+    const btn = e.target.closest('.btn');
+    if (btn && window.trackEvent) {
+        window.trackEvent('cta_click', {
+            cta_text: btn.innerText.trim(),
+            cta_location: btn.closest('section')?.id || 'navbar',
+            destination_url: btn.getAttribute('href')
+        });
+    }
 
-document.querySelectorAll('.hero-cta .btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (window.trackEvent) {
-            window.trackEvent('hero_cta_click', {
-                text: btn.innerText
-            });
-        }
-    });
+    // 2. Track Navigation Links
+    const navLink = e.target.closest('.nav-link');
+    if (navLink && window.trackEvent) {
+        window.trackEvent('nav_click', {
+            text: navLink.innerText.trim(),
+            destination_url: navLink.getAttribute('href')
+        });
+    }
 });

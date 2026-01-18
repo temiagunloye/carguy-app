@@ -197,9 +197,14 @@
 
 .steps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-xl);
-    margin-top: var(--space-2xl);
+    /* 2x2 Grid for 4 steps - Calmer layout */
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl);
+    /* Increased gap */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: var(--space-3xl);
 }
 
 .step-card {
