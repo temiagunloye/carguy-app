@@ -1,10 +1,10 @@
 /**
- * Car Guy App - Lightweight Analytics
+ * Garage Manager - Lightweight Analytics
  */
 
 (function () {
     // Analytics Store
-    const EVENTS_KEY = 'carguy_analytics_events';
+    const EVENTS_KEY = 'garagemanager_analytics_events';
 
     // Generate simple Session ID
     let sessionId = sessionStorage.getItem('analytics_session_id');

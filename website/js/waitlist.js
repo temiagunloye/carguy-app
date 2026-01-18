@@ -1,5 +1,5 @@
 /**
- * Car Guy App - Waitlist Logic
+ * Garage Manager - Waitlist Logic
  * Handles form submission, validation, and analytics
  */
 
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Share Button Logic
     if (shareBtn) {
         shareBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText('https://carguy.app').then(() => {
+            navigator.clipboard.writeText('https://garagemanager.co').then(() => {
                 const originalText = shareBtn.textContent;
                 shareBtn.textContent = 'Copied!';
                 setTimeout(() => {

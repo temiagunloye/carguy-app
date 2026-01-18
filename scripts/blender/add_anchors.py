@@ -61,10 +61,20 @@ def add_anchors_to_car(input_path, output_path):
     create_anchor("ANCHOR_WHEEL_RL", (center_x - wheel_offset_x, center_y + wheel_offset_y_rear, wheel_z))
     create_anchor("ANCHOR_WHEEL_RR", (center_x + wheel_offset_x, center_y + wheel_offset_y_rear, wheel_z))
     
-    # SPOILER ANCHOR (rear deck, top of car)
-    spoiler_y = min_y + car_length * 0.15  # 15% from rear
-    spoiler_z = max_z - 0.2  # Near roofline
-    create_anchor("ANCHOR_SPOILER", (center_x, spoiler_y, spoiler_z))
+    # BOLT-ON PART ANCHORS (NEW - Standardized for part swapping)
+    # Front lip/splitter - center front, low
+    create_anchor("ANCHOR_FRONT_CENTER_LOW", (center_x, max_y + 0.05, min_z + 0.1))
+    
+    # Rear diffuser - center rear, low
+    create_anchor("ANCHOR_REAR_CENTER_LOW", (center_x, min_y - 0.05, min_z + 0.1))
+    
+    # Side skirts - left and right sides, low, mid-wheelbase
+    skirt_offset_x = (max_x - min_x) / 2 + 0.05
+    create_anchor("ANCHOR_SIDE_LEFT_LOW", (center_x - skirt_offset_x, center_y, min_z + 0.2))
+    create_anchor("ANCHOR_SIDE_RIGHT_LOW", (center_x + skirt_offset_x, center_y, min_z + 0.2))
+    
+    # Trunk/spoiler - rear deck center
+    create_anchor("ANCHOR_TRUNK_CENTER", (center_x, min_y + car_length * 0.15, max_z - 0.15))
     
     # EXHAUST ANCHORS (rear bumper, low)
     exhaust_y = min_y - 0.1  # Slightly behind rear
@@ -72,34 +82,6 @@ def add_anchors_to_car(input_path, output_path):
     exhaust_offset_x = car_width * 0.2
     create_anchor("ANCHOR_EXHAUST_L", (center_x - exhaust_offset_x, exhaust_y, exhaust_z))
     create_anchor("ANCHOR_EXHAUST_R", (center_x + exhaust_offset_x, exhaust_y, exhaust_z))
-    
-    # HEADLIGHT ANCHORS (front, upper bumper)
-    headlight_y = max_y - 0.1  # Front edge
-    headlight_z = min_z + car_height * 0.4
-    headlight_offset_x = car_width * 0.3
-    create_anchor("ANCHOR_HEADLIGHT_L", (center_x - headlight_offset_x, headlight_y, headlight_z))
-    create_anchor("ANCHOR_HEADLIGHT_R", (center_x + headlight_offset_x, headlight_y, headlight_z))
-    
-    # TAILLIGHT ANCHORS (rear, upper bumper)
-    taillight_y = min_y + 0.1  # Rear edge
-    taillight_z = min_z + car_height * 0.35
-    taillight_offset_x = car_width * 0.3
-    create_anchor("ANCHOR_TAILLIGHT_L", (center_x - taillight_offset_x, taillight_y, taillight_z))
-    create_anchor("ANCHOR_TAILLIGHT_R", (center_x + taillight_offset_x, taillight_y, taillight_z))
-    
-    # BUMPER ANCHORS
-    create_anchor("ANCHOR_FRONT_BUMPER", (center_x, max_y, min_z + car_height * 0.25))
-    create_anchor("ANCHOR_REAR_BUMPER", (center_x, min_y, min_z + car_height * 0.25))
-    
-    # DIFFUSER ANCHOR (rear, bottom)
-    create_anchor("ANCHOR_DIFFUSER", (center_x, min_y, min_z + 0.15))
-    
-    # SIDE SKIRT ANCHORS (mid-car, low)
-    skirt_y = center_y
-    skirt_z = min_z + 0.2
-    skirt_offset_x = (max_x - min_x) / 2 + 0.05
-    create_anchor("ANCHOR_SIDE_SKIRT_L", (center_x - skirt_offset_x, skirt_y, skirt_z))
-    create_anchor("ANCHOR_SIDE_SKIRT_R", (center_x + skirt_offset_x, skirt_y, skirt_z))
     
     print(f"✅ Added {len([obj for obj in bpy.context.scene.objects if obj.type == 'EMPTY'])} anchor empties")
     

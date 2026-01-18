@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update baseModels with Anchors</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1a73e8;
+            margin-top: 0;
+        }
+
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .anchor-data {
+            background: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #1557b0;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .model-card {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .model-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔧 Update baseModels with Anchor Points</h1>
+        <p>This tool updates your Firestore baseModels documents with anchor metadata for part swapping.</p>
+
+        <div class="section">
+            <h3>📋 Instructions</h3>
+            <ol>
+                <li>Open <a
+                        href="https://console.firebase.google.com/project/carguy-app-demo/firestore/data/~2FbaseModels"
+                        target="_blank">Firebase Console - baseModels</a></li>
+                <li>For each model below, click "Copy Anchor Data"</li>
+                <li>In Firebase Console, click on the model document</li>
+                <li>Click "Add field" and manually add these 3 fields:
+                    <ul>
+                        <li><code>anchorPoints</code> (map) - paste the anchor data</li>
+                        <li><code>anchorsVersion</code> (string) - value: "v1"</li>
+                        <li><code>anchorCount</code> (number) - value shown below</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div id="models-container"></div>
+
+        <div class="section">
+            <h3>✅ Important Notes</h3>
+            <ul>
+                <li>All coordinates are in Blender's coordinate system (Y-up, meters)</li>
+                <li>11 anchors per model (4 wheels + 7 bolt-on points)</li>
+                <li>Anchors version: <strong>v1</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const anchorData = {
+            porsche_911_2024: {
+                displayName: "2024 Porsche 911",
+                anchorPoints: {
+                    ANCHOR_WHEEL_FL: { x: -51.9903, y: 40.3131, z: -49.6004 },
+                    ANCHOR_WHEEL_FR: { x: 43.6212, y: 40.3131, z: -49.6004 },
+                    ANCHOR_WHEEL_RL: { x: -51.9903, y: 8.3516, z: -49.6004 },
+                    ANCHOR_WHEEL_RR: { x: 43.6212, y: 8.3516, z: -49.6004 },
+                    ANCHOR_FRONT_CENTER_LOW: { x: -4.1846, y: 51.017, z: -49.8004 },
+                    ANCHOR_REAR_CENTER_LOW: { x: -4.1846, y: -2.3523, z: -49.8004 },
+                    ANCHOR_SIDE_LEFT_LOW: { x: -72.5285, y: 24.3323, z: -49.7004 },
+                    ANCHOR_SIDE_RIGHT_LOW: { x: 64.1594, y: 24.3323, z: -49.7004 },
+                    ANCHOR_TRUNK_CENTER: { x: -4.1846, y: 5.6881, z: 31.8056 },
+                    ANCHOR_EXHAUST_L: { x: -31.5021, y: -2.4023, z: -49.7004 },
+                    ANCHOR_EXHAUST_R: { x: 23.133, y: -2.4023, z: -49.7004 }
+                }
+            },
+            bmw_m3_2023: {
+                displayName: "2023 BMW M3",
+                anchorPoints: {
+                    ANCHOR_WHEEL_FL: { x: -0.7273, y: 1.4426, z: -0.0396 },
+                    ANCHOR_WHEEL_FR: { x: 0.7273, y: 1.4426, z: -0.0396 },
+                    ANCHOR_WHEEL_RL: { x: -0.7273, y: -1.4481, z: -0.0396 },
+                    ANCHOR_WHEEL_RR: { x: 0.7273, y: -1.4481, z: -0.0396 },
+                    ANCHOR_FRONT_CENTER_LOW: { x: -0.0000, y: 2.4561, z: -0.2396 },
+                    ANCHOR_REAR_CENTER_LOW: { x: -0.0000, y: -2.4616, z: -0.2396 },
+                    ANCHOR_SIDE_LEFT_LOW: { x: -1.089, y: -0.0027, z: -0.1396 },
+                    ANCHOR_SIDE_RIGHT_LOW: { x: 1.089, y: -0.0027, z: -0.1396 },
+                    ANCHOR_TRUNK_CENTER: { x: -0.0000, y: -1.6889, z: 1.2739 },
+                    ANCHOR_EXHAUST_L: { x: -0.4156, y: -2.5116, z: -0.1396 },
+                    ANCHOR_EXHAUST_R: { x: 0.4156, y: -2.5116, z: -0.1396 }
+                }
+            },
+            subaru_brz_2022: {
+                displayName: "2022 Subaru BRZ",
+                anchorPoints: {
+                    ANCHOR_WHEEL_FL: { x: -0.7029, y: 1.2806, z: -0.7 },
+                    ANCHOR_WHEEL_FR: { x: 0.7028, y: 1.2806, z: -0.7 },
+                    ANCHOR_WHEEL_RL: { x: -0.7029, y: -1.2799, z: -0.7 },
+                    ANCHOR_WHEEL_RR: { x: 0.7028, y: -1.2799, z: -0.7 },
+                    ANCHOR_FRONT_CENTER_LOW: { x: -0.0001, y: 2.1841, z: -0.9 },
+                    ANCHOR_REAR_CENTER_LOW: { x: -0.0001, y: -2.1834, z: -0.9 },
+                    ANCHOR_SIDE_LEFT_LOW: { x: -1.0542, y: 0.0003, z: -0.8 },
+                    ANCHOR_SIDE_RIGHT_LOW: { x: 1.054, y: 0.0003, z: -0.8 },
+                    ANCHOR_TRUNK_CENTER: { x: -0.0001, y: -1.4933, z: 1.0182 },
+                    ANCHOR_EXHAUST_L: { x: -0.4017, y: -2.2334, z: -0.8 },
+                    ANCHOR_EXHAUST_R: { x: 0.4016, y: -2.2334, z: -0.8 }
+                }
+            }
+        };
+
+        function generateModelCards() {
+            const container = document.getElementById('models-container');
+
+            for (const [docId, data] of Object.entries(anchorData)) {
+                const card = document.createElement('div');
+                card.className = 'model-card';
+
+                const anchorCount = Object.keys(data.anchorPoints).length;
+                const anchorNames = Object.keys(data.anchorPoints).join(', ');
+
+                card.innerHTML = `
+                    <h3>${data.displayName}</h3>
+                    <p><strong>Document ID:</strong> <code>${docId}</code></p>
+                    <p><strong>Anchor Count:</strong> ${anchorCount}</p>
+                    <p><strong>Anchors:</strong> ${anchorNames}</p>
+                    
+                    <div class="anchor-data">${JSON.stringify(data.anchorPoints, null, 2)}</div>
+                    
+                    <button onclick="copyAnchors('${docId}')">📋 Copy Anchor Data</button>
+                    <button onclick="window.open('https://console.firebase.google.com/project/carguy-app-demo/firestore/data/~2FbaseModels~2F${docId}', '_blank')">🔗 Open in Console</button>
+                    
+                    <div id="status-${docId}"></div>
+                `;
+
+                container.appendChild(card);
+            }
+        }
+
+        function copyAnchors(modelId) {
+            const data = anchorData[modelId];
+            const text = JSON.stringify(data.anchorPoints, null, 2);
+
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus(modelId, 'Copied to clipboard! Now paste in Firebase Console.', 'success');
+            }).catch(err => {
+                showStatus(modelId, 'Failed to copy: ' + err.message, 'error');
+            });
+        }
+
+        function showStatus(modelId, message, type) {
+            const statusDiv = document.getElementById(`status-${modelId}`);
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // Initialize
+        generateModelCards();
+    </script>
+</body>
+
+</html>

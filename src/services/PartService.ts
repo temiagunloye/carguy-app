@@ -28,10 +28,11 @@ export interface Part {
         materials?: string[];
     };
     placementDefaults: {
-        anchorName: string;
+        anchorName?: string;
+        anchorPattern?: string; // e.g. "ANCHOR_WHEEL_*"
         offset: { x: number; y: number; z: number };
         rotation: { x: number; y: number; z: number };
-        scaleMode: 'fixed' | 'relativeToWheelAnchors' | 'relativeToCarWidth';
+        scaleMode: 'fixed' | 'relativeToWheelAnchors' | 'relativeToCarWidth' | 'relativeToWheelbase' | 'absolute';
     };
 }
 

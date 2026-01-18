@@ -298,61 +298,118 @@ export default function CarModelViewerScreen({ navigation, route }: Props) {
         });
     }
 
+    // --- METRICS & SCALING ---
+    function getCarMetrics() {
+        if (!anchorMap['ANCHOR_WHEEL_FL'] || !anchorMap['ANCHOR_WHEEL_FR']) return null;
+        
+        const fl = anchorMap['ANCHOR_WHEEL_FL'].position;
+        const fr = anchorMap['ANCHOR_WHEEL_FR'].position;
+        const rl = anchorMap['ANCHOR_WHEEL_RL'] ? anchorMap['ANCHOR_WHEEL_RL'].position : null;
+
+        // Track Width (Width between front wheels)
+        const trackWidth = Math.abs(fr.x - fl.x); // X-axis width
+        
+        // Wheelbase (Length between front/rear)
+        const wheelbase = rl ? Math.abs(fl.y - rl.y) : trackWidth * 1.6; // Y-axis length (Blender Y-up/Z-forward varies, assume Y is length based on add_anchors.py)
+                                                                       // Actually add_anchors used Y for length.
+        
+        // Car Width (Approx based on anchors or bounding box)
+        // We can use the side anchors if available
+        let carWidth = trackWidth * 1.1; // Fallback
+        if (anchorMap['ANCHOR_SIDE_LEFT_LOW'] && anchorMap['ANCHOR_SIDE_RIGHT_LOW']) {
+            carWidth = Math.abs(anchorMap['ANCHOR_SIDE_RIGHT_LOW'].position.x - anchorMap['ANCHOR_SIDE_LEFT_LOW'].position.x);
+        }
+
+        return { trackWidth, wheelbase, carWidth };
+    }
+
     function attachPart(partData, glbUrl, config) {
         sendLog('Attaching part: ' + partData.name);
         
         loader.load(glbUrl, (gltf) => {
             const partScene = gltf.scene;
             const placement = partData.placementDefaults;
-            const targetAnchorName = placement.anchorName;
+            const targetPattern = placement.anchorPattern || placement.anchorName;
 
             // Find matching anchors
             const targets = [];
-            if (targetAnchorName.endsWith('*')) {
-                const prefix = targetAnchorName.replace('*', '');
+            if (targetPattern && targetPattern.endsWith('*')) {
+                const prefix = targetPattern.replace('*', '');
                 Object.keys(anchorMap).forEach(key => {
                     if (key.startsWith(prefix)) targets.push(anchorMap[key]);
                 });
-            } else {
-                if (anchorMap[targetAnchorName]) targets.push(anchorMap[targetAnchorName]);
+            } else if (targetPattern && anchorMap[targetPattern]) {
+                targets.push(anchorMap[targetPattern]);
             }
 
             if (targets.length === 0) {
-                sendLog('No matching anchors found for ' + targetAnchorName);
-                // Fallback: Add to scene root for debugging
-                // scene.add(partScene);
+                sendLog('No matching anchors found for ' + targetPattern);
                 return;
             }
 
-            // Clone part for multiple anchors (e.g. 4 wheels)
+            // Calculate Scale
+            const metrics = getCarMetrics();
+            let finalScale = partData.meta.defaultScale || 1.0;
+            
+            if (metrics) {
+                if (placement.scaleMode === 'relativeToCarWidth') {
+                    // Assume part is designed for ~1.8m width, scale to actual car width
+                    // Or simpler: We assume the part GLB width (X) matches 1 unit? 
+                    // No, "relative" usually means matching the target dimension.
+                    // If part is 2m wide and car is 2m, scale 1.
+                    // If part is 1m wide generic (placeholder), scale to carWidth.
+                    // We'll use the part dimensions from meta if available, else 1.0
+                    const partWidthMm = partData.meta.dimensionsMm?.x || 1000; 
+                    const partWidthM = partWidthMm / 1000;
+                    if (partWidthM > 0) {
+                        finalScale = metrics.carWidth / partWidthM;
+                        sendLog('Scaled to Car Width: ' + finalScale.toFixed(2));
+                    }
+                } else if (placement.scaleMode === 'relativeToWheelbase') {
+                    const partLengthMm = partData.meta.dimensionsMm?.y || 2600; // Default wheelbase approx
+                    const partLengthM = partLengthMm / 1000;
+                     // Side skirts usually Y-axis length
+                     // If explicit dimension known:
+                     if (partLengthM > 0) {
+                         finalScale = metrics.wheelbase / partLengthM;
+                         sendLog('Scaled to Wheelbase: ' + finalScale.toFixed(2));
+                     }
+                }
+            }
+
+            // Clone part for multiple anchors
             targets.forEach(anchor => {
+                // If part is already attached to this anchor (cleanup old), handled by React logic mostly but good to check
+                // For now, simple add.
+                
                 const instance = partScene.clone();
                 
-                // --- SCALING ---
-                let scale = partData.meta.defaultScale || 1.0;
+                // Transforms
+                instance.scale.setScalar(finalScale);
                 
-                // TODO: Implement sophisticated scaling modes
-                // if (placement.scaleMode === 'relativeToWheelAnchors') ...
-
-                // Apply transforms
-                instance.scale.setScalar(scale);
+                // Rotations (Degrees -> Radians usually, but check if data is rads)
+                // Assuming degrees from manual input, convert to rads
+                // If already rads, keep. Assuming 0,0,0 defaults are fine.
+                // Standard Three.js uses Radians.
                 instance.rotation.set(
                     placement.rotation.x,
                     placement.rotation.y,
                     placement.rotation.z
                 );
+                
+                // Position Offset
                 instance.position.set(
                     placement.offset.x,
                     placement.offset.y,
                     placement.offset.z
                 );
 
-                // Parent to anchor
+                // Add to anchor
                 anchor.add(instance);
-                attachedParts[partData.partId] = instance; // Store ref
+                attachedParts[partData.partId + '_' + anchor.name] = instance;
             });
 
-            sendLog('Part attached successfully!');
+            sendLog('Part attached successfully! (' + targets.length + ' anchors)');
 
         }, undefined, (err) => {
             sendLog('Error loading part GLB: ' + err.message);

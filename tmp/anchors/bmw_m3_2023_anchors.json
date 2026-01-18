@@ -1,0 +1,61 @@
+{
+  "anchorPoints": {
+    "ANCHOR_WHEEL_FL": {
+      "x": -0.7273,
+      "y": 1.4426,
+      "z": -0.0396
+    },
+    "ANCHOR_WHEEL_FR": {
+      "x": 0.7273,
+      "y": 1.4426,
+      "z": -0.0396
+    },
+    "ANCHOR_WHEEL_RL": {
+      "x": -0.7273,
+      "y": -1.4481,
+      "z": -0.0396
+    },
+    "ANCHOR_WHEEL_RR": {
+      "x": 0.7273,
+      "y": -1.4481,
+      "z": -0.0396
+    },
+    "ANCHOR_FRONT_CENTER_LOW": {
+      "x": 0,
+      "y": 2.4561,
+      "z": -0.2396
+    },
+    "ANCHOR_REAR_CENTER_LOW": {
+      "x": 0,
+      "y": -2.4616,
+      "z": -0.2396
+    },
+    "ANCHOR_SIDE_LEFT_LOW": {
+      "x": -1.089,
+      "y": -0.0027,
+      "z": -0.1396
+    },
+    "ANCHOR_SIDE_RIGHT_LOW": {
+      "x": 1.089,
+      "y": -0.0027,
+      "z": -0.1396
+    },
+    "ANCHOR_TRUNK_CENTER": {
+      "x": 0,
+      "y": -1.6889,
+      "z": 1.2739
+    },
+    "ANCHOR_EXHAUST_L": {
+      "x": -0.4156,
+      "y": -2.5116,
+      "z": -0.1396
+    },
+    "ANCHOR_EXHAUST_R": {
+      "x": 0.4156,
+      "y": -2.5116,
+      "z": -0.1396
+    }
+  },
+  "anchorsVersion": "v1",
+  "anchorCount": 11
+}

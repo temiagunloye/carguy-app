@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         });
 
         res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', `attachment; filename=carguy_leads_${new Date().toISOString().split('T')[0]}.csv`);
+        res.setHeader('Content-Disposition', `attachment; filename=garagemanager_leads_${new Date().toISOString().split('T')[0]}.csv`);
         res.status(200).send(csv);
 
     } catch (error) {

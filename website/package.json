@@ -1,7 +1,7 @@
 {
-    "name": "carguy-website",
+    "name": "garagemanager-website",
     "version": "1.0.0",
-    "description": "Car Guy App Marketing Website by ThatAppCompany",
+    "description": "Garage Manager Marketing Website by ThatAppCompany",
     "type": "module",
     "scripts": {
         "dev": "vite",

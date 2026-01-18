@@ -1,4 +1,4 @@
-// Car Guy App - Main JavaScript
+// Garage Manager - Main JavaScript
 // Navigation, FAQ, and scroll effects
 
 // Sticky Navigation

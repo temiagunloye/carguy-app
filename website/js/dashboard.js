@@ -1,5 +1,5 @@
 /**
- * Car Guy Dashboard Logic
+ * Garage Manager Dashboard Logic
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
