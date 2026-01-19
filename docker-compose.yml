@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  firebase-emulator:
+    image: node:20-bullseye
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    command: bash -lc "npm i -g firebase-tools && cd functions && npm install && cd .. && firebase emulators:start --project demo-carapp --import=./.emulator-data --export-on-exit"
+    ports:
+      - "4000:4000" # emulator UI
+      - "8080:8080" # firestore
+      - "9099:9099" # auth
+      - "9199:9199" # storage
+      - "5001:5001" # functions
+    environment:
+      - FIREBASE_PROJECT_ID=demo-carapp
+
+  gpu-worker:
+    build:
+      context: ./gpu-worker
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
+    environment:
+      - WORKER_PORT=8088
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/serviceAccountKey.json
+      - FIREBASE_PROJECT_ID=demo-carapp
+      - STORAGE_BUCKET=demo-carapp.appspot.com
+    volumes:
+      - ./secrets:/secrets:ro

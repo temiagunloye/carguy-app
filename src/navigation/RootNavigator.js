@@ -32,6 +32,8 @@ import RenderProcessingScreen from "../screens/RenderProcessingScreen";
 import ShopScreen from "../screens/ShopScreen";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import SpinBuildScreen from "../screens/SpinBuildScreen";
+import SpinCarDetailScreen from "../screens/SpinCarDetailScreen";
 import TermsPrivacyScreen from "../screens/TermsPrivacyScreen";
 import TryModsScreen from "../screens/TryModsScreen";
 import UpgradeScreen from "../screens/UpgradeScreen";
@@ -212,6 +214,16 @@ export default function RootNavigator() {
         name="CarModelViewerScreen"
         component={CarModelViewerScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SpinCarDetail"
+        component={SpinCarDetailScreen}
+        options={{ title: "10-Angle Studio" }}
+      />
+      <Stack.Screen
+        name="SpinBuild"
+        component={SpinBuildScreen}
+        options={{ title: "Build Studio" }}
       />
     </Stack.Navigator>
   );

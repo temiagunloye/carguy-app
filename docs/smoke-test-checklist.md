@@ -19,13 +19,20 @@
 - [ ] Click "Install" -> Verify status changes to "Installed".
 - [ ] Verify "Open 3D Configurator" button appears/is active.
 
-## D. Try-On System
-- [ ] Go to "The Shop" -> "Try Part on Build" (Simulate).
-- [ ] Enter a Product Name and Link.
-- [ ] Click "Simulate".
-- [ ] Verify "Analysis: PENDING" -> "Analysis: RESOLVED" (matches "borla" keyword if used).
-- [ ] Toggle part ON -> "Save to Build".
-- [ ] Verify it lands in Inventory.
+## D. AI Ingestion (Add from Link)
+- [ ] Go to Car Detail Screen -> "Add Part".
+- [ ] Locate "Link" input field at the top.
+- [ ] Paste a product URL (e.g., https://www.tirerack.com/wheels/bbs-lm-silver-w-machined-lip).
+- [ ] Tap the "Download" icon.
+- [ ] **Verify:** Loading spinner appears briefly.
+- [ ] **Verify:** Form auto-fills with:
+    - [ ] Name (e.g., "BBS LM")
+    - [ ] Price (e.g., parsed value or null)
+    - [ ] Image (should load the product image)
+- [ ] Tap "Save".
+- [ ] **Verify:** Part appears in inventory with "Analysis: Simulated" (or similar status).
+- [ ] "Install" the part and open 3D Viewer.
+- [ ] **Verify:** The "generic 5-spoke wheel" placeholder appears on the car (verifying 3D mapping).
 
 ## E. Build Examples
 - [ ] Ensure a part is installed on a build.
