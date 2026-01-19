@@ -85,3 +85,10 @@ coverage/
 
 # firebase local
 .firebase/
+
+# Secrets
+serviceAccountKey.json
+*.secret.json
+.env
+.env.*
+
