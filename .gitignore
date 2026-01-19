@@ -92,3 +92,9 @@ serviceAccountKey.json
 .env
 .env.*
 
+
+# Secrets
+serviceAccountKey.json
+*.secret.json
+.env
+.env.*
