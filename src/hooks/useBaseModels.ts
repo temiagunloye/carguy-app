@@ -18,6 +18,10 @@ export function useBaseModels() {
             try {
                 console.log('[useBaseModels] Fetching base models from Firestore...');
 
+                if (!db) {
+                    throw new Error('Firestore instance not initialized');
+                }
+
                 const baseModelsRef = collection(db, 'baseModels');
                 const q = query(baseModelsRef, where('active', '==', true));
                 const snapshot = await getDocs(q);

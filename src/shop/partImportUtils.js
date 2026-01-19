@@ -9,41 +9,59 @@
  * @param {string} url - Product URL
  * @returns {Promise<Object>} Part data object
  */
-export async function importPartFromURL(url) {
+export async function importPartFromURL(url, carId = null) {
   // Validate URL
   if (!url || !url.startsWith('http')) {
     throw new Error('Invalid URL');
   }
 
-  // TODO: In production, call Cloud Function:
-  // const response = await fetch('https://your-cloud-function.com/scrape-part', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ url }),
-  // });
-  // const data = await response.json();
-  // return data;
+  try {
+    const { getFunctions, httpsCallable } = await import("firebase/functions");
+    const { functions } = await import("../services/firebaseConfig");
 
-  // For now, return a placeholder structure
-  // This demonstrates what the function should return
-  return {
-    name: null, // Extracted from page title or product name
-    brand: null, // Extracted from brand field or manufacturer
-    partNumber: null, // Extracted from SKU or part number
-    category: null, // Inferred from product description or category
-    price: null, // Extracted from price field
-    imageUrl: null, // Primary product image URL
-    imageUrls: [], // All product images
-    description: null, // Product description
-    dimensions: {
-      lengthMm: null, // Extracted or inferred from specs
-      widthMm: null,
-      heightMm: null,
-      diameterMm: null, // For wheels
-    },
-    specifications: {}, // Additional specs
-    sourceUrl: url, // Original URL
-  };
+    // Call the Cloud Function
+    const submitCandidate = httpsCallable(functions, 'submitPartCandidate');
+    const result = await submitCandidate({ url, carId });
+    const { success, candidateId } = result.data;
+
+    if (!success) {
+      throw new Error('Failed to submit candidate');
+    }
+
+    // Now polling or fetching the candidate document would happen.
+    // For this immediate step, we'll try to fetch the created doc to get the metadata
+    // that the Cloud Function scraped.
+
+    const { doc, getDoc } = await import("firebase/firestore");
+    const { db } = await import("../services/firebaseConfig");
+
+    // Quick polling to wait for the document to be written
+    // In a real app, this should be a snapshot listener or more robust polling
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    const candidateRef = doc(db, "partCandidates", candidateId);
+    const candidateSnap = await getDoc(candidateRef);
+
+    if (candidateSnap.exists()) {
+      const data = candidateSnap.data();
+      return {
+        name: data.metadata?.title || "Unknown Part",
+        price: data.metadata?.price || null,
+        imageUrl: data.metadata?.imageUrl || null,
+        description: data.metadata?.description || "",
+        category: data.analysis?.partType || "other", // AI hint
+        sourceUrl: url,
+        // Additional metadata from AI analysis can be mapped here
+        aiAnalysis: data.analysis
+      };
+    }
+
+    return { name: "Processing...", sourceUrl: url };
+
+  } catch (error) {
+    console.error("Cloud Function Error:", error);
+    throw error;
+  }
 }
 
 /**
@@ -53,7 +71,7 @@ export async function importPartFromURL(url) {
  */
 export function isSupportedProductURL(url) {
   if (!url) return false;
-  
+
   // List of supported domains (expandable)
   const supportedDomains = [
     'tirerack.com',
@@ -85,7 +103,7 @@ export function extractBasicInfoFromURL(url) {
   try {
     const urlObj = new URL(url);
     const hostname = urlObj.hostname.replace('www.', '');
-    
+
     return {
       sourceDomain: hostname,
       sourceUrl: url,

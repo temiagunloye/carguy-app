@@ -4,6 +4,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
+    Alert,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -42,7 +43,7 @@ export default function DemoCarViewerScreen({ navigation, route }: Props) {
         Alert.prompt(
             'Save Build',
             'Enter a name for this build',
-            async (name) => {
+            async (name: string) => {
                 if (!name) return;
                 try {
                     await saveBuild(carId, activeParts, name, tier);
