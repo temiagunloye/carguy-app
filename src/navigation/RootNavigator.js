@@ -10,22 +10,16 @@ import MainPhotoSelectScreen from "../features/carScan/MainPhotoSelectScreen";
 import RenderingProcessingScreen from "../features/rendering/RenderingProcessingScreen";
 import AddCarScreen from "../screens/AddCarScreen";
 import AddPartScreen from "../screens/AddPartScreen";
-import BaseModelPickerScreen from "../screens/BaseModelPickerScreen";
 import BuildHistoryScreen from "../screens/BuildHistoryScreen";
 import CarDetailScreen from "../screens/CarDetailScreen";
-import CarModelViewerScreen from "../screens/CarModelViewerScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
 import CreateVehicleScreen from "../screens/CreateVehicleScreen";
-import DemoCarsGalleryScreen from "../screens/DemoCarsGalleryScreen";
-import DemoCarViewerScreen from "../screens/DemoCarViewerScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import HelpCenterScreen from "../screens/HelpCenterScreen";
 import HomeScreen from "../screens/HomeScreen";
 import InventoryScreen from "../screens/InventoryScreen";
-import ModelViewerScreen from "../screens/ModelViewerScreen";
 import MyVehiclesScreen from "../screens/MyVehiclesScreen";
 import PartDetailScreen from "../screens/PartDetailScreen";
-import PartTryOnScreen from "../screens/PartTryOnScreen";
 import PhotoUploadChecklistScreen from "../screens/PhotoUploadChecklistScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import RenderProcessingScreen from "../screens/RenderProcessingScreen";
@@ -181,40 +175,15 @@ export default function RootNavigator() {
         component={RenderProcessingScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="CarModelViewer"
-        component={CarModelViewerScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ModelViewer"
-        component={ModelViewerScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PartTryOn"
-        component={PartTryOnScreen}
-      />
-      <Stack.Screen
-        name="BaseModelPicker"
-        component={BaseModelPickerScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="DemoCarsGallery"
-        component={DemoCarsGalleryScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="DemoCarViewer"
-        component={DemoCarViewerScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CarModelViewerScreen"
-        component={CarModelViewerScreen}
-        options={{ headerShown: false }}
-      />
+      {/* LEGACY UNIVERSE A ROUTES (DEPRECATED/REMOVED)
+         - CarModelViewer
+         - ModelViewer
+         - PartTryOn
+         - DemoCarViewer
+         - CarModelViewerScreen
+         - BaseModelPicker
+         - DemoCarsGallery
+      */}
       <Stack.Screen
         name="SpinCarDetail"
         component={SpinCarDetailScreen}

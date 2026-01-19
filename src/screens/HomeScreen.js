@@ -104,8 +104,31 @@ export default function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate("DemoCarsGallery")}
         >
           <Ionicons name="car-sport-outline" size={18} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Browse Demo Cars</Text>
+          <Text style={styles.primaryButtonText}>Browse Demo</Text>
         </TouchableOpacity>
+
+        {/* 10-ANGLE STUDIO DEMO ROW */}
+        <Text style={{ color: '#666', fontSize: 12, marginBottom: 8, fontWeight: '600' }}>10-ANGLE STUDIO (DEMOS)</Text>
+        <View style={{ flexDirection: "row", gap: 10, marginBottom: 20 }}>
+          <TouchableOpacity
+            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-911" })}
+          >
+            <Text style={styles.primaryButtonText}>Porsche 911</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-m3" })}
+          >
+            <Text style={styles.primaryButtonText}>BMW M3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-brz" })}
+          >
+            <Text style={styles.primaryButtonText}>Subaru BRZ</Text>
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           style={styles.primaryButton}
