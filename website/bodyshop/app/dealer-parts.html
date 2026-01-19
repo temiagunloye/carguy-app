@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parts Inventory | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="../css/bodyshop.css">
+</head>
+
+<body style="background: #0a0a0a; color: #f5f5f5;">
+    <!-- Header -->
+    <header
+        style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.7); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="dealers.html" style="font-size: 0.875rem; color: #a3a3a3; text-decoration: none;">← Dealers</a>
+                <div id="dealer-name" style="font-size: 0.875rem; font-weight: 600;">Dealer Inventory</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button id="import-csv-btn"
+                    style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); font-size: 0.875rem; cursor: pointer; color: inherit;">Import
+                    CSV</button>
+                <button id="add-part-btn"
+                    style="padding: 0.5rem 1rem; border-radius: 9999px; background: #f5f5f5; color: #0a0a0a; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer;">Add
+                    Part</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <div>
+                <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.25rem;">Parts Inventory</h1>
+                <p style="font-size: 0.875rem; color: #a3a3a3;">
+                    Browse in-stock parts, search by name, and add items directly to a build.
+                </p>
+            </div>
+
+            <!-- Search Bar -->
+            <div style="width: 100%; max-width: 360px; align-self: flex-end;">
+                <div
+                    style="display: flex; align-items: center; gap: 0.5rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); padding: 0.75rem 1rem;">
+                    <span style="color: #737373;">⌕</span>
+                    <input id="search-input" type="text" placeholder="Search parts"
+                        style="width: 100%; background: transparent; border: none; outline: none; font-size: 0.875rem; color: #f5f5f5;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Chips -->
+        <div id="category-chips" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <!-- Categories will be loaded here -->
+        </div>
+
+        <!-- Parts List -->
+        <div id="parts-list" style="display: grid; gap: 0.75rem;">
+            <!-- Parts will be loaded here -->
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" style="text-align: center; padding: 3rem;">
+            <div style="color: #a3a3a3;">Loading parts...</div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state"
+            style="display: none; text-align: center; padding: 2.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem;">
+            <div
+                style="width: 48px; height: 48px; margin: 0 auto 0.75rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #a3a3a3;">
+                ⛭</div>
+            <div style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem;">No parts yet</div>
+            <div style="font-size: 0.875rem; color: #a3a3a3; margin-bottom: 1.25rem;">
+                Import a CSV or add your first part to start tracking inventory.
+            </div>
+            <div style="display: flex; justify-content: center; gap: 0.5rem;">
+                <button onclick="document.getElementById('import-csv-btn').click()"
+                    style="padding: 0.625rem 1.25rem; border-radius: 9999px; background: #f5f5f5; color: #0a0a0a; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer;">Import
+                    CSV</button>
+                <button onclick="document.getElementById('add-part-btn').click()"
+                    style="padding: 0.625rem 1.25rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); font-size: 0.875rem; font-weight: 600; color: #f5f5f5; cursor: pointer;">Add
+                    Part</button>
+            </div>
+        </div>
+
+        <!-- Footer Action -->
+        <div id="footer-action"
+            style="display: none; margin-top: 2rem; padding: 1.25rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div style="font-size: 0.875rem; font-weight: 600;">Next step: connect inventory → builds → client
+                    portal</div>
+                <div style="font-size: 0.875rem; color: #a3a3a3;">
+                    Once a part is added to a build, it should appear in the client preview link with status (in stock /
+                    ordered / planned).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const CATEGORIES = ["All Parts", "Wheels & Tires", "Suspension", "Aero", "Wrap", "Lighting", "Body"];
+
+        // Demo parts data
+        const DEMO_PARTS = [
+            { id: "p1", name: "Wheel Set — 18in (5x114.3)", category: "Wheels & Tires", stockQty: 7, leadTimeDays: 5, price: 1299 },
+            { id: "p2", name: "Lowering Springs — Sport", category: "Suspension", stockQty: 12, leadTimeDays: 3, price: 249 },
+            { id: "p3", name: "Front Lip — Carbon", category: "Aero", stockQty: 4, leadTimeDays: 2, price: 399 },
+            { id: "p4", name: "Wrap Film — Matte Charcoal", category: "Wrap", stockQty: 18, leadTimeDays: 1, price: 699 },
+            { id: "p5", name: "Headlight Tint Kit", category: "Lighting", stockQty: 9, leadTimeDays: 2, price: 59 },
+        ];
+
+        let allParts = [];
+        let currentCategory = "All Parts";
+        let searchQuery = "";
+        let dealerId = "";
+        let dealerName = "Dealer Inventory";
+
+        // Get dealer ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        dealerId = urlParams.get('dealerId') || 'demo';
+
+        // Set dealer name
+        if (dealerId === 'northside-auto') dealerName = 'Northside Auto Group';
+        else if (dealerId === 'metro-wrap') dealerName = 'Metro Wrap Supply';
+        else if (dealerId === 'precision-depot') dealerName = 'Precision Parts Depot';
+        document.getElementById('dealer-name').textContent = dealerName;
+
+        function renderCategoryChips() {
+            const container = document.getElementById('category-chips');
+            container.innerHTML = CATEGORIES.map(cat => `
+                <button data-category="${cat}" style="padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; border: 1px solid ${cat === currentCategory ? '#f5f5f5' : 'rgba(255,255,255,0.1)'}; background: ${cat === currentCategory ? '#f5f5f5' : 'rgba(255,255,255,0.02)'}; color: ${cat === currentCategory ? '#0a0a0a' : '#f5f5f5'}; cursor: pointer; transition: all 0.15s;">
+                    ${cat}
+                </button>
+            `).join('');
+
+            // Add click handlers
+            container.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentCategory = btn.dataset.category;
+                    renderCategoryChips();
+                    renderParts();
+                });
+            });
+        }
+
+        function filterParts() {
+            return allParts.filter(p => {
+                const matchesCategory = currentCategory === "All Parts" || p.category === currentCategory;
+                const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+        }
+
+        function renderParts() {
+            const container = document.getElementById('parts-list');
+            const empty = document.getElementById('empty-state');
+            const footer = document.getElementById('footer-action');
+            const loading = document.getElementById('loading-state');
+
+            const filtered = filterParts();
+
+            loading.style.display = 'none';
+
+            if (filtered.length === 0) {
+                container.style.display = 'none';
+                empty.style.display = 'block';
+                footer.style.display = 'none';
+                return;
+            }
+
+            empty.style.display = 'none';
+            container.style.display = 'grid';
+            footer.style.display = 'block';
+
+            container.innerHTML = filtered.map(p => `
+                <div style="padding: 1rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); transition: all 0.2s;">
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 48px; height: 48px; border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4);"></div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">${p.name}</div>
+                                <div style="font-size: 0.75rem; color: #737373;">
+                                    ${p.category} • Stock ${p.stockQty} • Lead ${p.leadTimeDays}d
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;">
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.875rem; font-weight: 600;">$${p.price}</div>
+                                <div style="font-size: 0.75rem; color: #737373;">dealer price</div>
+                            </div>
+                            <button onclick="addToBuild('${p.id}')" style="padding: 0.5rem 1rem; border-radius: 9999px; background: #f5f5f5; color: #0a0a0a; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer;">Add to Build</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add hover effects
+            container.querySelectorAll('div[style*="padding: 1rem"]').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.background = 'rgba(255,255,255,0.03)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.background = 'rgba(255,255,255,0.02)';
+                });
+            });
+        }
+
+        // Add to build function
+        window.addToBuild = (partId) => {
+            alert(`Add to Build functionality coming soon! Part ID: ${partId}`);
+        };
+
+        // Search handler
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderParts();
+        });
+
+        // Button handlers
+        document.getElementById('import-csv-btn').addEventListener('click', () => {
+            alert('CSV import functionality coming soon!');
+        });
+
+        document.getElementById('add-part-btn').addEventListener('click', () => {
+            alert('Add part form coming soon!');
+        });
+
+        // Initialize
+        async function init() {
+            allParts = DEMO_PARTS;
+            renderCategoryChips();
+            renderParts();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

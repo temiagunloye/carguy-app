@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Network | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="../css/bodyshop.css">
+</head>
+
+<body style="background: #0a0a0a; color: #f5f5f5;">
+    <!-- Header -->
+    <header
+        style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.7); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="../app/" style="font-size: 0.875rem; color: #a3a3a3; text-decoration: none;">← Back</a>
+                <div style="font-size: 0.875rem; font-weight: 600;">Dealer Network</div>
+            </div>
+            <a href="../app/"
+                style="padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); font-size: 0.875rem; text-decoration: none; color: inherit;">Workspace</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+            <div>
+                <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.25rem;">Dealers in your network</h1>
+                <p style="font-size: 0.875rem; color: #a3a3a3;">
+                    Open any dealer to view their in-stock parts inventory and add parts to a build.
+                </p>
+            </div>
+            <button id="invite-dealer-btn"
+                style="align-self: flex-end; padding: 0.5rem 1rem; border-radius: 9999px; background: #f5f5f5; color: #0a0a0a; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer;">
+                Invite Dealer
+            </button>
+        </div>
+
+        <!-- Dealers Grid -->
+        <div id="dealers-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+            <!-- Dealers will be loaded here -->
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" style="text-align: center; padding: 3rem;">
+            <div style="color: #a3a3a3;">Loading dealers...</div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state"
+            style="display: none; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem;">
+            <div style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">No dealers yet</div>
+            <div style="font-size: 0.875rem; color: #a3a3a3; margin-bottom: 1.5rem;">
+                Invite your first dealer to start building your network.
+            </div>
+            <button onclick="document.getElementById('invite-dealer-btn').click()"
+                style="padding: 0.625rem 1.25rem; border-radius: 9999px; background: #f5f5f5; color: #0a0a0a; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer;">
+                Invite Dealer
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Initialize Firebase (use your config)
+        const firebaseConfig = {
+            // Will be loaded from environment or config
+        };
+
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+        } catch (error) {
+            console.log('Firebase not configured, using demo data');
+        }
+
+        // Demo dealers data
+        const DEMO_DEALERS = [
+            { id: "northside-auto", name: "Northside Auto Group", location: "Austin, TX", specialty: "Wheels + Aero", partsCount: 128 },
+            { id: "metro-wrap", name: "Metro Wrap Supply", location: "Dallas, TX", specialty: "Wrap + Film", partsCount: 76 },
+            { id: "precision-depot", name: "Precision Parts Depot", location: "Houston, TX", specialty: "Body + Lighting", partsCount: 212 },
+        ];
+
+        async function loadDealers() {
+            const grid = document.getElementById('dealers-grid');
+            const loading = document.getElementById('loading-state');
+            const empty = document.getElementById('empty-state');
+
+            try {
+                let dealers = DEMO_DEALERS;
+
+                // Try to load from Firestore if available
+                if (db) {
+                    const q = query(collection(db, 'dealers'), orderBy('name'));
+                    const snapshot = await getDocs(q);
+                    if (!snapshot.empty) {
+                        dealers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    }
+                }
+
+                loading.style.display = 'none';
+
+                if (dealers.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                // Render dealers
+                grid.innerHTML = dealers.map(d => `
+                    <a href="dealer-parts.html?dealerId=${d.id}" style="display: block; padding: 1.25rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); text-decoration: none; color: inherit; transition: all 0.2s;">
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem;">${d.name}</div>
+                                <div style="font-size: 0.875rem; color: #737373;">${d.location}</div>
+                                <div style="display: inline-block; margin-top: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(10,10,10,0.4); font-size: 0.75rem; color: #d4d4d4;">
+                                    ${d.specialty}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.125rem; font-weight: 600;">${d.partsCount}</div>
+                                <div style="font-size: 0.75rem; color: #737373;">parts listed</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem;">
+                            <div style="font-size: 0.75rem; color: #737373;">Tap to open inventory</div>
+                            <div style="font-size: 0.75rem; color: #d4d4d4;">View →</div>
+                        </div>
+                    </a>
+                `).join('');
+
+                // Add hover effects
+                grid.querySelectorAll('a').forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        card.style.background = 'rgba(255,255,255,0.03)';
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.background = 'rgba(255,255,255,0.02)';
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error loading dealers:', error);
+                loading.innerHTML = '<div style="color: #ef4444;">Failed to load dealers</div>';
+            }
+        }
+
+        // Invite dealer button
+        document.getElementById('invite-dealer-btn').addEventListener('click', () => {
+            alert('Invite dealer functionality coming soon! For now, dealers are added via Firebase Console.');
+        });
+
+        // Load dealers on page load
+        loadDealers();
+    </script>
+</body>
+
+</html>

@@ -13,6 +13,11 @@ export default defineConfig({
                 terms: resolve(__dirname, 'terms.html'),
                 dashboard: resolve(__dirname, 'dashboard.html'),
                 crm: resolve(__dirname, 'crm.html'),
+                // Body Shop pages
+                bodyshop: resolve(__dirname, 'bodyshop/index.html'),
+                bodyshopDealers: resolve(__dirname, 'bodyshop/app/dealers.html'),
+                bodyshopParts: resolve(__dirname, 'bodyshop/app/dealer-parts.html'),
+                bodyshopPortal: resolve(__dirname, 'bodyshop/portal/index.html'),
             },
         },
     },

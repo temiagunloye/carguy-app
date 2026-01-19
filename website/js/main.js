@@ -39,6 +39,7 @@ document.querySelectorAll('.faq-question').forEach(button => {
     button.addEventListener('click', () => {
         const faqItem = button.parentElement;
         const wasActive = faqItem.classList.contains('active');
+        const questionText = button.querySelector('h3')?.innerText || button.innerText;
 
         // Close all FAQ items
         document.querySelectorAll('.faq-item').forEach(item => {
@@ -48,6 +49,10 @@ document.querySelectorAll('.faq-question').forEach(button => {
         // Open clicked item if it wasn't active
         if (!wasActive) {
             faqItem.classList.add('active');
+            // Track FAQ Open
+            if (window.trackEvent) {
+                window.trackEvent('faq_open', { question: questionText });
+            }
         }
     });
 });

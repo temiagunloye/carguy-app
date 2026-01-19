@@ -101,6 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
             navigator.clipboard.writeText('https://garagemanager.co').then(() => {
                 const originalText = shareBtn.textContent;
                 shareBtn.textContent = 'Copied!';
+
+                // Track Share
+                if (window.trackEvent) {
+                    window.trackEvent('share_click', { method: 'clipboard', url: 'https://garagemanager.co' });
+                }
+
                 setTimeout(() => {
                     shareBtn.textContent = originalText;
                 }, 2000);

@@ -1,0 +1,435 @@
+/* Body Shop Specific Styles */
+
+/* Hero Section */
+.bodyshop-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    padding: var(--space-4xl) 0;
+}
+
+.bodyshop-hero h1 {
+    font-size: var(--text-6xl);
+    margin-bottom: var(--space-md);
+}
+
+.bodyshop-hero .hero-subtitle {
+    font-size: var(--text-xl);
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto var(--space-xl);
+}
+
+.bodyshop-hero .hero-cta {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* 3-Feature Tiles Grid */
+.bodyshop-features {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-primary);
+}
+
+.features-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-2xl);
+}
+
+.feature-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.feature-tile:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-light);
+    transform: translateY(-4px);
+}
+
+.feature-tile-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--accent-primary);
+}
+
+.feature-tile h3 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-sm);
+}
+
+.feature-tile p {
+    color: var(--text-muted);
+    line-height: var(--line-height-relaxed);
+}
+
+/* How It Works Section */
+.bodyshop-how-it-works {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-secondary);
+}
+
+.bodyshop-how-it-works h2 {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+}
+
+/* CTA Blocks */
+.bodyshop-cta-blocks {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-primary);
+}
+
+.cta-blocks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.cta-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    text-align: center;
+}
+
+.cta-block h3 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-sm);
+}
+
+.cta-block p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+}
+
+/* Forms */
+.bodyshop-join-form,
+.bodyshop-quote-form {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-secondary);
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: var(--space-sm);
+}
+
+.form-container>p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-2xl);
+}
+
+.bodyshop-form {
+    text-align: left;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-xs);
+    color: var(--text-secondary);
+}
+
+.form-message {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.form-message.success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.form-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+/* Dealer Cards */
+.dealer-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.dealer-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-light);
+    transform: translateY(-2px);
+}
+
+.dealer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+}
+
+.dealer-card-name {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-xs);
+}
+
+.dealer-card-location {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+.dealer-card-specialty {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+.dealer-card-stats {
+    text-align: right;
+}
+
+.dealer-card-count {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.dealer-card-label {
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+}
+
+/* Parts List */
+.parts-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.part-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    transition: all var(--transition-base);
+}
+
+.part-card:hover {
+    background: var(--bg-card-hover);
+}
+
+.part-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+}
+
+.part-card-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex: 1;
+}
+
+.part-thumbnail {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.part-name {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-xs);
+}
+
+.part-meta {
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+}
+
+.part-card-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.part-price {
+    text-align: right;
+}
+
+.part-price-amount {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.part-price-label {
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+}
+
+/* Category Chips */
+.category-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+}
+
+.category-chip {
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.category-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.category-chip.active {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border-color: var(--text-primary);
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+}
+
+.search-bar input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.search-bar input::placeholder {
+    color: var(--text-dim);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--space-4xl) var(--space-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-md);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-3xl);
+    color: var(--text-dim);
+}
+
+.empty-state h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+}
+
+.empty-state-actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .features-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-blocks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .part-card-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .part-card-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

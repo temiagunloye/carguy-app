@@ -20,6 +20,58 @@
         localStorage.setItem('analytics_user_id', userId);
     }
 
+    // Extract UTM parameters
+    function getUTMParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            utmSource: params.get('utm_source') || null,
+            utmMedium: params.get('utm_medium') || null,
+            utmCampaign: params.get('utm_campaign') || null
+        };
+    }
+
+    // Detect device type
+    function getDeviceType() {
+        return /mobile|android|iphone|ipad|tablet/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
+    }
+
+    // Get browser name
+    function getBrowserName() {
+        const ua = navigator.userAgent;
+        if (ua.indexOf('Firefox') > -1) return 'Firefox';
+        if (ua.indexOf('Chrome') > -1) return 'Chrome';
+        if (ua.indexOf('Safari') > -1) return 'Safari';
+        if (ua.indexOf('Edge') > -1) return 'Edge';
+        return 'Other';
+    }
+
+    // Send page view to backend
+    function sendPageView() {
+        const utm = getUTMParams();
+        const pageViewData = {
+            url: window.location.href,
+            path: window.location.pathname,
+            referrer: document.referrer || null,
+            sessionId,
+            userId,
+            ...utm,
+            device: getDeviceType(),
+            browser: getBrowserName()
+        };
+
+        // Send to backend (non-blocking)
+        fetch('/api/page-views', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pageViewData)
+        }).catch(err => {
+            // Silently fail - analytics is optional
+            if (window.location.hostname === 'localhost') {
+                console.log('📊 Page view tracking (backend unavailable):', pageViewData);
+            }
+        });
+    }
+
     // Track Event
     window.trackEvent = function (eventName, properties = {}) {
         const event = {
@@ -46,7 +98,25 @@
             console.warn('Analytics storage failed', e);
         }
 
-        // 3. Dev Logging
+        // 3. Send to backend (non-blocking)
+        fetch('/api/track-event', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                eventName,
+                sessionId,
+                userId,
+                properties,
+                url: window.location.href
+            })
+        }).catch(err => {
+            // Silently fail - analytics is optional
+            if (window.location.hostname === 'localhost') {
+                console.log('📊 Event tracking (backend unavailable):', eventName, properties);
+            }
+        });
+
+        // 4. Dev Logging
         if (window.location.hostname === 'localhost') {
             console.log('📊 Analytics:', eventName, properties);
         }
@@ -57,5 +127,8 @@
         page_title: document.title,
         page_path: window.location.pathname
     });
+
+    // Send page view to backend
+    sendPageView();
 
 })();

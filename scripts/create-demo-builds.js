@@ -2,21 +2,14 @@
 // Helper script to create demo builds
 // Usage: node scripts/create-demo-builds.js
 
-const { initializeApp } = require('firebase/app');
-const { getFirestore, doc, setDoc, serverTimestamp } = require('firebase/firestore');
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCEFvcV4MKlxtXOiZXRFTL8xVSGuKsPme8",
-    authDomain: "carguy-app-demo.firebaseapp.com",
-    projectId: "carguy-app-demo",
-    storageBucket: "carguy-app-demo.firebasestorage.app",
-    messagingSenderId: "869343833766",
-    appId: "1:869343833766:web:d80b4034b146525a588e67"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
+const admin = require('firebase-admin');
+const path = require('path');
+// Load service account key (git‑ignored)
+const serviceAccountPath = path.resolve(__dirname, '../serviceAccountKey.json');
+admin.initializeApp({
+    credential: admin.credential.cert(require(serviceAccountPath))
+});
+const db = admin.firestore();
 // Seed data based on prompt requirements
 const DEMO_PARTS = [
     {
@@ -99,41 +92,30 @@ async function seedDemoBuilds() {
         // Let's start with nothing installed to let user "Install" them.
         const installedParts = [];
 
-        await setDoc(doc(db, 'builds', buildId), {
-            carId: carId, // Base Model ID acting as Car ID in demo
+        await db.collection('builds').doc(buildId).set({
+            carId: carId,
             userId: 'demo_user',
             name: 'Demo Build',
-            activeParts: [], // Legacy
+            activeParts: [], // legacy
             installedParts: installedParts,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
             isDemo: true
         });
 
-        // Also need to ensure the Car Document exists and has the 'parts' inventory
-        // so CarDetailScreen can list them (toggle from 'in_storage' to 'installed')
-
-        // NOTE: In Demo Mode, app might use local state or read from doc.
-        // CarDetailScreen reads "latestCar.parts".
-        // Let's update the car doc too.
-
-        // Assuming carId is the ID in 'cars' collection or 'baseModels'?
-        // The app uses baseModels for 3D but 'cars' for user instances.
-        // We'll create/update 'cars/{carId}' for the demo flow.
-
-        // For simple demo, we put the inventory in the car doc.
-        const carRef = doc(db, 'cars', carId);
-        // Ensure parts array has our demo parts
-        await setDoc(carRef, {
+        // Update car document with demo parts inventory
+        const carRef = db.collection('cars').doc(carId);
+        await carRef.set({
             parts: DEMO_PARTS.map(p => ({
                 ...p,
-                status: 'in_storage', // Reset to storage
+                status: 'in_storage',
                 createdAt: new Date().toISOString()
             })),
             activeBuildId: buildId,
-            renderStatus: 'ready', // ready for 3D
-            baseModelId: carId // Self-reference if using base id
+            renderStatus: 'ready',
+            baseModelId: carId
         }, { merge: true });
+
 
     }
 

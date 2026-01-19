@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --fg: #0f172a;
+  /* slate-900 */
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
