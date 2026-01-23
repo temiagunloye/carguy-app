@@ -13,6 +13,7 @@ from PIL import Image
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
 from google.cloud import storage
@@ -225,18 +226,24 @@ def segment_car(inp: SegmentCarIn):
 
     out_angles = []
     for idx, ang in enumerate(angles):
-        raw_url = ang.get("imageUrl")
-        if not raw_url or not raw_url.startswith("gs://"):
-            raise HTTPException(status_code=400, detail=f"Angle {ang.get('angleIndex')} missing gs:// imageUrl")
+        raw_url = ang.get("imageUrl") or ang.get("httpUrl")
+        if not raw_url:
+            raise HTTPException(status_code=400, detail=f"Angle {ang.get('angleIndex')} missing imageUrl/httpUrl")
 
-        # gs://bucket/path
-        _, _, bucket_and_path = raw_url.partition("gs://")
-        bucket, _, path = bucket_and_path.partition("/")
-        if bucket != BUCKET:
-            # allow but warn in logs; we still try to read from current BUCKET
-            pass
+        if str(raw_url).startswith("gs://"):
+            # gs://bucket/path
+            _, _, bucket_and_path = raw_url.partition("gs://")
+            bucket, _, path = bucket_and_path.partition("/")
+            raw_bytes = gcs_download(path)
+        elif str(raw_url).startswith("http"):
+            # Download from public URL (demo mode)
+            print(f"Downloading demo image: {raw_url}")
+            resp = requests.get(raw_url)
+            resp.raise_for_status()
+            raw_bytes = resp.content
+        else:
+             raise HTTPException(status_code=400, detail=f"Invalid URL schema: {raw_url}")
 
-        raw_bytes = gcs_download(path)
         img = image_from_bytes(raw_bytes)
 
         cutout = rgba_cutout(img)
@@ -350,12 +357,19 @@ def build_frames(inp: BuildFramesIn):
     owner_id = build.get("ownerId", "demo")
 
     for idx, ang in enumerate(angles):
-        raw_url = ang.get("imageUrl")
+        raw_url = ang.get("imageUrl") or ang.get("httpUrl") # patch for demo logic
         if not raw_url:
             raise HTTPException(status_code=400, detail="angle.imageUrl missing")
-        _, _, bucket_and_path = str(raw_url).partition("gs://")
-        _, _, raw_path = bucket_and_path.partition("/")
-        base = image_from_bytes(gcs_download(raw_path))
+            
+        if str(raw_url).startswith("gs://"):
+            _, _, bucket_and_path = str(raw_url).partition("gs://")
+            _, _, raw_path = bucket_and_path.partition("/")
+            base = image_from_bytes(gcs_download(raw_path))
+        elif str(raw_url).startswith("http"):
+             resp = requests.get(raw_url)
+             base = image_from_bytes(resp.content)
+        else:
+             raise HTTPException(status_code=400, detail=f"Invalid URL: {raw_url}")
 
         # Load car mask if available for paint/wrap
         mask = None
