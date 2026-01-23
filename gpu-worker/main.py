@@ -20,7 +20,7 @@ from google.cloud import storage
 
 from rembg import remove as rembg_remove
 
-APP = FastAPI(title="GPU Worker", version="1.0")
+app = FastAPI(title="GPU Worker", version="1.0")
 
 # ---------------------------
 # Firebase init
@@ -203,11 +203,11 @@ def get_car_angles(car_id: str) -> List[Dict[str, Any]]:
 # ---------------------------
 # Endpoints
 # ---------------------------
-@APP.get("/health")
+@app.get("/health")
 def health():
     return {"ok": True, "bucket": BUCKET}
 
-@APP.post("/jobs/segment_car")
+@app.post("/jobs/segment_car")
 def segment_car(inp: SegmentCarIn):
     """
     For each car angle:
@@ -272,7 +272,7 @@ def segment_car(inp: SegmentCarIn):
     update_job(inp.jobId, {"status": "done", "progress": 100})
     return {"carId": inp.carId, "angles": out_angles}
 
-@APP.post("/jobs/make_part_asset")
+@app.post("/jobs/make_part_asset")
 def make_part_asset(inp: MakePartAssetIn):
     """
     Creates a PNG cutout asset for a part.
@@ -314,7 +314,7 @@ def make_part_asset(inp: MakePartAssetIn):
     update_job(inp.jobId, {"status": "done", "progress": 100})
     return {"partId": inp.partId, "assets": {"pngCutoutUrl": png_gs, "maskUrl": mask_gs}}
 
-@APP.post("/jobs/build_frames")
+@app.post("/jobs/build_frames")
 def build_frames(inp: BuildFramesIn):
     """
     Generates 10 composited frames for a build.
