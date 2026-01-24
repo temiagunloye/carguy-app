@@ -1,0 +1,96 @@
+/* Pricing Toggle (Sortly Style) */
+.pricing-toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.pricing-toggle-tabs {
+    position: relative;
+    display: flex;
+    background: var(--bg-card);
+    /* Darker background */
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 6px;
+    gap: 0;
+    cursor: pointer;
+    user-select: none;
+    min-width: 320px;
+}
+
+.toggle-slider-bg {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    bottom: 6px;
+    width: calc(50% - 6px);
+    background: var(--accent-primary);
+    /* Blue pill for active state */
+    border-radius: 999px;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    z-index: 1;
+}
+
+/* State: Yearly */
+.pricing-toggle-tabs.year-active .toggle-slider-bg {
+    transform: translateX(100%);
+    /* Moves to right half */
+}
+
+/* State: Monthly (Default) */
+.pricing-toggle-tabs:not(.year-active) .toggle-slider-bg {
+    transform: translateX(0);
+    /* Stays left */
+}
+
+.toggle-option {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    background: none;
+    border: none;
+    padding: 12px 24px;
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Active Text Color (White when logic implies active) */
+/* Requires JS to toggle classes on buttons or parent. 
+   We use parent class .year-active to style children. */
+
+/* Monthly is active when parent NOT .year-active */
+.pricing-toggle-tabs:not(.year-active) .toggle-option[data-period="monthly"] {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Yearly is active when parent IS .year-active */
+.pricing-toggle-tabs.year-active .toggle-option[data-period="yearly"] {
+    color: #fff;
+    font-weight: 600;
+}
+
+.discount-badge-small {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+/* When yearly is active, maybe make badge accent-colored? Or keep white on blue bg */
+.pricing-toggle-tabs.year-active .discount-badge-small {
+    background: #fff;
+    color: var(--accent-primary);
+}

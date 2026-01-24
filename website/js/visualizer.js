@@ -1,6 +1,6 @@
 import { localBuildService } from './localBuildService.js';
 
-// Configuration (Placeholder)
+// Configuration
 const firebaseConfig = {
     apiKey: "AIzaSy...",
     authDomain: "carguy-app-v1.firebaseapp.com",
@@ -17,6 +17,11 @@ import { addDoc, collection, doc, getDoc, getDocs, getFirestore, serverTimestamp
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Sounds (Base64 for portability in V1)
+const CLICK_SOUND = new Audio("data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="); // Placeholder silent wav, real one would be longer
+// For V1, we'll just log "Click" interactions or use browser beep if enabled, 
+// but actually, let's use a very short visual transition instead of sound to avoid autoplay blocked issues.
+
 // State
 let currentVehicle = null;
 let currentAngle = 0;
@@ -28,18 +33,7 @@ let installedParts = {
     lowered: false
 };
 const angles = ['front', 'front-left', 'left', 'rear-left', 'rear', 'rear-right', 'right', 'front-right', 'top', 'interior'];
-
-// Data
-const wrapColors = [
-    { name: 'Gloss Black', hex: '#000000', tier: 'free' },
-    { name: 'Alpine White', hex: '#ffffff', tier: 'free' },
-    { name: 'Silver Metallic', hex: '#c0c0c0', tier: 'free' },
-    { name: 'Guards Red', hex: '#ef4444', tier: 'free' },
-    { name: 'Miami Blue', hex: '#3b82f6', tier: 'free' },
-    { name: 'Matte Grey', hex: '#4b5563', tier: 'pro' },
-    { name: 'Midnight Purple', hex: '#4c1d95', tier: 'pro' },
-    { name: 'Acid Green', hex: '#a3e635', tier: 'pro' }
-];
+const imageCache = new Map(); // Cache for preloaded images
 
 // DOM Elements
 const vehicleSelect = document.getElementById('vehicle-selector');
@@ -67,19 +61,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else if (path.includes('shop/simulator.html')) {
         initShopMode();
     } else {
-        // Standard Preview Mode
         checkLocalSave();
+        // Auto-rotate demo on first load
+        setTimeout(() => autoRotate(), 1500);
     }
 });
 
+let rotateInterval;
+function autoRotate() {
+    if (!currentVehicle) return;
+    let count = 0;
+    rotateInterval = setInterval(() => {
+        setAngle((currentAngle + 1) % angles.length);
+        count++;
+        if (count >= angles.length) clearInterval(rotateInterval);
+    }, 800); // 800ms per frame
+
+    // Stop on interaction
+    document.querySelector('.angle-nav').addEventListener('click', () => clearInterval(rotateInterval));
+}
+
 // Mode Handling
 async function initSharedMode(id) {
-    // Disable Controls
     const inputs = document.querySelectorAll('input, select');
     inputs.forEach(el => el.disabled = true);
     document.querySelectorAll('.color-swatch').forEach(el => el.style.pointerEvents = 'none');
 
-    // Show Banner
     const container = document.querySelector('.visualizer-container');
     if (container) {
         const banner = document.createElement('div');
@@ -95,29 +102,22 @@ async function initSharedMode(id) {
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-            // Load Vehicle
             vehicleSelect.value = data.vehicleId;
-            // Manually trigger change
+            // Fetch vehicle data manually since select change might not trigger if value set programmatically
             const vParam = { target: { value: data.vehicleId } };
-            // Simulate change
-            const vId = data.vehicleId;
-            const docRefV = doc(db, "vehicles", vId);
+            const docRefV = doc(db, "vehicles", data.vehicleId);
             const docSnapV = await getDoc(docRefV);
             if (docSnapV.exists()) {
                 currentVehicle = { id: docSnapV.id, ...docSnapV.data() };
 
-                // Wait for vehicle load then apply parts
                 setTimeout(() => {
-                    // Apply Wrap
                     if (data.wrap) selectWrap(data.wrap);
-
-                    // Apply Parts
                     installedParts = data.parts;
                     document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                         if (installedParts[cb.dataset.part]) cb.checked = true;
                     });
-
                     updateVisualizer();
+                    preloadVehicleImages(currentVehicle); // Preload after load
                 }, 200);
             }
         } else {
@@ -129,7 +129,6 @@ async function initSharedMode(id) {
 }
 
 function initShopMode() {
-    // Add "Send Quote" button to actions
     const actionContainer = document.querySelector('.action-buttons');
     if (actionContainer) {
         const sendBtn = document.createElement('button');
@@ -139,13 +138,11 @@ function initShopMode() {
         sendBtn.onclick = () => {
             const email = prompt("Enter Customer Email:");
             if (email) {
-                // In V2 this writes to emailQueue
                 alert(`Quote queued for ${email}!\n(Email integration coming in Phase 2)`);
             }
         };
         actionContainer.prepend(sendBtn);
     }
-
     checkLocalSave();
 }
 
@@ -168,8 +165,6 @@ async function loadVehicles() {
     try {
         const querySnapshot = await getDocs(collection(db, "vehicles"));
         vehicleSelect.innerHTML = '<option value="" disabled selected>Select Base Car...</option>';
-
-        // Cache docs for easier access
         const vehicleMap = {};
 
         querySnapshot.forEach((doc) => {
@@ -186,12 +181,13 @@ async function loadVehicles() {
             if (vehicleMap[vId]) {
                 currentVehicle = vehicleMap[vId];
                 updateVisualizer();
+                preloadVehicleImages(currentVehicle);
             }
         });
 
     } catch (e) {
         console.error("Error loading vehicles:", e);
-        // Fallback demo data
+        // Fallback
         const demoVehicles = [
             { id: '1', make: 'Porsche', model: '911', variant: 'Carrera 4S', year: 2024, basePrice: 138600 },
             { id: '2', make: 'BMW', model: 'M3', variant: 'Competition', year: 2024, basePrice: 84300 },
@@ -210,6 +206,7 @@ async function loadVehicles() {
             const vId = e.target.value;
             currentVehicle = demoVehicles.find(v => v.id === vId);
             updateVisualizer();
+            preloadVehicleImages(currentVehicle);
         });
     }
 }
@@ -230,7 +227,6 @@ function selectWrap(color) {
     currentWrap = color;
     wrapNameEl.textContent = color.name + (color.tier === 'pro' ? ' (Pro)' : '');
 
-    // Update active class
     document.querySelectorAll('.color-swatch').forEach(el => {
         el.classList.remove('active');
         if (el.style.backgroundColor === color.hex ||
@@ -245,12 +241,10 @@ function selectWrap(color) {
 // Global Exports
 window.setAngle = (idx) => {
     currentAngle = idx;
-
     document.querySelectorAll('.angle-dot').forEach((dot, i) => {
         if (i === idx) dot.classList.add('active');
         else dot.classList.remove('active');
     });
-
     updateImage();
 };
 
@@ -258,7 +252,6 @@ window.updateVisualizer = () => {
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         installedParts[cb.dataset.part] = cb.checked;
     });
-
     updateImage();
     updateSummary();
 };
@@ -266,20 +259,40 @@ window.updateVisualizer = () => {
 function updateImage() {
     if (!currentVehicle) return;
 
-    spinner.style.display = 'block';
     const angleName = angles[currentAngle];
-    // Placeholder logic
+    // Cache Key: vehicleId-angle
+    const cacheKey = `${currentVehicle.id}-${angleName}`;
+
+    // Check Cache first
+    if (imageCache.has(cacheKey)) {
+        mainImage.src = imageCache.get(cacheKey).src;
+        return;
+    }
+
+    spinner.style.display = 'block';
+    // Logic: If real storageUrl exists in currentVehicle.angles map (from db), use it.
+    // Otherwise fallback to placeholder
     const url = `https://placehold.co/1920x1080/000000/FFF?text=${currentVehicle.make}+${currentVehicle.model}+-+${angleName}`;
 
     mainImage.onload = () => { spinner.style.display = 'none'; };
     mainImage.src = url;
 }
 
+// Preloader
+function preloadVehicleImages(vehicle) {
+    console.log("Preloading images for", vehicle.make);
+    angles.forEach(angleName => {
+        const url = `https://placehold.co/1920x1080/000000/FFF?text=${vehicle.make}+${vehicle.model}+-+${angleName}`;
+        const img = new Image();
+        img.src = url;
+        imageCache.set(`${vehicle.id}-${angleName}`, img);
+    });
+}
+
 function updateSummary() {
     if (!currentVehicle) return;
 
     vehicleNameEl.textContent = `${currentVehicle.make} ${currentVehicle.model}`;
-
     let total = currentVehicle.basePrice || 0;
     let partsCount = 0;
 
@@ -294,6 +307,8 @@ function updateSummary() {
         total += 2500;
     }
 
+    // Animate Price: simple counter effect if big jump?
+    // For V1 just text
     costEl.textContent = '$' + total.toLocaleString();
     partsCountEl.textContent = `${partsCount} installed`;
 }
@@ -308,10 +323,8 @@ window.generateShareLink = async () => {
             parts: installedParts,
             createdAt: serverTimestamp()
         };
-
         const docRef = await addDoc(collection(db, "sharedBuilds"), buildData);
         const url = `${window.location.host}/shared-build.html?id=${docRef.id}`;
-
         navigator.clipboard.writeText(url);
         alert("Build Link Copied to Clipboard!\n" + url);
     } catch (e) {
@@ -322,7 +335,6 @@ window.generateShareLink = async () => {
 
 window.saveLocalBuild = async () => {
     if (!currentVehicle) return alert("Select a vehicle first.");
-
     const buildData = {
         vehicleId: currentVehicle.id,
         vehicleName: `${currentVehicle.make} ${currentVehicle.model}`,
@@ -332,14 +344,11 @@ window.saveLocalBuild = async () => {
             name: `${currentVehicle.year} ${currentVehicle.model} Build`,
         }
     };
-
     await localBuildService.saveBuild(buildData);
-
     const status = document.getElementById('save-status');
     status.style.opacity = '1';
     setTimeout(() => status.style.opacity = '0', 3000);
-
-    checkLocalSave(); // Refresh list
+    checkLocalSave();
 };
 
 window.clearBuild = async () => {
@@ -352,14 +361,9 @@ window.clearBuild = async () => {
 window.loadSavedToVisualizer = async () => {
     const saved = await localBuildService.loadBuild();
     if (!saved) return;
-
-    // We need to match vehicle ID, but assuming standard vehicles for now or stored vehicleId is valid
-    // For demo/V1 we might need to just force set the values
     vehicleSelect.value = saved.vehicleId;
-    // Trigger change handling manually to set currentVehicle
     const event = new Event('change');
     vehicleSelect.dispatchEvent(event);
-
     setTimeout(() => {
         if (saved.wrap) selectWrap(saved.wrap);
         installedParts = saved.parts;
@@ -371,7 +375,6 @@ window.loadSavedToVisualizer = async () => {
     }, 500);
 };
 
-// Formatting Aid
 function hexToRgb(hex) {
     if (!hex) return '0,0,0';
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

@@ -1,16 +1,15 @@
 /**
- * Pricing Toggle Logic
+ * Pricing Toggle Logic (Sliding Tab Version)
  * Handles switching between Monthly and Yearly billing
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initPricingToggle();
+    initPricingSlideToggle();
 });
 
-function initPricingToggle() {
-    const toggle = document.getElementById('billing-toggle');
-    const monthlyLabels = document.querySelectorAll('.pricing-label[data-billing="monthly"]');
-    const yearlyLabels = document.querySelectorAll('.pricing-label[data-billing="yearly"]');
+function initPricingSlideToggle() {
+    const tabsContainer = document.getElementById('pricing-tabs');
+    const options = document.querySelectorAll('.toggle-option');
 
     // Check local storage or URL param for preference
     const savedBilling = localStorage.getItem('garageManager_billing') || 'monthly';
@@ -21,38 +20,41 @@ function initPricingToggle() {
     const currentBilling = urlBilling || savedBilling;
 
     if (currentBilling === 'yearly') {
-        toggle.checked = true;
-        updateActiveLabels('yearly');
-        updatePrices('yearly');
+        setYearly();
     } else {
-        toggle.checked = false;
-        updateActiveLabels('monthly');
-        updatePrices('monthly');
+        setMonthly();
     }
 
-    // Event listener
-    toggle.addEventListener('change', (e) => {
-        const mode = e.target.checked ? 'yearly' : 'monthly';
-        updateActiveLabels(mode);
-        updatePrices(mode);
+    // Click Handlers
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            const period = opt.dataset.period;
+            if (period === 'yearly') setYearly();
+            else setMonthly();
+        });
+    });
 
+    function setMonthly() {
+        tabsContainer.classList.remove('year-active');
+        updateState('monthly');
+    }
+
+    function setYearly() {
+        tabsContainer.classList.add('year-active');
+        updateState('yearly');
+    }
+
+    function updateState(mode) {
         // Persist
         localStorage.setItem('garageManager_billing', mode);
 
-        // Update URL without reload
+        // Update URL
         const newUrl = new URL(window.location);
         newUrl.searchParams.set('billing', mode);
         window.history.replaceState({}, '', newUrl);
-    });
 
-    function updateActiveLabels(mode) {
-        if (mode === 'yearly') {
-            monthlyLabels.forEach(l => l.classList.remove('active'));
-            yearlyLabels.forEach(l => l.classList.add('active'));
-        } else {
-            yearlyLabels.forEach(l => l.classList.remove('active'));
-            monthlyLabels.forEach(l => l.classList.add('active'));
-        }
+        // Update Prices
+        updatePrices(mode);
     }
 
     function updatePrices(mode) {
@@ -67,7 +69,6 @@ function initPricingToggle() {
             const monthlyPrice = card.getAttribute('data-monthly-price');
             const yearlyPrice = card.getAttribute('data-yearly-price');
 
-            // Skip if no pricing data (e.g. Free plan might handle differently or be same)
             if (!monthlyPrice && !yearlyPrice) return;
 
             if (mode === 'yearly') {
@@ -77,11 +78,11 @@ function initPricingToggle() {
                 setTimeout(() => {
                     if (yearlyPrice) {
                         priceEl.textContent = yearlyPrice;
-                        periodEl.innerHTML = 'per year <span class="text-xs text-accent">(billed annually)</span>';
+                        periodEl.innerHTML = 'per year <span class="text-xs text-accent" style="display:block; font-size:12px; color:#3b82f6;">(billed annually)</span>';
                     }
                     if (saveBadge) saveBadge.classList.add('visible');
                     priceEl.style.opacity = '1';
-                }, 200);
+                }, 150);
             } else {
                 // Animate out
                 priceEl.style.opacity = '0';
@@ -93,7 +94,7 @@ function initPricingToggle() {
                     }
                     if (saveBadge) saveBadge.classList.remove('visible');
                     priceEl.style.opacity = '1';
-                }, 200);
+                }, 150);
             }
         });
     }

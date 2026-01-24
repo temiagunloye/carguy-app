@@ -9,6 +9,7 @@
     <title>Pricing - Garage Manager | ThatAppCompany</title>
     <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pricing-sliding-toggle.css">
 </head>
 
 <body>
@@ -52,27 +53,19 @@
     </section>
 
     <!-- Pricing Cards -->
-    <!-- Pricing Cards -->
     <section
         style="padding: var(--space-4xl) 0; background: var(--bg-secondary); margin-top: calc(-1 * var(--space-4xl));">
         <div class="container">
 
-            <!-- Pricing Toggle -->
-            <div class="pricing-toggle-container">
-                <span class="pricing-label active" data-billing="monthly"
-                    onclick="document.getElementById('billing-toggle').click()">Monthly</span>
-
-                <label class="toggle-switch-wrapper" style="display:flex; align-items:center;">
-                    <input type="checkbox" id="billing-toggle" class="pricing-toggle-checkbox">
-                    <div class="toggle-switch">
-                        <div class="toggle-slider"></div>
-                    </div>
-                </label>
-
-                <span class="pricing-label" data-billing="yearly"
-                    onclick="document.getElementById('billing-toggle').click()">
-                    Yearly <span class="discount-badge">Save 17%</span>
-                </span>
+            <!-- Pricing Toggle (Sortly Style) -->
+            <div class="pricing-toggle-wrapper">
+                <div class="pricing-toggle-tabs" id="pricing-tabs">
+                    <div class="toggle-slider-bg"></div>
+                    <button class="toggle-option active" data-period="monthly">Monthly</button>
+                    <button class="toggle-option" data-period="yearly">
+                        Yearly <span class="discount-badge-small">Save 17%</span>
+                    </button>
+                </div>
             </div>
 
             <div class="grid grid-3">
