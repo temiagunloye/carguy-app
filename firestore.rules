@@ -104,13 +104,7 @@ service cloud.firestore {
     // Firestore rules cascade somewhat, but usually match most specific. 
     // For now, keeping the top-level generous rule for 10-angle parts.
 
-    match /jobs/{jobId} {
-       // Conflict with top-level /jobs. The top-level allows owner access.
-       // This dealer-specific rule allows shop admin access. 
-       // We can rely on the updated top-level rule + this logic if we merge cleanly, 
-       // but typically you can't have duplicate match blocks for same path.
-       // Merging logic into single block below:
-    }
+    // match /jobs/{jobId} block removed (merged with top-level)
     
     match /portalTokens/{tokenId} { allow read, write: if false; }
     match /portalApprovals/{approvalId} { 

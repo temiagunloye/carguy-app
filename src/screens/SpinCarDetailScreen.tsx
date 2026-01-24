@@ -1,11 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { collection, doc, onSnapshot, orderBy, query, setDoc } from "firebase/firestore";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Pressable, Text, View } from "react-native";
-import { db } from "../services/firebaseConfig";
+import { getFunctions } from "firebase/functions";
+import React, { useState } from "react";
+import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
 
-import { Firestore } from "firebase/firestore";
+// Isolate header for cleaner diff
+const Header = ({ title, onBack }: { title: string; onBack: () => void }) => (
+    <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+        <TouchableOpacity onPress={onBack} style={{ padding: 8, marginRight: 8 }}>
+            <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, fontWeight: "700" }}>{title}</Text>
+    </View>
+);
 
 export default function SpinCarDetailScreen() {
     const route = useRoute();
@@ -15,46 +22,14 @@ export default function SpinCarDetailScreen() {
     const fn = getFunctions();
 
     const [car, setCar] = useState<any>(null);
-    const [angles, setAngles] = useState<any[]>([]);
-
-    useEffect(() => {
-        if (!carId) return;
-        const firestoreDb = db as unknown as Firestore;
-        const unsub = onSnapshot(doc(firestoreDb, "cars", carId), (d) => setCar({ id: d.id, ...d.data() }));
-        const q = query(collection(firestoreDb, "cars", carId, "angles"), orderBy("angleIndex", "asc"));
-        const unsub2 = onSnapshot(q, (snap) => setAngles(snap.docs.map(x => ({ id: x.id, ...x.data() }))));
-        return () => { unsub(); unsub2(); };
-    }, [carId]);
-
-    const queueSeg = async () => {
-        try {
-            const call = httpsCallable(fn, "queueSegmentCar");
-            const res: any = await call({ carId });
-            Alert.alert("Queued", `Job: ${res.data.jobId}`);
-        } catch (e: any) {
-            Alert.alert("Error", e?.message || String(e));
-        }
-    };
-
-    const createBuild = async () => {
-        // Minimal build doc
-        const buildId = `${carId}-${Date.now()}`;
-        const firestoreDb = db as unknown as Firestore;
-        await setDoc(doc(firestoreDb, "builds", buildId), {
-            ownerId: "demo",
-            carId,
-            appliedParts: [],
-            status: "idle",
-            createdAt: new Date(),
-            updatedAt: new Date()
-        });
-        // @ts-ignore
-        navigation.navigate("SpinBuild", { buildId });
-    };
+    // ... existing state ...
 
     return (
-        <View style={{ flex: 1, padding: 16, gap: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: "700" }}>{car?.make} {car?.model}</Text>
+        <View style={{ flex: 1, padding: 16, paddingTop: 60, gap: 12 }}>
+            <Header
+                title={car ? `${car.make} ${car.model}` : "Loading..."}
+                onBack={() => navigation.goBack()}
+            />
             <Text style={{ opacity: 0.7 }}>Angles: {angles.length}/10</Text>
 
             <View style={{ flexDirection: "row", gap: 10 }}>

@@ -28,11 +28,12 @@ const initializeFirebase = () => {
   }
 
   try {
-    const { initializeApp } = require("firebase/app");
-    const { initializeAuth, getReactNativePersistence } = require("firebase/auth");
-    const { getFirestore } = require("firebase/firestore");
-    const { getStorage: getFirebaseStorage } = require("firebase/storage");
+    const { initializeApp, getApps } = require("firebase/app");
+    const { initializeAuth, getReactNativePersistence, connectAuthEmulator } = require("firebase/auth");
+    const { initializeFirestore, connectFirestoreEmulator } = require("firebase/firestore");
+    const { getStorage: getFirebaseStorage, connectStorageEmulator } = require("firebase/storage");
     const ReactNativeAsyncStorage = require("@react-native-async-storage/async-storage").default;
+    const Constants = require("expo-constants").default;
 
     // Firebase configuration from carguy-app-demo project
     const firebaseConfig = {
@@ -45,12 +46,43 @@ const initializeFirebase = () => {
       measurementId: "G-VK9ENC9J54"
     };
 
-    firebaseState.app = initializeApp(firebaseConfig);
-    firebaseState.auth = initializeAuth(firebaseState.app, {
-      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-    });
-    firebaseState.db = getFirestore(firebaseState.app);
-    firebaseState.storage = getFirebaseStorage(firebaseState.app);
+    if (getApps().length === 0) {
+      firebaseState.app = initializeApp(firebaseConfig);
+      firebaseState.auth = initializeAuth(firebaseState.app, {
+        persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+      });
+      // Force long polling to fix "transport errored" on React Native
+      firebaseState.db = initializeFirestore(firebaseState.app, {
+        experimentalForceLongPolling: true,
+      });
+      firebaseState.storage = getFirebaseStorage(firebaseState.app);
+
+      // Connect to emulators if in DEV mode
+      if (__DEV__) {
+        console.log("🔥 Connecting to Firebase Emulators...");
+        // Dynamically detect host IP for physical devices
+        const debuggerHost = Constants.expoConfig?.hostUri || Constants.manifest?.debuggerHost || "127.0.0.1:8081";
+        const localhost = debuggerHost.split(":")[0];
+
+        console.log(`📡 Detected Host IP: ${localhost}`);
+
+        try {
+          connectAuthEmulator(firebaseState.auth, `http://${localhost}:9099`);
+          connectFirestoreEmulator(firebaseState.db, localhost, 8080);
+          connectStorageEmulator(firebaseState.storage, localhost, 9199);
+        } catch (e) {
+          console.warn("Error connecting to emulators:", e);
+        }
+      }
+    } else {
+      // App already initialized - recover instances
+      firebaseState.app = getApps()[0];
+      const { getAuth } = require("firebase/auth");
+      const { getFirestore } = require("firebase/firestore");
+      firebaseState.auth = getAuth(firebaseState.app);
+      firebaseState.db = getFirestore(firebaseState.app);
+      firebaseState.storage = getFirebaseStorage(firebaseState.app);
+    }
 
     return { auth: firebaseState.auth, db: firebaseState.db, storage: firebaseState.storage };
   } catch (error) {

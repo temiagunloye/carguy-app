@@ -5,9 +5,22 @@ const path = require('path');
 // Use the same service account as base-models-test
 const serviceAccount = require('../base-models-test/service-account-key.json');
 
+
+// FORCE EMULATOR CONNECTION
+process.env.FIRESTORE_EMULATOR_HOST = "127.0.0.1:8080";
+process.env.FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099";
+process.env.FIREBASE_STORAGE_EMULATOR_HOST = "127.0.0.1:9199";
+
+console.log("🔧 Forced Emulator Hosts:", {
+    firestore: process.env.FIRESTORE_EMULATOR_HOST,
+    auth: process.env.FIREBASE_AUTH_EMULATOR_HOST,
+    storage: process.env.FIREBASE_STORAGE_EMULATOR_HOST
+});
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: 'carguy-app-demo.firebasestorage.app'
+    storageBucket: 'carguy-app-demo.firebasestorage.app',
+    projectId: 'demo-carapp' // Match the emulator project ID
 });
 
 const bucket = admin.storage().bucket();

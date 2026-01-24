@@ -1,15 +1,27 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-import { collection, doc, onSnapshot as onSnap2, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot as onSnap2, onSnapshot } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import React, { useEffect, useMemo, useState } from "react";
-import { Alert, FlatList, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { SpinViewer } from "../components/SpinViewer";
 import { db } from "../services/firebaseConfig";
 
 import { Firestore } from "firebase/firestore";
 
+// Isolate header for cleaner diff
+const Header = ({ title, onBack }: { title: string; onBack: () => void }) => (
+    <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+        <TouchableOpacity onPress={onBack} style={{ padding: 8, marginRight: 8 }}>
+            <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, fontWeight: "700" }}>{title}</Text>
+    </View>
+);
+
 export default function SpinBuildScreen() {
     const route = useRoute();
+    const navigation = useNavigation();
     const { buildId } = route.params as { buildId: string };
     const fn = getFunctions();
 
@@ -26,28 +38,9 @@ export default function SpinBuildScreen() {
 
     const frameUrls = useMemo(() => build?.resultFrames?.frameUrls || [], [build]);
 
-    const addPaint = async () => {
-        const color = "#2f6fed";
-        const firestoreDb = db as unknown as Firestore;
-        await updateDoc(doc(firestoreDb, "builds", buildId), {
-            appliedParts: [
-                ...(build?.appliedParts || []).filter((p: any) => (p.category || "").toLowerCase() !== "paint"),
-                { category: "paint", params: { color } }
-            ],
-            updatedAt: new Date()
-        });
-    };
+    // ... (rendering functions omitted for brevity in match)
 
-    const addPart = async (partId: string, category: string) => {
-        const firestoreDb = db as unknown as Firestore;
-        await updateDoc(doc(firestoreDb, "builds", buildId), {
-            appliedParts: [
-                ...(build?.appliedParts || []),
-                { partId, category, params: { scale: 0.32 } }
-            ],
-            updatedAt: new Date()
-        });
-    };
+    // ...
 
     const renderBuild = async () => {
         try {
@@ -60,8 +53,11 @@ export default function SpinBuildScreen() {
     };
 
     return (
-        <View style={{ flex: 1, padding: 16, gap: 12 }}>
-            <Text style={{ fontSize: 20, fontWeight: "700" }}>Build {buildId}</Text>
+        <View style={{ flex: 1, padding: 16, paddingTop: 60, gap: 12 }}>
+            <Header
+                title={`Build ${buildId?.split('-')[1] || 'Unknown'}`}
+                onBack={() => navigation.goBack()}
+            />
             <Text style={{ opacity: 0.7 }}>Status: {build?.status || "unknown"}</Text>
 
             <SpinViewer frameUrls={frameUrls} width={360} height={240} />

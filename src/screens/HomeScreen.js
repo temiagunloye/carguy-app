@@ -97,36 +97,27 @@ export default function HomeScreen({ navigation }) {
           : "Start by adding your vehicle."}
       </Text>
 
-      {/* MAIN BUTTONS */}
-      <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={[styles.primaryButton, { backgroundColor: '#4CAF50' }]}
-          onPress={() => navigation.navigate("DemoCarsGallery")}
-        >
-          <Ionicons name="car-sport-outline" size={18} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Browse Demo</Text>
-        </TouchableOpacity>
-
-        {/* 10-ANGLE STUDIO DEMO ROW */}
-        <Text style={{ color: '#666', fontSize: 12, marginBottom: 8, fontWeight: '600' }}>10-ANGLE STUDIO (DEMOS)</Text>
-        <View style={{ flexDirection: "row", gap: 10, marginBottom: 20 }}>
+      {/* MAIN ACTIONS */}
+      <View style={styles.actionSection}>
+        <Text style={styles.sectionTitle}>Start Building (Demos)</Text>
+        <View style={styles.demoRow}>
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            style={styles.demoButton}
             onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-911" })}
           >
-            <Text style={styles.primaryButtonText}>Porsche 911</Text>
+            <Text style={styles.demoButtonText}>Porsche 911</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            style={styles.demoButton}
             onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-m3" })}
           >
-            <Text style={styles.primaryButtonText}>BMW M3</Text>
+            <Text style={styles.demoButtonText}>BMW M3</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: '#2f6fed', paddingVertical: 10 }]}
+            style={styles.demoButton}
             onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-brz" })}
           >
-            <Text style={styles.primaryButtonText}>Subaru BRZ</Text>
+            <Text style={styles.demoButtonText}>Subaru BRZ</Text>
           </TouchableOpacity>
         </View>
 
@@ -134,8 +125,8 @@ export default function HomeScreen({ navigation }) {
           style={styles.primaryButton}
           onPress={handleAddNewCar}
         >
-          <Ionicons name="add-circle-outline" size={18} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Add New Car</Text>
+          <Ionicons name="add-circle-outline" size={20} color="#fff" style={styles.buttonIcon} />
+          <Text style={styles.primaryButtonText}>Add Your Own Car</Text>
         </TouchableOpacity>
       </View>
 
@@ -237,30 +228,50 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 20,
   },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 12,
+  actionSection: {
     marginBottom: 32,
   },
+  sectionTitle: {
+    color: '#666',
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 1,
+    marginBottom: 12,
+    textTransform: 'uppercase',
+  },
+  demoRow: {
+    flexDirection: "row",
+    gap: 10,
+    marginBottom: 16,
+  },
+  demoButton: {
+    backgroundColor: '#1E1E1E',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  demoButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
   primaryButton: {
-    flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: "#ffffff",
     borderRadius: 8,
     alignItems: "center",
-    paddingVertical: 14,
+    paddingVertical: 16,
     flexDirection: "row",
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#1a1a1a",
   },
   buttonIcon: {
     marginRight: 8,
   },
   primaryButtonText: {
-    color: "#ffffff",
-    fontSize: 15,
-    fontWeight: "600",
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "700",
   },
   quickActions: {
     marginTop: 8,
