@@ -16,8 +16,12 @@
         <!-- Left Panel: Controls -->
         <div class="hud-panel hud-left">
             <div class="hud-panel-header">
-                <span>Configuration</span>
-                <a href="/" class="text-xs text-muted" style="text-decoration:none; color: #a1a1aa;">&larr; Exit</a>
+                <span style="display:flex; align-items:center; gap:8px;"><i data-lucide="sliders-horizontal"
+                        style="width:16px;"></i> Configuration</span>
+                <a href="/shop/builds.html" class="text-xs text-muted"
+                    style="text-decoration:none; color: #a1a1aa; display:flex; align-items:center; gap:4px;">
+                    <i data-lucide="arrow-left" style="width:12px;"></i> Exit
+                </a>
             </div>
 
             <div class="hud-panel-content">
@@ -97,7 +101,8 @@
         <!-- Right Panel: Summary -->
         <div class="hud-panel hud-right">
             <div class="hud-panel-header">
-                <span>Build Summary</span>
+                <span style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-text"
+                        style="width:16px;"></i> Build Summary</span>
                 <span id="save-status" class="text-xs text-green-500" style="opacity:0;">Saved</span>
             </div>
 
@@ -147,8 +152,8 @@
 
             <div class="hud-panel-footer">
                 <div style="display:flex; gap: 10px; align-items:center;">
-                    <img src="/assets/icons/favicon.png" width="24" height="24" alt="GM">
-                    <span style="font-weight:600; font-size:12px;">GARAGE MANAGER</span>
+                    <img src="/brand/garage-manager/v1/mark.svg" width="24" height="24" alt="GM">
+                    <span style="font-weight:600; font-size:12px;">Garage Manager</span>
                 </div>
             </div>
         </div>
@@ -156,6 +161,8 @@
     </div>
 
     <!-- Firebase SDKs -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, getDoc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";

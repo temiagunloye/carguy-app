@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Builds | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .shop-nav {
+            background: #000;
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--space-md) 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: var(--space-lg);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .sidebar-link i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main-content {
+            padding: var(--space-2xl);
+            background: var(--bg-primary);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pill.draft {
+            background: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+        }
+
+        .status-pill.shared {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .status-pill.approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .status-pill.completed {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="shop-nav">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="/brand/garage-manager/v1/mark.svg" width="32" height="32" alt="GM">
+                <span class="font-bold text-lg" style="color: white; font-weight: 700;">Garage Manager</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <span class="text-sm text-muted" id="user-email">Loading...</span>
+                <button onclick="signOutUser()" class="text-sm text-accent hover:underline">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <aside class="sidebar">
+            <a href="/shop/dashboard.html" class="sidebar-link">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="/shop/marketplace.html" class="sidebar-link">
+                <i data-lucide="shopping-bag"></i> Marketplace
+            </a>
+            <a href="/shop/builds.html" class="sidebar-link active">
+                <i data-lucide="wrench"></i> Build Simulator
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="message-circle"></i> Inquiries <span class="badge badge-primary"
+                    style="margin-left:auto; font-size:10px;">2</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="settings"></i> Settings
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <div class="section-header">
+                <div>
+                    <h1 class="text-2xl font-bold">Builds</h1>
+                    <p class="text-muted">Manage your quotes and vehicle configurations.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary">Add New Car</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/shop/simulator.html'">Create New
+                        Build</button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex gap-4 mb-6" style="margin-bottom: var(--space-xl);">
+                <input type="text" placeholder="Search builds..."
+                    style="background:var(--bg-card); border:1px solid var(--border-color); padding:8px 12px; border-radius:8px; color:white; width:250px;">
+                <select
+                    style="background:var(--bg-card); border:1px solid var(--border-color); padding:8px 12px; border-radius:8px; color:white;">
+                    <option value="all">All Statuses</option>
+                    <option value="draft">Draft</option>
+                    <option value="approved">Approved</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <!-- Builds List -->
+            <div class="card">
+                <table style="width:100%; text-align:left; border-collapse:collapse;">
+                    <thead>
+                        <tr
+                            style="border-bottom:1px solid var(--border-color); color:var(--text-muted); font-size:14px;">
+                            <th style="padding:16px;">Build Name</th>
+                            <th style="padding:16px;">Customer</th>
+                            <th style="padding:16px;">Vehicle</th>
+                            <th style="padding:16px;">Status</th>
+                            <th style="padding:16px;">Total</th>
+                            <th style="padding:16px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:14px;">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:16px; font-weight:500;">M3 Carbon Pack</td>
+                            <td style="padding:16px;">Alex Chen</td>
+                            <td style="padding:16px;">2024 BMW M3 G80</td>
+                            <td style="padding:16px;"><span class="status-pill drafted">In Progress</span></td>
+                            <td style="padding:16px;">$12,400</td>
+                            <td style="padding:16px;">
+                                <button class="btn btn-sm btn-secondary"
+                                    onclick="window.location.href='/shop/simulator.html?buildId=123'">Open</button>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:16px; font-weight:500;">911 Wrap & Wheels</td>
+                            <td style="padding:16px;">Sarah Miller</td>
+                            <td style="padding:16px;">2023 Porsche 911</td>
+                            <td style="padding:16px;"><span class="status-pill shared">Shared</span></td>
+                            <td style="padding:16px;">$8,200</td>
+                            <td style="padding:16px;">
+                                <button class="btn btn-sm btn-secondary"
+                                    onclick="window.location.href='/shop/simulator.html?buildId=456'">Open</button>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:16px; font-weight:500;">Track Prep BRZ</td>
+                            <td style="padding:16px;">John Doe</td>
+                            <td style="padding:16px;">2022 Subaru BRZ</td>
+                            <td style="padding:16px;"><span class="status-pill approved">Approved</span></td>
+                            <td style="padding:16px;">$15,100</td>
+                            <td style="padding:16px;">
+                                <button class="btn btn-sm btn-secondary"
+                                    onclick="window.location.href='/shop/simulator.html?buildId=789'">Open</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Auth Script -->
+    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module">
+        import { checkAuth, signOut } from '/js/shopAuth.js';
+        (async () => {
+            const user = await checkAuth();
+            if (user) document.getElementById('user-email').textContent = user.email;
+        })();
+        window.signOutUser = async () => {
+            await signOut();
+            window.location.href = '/shop/login.html';
+        };
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

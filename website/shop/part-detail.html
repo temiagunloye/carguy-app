@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part Details | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .shop-nav {
+            background: #000;
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--space-md) 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: var(--space-lg);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .sidebar-link i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main-content {
+            padding: var(--space-2xl);
+            background: var(--bg-primary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .gallery-main {
+            width: 100%;
+            height: 400px;
+            background: #222;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-md);
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .gallery-thumb {
+            width: 80px;
+            height: 60px;
+            background: #222;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .gallery-thumb.active {
+            border-color: var(--accent-primary);
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="shop-nav">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="/brand/garage-manager/v1/mark.svg" width="32" height="32" alt="GM">
+                <span class="font-bold text-lg" style="color: white; font-weight: 700;">Garage Manager</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <span class="text-sm text-muted" id="user-email">Loading...</span>
+                <button onclick="signOutUser()" class="text-sm text-accent hover:underline">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <aside class="sidebar">
+            <a href="/shop/dashboard.html" class="sidebar-link">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="/shop/marketplace.html" class="sidebar-link active">
+                <i data-lucide="shopping-bag"></i> Marketplace
+            </a>
+            <a href="/shop/builds.html" class="sidebar-link">
+                <i data-lucide="wrench"></i> Build Simulator
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="message-circle"></i> Inquiries <span class="badge badge-primary"
+                    style="margin-left:auto; font-size:10px;">2</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="settings"></i> Settings
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-lg);">
+                <a href="/shop/marketplace.html"
+                    style="color:var(--text-muted); text-decoration:none; display:flex; align-items:center; gap:8px;">
+                    <i data-lucide="arrow-left" style="width:16px;"></i> Back to Marketplace
+                </a>
+            </div>
+
+            <div class="detail-grid">
+                <!-- Left: Photos & Details -->
+                <div>
+                    <div class="gallery-main">
+                        <img src="https://placehold.co/800x600/333/FFF?text=BBS+LM" alt="Main Photo">
+                    </div>
+                    <div class="gallery-thumbs">
+                        <div class="gallery-thumb active"><img src="https://placehold.co/100x100/333/FFF?text=1"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:4px;"></div>
+                        <div class="gallery-thumb"><img src="https://placehold.co/100x100/333/FFF?text=2"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:4px;"></div>
+                        <div class="gallery-thumb"><img src="https://placehold.co/100x100/333/FFF?text=3"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:4px;"></div>
+                    </div>
+
+                    <div class="info-card" style="margin-top: var(--space-xl);">
+                        <h2 class="text-xl font-bold mb-4">Description</h2>
+                        <p class="text-muted" style="line-height: 1.6;">
+                            Authentic BBS LM wheels in Diamond Silver. Brand new in box, never mounted.
+                            These are the perfect spec for G80/G82 BMW M3/M4. Includes center caps and valve stems.
+
+                            <br><br>
+                            Front: 20x10 ET22<br>
+                            Rear: 20x11 ET24
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h2 class="text-xl font-bold mb-4">Fitment</h2>
+                        <ul style="list-style: disc; margin-left: 20px; color: var(--text-muted);">
+                            <li>2021+ BMW M3 (G80)</li>
+                            <li>2021+ BMW M4 (G82)</li>
+                            <li>2023+ BMW M2 (G87)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right: Actions & Shop Info -->
+                <div>
+                    <div class="info-card" style="position:sticky; top:20px;">
+                        <h1 class="text-3xl font-bold mb-2">$3,400</h1>
+                        <h2 class="text-lg text-muted mb-4">BBS LM - 20" - BMW Spec</h2>
+
+                        <div class="flex flex-col gap-3 mb-6">
+                            <button class="btn btn-primary w-full"
+                                style="width:100%; display:flex; justify-content:center; align-items:center; gap:8px;">
+                                <i data-lucide="plus-circle" style="width:18px;"></i> Add to Build
+                            </button>
+                            <button class="btn btn-secondary w-full"
+                                style="width:100%; display:flex; justify-content:center; align-items:center; gap:8px;">
+                                <i data-lucide="message-circle" style="width:18px;"></i> Request Quote
+                            </button>
+                        </div>
+
+                        <hr style="border-color:var(--border-color); margin: 20px 0;">
+
+                        <div>
+                            <p class="text-xs font-bold text-muted uppercase mb-3">Sold By</p>
+                            <div class="flex items-center gap-3">
+                                <div style="width:40px; height:40px; background:#333; border-radius:50%;"></div>
+                                <div>
+                                    <p class="font-bold">Apex Performance</p>
+                                    <p class="text-xs text-muted">Los Angeles, CA</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 mt-3">
+                                <span class="badge badge-primary">Top Rated</span>
+                                <span class="badge badge-secondary">Fast Shipper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module">
+        import { checkAuth, signOut } from '/js/shopAuth.js';
+        (async () => {
+            const user = await checkAuth();
+            if (user) document.getElementById('user-email').textContent = user.email;
+        })();
+        window.signOutUser = async () => {
+            await signOut();
+            window.location.href = '/shop/login.html';
+        };
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

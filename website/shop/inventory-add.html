@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Inventory | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .shop-nav {
+            background: #000;
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--space-md) 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: var(--space-lg);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .sidebar-link i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main-content {
+            padding: var(--space-2xl);
+            background: var(--bg-primary);
+        }
+
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px;
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="shop-nav">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="/brand/garage-manager/v1/mark.svg" width="32" height="32" alt="GM">
+                <span class="font-bold text-lg" style="color: white; font-weight: 700;">Garage Manager</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <span class="text-sm text-muted" id="user-email">Loading...</span>
+                <button onclick="signOutUser()" class="text-sm text-accent hover:underline">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        <aside class="sidebar">
+            <a href="/shop/dashboard.html" class="sidebar-link">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="/shop/marketplace.html" class="sidebar-link activity">
+                <i data-lucide="shopping-bag"></i> Marketplace
+            </a>
+            <a href="/shop/builds.html" class="sidebar-link">
+                <i data-lucide="wrench"></i> Build Simulator
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="message-circle"></i> Inquiries <span class="badge badge-primary"
+                    style="margin-left:auto; font-size:10px;">2</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <i data-lucide="settings"></i> Settings
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <div style="max-width:800px; margin:0 auto; margin-bottom:var(--space-lg);">
+                <a href="/shop/dashboard.html"
+                    style="color:var(--text-muted); text-decoration:none; display:flex; align-items:center; gap:8px; margin-bottom:var(--space-md);">
+                    <i data-lucide="arrow-left" style="width:16px;"></i> Back to Dashboard
+                </a>
+                <h1 class="text-2xl font-bold">Add New Part</h1>
+                <p class="text-muted">List a part in the Garage Manager Marketplace.</p>
+            </div>
+
+            <div class="form-card">
+                <form
+                    onsubmit="event.preventDefault(); alert('Part created!'); window.location.href='/shop/marketplace.html';">
+
+                    <div class="form-group">
+                        <label class="form-label">Part Name</label>
+                        <input type="text" class="form-input" placeholder="e.g. Michelin Pilot Sport 4S - 265/35/19"
+                            required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" required>
+                                <option value="">Select Category...</option>
+                                <option value="wheels">Wheels & Tires</option>
+                                <option value="aero">Aero / Body</option>
+                                <option value="suspension">Suspension</option>
+                                <option value="exhaust">Exhaust</option>
+                                <option value="interior">Interior</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Brand</label>
+                            <input type="text" class="form-input" placeholder="e.g. Michelin">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Price ($)</label>
+                            <input type="number" class="form-input" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-input" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Condition</label>
+                        <select class="form-select">
+                            <option value="new">New</option>
+                            <option value="used">Used - Like New</option>
+                            <option value="used_good">Used - Good</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group"
+                        style="padding:16px; background:rgba(59,130,246,0.1); border-radius:8px; border:1px solid rgba(59,130,246,0.2);">
+                        <label class="form-label text-accent" style="display:flex; align-items:center; gap:8px;">
+                            <input type="checkbox" checked> Available for In-House Installation
+                        </label>
+                        <div class="form-row" style="margin-top:12px;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label text-sm">Est. Labor Hours</label>
+                                <input type="number" class="form-input" placeholder="e.g. 2.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Images</label>
+                        <div
+                            style="border:2px dashed var(--border-color); padding:32px; text-align:center; border-radius:12px; cursor:pointer; color:var(--text-muted);">
+                            <i data-lucide="image-plus" style="width:32px; height:32px; margin-bottom:8px;"></i>
+                            <p>Click to upload or drag and drop</p>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:32px;">
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Listing</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module">
+        import { checkAuth, signOut } from '/js/shopAuth.js';
+        (async () => {
+            const user = await checkAuth();
+            if (user) document.getElementById('user-email').textContent = user.email;
+        })();
+        window.signOutUser = async () => {
+            await signOut();
+            window.location.href = '/shop/login.html';
+        };
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

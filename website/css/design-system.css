@@ -4,70 +4,104 @@
  */
 
 :root {
-  /* Color Palette */
-  --bg-primary: #0B0F14;
-  --bg-secondary: #121826;
-  --bg-tertiary: #1a202e;
-  --bg-card: #1F2937;
-  --bg-card-hover: #2d3748;
-  
+  /* Garage Manager Brand Kit v1 */
+  /* Core */
+  --gm-bg: #0B0F14;
+  --gm-surface: #111826;
+  --gm-surface-2: #151F2E;
+
+  /* Accents */
+  --gm-navy: #0B2A4A;
+  --gm-navy-2: #103A66;
+
+  /* Metal */
+  --gm-silver: #C9D1D9;
+  --gm-silver-hi: #E6EDF3;
+  --gm-graphite: #6B7785;
+
+  /* Mappings to legacy variables */
+  --bg-primary: var(--gm-bg);
+  --bg-secondary: var(--gm-surface);
+  --bg-tertiary: var(--gm-surface-2);
+  --bg-card: var(--gm-surface);
+  --bg-card-hover: var(--gm-surface-2);
+
   --text-primary: #F5F7FA;
   --text-secondary: #E5E7EB;
-  --text-muted: #A8B0BC;
-  --text-dim: #6B7280;
-  
-  --accent-primary: #3B82F6;
-  --accent-primary-hover: #2563EB;
-  --accent-secondary: #10B981;
-  --accent-glow: rgba(59, 130, 246, 0.25);
-  --accent-glow-strong: rgba(59, 130, 246, 0.4);
-  
-  --border-color: #374151;
-  --border-light: #4B5563;
-  
+  --text-muted: var(--gm-graphite);
+  --text-dim: #4B5563;
+
+  --accent-primary: var(--gm-navy);
+  --accent-primary-hover: var(--gm-navy-2);
+  --accent-secondary: var(--gm-silver);
+  --accent-glow: rgba(11, 42, 74, 0.4);
+  --accent-glow-strong: rgba(11, 42, 74, 0.7);
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.15);
+
   /* Spacing System */
-  --space-xs: 0.5rem;      /* 8px */
-  --space-sm: 1rem;        /* 16px */
-  --space-md: 1.5rem;      /* 24px */
-  --space-lg: 2rem;        /* 32px */
-  --space-xl: 3rem;        /* 48px */
-  --space-2xl: 4rem;       /* 64px */
-  --space-3xl: 6rem;       /* 96px */
-  --space-4xl: 8rem;       /* 128px */
-  
+  --space-xs: 0.5rem;
+  /* 8px */
+  --space-sm: 1rem;
+  /* 16px */
+  --space-md: 1.5rem;
+  /* 24px */
+  --space-lg: 2rem;
+  /* 32px */
+  --space-xl: 3rem;
+  /* 48px */
+  --space-2xl: 4rem;
+  /* 64px */
+  --space-3xl: 6rem;
+  /* 96px */
+  --space-4xl: 8rem;
+  /* 128px */
+
   /* Typography */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  --text-4xl: 2.25rem;     /* 36px */
-  --text-5xl: 3rem;        /* 48px */
-  --text-6xl: 3.75rem;     /* 60px */
-  --text-7xl: 4.5rem;      /* 72px */
-  
+
+  --text-xs: 0.75rem;
+  /* 12px */
+  --text-sm: 0.875rem;
+  /* 14px */
+  --text-base: 1rem;
+  /* 16px */
+  --text-lg: 1.125rem;
+  /* 18px */
+  --text-xl: 1.25rem;
+  /* 20px */
+  --text-2xl: 1.5rem;
+  /* 24px */
+  --text-3xl: 1.875rem;
+  /* 30px */
+  --text-4xl: 2.25rem;
+  /* 36px */
+  --text-5xl: 3rem;
+  /* 48px */
+  --text-6xl: 3.75rem;
+  /* 60px */
+  --text-7xl: 4.5rem;
+  /* 72px */
+
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-black: 900;
-  
+
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -75,12 +109,12 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 40px var(--accent-glow);
   --shadow-glow-strong: 0 0 60px var(--accent-glow-strong);
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
   --transition-slow: 300ms ease;
-  
+
   /* Z-index layers */
   --z-base: 1;
   --z-dropdown: 100;
@@ -88,7 +122,7 @@
   --z-modal: 300;
   --z-overlay: 400;
   --z-tooltip: 500;
-  
+
   /* Container widths */
   --container-sm: 640px;
   --container-md: 768px;
@@ -120,7 +154,12 @@ body {
 }
 
 /* Typography Utilities */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -175,10 +214,14 @@ a:hover {
 /* Responsive Typography */
 @media (max-width: 768px) {
   :root {
-    --text-6xl: 2.5rem;   /* 40px */
-    --text-5xl: 2rem;     /* 32px */
-    --text-4xl: 1.75rem;  /* 28px */
-    --text-3xl: 1.5rem;   /* 24px */
+    --text-6xl: 2.5rem;
+    /* 40px */
+    --text-5xl: 2rem;
+    /* 32px */
+    --text-4xl: 1.75rem;
+    /* 28px */
+    --text-3xl: 1.5rem;
+    /* 24px */
   }
 }
 
@@ -190,11 +233,25 @@ a:hover {
   padding: 0 var(--space-lg);
 }
 
-.container-sm { max-width: var(--container-sm); }
-.container-md { max-width: var(--container-md); }
-.container-lg { max-width: var(--container-lg); }
-.container-xl { max-width: var(--container-xl); }
-.container-2xl { max-width: var(--container-2xl); }
+.container-sm {
+  max-width: var(--container-sm);
+}
+
+.container-md {
+  max-width: var(--container-md);
+}
+
+.container-lg {
+  max-width: var(--container-lg);
+}
+
+.container-xl {
+  max-width: var(--container-xl);
+}
+
+.container-2xl {
+  max-width: var(--container-2xl);
+}
 
 @media (max-width: 768px) {
   .container {
@@ -214,23 +271,61 @@ section {
 }
 
 /* Utility Classes */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
 
-.text-muted { color: var(--text-muted); }
-.text-dim { color: var(--text-dim); }
+.text-left {
+  text-align: left;
+}
 
-.mb-sm { margin-bottom: var(--space-sm); }
-.mb-md { margin-bottom: var(--space-md); }
-.mb-lg { margin-bottom: var(--space-lg); }
-.mb-xl { margin-bottom: var(--space-xl); }
-.mb-2xl { margin-bottom: var(--space-2xl); }
+.text-right {
+  text-align: right;
+}
 
-.mt-sm { margin-top: var(--space-sm); }
-.mt-md { margin-top: var(--space-md); }
-.mt-lg { margin-top: var(--space-lg); }
-.mt-xl { margin-top: var(--space-xl); }
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+.mb-2xl {
+  margin-bottom: var(--space-2xl);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.mt-xl {
+  margin-top: var(--space-xl);
+}
 
 /* Gradient Utilities */
 .gradient-text {

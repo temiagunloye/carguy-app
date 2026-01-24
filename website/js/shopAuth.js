@@ -1,44 +1,70 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { signOut as firebaseSignOut, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// MOCK AUTH SERVICE - BYPASSING FIREBASE FOR DEMO
+// Reason: API Key issues blocking access. User requested to skip password lock.
 
-// Init Firebase (Using same placeholder config, ensures separate instance if needed or reuse)
-const firebaseConfig = {
-    apiKey: "AIzaSy...",
-    authDomain: "carguy-app-v1.firebaseapp.com",
-    projectId: "carguy-app-v1",
-    storageBucket: "carguy-app-v1.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "..."
-};
+// Mock Persistence
+const SESSION_KEY = 'carguy_mock_session'; // stores boolean
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-export function signIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+export async function signUp(email, password) {
+    console.log("Mock SignUp:", email);
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ email: email, uid: 'mock-uid-' + Date.now() }));
+    return { email, uid: 'mock-new-user' };
 }
 
-export function signOut() {
-    return firebaseSignOut(auth);
+export async function signIn(email, password) {
+    console.log("Mock SignIn:", email);
+    // Always succeed
+    const user = {
+        email: email || 'demo@carguy.app',
+        uid: 'demo-admin-uid',
+        displayName: 'Demo Admin'
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+    return { user };
+}
+
+export async function signOut() {
+    console.log("Mock SignOut");
+    localStorage.removeItem(SESSION_KEY);
+    return Promise.resolve();
 }
 
 export function checkAuth() {
-    return new Promise((resolve, reject) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            unsubscribe();
-            if (user) {
-                resolve(user);
+    return new Promise((resolve) => {
+        // Auto-login / Bypass check
+        // If we want to strictly skip lock, we can just always return a user.
+        // But let's check localStorage so SignOut actually works (for UX demo purposes).
+        // If user is locked out, they can just click "Login" and it will work instantly.
+
+        try {
+            const session = localStorage.getItem(SESSION_KEY);
+            if (session) {
+                resolve(JSON.parse(session));
             } else {
-                // Redirect if not on login page
+                // Not logged in. 
+                // Redirect if protected page.
                 if (!window.location.href.includes('login.html')) {
+                    // For "Skip Password Lock" request:
+                    // We could auto-login here, OR just redirect.
+                    // Let's Redirect, but `login.html` will have a helper to strictly bypass.
                     window.location.href = '/shop/login.html';
                 }
                 resolve(null);
             }
-        });
+        } catch (e) {
+            resolve(null);
+        }
     });
 }
 
 export function getCurrentUser() {
-    return auth.currentUser;
+    try {
+        const session = localStorage.getItem(SESSION_KEY);
+        return session ? JSON.parse(session) : null;
+    } catch (e) { return null; }
 }
+
+// Force a demo session if needed (call from console window.forceDemo())
+window.forceDemo = () => {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ email: 'demo@carguy.app', uid: 'demo' }));
+    location.href = '/shop/dashboard.html';
+};

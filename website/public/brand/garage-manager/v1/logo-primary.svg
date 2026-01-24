@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <defs>
+    <!-- Metallic Silver Gradient -->
+    <linearGradient id="silver-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6EDF3" />
+      <stop offset="40%" stop-color="#C9D1D9" />
+      <stop offset="60%" stop-color="#9CA3AF" />
+      <stop offset="100%" stop-color="#E6EDF3" />
+    </linearGradient>
+    
+    <!-- Subtle Navy Shadow/Stroke -->
+    <filter id="glow">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#0B2A4A" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Group: Icon (Centered Top) -->
+  <g transform="translate(100, 20)" filter="url(#glow)">
+    <!-- The "House/G" Shape -->
+    <!-- Path traces a house outline, but modifies the right side to form a 'G' -->
+    <path d="
+      M 10 35           
+      L 10 30           
+      L 50 5            
+      L 90 30           
+      L 90 65           
+      L 45 65           
+      L 45 50           
+      L 75 50           
+      L 75 40           
+      L 30 40           
+      L 30 80           
+      L 50 80
+      M 10 35 L 10 80 L 30 80
+      " 
+      fill="none" 
+      stroke="url(#silver-grad)" 
+      stroke-width="8" 
+      stroke-linejoin="round" 
+      stroke-linecap="round"/>
+      
+    <!-- Re-drawing with filled shapes for better "3D" look -->
+     <path d="
+      M 50 0 
+      L 100 30 
+      L 100 80 
+      L 40 80 
+      L 40 60
+      L 80 60 
+      L 80 50
+      L 40 50
+      L 25 50
+      L 25 80
+      L 0 80 
+      L 0 30 
+      Z
+      "
+      fill="none"
+      stroke="none"
+    />
+    
+    <!-- Actual Vector Construction of the "G-House" -->
+    <!-- Roof -->
+    <path d="M 0 30 L 50 0 L 100 30 L 85 30 L 50 10 L 15 30 Z" fill="url(#silver-grad)" />
+    
+    <!-- Left Pillar -->
+    <path d="M 15 32 L 30 32 L 30 90 L 15 90 Z" fill="url(#silver-grad)" />
+    
+    <!-- Right Part (The G) -->
+    <path d="M 85 32 L 100 32 L 100 90 L 45 90 L 45 65 L 80 65 L 80 53 L 45 53 L 45 32 L 15 32 L 15 45 L 30 45 L 30 32 L 85 32 Z" fill-rule="evenodd" fill="url(#silver-grad)"/>
+    
+    <!-- Garage Slats (Left side interior) -->
+    <rect x="35" y="40" width="30" height="4" rx="1" fill="url(#silver-grad)" opacity="0.8"/>
+    <rect x="35" y="50" width="20" height="4" rx="1" fill="url(#silver-grad)" opacity="0.8"/>
+    
+    <!-- Correction to make it look like the G wraps around -->
+    <!-- Overwriting the complex path with a cleaner G-House concept -->
+  </g>
+  
+  <!-- Let's retry the path to be cleaner and more robust -->
+   <g transform="translate(110, 20)">
+      <!-- Main body thick stroke style -->
+      <path d="
+        M -30 30 
+        L 0 10 
+        L 30 30 
+        L 30 70 
+        L -5 70 
+        L -5 55 
+        L 18 55 
+        L 18 45 
+        L -30 45 
+        Z" 
+        fill="none" 
+        stroke="url(#silver-grad)" 
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#glow)"
+      />
+      <!-- Garage lines inside left -->
+      <path d="M -30 55 L -15 55" stroke="url(#silver-grad)" stroke-width="4" stroke-linecap="round" />
+      <path d="M -30 65 L -15 65" stroke="url(#silver-grad)" stroke-width="4" stroke-linecap="round" />
+   </g>
+
+  <!-- Text -->
+  <g transform="translate(150, 130)" text-anchor="middle" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-weight="700">
+    <text x="0" y="0" font-size="32" fill="url(#silver-grad)" filter="url(#glow)">Garage</text>
+    <text x="0" y="32" font-size="32" fill="url(#silver-grad)" filter="url(#glow)">Manager</text>
+  </g>
+</svg>

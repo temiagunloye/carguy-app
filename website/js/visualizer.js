@@ -2,12 +2,12 @@ import { localBuildService } from './localBuildService.js';
 
 // Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSy...",
-    authDomain: "carguy-app-v1.firebaseapp.com",
-    projectId: "carguy-app-v1",
-    storageBucket: "carguy-app-v1.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef"
+    apiKey: "AIzaSyCEFvcV4MKlxtXOiZXRFTL8xVSGuKsPme8",
+    authDomain: "carguy-app-demo.firebaseapp.com",
+    projectId: "carguy-app-demo",
+    storageBucket: "carguy-app-demo.firebasestorage.app",
+    messagingSenderId: "869343833766",
+    appId: "1:869343833766:web:d80b4034b146525a588e67"
 };
 
 // Initialize Firebase
@@ -164,6 +164,9 @@ async function checkLocalSave() {
 async function loadVehicles() {
     try {
         const querySnapshot = await getDocs(collection(db, "vehicles"));
+        // Check if empty
+        if (querySnapshot.empty) throw new Error("No properties found");
+
         vehicleSelect.innerHTML = '<option value="" disabled selected>Select Base Car...</option>';
         const vehicleMap = {};
 
@@ -176,38 +179,54 @@ async function loadVehicles() {
             vehicleMap[doc.id] = { id: doc.id, ...v };
         });
 
-        vehicleSelect.addEventListener('change', (e) => {
-            const vId = e.target.value;
-            if (vehicleMap[vId]) {
-                currentVehicle = vehicleMap[vId];
-                updateVisualizer();
-                preloadVehicleImages(currentVehicle);
-            }
-        });
+        setupVehicleListeners(vehicleMap);
 
     } catch (e) {
-        console.error("Error loading vehicles:", e);
-        // Fallback
-        const demoVehicles = [
-            { id: '1', make: 'Porsche', model: '911', variant: 'Carrera 4S', year: 2024, basePrice: 138600 },
-            { id: '2', make: 'BMW', model: 'M3', variant: 'Competition', year: 2024, basePrice: 84300 },
-            { id: '3', make: 'Subaru', model: 'BRZ', variant: 'tS', year: 2024, basePrice: 35395 }
-        ];
+        console.warn("Firestore access failed, loading demo mode:", e);
+        loadDemoVehicles();
+    }
+}
 
-        vehicleSelect.innerHTML = '<option value="" disabled selected>Select Base Car (Offline Mode)</option>';
-        demoVehicles.forEach(v => {
-            const opt = document.createElement('option');
-            opt.value = v.id;
-            opt.textContent = `${v.year} ${v.make} ${v.model} ${v.variant}`;
-            vehicleSelect.appendChild(opt);
-        });
+function loadDemoVehicles() {
+    const demoVehicles = [
+        { id: 'demo1', make: 'Porsche', model: '911', variant: 'Carrera 4S', year: 2024, basePrice: 138600 },
+        { id: 'demo2', make: 'BMW', model: 'M3', variant: 'Competition', year: 2024, basePrice: 84300 },
+        { id: 'demo3', make: 'Subaru', model: 'BRZ', variant: 'tS', year: 2024, basePrice: 35395 }
+    ];
 
-        vehicleSelect.addEventListener('change', (e) => {
-            const vId = e.target.value;
-            currentVehicle = demoVehicles.find(v => v.id === vId);
+    vehicleSelect.innerHTML = '<option value="" disabled selected>Select Base Car (Demo Mode)</option>';
+    const vehicleMap = {};
+
+    demoVehicles.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = `${v.year} ${v.make} ${v.model} ${v.variant}`;
+        vehicleSelect.appendChild(opt);
+        vehicleMap[v.id] = v;
+    });
+
+    setupVehicleListeners(vehicleMap);
+}
+
+function setupVehicleListeners(map) {
+    vehicleSelect.addEventListener('change', (e) => {
+        const vId = e.target.value;
+        if (map[vId]) {
+            currentVehicle = map[vId];
             updateVisualizer();
             preloadVehicleImages(currentVehicle);
-        });
+        }
+    });
+
+    // Auto-select first vehicle for immediate visual
+    const firstId = Object.keys(map)[0];
+    if (firstId) {
+        vehicleSelect.value = firstId;
+        currentVehicle = map[firstId];
+        updateVisualizer();
+        preloadVehicleImages(currentVehicle);
+        // Trigger auto-rotate
+        setTimeout(() => autoRotate(), 1000);
     }
 }
 

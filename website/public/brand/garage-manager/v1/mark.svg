@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="silver-grad-mark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6EDF3" />
+      <stop offset="40%" stop-color="#C9D1D9" />
+      <stop offset="60%" stop-color="#9CA3AF" />
+      <stop offset="100%" stop-color="#E6EDF3" />
+    </linearGradient>
+    <filter id="glow-mark">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#0B2A4A" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(50, 15)">
+      <!-- Main body thick stroke style -->
+      <!-- Adjusted scale for square viewbox -->
+      <path d="
+        M -30 30 
+        L 0 10 
+        L 30 30 
+        L 30 70 
+        L -5 70 
+        L -5 55 
+        L 18 55 
+        L 18 45 
+        L -30 45 
+        Z" 
+        fill="none" 
+        stroke="url(#silver-grad-mark)" 
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#glow-mark)"
+      />
+      <!-- Garage lines inside left -->
+      <path d="M -30 55 L -15 55" stroke="url(#silver-grad-mark)" stroke-width="4" stroke-linecap="round" />
+      <path d="M -30 65 L -15 65" stroke="url(#silver-grad-mark)" stroke-width="4" stroke-linecap="round" />
+   </g>
+</svg>
