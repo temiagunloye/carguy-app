@@ -11,13 +11,18 @@ export default defineConfig({
                 support: resolve(__dirname, 'support.html'),
                 privacy: resolve(__dirname, 'privacy.html'),
                 terms: resolve(__dirname, 'terms.html'),
+                // Dashboard & CRM
                 dashboard: resolve(__dirname, 'dashboard.html'),
                 crm: resolve(__dirname, 'crm.html'),
+                // New Pages (V1 Benchmark)
+                visualizer: resolve(__dirname, 'visualizer-preview.html'),
+                sharedBuild: resolve(__dirname, 'shared-build.html'),
+                // Shop Portal
+                shopLogin: resolve(__dirname, 'shop/login.html'),
+                shopDashboard: resolve(__dirname, 'shop/dashboard.html'),
+                shopSimulator: resolve(__dirname, 'shop/simulator.html'),
                 // Body Shop pages
                 bodyshop: resolve(__dirname, 'bodyshop/index.html'),
-                bodyshopDealers: resolve(__dirname, 'bodyshop/app/dealers.html'),
-                bodyshopParts: resolve(__dirname, 'bodyshop/app/dealer-parts.html'),
-                bodyshopPortal: resolve(__dirname, 'bodyshop/portal/index.html'),
             },
         },
     },

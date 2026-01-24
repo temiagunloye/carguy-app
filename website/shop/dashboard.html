@@ -184,10 +184,12 @@
         import { checkAuth, signOut } from '/js/shopAuth.js';
 
         // Protect route
-        const user = await checkAuth();
-        if (user) {
-            document.getElementById('user-email').textContent = user.email;
-        }
+        (async () => {
+            const user = await checkAuth();
+            if (user) {
+                document.getElementById('user-email').textContent = user.email;
+            }
+        })();
 
         window.signOutUser = async () => {
             await signOut();
