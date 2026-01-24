@@ -1,43 +1,42 @@
 'use client';
 
-import { ActivityLog, AdminLink, createAdminLink, deleteAdminLink, getAdminLinks, getRecentActivity } from '@/services/AdminService';
-import { Activity, ExternalLink, Layers, Plus, RefreshCw, Trash2 } from 'lucide-react';
+import { ActivityLog, AdminLink, createAdminLink, deleteAdminLink, subscribeToActivity, subscribeToAdminLinks } from '@/services/AdminService';
+import { Activity, ExternalLink, Layers, Plus, Trash2, Wifi } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
   const [links, setLinks] = useState<AdminLink[]>([]);
   const [activity, setActivity] = useState<ActivityLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isLive, setIsLive] = useState(false);
 
   // State for Add Link Modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newLink, setNewLink] = useState<Partial<AdminLink>>({ platform: 'Unified', category: 'other' });
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  async function loadData() {
-    try {
-      const [linksData, activityData] = await Promise.all([
-        getAdminLinks(),
-        getRecentActivity()
-      ]);
-      setLinks(linksData);
-      setActivity(activityData);
-    } catch (e) {
-      console.error(e);
-    } finally {
+    // Real-time subscriptions
+    const unsubscribeLinks = subscribeToAdminLinks((data) => {
+      setLinks(data);
       setLoading(false);
-    }
-  }
+      setIsLive(true);
+    });
+
+    const unsubscribeActivity = subscribeToActivity((data) => {
+      setActivity(data);
+    });
+
+    return () => {
+      unsubscribeLinks();
+      unsubscribeActivity();
+    };
+  }, []);
 
   const handleCreateLink = async () => {
     if (!newLink.label || !newLink.url) return;
     try {
       await createAdminLink(newLink as Omit<AdminLink, 'id'>);
-      // Optimistic update or reload
-      await loadData();
+      // No need to reload - subscription handles it
       setIsAddModalOpen(false);
       setNewLink({ platform: 'Unified', category: 'other' });
     } catch (e) {
@@ -50,7 +49,6 @@ export default function DashboardPage() {
     if (!confirm('Delete this link?')) return;
     try {
       await deleteAdminLink(id);
-      await loadData();
     } catch (e) {
       console.error(e);
     }
@@ -60,10 +58,10 @@ export default function DashboardPage() {
   const stats = [
     { label: 'Total Signups', value: '1,248', change: '+12%', icon: Activity },
     { label: 'Active Apps', value: '3', change: 'Stable', icon: Layers },
-    { label: 'Pending Updates', value: '1', change: 'Action', icon: RefreshCw },
+    { label: 'System Status', value: isLive ? 'Online' : 'Reconnecting...', change: 'Live Sync', icon: Wifi },
   ];
 
-  if (loading) return <div className="p-8 text-zinc-500">Loading dashboard...</div>;
+  if (loading) return <div className="p-8 text-zinc-500">Connecting to Garage Manager Hub...</div>;
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 relative">

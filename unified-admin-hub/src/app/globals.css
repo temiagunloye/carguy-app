@@ -2,19 +2,19 @@
 
 :root {
   /* Force Dark Mode Default */
-  --background: #09090b;
-  /* zinc-950 */
+  --background: #000000;
+  /* Pure Black */
   --foreground: #fafafa;
   /* zinc-50 */
-  --primary: #dc2626;
-  /* red-600 */
-  --primary-foreground: #fafafa;
-  --muted: #27272a;
-  /* zinc-800 */
+  --primary: #ef4444;
+  /* red-500 */
+  --primary-foreground: #ffffff;
+  --muted: #18181b;
+  /* zinc-900 */
   --muted-foreground: #a1a1aa;
   /* zinc-400 */
-  --border: #27272a;
-  /* zinc-800 */
+  --border: #1f1f1f;
+  /* Dark Gray */
 }
 
 @theme inline {

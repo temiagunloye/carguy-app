@@ -107,6 +107,12 @@
         <div class="container">
             <div class="footer-left">
                 <p>&copy; 2026 ThatAppCompany. All rights reserved.</p>
+                <div class="status-indicator"
+                    style="display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.8rem; color: #666;">
+                    <div id="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background-color: #666;">
+                    </div>
+                    <span id="status-text">Checking status...</span>
+                </div>
             </div>
             <div class="footer-right">
                 <a href="https://instagram.com/garagemanagerapp" target="_blank" rel="noopener"
@@ -118,6 +124,7 @@
 
     <script type="module" src="/js/analytics.js"></script>
     <script type="module" src="/js/waitlist.js"></script>
+    <script type="module" src="/js/status.js"></script>
 </body>
 
 </html>

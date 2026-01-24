@@ -58,18 +58,23 @@ const initializeFirebase = () => {
       firebaseState.storage = getFirebaseStorage(firebaseState.app);
 
       // Connect to emulators if in DEV mode
+      // Connect to emulators if in DEV mode
       if (__DEV__) {
         console.log("🔥 Connecting to Firebase Emulators...");
         // Dynamically detect host IP for physical devices
-        const debuggerHost = Constants.expoConfig?.hostUri || Constants.manifest?.debuggerHost || "127.0.0.1:8081";
+        // FALLBACK: We detected 192.168.5.55, hardcoding it for stability.
+        const debuggerHost = "192.168.5.55:8081";
         const localhost = debuggerHost.split(":")[0];
 
         console.log(`📡 Detected Host IP: ${localhost}`);
 
         try {
+          // Note: On physical iOS/Android, you MUST use the LAN IP, not localhost.
+          // If you see "Network request failed", it means the phone can't reach this IP.
           connectAuthEmulator(firebaseState.auth, `http://${localhost}:9099`);
           connectFirestoreEmulator(firebaseState.db, localhost, 8080);
           connectStorageEmulator(firebaseState.storage, localhost, 9199);
+          console.log(`✅ Emulators connected at ${localhost}`);
         } catch (e) {
           console.warn("Error connecting to emulators:", e);
         }

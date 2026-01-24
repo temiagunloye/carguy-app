@@ -52,15 +52,35 @@
     </section>
 
     <!-- Pricing Cards -->
+    <!-- Pricing Cards -->
     <section
         style="padding: var(--space-4xl) 0; background: var(--bg-secondary); margin-top: calc(-1 * var(--space-4xl));">
         <div class="container">
+
+            <!-- Pricing Toggle -->
+            <div class="pricing-toggle-container">
+                <span class="pricing-label active" data-billing="monthly"
+                    onclick="document.getElementById('billing-toggle').click()">Monthly</span>
+
+                <label class="toggle-switch-wrapper" style="display:flex; align-items:center;">
+                    <input type="checkbox" id="billing-toggle" class="pricing-toggle-checkbox">
+                    <div class="toggle-switch">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </label>
+
+                <span class="pricing-label" data-billing="yearly"
+                    onclick="document.getElementById('billing-toggle').click()">
+                    Yearly <span class="discount-badge">Save 17%</span>
+                </span>
+            </div>
+
             <div class="grid grid-3">
 
                 <!-- Basic Plan -->
-                <div class="pricing-card">
+                <div class="pricing-card" data-monthly-price="Free" data-yearly-price="Free">
                     <h3 class="pricing-name">Basic</h3>
-                    <div class="pricing-price">Free</div>
+                    <div class="pricing-price" style="transition: opacity 0.2s;">Free</div>
                     <p class="pricing-period">Forever</p>
 
                     <ul class="pricing-features">
@@ -75,12 +95,15 @@
                 </div>
 
                 <!-- Pro Plan -->
-                <div class="pricing-card featured">
+                <div class="pricing-card featured" data-monthly-price="$9.99" data-yearly-price="$99">
                     <div class="pricing-badge">
                         <span class="badge badge-primary">Popular</span>
                     </div>
-                    <h3 class="pricing-name">Pro</h3>
-                    <div class="pricing-price">$9.99</div>
+                    <h3 class="pricing-name">
+                        Pro
+                        <span class="save-badge">Save $20</span>
+                    </h3>
+                    <div class="pricing-price" style="transition: opacity 0.2s;">$9.99</div>
                     <p class="pricing-period">per month</p>
 
                     <ul class="pricing-features">
@@ -96,15 +119,18 @@
                 </div>
 
                 <!-- Premium Plan -->
-                <div class="pricing-card">
-                    <h3 class="pricing-name">Premium</h3>
-                    <div class="pricing-price">$19.99</div>
+                <div class="pricing-card" data-monthly-price="$19.99" data-yearly-price="$199">
+                    <h3 class="pricing-name">
+                        Premium
+                        <span class="save-badge">Save $40</span>
+                    </h3>
+                    <div class="pricing-price" style="transition: opacity 0.2s;">$19.99</div>
                     <p class="pricing-period">per month</p>
 
                     <ul class="pricing-features">
                         <li>Everything in Pro</li>
                         <li><strong>Multi-vehicle support</strong></li>
-                        <li>Unlimited builds</li>
+                        <li>3 Cars*</li>
                         <li>Full visualization suite</li>
                         <li>Priority support</li>
                         <li>Early access to features</li>
@@ -112,13 +138,15 @@
                     </ul>
 
                     <a href="/#get-app" class="btn btn-primary" style="width: 100%;">Go Premium</a>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: var(--space-md);">*Additional
+                        slots available for purchase</p>
                 </div>
 
             </div>
 
-            <div class="text-center mt-2xl">
-                <p class="text-muted">All plans include 7-day free trial. Cancel anytime. No credit card required to
-                    start.</p>
+            <div class="text-center" style="margin-top: var(--space-4xl);">
+                <p class="text-muted">All plans include a 7-day free trial. Cancel anytime. Trial converts to a paid
+                    subscription.</p>
             </div>
         </div>
     </section>
@@ -147,7 +175,7 @@
                             <td style="text-align: center; padding: var(--space-md); color: var(--text-muted);">1</td>
                             <td style="text-align: center; padding: var(--space-md); color: var(--text-muted);">1</td>
                             <td style="text-align: center; padding: var(--space-md); color: var(--accent-primary);">
-                                Unlimited</td>
+                                3*</td>
                         </tr>
                         <tr style="border-bottom: 1px solid var(--border-color);">
                             <td style="padding: var(--space-md); color: var(--text-secondary);">Build Tracker</td>
@@ -244,8 +272,10 @@
                 <div class="footer-column">
                     <h6>Follow Us</h6>
                     <ul class="footer-links">
-                        <li><a href="https://instagram.com/garagemanagerapp" target="_blank" rel="noopener">Instagram</a></li>
-                        <li><a href="https://tiktok.com/@garagemanagerapp" target="_blank" rel="noopener">TikTok</a></li>
+                        <li><a href="https://instagram.com/garagemanagerapp" target="_blank"
+                                rel="noopener">Instagram</a></li>
+                        <li><a href="https://tiktok.com/@garagemanagerapp" target="_blank" rel="noopener">TikTok</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -255,12 +285,14 @@
                 <div class="footer-social">
                     <a href="https://instagram.com/garagemanagerapp" target="_blank" rel="noopener"
                         aria-label="Instagram">📷</a>
-                    <a href="https://tiktok.com/@garagemanagerapp" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+                    <a href="https://tiktok.com/@garagemanagerapp" target="_blank" rel="noopener"
+                        aria-label="TikTok">🎵</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script type="module" src="/js/pricingToggle.js"></script>
     <script type="module" src="/js/main.js"></script>
 </body>
 

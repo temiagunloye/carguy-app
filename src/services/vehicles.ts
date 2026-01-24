@@ -24,6 +24,8 @@ export interface Vehicle {
     make?: string;
     model?: string;
     photoSetId?: string;
+    standardCarId?: string;
+    activeVariantId?: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -33,6 +35,8 @@ export interface CreateVehicleData {
     year?: number;
     make?: string;
     model?: string;
+    standardCarId?: string;
+    activeVariantId?: string;
 }
 
 /**
@@ -71,6 +75,8 @@ export async function createVehicle(data: CreateVehicleData): Promise<string> {
         make: data.make,
         model: data.model,
         photoSetId: null,
+        standardCarId: data.standardCarId || null,
+        activeVariantId: data.activeVariantId || null,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
     });
@@ -100,6 +106,8 @@ export async function getUserVehicles(): Promise<Vehicle[]> {
             make: data.make,
             model: data.model,
             photoSetId: data.photoSetId,
+            standardCarId: data.standardCarId,
+            activeVariantId: data.activeVariantId,
             createdAt: (data.createdAt as Timestamp).toDate(),
             updatedAt: (data.updatedAt as Timestamp).toDate(),
         };

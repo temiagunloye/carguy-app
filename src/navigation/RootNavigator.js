@@ -10,6 +10,7 @@ import MainPhotoSelectScreen from "../features/carScan/MainPhotoSelectScreen";
 import RenderingProcessingScreen from "../features/rendering/RenderingProcessingScreen";
 import AddCarScreen from "../screens/AddCarScreen";
 import AddPartScreen from "../screens/AddPartScreen";
+import BrowseStandardCarsScreen from "../screens/BrowseStandardCarsScreen";
 import BuildHistoryScreen from "../screens/BuildHistoryScreen";
 import CarDetailScreen from "../screens/CarDetailScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
@@ -193,6 +194,11 @@ export default function RootNavigator() {
         name="SpinBuild"
         component={SpinBuildScreen}
         options={{ title: "Build Studio" }}
+      />
+      <Stack.Screen
+        name="BrowseStandardCars"
+        component={BrowseStandardCarsScreen}
+        options={{ title: "Browse Cars" }}
       />
     </Stack.Navigator>
   );

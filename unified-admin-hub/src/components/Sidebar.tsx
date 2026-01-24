@@ -1,13 +1,15 @@
 'use client';
 
 import { clsx } from 'clsx';
-import { Globe, Home, Layers, LogOut, Settings, Wrench } from 'lucide-react';
+import { Car, FileDown, Globe, Home, Layers, LogOut, Settings, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 
 const navItems = [
     { label: 'Overview', icon: Home, href: '/' },
+    { label: 'Vehicle Library', icon: Car, href: '/vehicle-library' },
+    { label: 'Import Jobs', icon: FileDown, href: '/import-jobs' },
     { label: 'ThatAppCompany', icon: Globe, href: '/apps/thatappcompany' },
     { label: 'GarageManager', icon: Wrench, href: '/apps/garagemanager' },
     { label: 'Updates', icon: Layers, href: '/updates' },
@@ -23,7 +25,7 @@ export function Sidebar() {
         <aside className="w-64 bg-zinc-950 border-r border-zinc-900 hidden md:flex flex-col h-screen fixed left-0 top-0 z-50">
             <div className="p-6 border-b border-zinc-900">
                 <h1 className="text-xl font-bold tracking-tight text-white">
-                    <span className="text-red-600">Unified</span>Hub
+                    <span className="text-red-500">Unified</span>Hub
                 </h1>
                 <p className="text-xs text-zinc-500 mt-1">Command Center</p>
             </div>

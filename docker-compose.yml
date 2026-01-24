@@ -1,11 +1,21 @@
-version: "3.9"
+
 services:
   firebase-emulator:
     image: node:20-bullseye
     working_dir: /workspace
     volumes:
       - ./:/workspace
-    command: bash -lc "apt-get update && apt-get install -y default-jre && npm i -g firebase-tools@12.9.1 && cd functions && npm install && cd .. && firebase emulators:start --project demo-carapp --import=./.emulator-data --export-on-exit"
+      - emulator_cache:/root/.cache
+    command: >
+      bash -lc "
+        apt-get update &&
+        apt-get install -y default-jre &&
+        npm i -g firebase-tools@12.9.1 &&
+        cd functions &&
+        npm install &&
+        cd .. &&
+        firebase emulators:start --project carguy-app-demo --only auth,firestore,functions,storage,ui --import=./.emulator-data --export-on-exit
+      "
     ports:
       - "4000:4000" # emulator UI
       - "8080:8080" # firestore
@@ -13,7 +23,7 @@ services:
       - "9199:9199" # storage
       - "5001:5001" # functions
     environment:
-      - FIREBASE_PROJECT_ID=demo-carapp
+      - FIREBASE_PROJECT_ID=carguy-app-demo
 
   gpu-worker:
     build:
@@ -24,7 +34,12 @@ services:
     environment:
       - WORKER_PORT=8088
       - GOOGLE_APPLICATION_CREDENTIALS=/secrets/serviceAccountKey.json
-      - FIREBASE_PROJECT_ID=demo-carapp
+      - FIREBASE_PROJECT_ID=carguy-app-demo
       - STORAGE_BUCKET=demo-carapp.appspot.com
     volumes:
       - ./serviceAccountKey.json:/secrets/serviceAccountKey.json:ro
+    depends_on:
+      - firebase-emulator
+
+volumes:
+  emulator_cache:

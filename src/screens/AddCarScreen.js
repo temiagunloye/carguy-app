@@ -405,6 +405,25 @@ export default function AddCarScreen({ navigation }) {
           </Text>
         </View>
 
+        {/* Browse Library Option */}
+        <TouchableOpacity
+          style={styles.browseButton}
+          onPress={() => navigation.navigate('BrowseStandardCars')}
+        >
+          <Ionicons name="search" size={24} color="#fff" style={{ marginRight: 12 }} />
+          <View>
+            <Text style={styles.browseButtonText}>Browse Car Library</Text>
+            <Text style={styles.browseButtonSubtext}>Find your car model (Porsche 911, M3, etc)</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={24} color="#666" style={{ marginLeft: 'auto' }} />
+        </TouchableOpacity>
+
+        <View style={styles.dividerContainer}>
+          <View style={styles.dividerLine} />
+          <Text style={styles.dividerText}>OR ADD MANUALLY</Text>
+          <View style={styles.dividerLine} />
+        </View>
+
         {/* Basic Info Form */}
         <View style={styles.formSection}>
           <Text style={styles.label}>Nickname *</Text>
@@ -1500,5 +1519,43 @@ const styles = StyleSheet.create({
   upgradePromptArrow: {
     color: "#4a9eff",
     fontSize: 18,
+  },
+  browseButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1a1a1a',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#333',
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  browseButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  browseButtonSubtext: {
+    color: '#888',
+    fontSize: 12,
+    marginTop: 2,
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginBottom: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#333',
+  },
+  dividerText: {
+    color: '#666',
+    fontSize: 12,
+    fontWeight: '600',
+    marginHorizontal: 16,
   },
 });

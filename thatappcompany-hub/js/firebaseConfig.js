@@ -3,12 +3,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { addDoc, collection, getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCEFvcV4MKlxtXOiZXRFTL8xVSGuKsPme8",
+    authDomain: "carguy-app-demo.firebaseapp.com",
+    projectId: "carguy-app-demo",
+    storageBucket: "carguy-app-demo.firebasestorage.app",
+    messagingSenderId: "869343833766",
+    appId: "1:869343833766:web:d80b4034b146525a588e67",
+    measurementId: "G-VK9ENC9J54"
 };
 
 const app = initializeApp(firebaseConfig);

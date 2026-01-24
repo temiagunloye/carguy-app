@@ -17,6 +17,7 @@ import standardCarLibraryService, {
     StandardCarVariant,
 } from '../services/StandardCarLibraryService';
 import { variantFadeController } from '../services/VariantFadeController';
+import { createVehicle } from '../services/vehicles';
 
 interface RouteParams {
     carId: string;
@@ -37,6 +38,46 @@ const StandardCarDetailScreen: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [currentAngle, setCurrentAngle] = useState<string>('');
     const [showEnrichedSpecs, setShowEnrichedSpecs] = useState(false);
+    const [addingToGarage, setAddingToGarage] = useState(false);
+
+    /**
+     * Handle "Add to Garage"
+     */
+    const handleAddToGarage = useCallback(async () => {
+        if (!car || !selectedVariant) return;
+
+        setAddingToGarage(true);
+        try {
+            await createVehicle({
+                displayName: `${car.year} ${car.make} ${car.model}`,
+                year: car.year,
+                make: car.make,
+                model: car.model,
+                standardCarId: car.id,
+                activeVariantId: selectedVariant.id,
+            });
+
+            Alert.alert(
+                'Success',
+                'Car added to your garage!',
+                [
+                    {
+                        text: 'Go to Shop',
+                        onPress: () => (navigation as any).navigate('Shop'),
+                    },
+                    {
+                        text: 'Keep Browsing',
+                        style: 'cancel',
+                    },
+                ]
+            );
+        } catch (error: any) {
+            console.error('Failed to add car:', error);
+            Alert.alert('Error', error.message || 'Failed to add car to garage');
+        } finally {
+            setAddingToGarage(false);
+        }
+    }, [car, selectedVariant, navigation]);
 
     /**
      * Load car data
@@ -157,6 +198,24 @@ const StandardCarDetailScreen: React.FC = () => {
                 )}
             </View>
 
+            {/* Main Action Buttons */}
+            <View style={styles.actionButtonsContainer}>
+                <TouchableOpacity
+                    style={styles.primaryButton}
+                    onPress={handleAddToGarage}
+                    activeOpacity={0.8}
+                >
+                    {addingToGarage ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <Text style={styles.primaryButtonText}>Add to My Garage</Text>
+                    )}
+                </TouchableOpacity>
+                <Text style={styles.actionHelperText}>
+                    Start a new build with this car
+                </Text>
+            </View>
+
             {/* Paint Color Selector */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Paint Color</Text>
@@ -184,46 +243,48 @@ const StandardCarDetailScreen: React.FC = () => {
             </View>
 
             {/* Enriched Specs (if available) */}
-            {car.enrichedSpecs && (
-                <View style={styles.section}>
-                    <TouchableOpacity
-                        style={styles.specsHeader}
-                        onPress={() => setShowEnrichedSpecs(!showEnrichedSpecs)}
-                        activeOpacity={0.7}
-                    >
-                        <Text style={styles.sectionTitle}>Vehicle Specifications</Text>
-                        <Text style={styles.toggleIcon}>
-                            {showEnrichedSpecs ? '▼' : '▶'}
-                        </Text>
-                    </TouchableOpacity>
-
-                    {showEnrichedSpecs && (
-                        <View style={styles.specsContent}>
-                            <SpecRow label="Trim" value={car.enrichedSpecs.trim} />
-                            <SpecRow label="Engine" value={car.enrichedSpecs.engine} />
-                            <SpecRow label="Drivetrain" value={car.enrichedSpecs.drivetrain} />
-                            <SpecRow label="MPG" value={car.enrichedSpecs.mpg} />
-                            <SpecRow label="Exterior Color" value={car.enrichedSpecs.exteriorColor} />
-                            <SpecRow label="Interior Color" value={car.enrichedSpecs.interiorColor} />
-
-                            {car.enrichedSpecs.features.length > 0 && (
-                                <>
-                                    <Text style={styles.featuresTitle}>Features</Text>
-                                    {car.enrichedSpecs.features.map((feature, idx) => (
-                                        <Text key={idx} style={styles.featureItem}>
-                                            • {feature}
-                                        </Text>
-                                    ))}
-                                </>
-                            )}
-
-                            <Text style={styles.specsSource}>
-                                Source: {car.enrichedSpecs.provenance}
+            {
+                car.enrichedSpecs && (
+                    <View style={styles.section}>
+                        <TouchableOpacity
+                            style={styles.specsHeader}
+                            onPress={() => setShowEnrichedSpecs(!showEnrichedSpecs)}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={styles.sectionTitle}>Vehicle Specifications</Text>
+                            <Text style={styles.toggleIcon}>
+                                {showEnrichedSpecs ? '▼' : '▶'}
                             </Text>
-                        </View>
-                    )}
-                </View>
-            )}
+                        </TouchableOpacity>
+
+                        {showEnrichedSpecs && (
+                            <View style={styles.specsContent}>
+                                <SpecRow label="Trim" value={car.enrichedSpecs.trim} />
+                                <SpecRow label="Engine" value={car.enrichedSpecs.engine} />
+                                <SpecRow label="Drivetrain" value={car.enrichedSpecs.drivetrain} />
+                                <SpecRow label="MPG" value={car.enrichedSpecs.mpg} />
+                                <SpecRow label="Exterior Color" value={car.enrichedSpecs.exteriorColor} />
+                                <SpecRow label="Interior Color" value={car.enrichedSpecs.interiorColor} />
+
+                                {car.enrichedSpecs.features.length > 0 && (
+                                    <>
+                                        <Text style={styles.featuresTitle}>Features</Text>
+                                        {car.enrichedSpecs.features.map((feature, idx) => (
+                                            <Text key={idx} style={styles.featureItem}>
+                                                • {feature}
+                                            </Text>
+                                        ))}
+                                    </>
+                                )}
+
+                                <Text style={styles.specsSource}>
+                                    Source: {car.enrichedSpecs.provenance}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+                )
+            }
 
             {/* Try Parts CTA */}
             <TouchableOpacity
@@ -249,7 +310,7 @@ const StandardCarDetailScreen: React.FC = () => {
                     <Text style={styles.upgradeButtonText}>Upgrade to Pro</Text>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 };
 
@@ -447,6 +508,28 @@ const styles = StyleSheet.create({
         color: '#007AFF',
         fontSize: 14,
         fontWeight: '600',
+    },
+    actionButtonsContainer: {
+        padding: 20,
+        backgroundColor: '#000',
+    },
+    primaryButton: {
+        backgroundColor: '#22c55e',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    primaryButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '700',
+    },
+    actionHelperText: {
+        color: '#666',
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 8,
     },
 });
 
