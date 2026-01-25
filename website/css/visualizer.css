@@ -162,7 +162,8 @@ body {
     max-width: 90%;
     max-height: 80%;
     object-fit: contain;
-    transition: opacity 0.3s;
+    transition: opacity 0.1s ease-in-out;
+    /* Faster for angle switching */
 }
 
 .angle-nav {

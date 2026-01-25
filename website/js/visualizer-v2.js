@@ -19,6 +19,7 @@ const db = getFirestore(app);
 let standardCars = [];
 let currentCar = null;
 let currentAngleIndex = 0;
+let preloadedImages = {}; // Cache for instant rotation
 
 // Order matches the App's camera sequence for dots
 // (Or just a logical walkaround)
@@ -84,9 +85,9 @@ async function init() {
     } finally {
         els.spinner.style.display = 'none';
 
-        // Force Load if not already
+        // Auto-load first car if available
         if (!currentCar && standardCars.length > 0) {
-            loadCar('porsche_911_2024');
+            loadCar(standardCars[0].id);
         }
     }
 }
@@ -98,8 +99,31 @@ function loadCar(id) {
     // Update Summary
     els.summaryName.innerText = currentCar.displayName || id;
 
+    // Preload all angles for instant rotation
+    preloadCarAngles();
+
     // Reset Angle
     setAngle(0);
+}
+
+// Preload all car angles into browser cache for instant rotation
+function preloadCarAngles() {
+    if (!currentCar || !currentCar.photoAnglesHttp) return;
+
+    console.log(`🔄 Preloading ${currentCar.id} angles...`);
+    const urlMap = currentCar.photoAnglesHttp;
+    preloadedImages[currentCar.id] = {};
+
+    ANGLE_KEYS.forEach(key => {
+        const url = urlMap[key];
+        if (url) {
+            const img = new Image();
+            img.src = url;
+            preloadedImages[currentCar.id][key] = img;
+        }
+    });
+
+    console.log(`✅ Preloaded ${Object.keys(preloadedImages[currentCar.id]).length} angles`);
 }
 
 function setAngle(index) {
@@ -133,31 +157,41 @@ function setAngle(index) {
     if (dbgUrl) dbgUrl.innerText = url || 'UNDEFINED';
 
     if (url) {
-        // Show Spinner
-        els.spinner.style.display = 'block';
+        // Use preloaded image if available for instant display
+        const preloaded = preloadedImages[currentCar.id]?.[key];
 
-        const cacheBuster = url.includes('?') ? '&v=real' : '?v=real';
-        els.img.src = url + cacheBuster;
-
-        els.img.onload = () => {
-            els.spinner.style.display = 'none';
+        if (preloaded && preloaded.complete) {
+            // Instant swap - no loading needed!
+            els.img.src = url;
             if (dbgStatus) {
-                dbgStatus.innerText = 'LOADED (Success)';
+                dbgStatus.innerText = 'LOADED (Cached)';
                 dbgStatus.style.color = '#0f0';
             }
+        } else {
+            // Fallback: Show spinner for first load
+            els.spinner.style.display = 'block';
+
+            els.img.src = url;
+
+            els.img.onload = () => {
+                els.spinner.style.display = 'none';
+                if (dbgStatus) {
+                    dbgStatus.innerText = 'LOADED (Success)';
+                    dbgStatus.style.color = '#0f0';
+                }
+            };
+
+            els.img.onerror = () => {
+                console.warn("Image Check Failed:", url);
+                els.spinner.style.display = 'none';
+                if (dbgStatus) {
+                    dbgStatus.innerText = 'ERROR (Failed)';
+                    dbgStatus.style.color = '#fff';
+                }
+                // Fallback to local asset if remote fails
+                els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
+            };
         }
-
-        els.img.onerror = () => {
-            console.warn("Image Check Failed:", url);
-            els.spinner.style.display = 'none';
-            if (dbgStatus) {
-                dbgStatus.innerText = 'ERROR (Failed)';
-                dbgStatus.style.color = '#fff';
-            }
-
-            // Fallback to local asset if remote fails
-            els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
-        };
     } else {
         console.warn(`Angle ${key} not found for car ${currentCar.id}`);
         if (dbgStatus) dbgStatus.innerText = 'MISSING KEY';
