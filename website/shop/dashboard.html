@@ -6,49 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Dashboard | Garage Manager</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        <!-- Lucide Icons 
-        -->
+    <link rel="stylesheet" href="/css/dashboard.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .sidebar {
-            background: var(--bg-card);
-            border-right: 1px solid var(--border-color);
-            padding: var(--space-lg);
-        }
-
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            color: var(--text-muted);
-            border-radius: var(--radius-md);
-            text-decoration: none;
-            margin-bottom: 4px;
-            transition: all 0.2s;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
-
-        .sidebar-link.active {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-primary);
-            font-weight: 500;
-        }
-
-        .sidebar-link i {
-            width: 20px;
-            height: 20px;
-        }
-    </style>
 </head>
 
-<body>
+<body class="dashboard-body">
 
     <!-- Top Nav -->
     <nav class="shop-nav">
@@ -64,97 +26,90 @@
         </div>
     </nav>
 
-    <div class="dashboard-grid">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <a href="/shop/dashboard.html" class="sidebar-link active">
-                <i data-lucide="layout-dashboard"></i> Dashboard
-            </a>
-            <a href="/shop/marketplace.html" class="sidebar-link">
-                <i data-lucide="shopping-bag"></i> Marketplace
-            </a>
-            <a href="/shop/builds.html" class="sidebar-link">
-                <i data-lucide="wrench"></i> Build Simulator
-            </a>
-            <a href="#" class="sidebar-link">
-                <i data-lucide="message-circle"></i> Inquiries <span class="badge badge-primary"
-                    style="margin-left:auto; font-size:10px;">2</span>
-            </a>
-            <a href="#" class="sidebar-link">
-                <i data-lucide="settings"></i> Settings
-            </a>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="section-header">
-                <div>
-                    <h1 class="text-2xl font-bold">Overview</h1>
-                    <p class="text-muted">Welcome back to your shop command center.</p>
-                </div>
-                <div class="flex gap-2">
-                    <button class="btn btn-secondary" onclick="window.location.href='/shop/inventory-add.html'">Add
-                        Inventory</button>
-                    <button class="btn btn-primary" onclick="window.location.href='/shop/builds.html'">+ New
-                        Quote</button>
+    <div class="dash-container">
+        <!-- Header -->
+        <header class="dash-header">
+            <div class="dash-title">
+                <h1>Shop Command Center</h1>
+                <div class="dash-status">
+                    Welcome back, <span id="user-email-display">Partner</span>
                 </div>
             </div>
-
-            <!-- Stats -->
-            <div class="grid grid-3" style="margin-bottom: var(--space-2xl);">
-                <div class="stat-card">
-                    <p class="text-sm text-muted uppercase font-bold">Active Builds</p>
-                    <p class="text-4xl font-bold my-2">12</p>
-                    <p class="text-xs text-green-500">↑ 2 from last week</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-sm text-muted uppercase font-bold">Pending Inquiries</p>
-                    <p class="text-4xl font-bold my-2">5</p>
-                    <p class="text-xs text-muted">Requires attention</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-sm text-muted uppercase font-bold">Total Revenue (Est)</p>
-                    <p class="text-4xl font-bold my-2">$24.5k</p>
-                    <p class="text-xs text-green-500">↑ 15% WoW</p>
-                </div>
+            <div>
+                <a href="/shop/marketplace.html" class="btn btn-secondary btn-sm"
+                    style="border-color: #333; margin-right: 10px;">
+                    <i data-lucide="shopping-bag" style="width:14px; height:14px; margin-right:4px;"></i> Marketplace
+                </a>
+                <a href="/shop/builds.html" class="btn btn-secondary btn-sm"
+                    style="border-color: #333; margin-right: 10px;">
+                    <i data-lucide="wrench" style="width:14px; height:14px; margin-right:4px;"></i> Simulator
+                </a>
+                <button onclick="window.location.href='/shop/inventory-add.html'" class="btn btn-secondary btn-sm"
+                    style="border-color: #333; margin-right: 10px;">
+                    Add Inventory
+                </button>
+                <button onclick="window.location.href='/shop/builds.html'" class="btn btn-primary btn-sm">
+                    + New Quote
+                </button>
             </div>
+        </header>
 
-            <!-- Recent Inquiries Table -->
-            <div class="stat-card">
-                <h3 class="mb-4">Recent Inquiries</h3>
-                <div style="overflow-x:auto;">
-                    <table style="width:100%; text-align:left; border-collapse:collapse;">
-                        <thead>
-                            <tr
-                                style="border-bottom:1px solid var(--border-color); color:var(--text-muted); font-size:14px;">
-                                <th style="padding:12px;">Customer</th>
-                                <th style="padding:12px;">Interest</th>
-                                <th style="padding:12px;">Status</th>
-                                <th style="padding:12px;">Date</th>
-                                <th style="padding:12px;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody style="font-size:14px;">
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-                                <td style="padding:12px;">Alex Chen</td>
-                                <td style="padding:12px;">BMW M3 Carbon Lip</td>
-                                <td style="padding:12px;"><span class="badge badge-primary">New</span></td>
-                                <td style="padding:12px;">Today, 10:23 AM</td>
-                                <td style="padding:12px;"><button class="text-accent hover:underline">Reply</button>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-                                <td style="padding:12px;">Sarah Miller</td>
-                                <td style="padding:12px;">911 Wrap Quote</td>
-                                <td style="padding:12px;"><span style="color:#a1a1aa;">Pending</span></td>
-                                <td style="padding:12px;">Yesterday</td>
-                                <td style="padding:12px;"><button class="text-accent hover:underline">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Active Builds</div>
+                <div class="kpi-value">12</div>
+                <div class="kpi-trend">↑ 2 from last week</div>
             </div>
-        </main>
+            <div class="kpi-card">
+                <div class="kpi-label">Pending Inquiries</div>
+                <div class="kpi-value">5</div>
+                <div class="kpi-trend" style="color:var(--text-dim)">Requires attention</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Revenue (Est)</div>
+                <div class="kpi-value">$24.5k</div>
+                <div class="kpi-trend">↑ 15% WoW</div>
+            </div>
+        </div>
+
+        <!-- Recent Inquiries Table -->
+        <div class="table-card">
+            <div class="table-header">Recent Inquiries</div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Interest</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alex Chen</td>
+                            <td>BMW M3 Carbon Lip</td>
+                            <td><span class="status-badge live"
+                                    style="color:#3b82f6; background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.3)">New</span>
+                            </td>
+                            <td>Today, 10:23 AM</td>
+                            <td><button class="text-accent hover:underline">Reply</button></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Miller</td>
+                            <td>911 Wrap Quote</td>
+                            <td><span class="status-badge demo"
+                                    style="color:#a1a1aa; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2)">Pending</span>
+                            </td>
+                            <td>Yesterday</td>
+                            <td><button class="text-accent hover:underline">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -170,7 +125,7 @@
         (async () => {
             const user = await checkAuth();
             if (user) {
-                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('user-email-display').textContent = user.email;
             }
         })();
 

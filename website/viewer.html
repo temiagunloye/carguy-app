@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage Manager 360 Viewer</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        /* Specific Styles for Viewer */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            /* Fullscreen feel */
+        }
+
+        .viewer-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner-canvas {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            position: relative;
+            /* Allow touch actions */
+            touch-action: pan-y;
+            cursor: grab;
+        }
+
+        .spinner-canvas:active {
+            cursor: grabbing;
+        }
+
+        .spinner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            /* Hidden by default */
+            pointer-events: none;
+            /* Let clicks pass to canvas container */
+        }
+
+        .spinner-image.active {
+            display: block;
+        }
+
+        .controls-overlay {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .metadata-overlay {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .error-message {
+            color: var(--accent-danger, #ef4444);
+            text-align: center;
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="viewer-container" id="viewerContainer">
+
+        <!-- Loading -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div> <!-- Assuming css/components.css has spinner -->
+            <p style="margin-top:20px; color: var(--text-muted)">Loading 360 Experience...</p>
+        </div>
+
+        <!-- Metadata -->
+        <div class="metadata-overlay">
+            <h1 id="carTitle">Loading Car...</h1>
+            <p id="carSubtitle" style="color: var(--text-muted)">...</p>
+        </div>
+
+        <!-- The Image Spinner -->
+        <div class="spinner-canvas" id="spinnerCanvas">
+            <!-- Images injected here by JS -->
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-overlay">
+            <button class="nav-btn" id="prevBtn">←</button>
+            <div style="color:var(--text-muted); display:flex; align-items:center; font-size:14px;">
+                DRAG TO ROTATE
+            </div>
+            <button class="nav-btn" id="nextBtn">→</button>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDKs (Compat/CDN for quick setup without bundler) -->
+    <script type="module" src="/js/viewer.js"></script>
+
+</body>
+
+</html>

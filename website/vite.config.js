@@ -15,12 +15,17 @@ export default defineConfig({
                 dashboard: resolve(__dirname, 'dashboard.html'),
                 crm: resolve(__dirname, 'crm.html'),
                 // New Pages (V1 Benchmark)
+                viewer: resolve(__dirname, 'viewer.html'),
                 visualizer: resolve(__dirname, 'visualizer-preview.html'),
                 sharedBuild: resolve(__dirname, 'shared-build.html'),
                 // Shop Portal
                 shopLogin: resolve(__dirname, 'shop/login.html'),
                 shopDashboard: resolve(__dirname, 'shop/dashboard.html'),
                 shopSimulator: resolve(__dirname, 'shop/simulator.html'),
+                shopMarketplace: resolve(__dirname, 'shop/marketplace.html'),
+                shopPartDetail: resolve(__dirname, 'shop/part-detail.html'),
+                shopInventoryAdd: resolve(__dirname, 'shop/inventory-add.html'),
+                shopBuilds: resolve(__dirname, 'shop/builds.html'),
                 // Body Shop pages
                 bodyshop: resolve(__dirname, 'bodyshop/index.html'),
             },

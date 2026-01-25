@@ -28,8 +28,8 @@
 
   --text-primary: #F5F7FA;
   --text-secondary: #E5E7EB;
-  --text-muted: var(--gm-graphite);
-  --text-dim: #4B5563;
+  --text-muted: #A1A1AA;
+  --text-dim: #6B7785;
 
   --accent-primary: var(--gm-navy);
   --accent-primary-hover: var(--gm-navy-2);
