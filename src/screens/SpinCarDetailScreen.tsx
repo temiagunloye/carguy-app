@@ -19,8 +19,11 @@ const Header = ({ title, onBack }: { title: string; onBack: () => void }) => (
 export default function SpinCarDetailScreen() {
     const route = useRoute();
     const navigation = useNavigation();
-    const params = route.params as { carId: string } | undefined;
+    const params = route.params as { carId: string; isStandardCar?: boolean } | undefined;
     const carId = params?.carId;
+    const isStandardCar = params?.isStandardCar;
+    const collectionName = isStandardCar ? "standardCars" : "cars";
+
     const db = getDb();
     const functions = getFunctions();
 
@@ -31,26 +34,53 @@ export default function SpinCarDetailScreen() {
     useEffect(() => {
         if (!carId || !db) return;
 
-        // Subscribe to car doc
-        const unsubCar = onSnapshot(doc(db, "cars", carId), (snap) => {
+        // Subscribe to car doc (standard or user)
+        const unsubCar = onSnapshot(doc(db, collectionName, carId), (snap) => {
             if (snap.exists()) {
-                setCar({ id: snap.id, ...snap.data() });
+                const data = snap.data();
+                setCar({ id: snap.id, ...data });
+
+                // If loading from standardCars, the angles are likely in 'photoAnglesHttp' map
+                // We need to transform them to the array format expected by the viewer
+                if (isStandardCar && data.photoAnglesHttp) {
+                    const sortedAngles: any[] = [];
+                    // Use canonical sort order
+                    const ORDER = [
+                        'front_center', 'passenger_front', 'full_passenger_side', 'passenger_rear',
+                        'rear_center', 'driver_rear', 'full_driver_side', 'driver_front'
+                    ];
+
+                    ORDER.forEach((key, index) => {
+                        if (data.photoAnglesHttp[key]) {
+                            sortedAngles.push({
+                                id: key,
+                                angleIndex: index,
+                                httpUrl: data.photoAnglesHttp[key]
+                            });
+                        }
+                    });
+                    setAngles(sortedAngles);
+                }
             } else {
                 setCar(null);
             }
         });
 
-        // Subscribe to angles subcollection
-        const q = query(collection(db, "cars", carId, "angles"), orderBy("angleIndex"));
-        const unsubAngles = onSnapshot(q, (snap) => {
-            setAngles(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-        });
+        // Only subscribe to subcollection if we didn't find angles in the main doc (User Car mode)
+        let unsubAngles = () => { };
+
+        if (!isStandardCar) {
+            const q = query(collection(db, collectionName, carId, "angles"), orderBy("angleIndex"));
+            unsubAngles = onSnapshot(q, (snap) => {
+                setAngles(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+            });
+        }
 
         return () => {
             unsubCar();
             unsubAngles();
         };
-    }, [carId, db]);
+    }, [carId, db, isStandardCar]);
 
     const queueSeg = async () => {
         if (!carId) return;

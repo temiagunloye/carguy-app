@@ -1,34 +1,8 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // PUBLIC READ: Vehicles (for visualizer)
-    match /vehicles/{vehicleId} {
-      allow read: if true;
-      allow write: if false; // Admin only via console/script
-    }
-    
-    // PUBLIC CREATE: Inquiries and Shared Builds
-    match /partInquiries/{inquiryId} {
-      allow create: if true;
-      allow read, update, delete: if false;
-    }
-    
-    match /sharedBuilds/{buildId} {
-      allow read, create: if true;
-      allow update, delete: if false;
-    }
-    
-    // PUBLIC CREATE: Import Jobs (for demo purposes)
-    match /importJobs/{jobId} {
-      allow create: if true;
-      allow read: if true; // allow tracking
-    }
-    
-    // RESTRICTED: Everything else
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if true; // DEVELOPMENT ONLY: NO LOCKS
     }
   }
 }

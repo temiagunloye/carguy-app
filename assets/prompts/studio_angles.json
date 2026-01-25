@@ -1,0 +1,16 @@
+{
+    "style_prefix": "Professional automotive studio photography of a",
+    "style_suffix": "clean white background, softbox lighting, 8k resolution, photorealistic, commercial car photography, isolated",
+    "angles": {
+        "front": "front view",
+        "front_left": "front-left 3/4 angle view",
+        "left": "left side profile view",
+        "rear_left": "rear-left 3/4 angle view",
+        "rear": "rear view",
+        "rear_right": "rear-right 3/4 angle view",
+        "right": "right side profile view",
+        "front_right": "front-right 3/4 angle view",
+        "front_low": "low angle front view",
+        "rear_low": "low angle rear view"
+    }
+}

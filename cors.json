@@ -4,8 +4,7 @@
             "*"
         ],
         "method": [
-            "GET",
-            "HEAD"
+            "GET"
         ],
         "maxAgeSeconds": 3600
     }

@@ -189,7 +189,10 @@ export default function Page() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 py-10">
         <header className="flex items-center justify-between mb-8">
-          <div className="text-sm font-bold tracking-tight uppercase">ThatAppCompany</div>
+          <div className="flex items-center gap-2 text-sm font-bold tracking-tight uppercase">
+            <img src="/brand/tac-logo.png" alt="TAC" className="h-6 w-auto object-contain" />
+            <span>ThatAppCompany</span>
+          </div>
           <nav className="hidden items-center gap-6 text-xs font-medium uppercase tracking-wide text-slate-500 md:flex">
             <a href="#projects" className="hover:text-slate-900 transition-colors">Portfolio</a>
             <a href="#creative-deck" className="hover:text-slate-900 transition-colors">Habits</a>

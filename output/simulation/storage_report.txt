@@ -1,0 +1,15 @@
+STORAGE ESTIMATE REPORT
+=======================
+Timestamp: 2026-01-25T01:38:28.534Z
+Total Cars: 5
+Total Angles: 50
+Total Bytes: 367286300 (350.27 MB)
+
+PER CAR BREAKDOWN:
+- porsche_911_2024: 95.62 MB
+- bmw_m3_2024: 89.29 MB
+- subaru_brz_2024: 8.56 MB
+- mercedes_c63_2024: 32.84 MB
+- audi_rs6_2024: 123.96 MB
+
+ESTIMATED COST (Standard Tier): < $0.01 / month

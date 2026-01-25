@@ -8,7 +8,16 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "ingest:simulate": "node scripts/run_pipeline_simulation.js",
+    "ingest:upload": "node scripts/upload_base_simulation.js",
+    "ingest:process": "node scripts/trigger_segmentation.js",
+    "ingest:render": "blender --background --python scripts/blender/render_studio.py --",
+    "ingest:upload-render": "node scripts/upload_renders.js",
+    "ingest:acquire": "node scripts/acquire_images.js",
+    "ingest:scrape": "node scripts/acquire_dealer.js",
+    "ingest:clean": "python3 scripts/remove_background.py",
+    "ingest:generate": "python3 scripts/generate_ai_car.py"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -55,6 +64,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "metro-config": "^0.76.0",
+    "puppeteer": "^24.36.0",
     "typescript": "~5.9.2"
   },
   "private": true

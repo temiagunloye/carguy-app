@@ -1,0 +1,682 @@
+[
+  {
+    "carId": "porsche_911_2024",
+    "angles": [
+      {
+        "name": "driver_front",
+        "path": "output/simulation/porsche_911_2024/driver_front.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_front",
+        "path": "output/simulation/porsche_911_2024/passenger_front.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "driver_rear",
+        "path": "output/simulation/porsche_911_2024/driver_rear.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_rear",
+        "path": "output/simulation/porsche_911_2024/passenger_rear.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_driver_side",
+        "path": "output/simulation/porsche_911_2024/full_driver_side.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_passenger_side",
+        "path": "output/simulation/porsche_911_2024/full_passenger_side.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_center",
+        "path": "output/simulation/porsche_911_2024/front_center.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_center",
+        "path": "output/simulation/porsche_911_2024/rear_center.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_low",
+        "path": "output/simulation/porsche_911_2024/front_low.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_low",
+        "path": "output/simulation/porsche_911_2024/rear_low.jpg",
+        "size": 10026874,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Porsche_911_Carrera_4S_(992,_2021)_(53332395614).jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      }
+    ],
+    "status": "approved"
+  },
+  {
+    "carId": "bmw_m3_2024",
+    "angles": [
+      {
+        "name": "driver_front",
+        "path": "output/simulation/bmw_m3_2024/driver_front.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_front",
+        "path": "output/simulation/bmw_m3_2024/passenger_front.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "driver_rear",
+        "path": "output/simulation/bmw_m3_2024/driver_rear.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_rear",
+        "path": "output/simulation/bmw_m3_2024/passenger_rear.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_driver_side",
+        "path": "output/simulation/bmw_m3_2024/full_driver_side.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_passenger_side",
+        "path": "output/simulation/bmw_m3_2024/full_passenger_side.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_center",
+        "path": "output/simulation/bmw_m3_2024/front_center.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_center",
+        "path": "output/simulation/bmw_m3_2024/rear_center.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_low",
+        "path": "output/simulation/bmw_m3_2024/front_low.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_low",
+        "path": "output/simulation/bmw_m3_2024/rear_low.jpg",
+        "size": 9362794,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/BMW_M3_(G81)_IMG_9066.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      }
+    ],
+    "status": "approved"
+  },
+  {
+    "carId": "subaru_brz_2024",
+    "angles": [
+      {
+        "name": "driver_front",
+        "path": "output/simulation/subaru_brz_2024/driver_front.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_front",
+        "path": "output/simulation/subaru_brz_2024/passenger_front.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "driver_rear",
+        "path": "output/simulation/subaru_brz_2024/driver_rear.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_rear",
+        "path": "output/simulation/subaru_brz_2024/passenger_rear.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_driver_side",
+        "path": "output/simulation/subaru_brz_2024/full_driver_side.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_passenger_side",
+        "path": "output/simulation/subaru_brz_2024/full_passenger_side.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_center",
+        "path": "output/simulation/subaru_brz_2024/front_center.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_center",
+        "path": "output/simulation/subaru_brz_2024/rear_center.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_low",
+        "path": "output/simulation/subaru_brz_2024/front_low.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_low",
+        "path": "output/simulation/subaru_brz_2024/rear_low.jpg",
+        "size": 897908,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2022_Subaru_BRZ.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      }
+    ],
+    "status": "approved"
+  },
+  {
+    "carId": "mercedes_c63_2024",
+    "angles": [
+      {
+        "name": "driver_front",
+        "path": "output/simulation/mercedes_c63_2024/driver_front.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_front",
+        "path": "output/simulation/mercedes_c63_2024/passenger_front.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "driver_rear",
+        "path": "output/simulation/mercedes_c63_2024/driver_rear.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_rear",
+        "path": "output/simulation/mercedes_c63_2024/passenger_rear.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_driver_side",
+        "path": "output/simulation/mercedes_c63_2024/full_driver_side.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_passenger_side",
+        "path": "output/simulation/mercedes_c63_2024/full_passenger_side.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_center",
+        "path": "output/simulation/mercedes_c63_2024/front_center.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_center",
+        "path": "output/simulation/mercedes_c63_2024/rear_center.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_low",
+        "path": "output/simulation/mercedes_c63_2024/front_low.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_low",
+        "path": "output/simulation/mercedes_c63_2024/rear_low.jpg",
+        "size": 3443279,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-AMG_C_63_S_E_Performance_(W206)_front.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      }
+    ],
+    "status": "approved"
+  },
+  {
+    "carId": "audi_rs6_2024",
+    "angles": [
+      {
+        "name": "driver_front",
+        "path": "output/simulation/audi_rs6_2024/driver_front.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_front",
+        "path": "output/simulation/audi_rs6_2024/passenger_front.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "driver_rear",
+        "path": "output/simulation/audi_rs6_2024/driver_rear.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "passenger_rear",
+        "path": "output/simulation/audi_rs6_2024/passenger_rear.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_driver_side",
+        "path": "output/simulation/audi_rs6_2024/full_driver_side.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "full_passenger_side",
+        "path": "output/simulation/audi_rs6_2024/full_passenger_side.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_center",
+        "path": "output/simulation/audi_rs6_2024/front_center.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_center",
+        "path": "output/simulation/audi_rs6_2024/rear_center.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "front_low",
+        "path": "output/simulation/audi_rs6_2024/front_low.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      },
+      {
+        "name": "rear_low",
+        "path": "output/simulation/audi_rs6_2024/rear_low.jpg",
+        "size": 12997775,
+        "width": 1600,
+        "height": 900,
+        "evidence": {
+          "sourceUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/2021_Audi_RS6_Avant_in_Nardo_Gray,_front_right.jpg",
+          "tier": "TIER_2_COMMONS",
+          "licenseText": "Creative Commons / Public Domain",
+          "isEditorial": false
+        }
+      }
+    ],
+    "status": "approved"
+  }
+]

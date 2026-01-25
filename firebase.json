@@ -45,5 +45,13 @@
       "port": 4000,
       "host": "0.0.0.0"
     }
+  },
+  "hosting": {
+    "public": "website/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }

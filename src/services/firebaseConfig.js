@@ -30,7 +30,7 @@ const initializeFirebase = () => {
   try {
     const { initializeApp, getApps } = require("firebase/app");
     const { initializeAuth, getReactNativePersistence, connectAuthEmulator } = require("firebase/auth");
-    const { initializeFirestore, connectFirestoreEmulator } = require("firebase/firestore");
+    const { initializeFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager } = require("firebase/firestore");
     const { getStorage: getFirebaseStorage, connectStorageEmulator } = require("firebase/storage");
     const ReactNativeAsyncStorage = require("@react-native-async-storage/async-storage").default;
     const Constants = require("expo-constants").default;
@@ -51,13 +51,14 @@ const initializeFirebase = () => {
       firebaseState.auth = initializeAuth(firebaseState.app, {
         persistence: getReactNativePersistence(ReactNativeAsyncStorage),
       });
-      // Force long polling to fix "transport errored" on React Native
+
+      // Enable offline persistence
       firebaseState.db = initializeFirestore(firebaseState.app, {
+        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
         experimentalForceLongPolling: true,
       });
-      firebaseState.storage = getFirebaseStorage(firebaseState.app);
 
-      // Connect to emulators if in DEV mode
+      firebaseState.storage = getFirebaseStorage(firebaseState.app);
       // Connect to emulators if in DEV mode
       if (__DEV__) {
         console.log("🔥 Connecting to Firebase Emulators...");

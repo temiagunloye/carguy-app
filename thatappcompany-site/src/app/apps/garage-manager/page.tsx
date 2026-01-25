@@ -10,7 +10,10 @@ export default function GarageManagerPage() {
             {/* Header */}
             <div className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
                 <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-                    <a href="/" className="text-sm font-bold uppercase tracking-wide">ThatAppCompany</a>
+                    <a href="/" className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
+                        <img src="/brand/tac-logo.png" alt="TAC" className="h-6 w-auto object-contain" />
+                        <span>ThatAppCompany</span>
+                    </a>
                     <nav className="flex items-center gap-4 text-xs font-bold uppercase tracking-wide text-slate-500">
                         <a href="#showcase" className="hover:text-slate-900">Showcase</a>
                         <a href={`/apps/${app.slug}/updates`} className="hover:text-slate-900">Updates</a>
@@ -56,16 +59,16 @@ export default function GarageManagerPage() {
 
                     <div className="grid gap-8 md:grid-cols-3">
                         {[
-                            { src: "/showcase/gm-01.png", label: "Inventory Tracking" },
-                            { src: "/showcase/gm-02.png", label: "Build History" },
-                            { src: "/showcase/gm-03.png", label: "Visual Planner" }
+                            { src: "/portfolio/garage-manager/gm-01.png", label: "Inventory Tracking" },
+                            { src: "/portfolio/garage-manager/gm-02.png", label: "Build History" },
+                            { src: "/portfolio/garage-manager/gm-03.png", label: "Visual Planner" }
                         ].map((img, i) => (
-                            <div key={i} className="group relative aspect-[9/19] w-full overflow-hidden rounded-[32px] border border-slate-200 bg-slate-100 shadow-md transition-all hover:-translate-y-2 hover:shadow-xl">
+                            <div key={i} className="group relative aspect-[9/19] w-full overflow-hidden rounded-[32px] border border-slate-800 bg-[#0B0F14] shadow-md transition-all hover:-translate-y-2 hover:shadow-xl">
                                 <Image
                                     src={img.src}
                                     alt={img.label}
                                     fill
-                                    className="object-cover"
+                                    className="object-contain"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                                 <div className="absolute bottom-6 left-6 text-white text-lg font-bold opacity-0 transition-opacity group-hover:opacity-100">
