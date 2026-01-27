@@ -901,6 +901,31 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
     },
+    buildsList: {
+        paddingRight: 20,
+    },
+    buildCard: {
+        width: 160,
+        marginRight: 16,
+        backgroundColor: '#1a1a1a',
+        borderRadius: 12,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#333',
+    },
+    buildThumb: {
+        width: '100%',
+        height: 100,
+        backgroundColor: '#222',
+    },
+    buildInfo: {
+        padding: 10,
+    },
+    buildName: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '600',
+    },
 });
 
 export default StandardCarDetailScreen;

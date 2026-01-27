@@ -76,7 +76,12 @@ export default function BuildViewerScreen() {
             // Extract URLs in order
             if (resolvedBuild.renderSet && resolvedBuild.renderSet.angles) {
                 const urls = resolvedBuild.renderSet.angles
-                    .sort((a: any, b: any) => a.index - b.index)
+                    .sort((a: any, b: any) => {
+                        if (typeof a.index === 'number' && typeof b.index === 'number') {
+                            return a.index - b.index;
+                        }
+                        return 0; // Keep original order if index missing
+                    })
                     .map((a: any) => a.url)
                     .filter((u: any) => !!u);
                 setRenderUrls(urls);

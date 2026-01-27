@@ -80,7 +80,18 @@ async function seed() {
             // Construct a public URL guess (StandardCarLibraryService resolves storagePath too)
             const url = `https://storage.googleapis.com/${bucketName}/${storagePath}`;
 
+            // Determine index based on name pattern or simple increment
+            // Mapping: front-left (0), left (1), rear-left (2), etc?
+            // User wants to rotate.
+            // Let's assume the Object.entries comes in definition order or use specific mapping
+            // Definition order in HERO_BUILDS seems to be: front-left, left, rear-left, front(, rear)
+
+            // StandardCarLibrary typically has 8-10 angles.
+            // Let's just assign index based on push order for now
+            const index = angles.length;
+
             angles.push({
+                index: index,
                 name: angleName,
                 storagePath: storagePath,
                 url: url
