@@ -163,6 +163,27 @@ export default function CarDetailScreen({ navigation, route }) {
     }
   };
 
+  // Fetch standard car image if missing
+  const [resolvedImage, setResolvedImage] = useState(null);
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (car && !car.imageUrl && car.standardCarId) {
+        try {
+          const { standardCarLibraryService } = await import("../services/StandardCarLibraryService");
+          const stdCar = await standardCarLibraryService.getStandardCarById(car.standardCarId);
+          if (stdCar && stdCar.displayUrl) {
+            setResolvedImage(stdCar.displayUrl);
+          }
+        } catch (e) {
+          console.warn('Failed to resolve standard image', e);
+        }
+      }
+    };
+    fetchImage();
+  }, [car]);
+
+  const displayImage = resolvedImage || car?.imageUrl || car?.dealerImageUrl;
+
   // Filter and sort parts
   const filteredParts = parts
     .filter(p => selectedCategory === "all" || p.category === selectedCategory)
@@ -384,7 +405,7 @@ export default function CarDetailScreen({ navigation, route }) {
         {/* Car Info Card */}
         <View style={styles.carCard}>
           {car.imageUrl ? (
-            <Image source={{ uri: car.imageUrl }} style={styles.carImage} />
+            <Image source={{ uri: car.imageUrl }} style={styles.carImage} resizeMode="cover" />
           ) : (
             <View style={styles.carImagePlaceholder}>
               <Ionicons name="car-outline" size={24} color="#666" />
@@ -445,26 +466,6 @@ export default function CarDetailScreen({ navigation, route }) {
             </ScrollView>
           </View>
         )}
-
-        {/* Stats Row */}
-        <View style={styles.statsRow}>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>{parts.length}</Text>
-            <Text style={styles.statLabel}>Total Parts</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>{installedParts}</Text>
-            <Text style={styles.statLabel}>Installed</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>{activeWarranties}</Text>
-            <Text style={styles.statLabel}>Warranties</Text>
-          </View>
-          <View style={[styles.statBox, styles.statBoxHighlight]}>
-            <Text style={styles.statValueHighlight}>${totalInvestment.toLocaleString()}</Text>
-            <Text style={styles.statLabelHighlight}>Total Value</Text>
-          </View>
-        </View>
 
         {/* KIRI 3D Model Status */}
         {car.kiriStatus && car.kiriStatus !== 'idle' && (
@@ -528,84 +529,13 @@ export default function CarDetailScreen({ navigation, route }) {
           </View>
         )}
 
-        {/* Folder Grid - Google Drive Style */}
-        <View style={styles.folderGridSection}>
-          <Text style={styles.folderGridTitle}>Parts Folders</Text>
-          <View style={styles.folderGrid}>
-            {CATEGORIES.map((cat) => {
-              const count = cat.id === "all"
-                ? parts.length
-                : parts.filter(p => p.category === cat.id).length;
-
-              return (
-                <TouchableOpacity
-                  key={cat.id}
-                  style={[
-                    styles.folderCard,
-                    selectedCategory === cat.id && styles.folderCardActive,
-                  ]}
-                  onPress={() => setSelectedCategory(cat.id)}
-                >
-                  <View style={styles.folderIconContainer}>
-                    <Ionicons
-                      name={cat.icon}
-                      size={32}
-                      color={selectedCategory === cat.id ? "#4a9eff" : "#666"}
-                    />
-                  </View>
-                  <Text style={[
-                    styles.folderName,
-                    selectedCategory === cat.id && styles.folderNameActive,
-                  ]} numberOfLines={2}>
-                    {cat.name}
-                  </Text>
-                  {count > 0 && (
-                    <Text style={[
-                      styles.folderCount,
-                      selectedCategory === cat.id && styles.folderCountActive,
-                    ]}>
-                      {count} {count === 1 ? 'part' : 'parts'}
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-
-        {/* Sort Options */}
-        <View style={styles.sortRow}>
-          <Text style={styles.sortLabel}>Sort by:</Text>
-          {[
-            { id: "date", label: "Recent" },
-            { id: "price", label: "Price" },
-            { id: "name", label: "Name" },
-          ].map((option) => (
-            <TouchableOpacity
-              key={option.id}
-              style={[styles.sortChip, sortBy === option.id && styles.sortChipActive]}
-              onPress={() => setSortBy(option.id)}
-            >
-              <Text style={[styles.sortChipText, sortBy === option.id && styles.sortChipTextActive]}>
-                {option.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Parts List */}
-        {loading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator color="#4a9eff" />
-          </View>
-        ) : filteredParts.length === 0 ? (
+        {/* If NO PARTS, show Empty State prominently, hide stats/folders */}
+        {(!parts || parts.length === 0) && !loading ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>📦</Text>
             <Text style={styles.emptyTitle}>No parts yet</Text>
             <Text style={styles.emptySubtitle}>
-              {selectedCategory === "all"
-                ? "Start building your inventory by adding parts"
-                : `No ${CATEGORIES.find(c => c.id === selectedCategory)?.name.toLowerCase()} parts`}
+              Start building your inventory by adding parts
             </Text>
             <TouchableOpacity
               style={styles.emptyButton}
@@ -615,16 +545,122 @@ export default function CarDetailScreen({ navigation, route }) {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={styles.partsList}>
-            {filteredParts.map((part) => (
-              <View key={part.id}>
-                {renderPartCard({ item: part })}
+          /* SHOW STATS & FOLDERS ONLY IF PARTS EXIST */
+          <>
+            {/* Stats Row */}
+            <View style={styles.statsRow}>
+              <View style={styles.statBox}>
+                <Text style={styles.statValue}>{parts.length}</Text>
+                <Text style={styles.statLabel}>Total Parts</Text>
               </View>
-            ))}
-          </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statValue}>{installedParts}</Text>
+                <Text style={styles.statLabel}>Installed</Text>
+              </View>
+              <View style={styles.statBox}>
+                <Text style={styles.statValue}>{activeWarranties}</Text>
+                <Text style={styles.statLabel}>Warranties</Text>
+              </View>
+              <View style={[styles.statBox, styles.statBoxHighlight]}>
+                <Text style={styles.statValueHighlight}>${totalInvestment.toLocaleString()}</Text>
+                <Text style={styles.statLabelHighlight}>Total Value</Text>
+              </View>
+            </View>
+
+            {/* Folder Grid - Google Drive Style */}
+            <View style={styles.folderGridSection}>
+              <Text style={styles.folderGridTitle}>Parts Folders</Text>
+              <View style={styles.folderGrid}>
+                {CATEGORIES.map((cat) => {
+                  const count = cat.id === "all"
+                    ? parts.length
+                    : parts.filter(p => p.category === cat.id).length;
+
+                  return (
+                    <TouchableOpacity
+                      key={cat.id}
+                      style={[
+                        styles.folderCard,
+                        selectedCategory === cat.id && styles.folderCardActive,
+                      ]}
+                      onPress={() => setSelectedCategory(cat.id)}
+                    >
+                      <View style={styles.folderIconContainer}>
+                        <Ionicons
+                          name={cat.icon}
+                          size={32}
+                          color={selectedCategory === cat.id ? "#4a9eff" : "#666"}
+                        />
+                      </View>
+                      <Text style={[
+                        styles.folderName,
+                        selectedCategory === cat.id && styles.folderNameActive,
+                      ]} numberOfLines={2}>
+                        {cat.name}
+                      </Text>
+                      {count > 0 && (
+                        <Text style={[
+                          styles.folderCount,
+                          selectedCategory === cat.id && styles.folderCountActive,
+                        ]}>
+                          {count} {count === 1 ? 'part' : 'parts'}
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+
+            {/* Sort Options */}
+            <View style={styles.sortRow}>
+              <Text style={styles.sortLabel}>Sort by:</Text>
+              {[
+                { id: "date", label: "Recent" },
+                { id: "price", label: "Price" },
+                { id: "name", label: "Name" },
+              ].map((option) => (
+                <TouchableOpacity
+                  key={option.id}
+                  style={[styles.sortChip, sortBy === option.id && styles.sortChipActive]}
+                  onPress={() => setSortBy(option.id)}
+                >
+                  <Text style={[styles.sortChipText, sortBy === option.id && styles.sortChipTextActive]}>
+                    {option.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Parts List */}
+            {loading ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator color="#4a9eff" />
+              </View>
+            ) : (
+              <View style={styles.partsList}>
+                {filteredParts.map((part) => (
+                  <View key={part.id}>
+                    {renderPartCard({ item: part })}
+                  </View>
+                ))}
+                {/* "Add More" prompt at end of list */}
+                <View style={styles.addMoreContainer}>
+                  <Text style={styles.addMoreText}>Need more upgrades?</Text>
+                  <TouchableOpacity
+                    style={styles.addMoreButton}
+                    onPress={() => navigation.navigate("AddPart")}
+                  >
+                    <Text style={styles.addMoreButtonText}>+ Add Another Part</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+
+            <View style={{ height: 100 }} />
+          </>
         )}
 
-        <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Floating Add Button */}
@@ -913,6 +949,29 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 15,
     fontWeight: "600",
+  },
+  addMoreContainer: {
+    marginTop: 24,
+    marginBottom: 48,
+    alignItems: 'center',
+  },
+  addMoreText: {
+    color: '#888',
+    marginBottom: 12,
+    fontSize: 14,
+  },
+  addMoreButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    backgroundColor: '#111',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  addMoreButtonText: {
+    color: '#4a9eff',
+    fontWeight: '600',
+    fontSize: 15,
   },
   partsList: {
     paddingHorizontal: 16,

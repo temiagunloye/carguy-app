@@ -54,6 +54,39 @@ export default function HomeScreen({ navigation }) {
     return unsubscribe;
   }, [navigation, refreshActiveCar]);
 
+  // Resolve image if needed
+  const [heroImageSource, setHeroImageSource] = useState(null);
+
+  useEffect(() => {
+    const resolveImage = async () => {
+      if (!activeCar) {
+        setHeroImageSource(null);
+        return;
+      }
+
+      // Prefer dealerImageUrl or imageUrl
+      // Check local assets first if any (e.g. require) - not applicable for dynamic
+      let uri = activeCar.dealerImageUrl || activeCar.imageUrl;
+
+      if (uri && !uri.startsWith('http') && !uri.startsWith('file')) {
+        // It's likely a storage path
+        try {
+          const { default: standardCarLibraryService } = await import("../services/StandardCarLibraryService");
+          uri = await standardCarLibraryService.resolveStoragePath(uri);
+        } catch (e) {
+          console.warn("Failed to resolve home image", e);
+        }
+      }
+
+      if (uri) {
+        setHeroImageSource({ uri });
+      } else {
+        setHeroImageSource(null);
+      }
+    };
+    resolveImage();
+  }, [activeCar]);
+
   // Simple tier from plan (defaults to 'free' if no user/plan)
   const tier = plan || 'free';
 
@@ -79,35 +112,67 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate("AddCar");
   };
 
-  if (loading) {
+  const renderHeader = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    let timeOfDay = "day";
+    if (hours >= 5 && hours < 12) {
+      timeOfDay = "morning";
+    } else if (hours >= 12 && hours < 17) {
+      timeOfDay = "afternoon";
+    } else if (hours >= 17 || hours < 5) {
+      timeOfDay = "evening";
+    }
+
     return (
-      <View style={styles.center}>
-        <ActivityIndicator color="#fff" />
+      <View style={styles.header}>
+        <View style={styles.greetingContainer}>
+          <Text style={styles.greetingText}>Good {timeOfDay},</Text>
+          <Text style={styles.usernameText}>{user?.displayName || "Driver"}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          <Image
+            source={
+              user?.photoURL
+                ? { uri: user.photoURL }
+                : require("../../assets/images/default-avatar.png")
+            }
+            style={styles.profileImage}
+          />
+        </TouchableOpacity>
       </View>
     );
-  }
+  };
 
-  const hasCar = !!activeCar;
+  const renderActiveCar = () => {
+    if (!activeCar) {
+      return (
+        <TouchableOpacity
+          style={styles.heroPlaceholder}
+          onPress={() => navigation.navigate("AddCar")}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="car-outline" size={48} color="#666" />
+          <Text style={styles.heroPlaceholderText}>Tap to add your car</Text>
+        </TouchableOpacity>
+      );
+    }
 
-  const heroImageSource =
-    (activeCar && (resolvedImageUrl || activeCar.imageUrl))
-      ? { uri: resolvedImageUrl || activeCar.imageUrl }
-      : null;
-
-  return (
-    <View style={styles.container}>
-      {/* HERO IMAGE */}
-      <View style={styles.heroImageWrapper}>
+    return (
+      <View style={styles.heroContainer}>
         {heroImageSource ? (
           <TouchableOpacity
             activeOpacity={0.9}
             style={styles.heroImageContainer}
             onPress={() => {
               if (activeCar.standardCarId) {
-                navigation.navigate("StandardCarDetail", {
-                  carId: activeCar.standardCarId,
-                  inventoryCarId: activeCar.id
-                });
+                // If it's a standard car, go to the dedicated standard car UI?
+                // OR go to CarDetail which we are upgrading to have 360 view
+                // User asked for "access it" -> implies Details
+                navigation.navigate("CarDetail", { car: activeCar });
               } else {
                 navigation.navigate("CarDetail", { car: activeCar });
               }
@@ -127,7 +192,7 @@ export default function HomeScreen({ navigation }) {
         )}
       </View>
 
-      {/* CAR TEXT */}
+      {/* CAR TEXT */ }
       <Text style={styles.carTitle}>
         {hasCar
           ? `${activeCar.year} ${activeCar.make} ${activeCar.model}${activeCar.trim ? ` ${activeCar.trim}` : ""}`
@@ -141,72 +206,72 @@ export default function HomeScreen({ navigation }) {
           : "Start by adding your vehicle."}
       </Text>
 
-      {/* MAIN ACTIONS */}
-      <View style={styles.actionSection}>
-        <TouchableOpacity
-          style={styles.libraryButton}
-          onPress={() => navigation.navigate("BrowseStandardCars")}
-        >
-          <Ionicons name="grid-outline" size={20} color="#fff" style={styles.buttonIcon} />
-          <Text style={styles.libraryButtonText}>Browse Car Library</Text>
-        </TouchableOpacity>
+    {/* MAIN ACTIONS */ }
+    <View style={styles.actionSection}>
+      <TouchableOpacity
+        style={styles.libraryButton}
+        onPress={() => navigation.navigate("BrowseStandardCars")}
+      >
+        <Ionicons name="grid-outline" size={20} color="#fff" style={styles.buttonIcon} />
+        <Text style={styles.libraryButtonText}>Browse Car Library</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.primaryButton}
-          onPress={handleAddNewCar}
-        >
-          <Ionicons name="add-circle-outline" size={20} color="#000" style={styles.buttonIcon} />
-          <Text style={styles.primaryButtonText}>Add Your Own Car</Text>
-        </TouchableOpacity>
-      </View>
-
-
-
-      {/* QUICK ACTIONS */}
-      <View style={styles.quickActions}>
-        <Text style={styles.quickTitle}>Quick Actions</Text>
-
-        <TouchableOpacity
-          style={styles.quickRow}
-          onPress={() => navigation.navigate("InventoryTab")}
-        >
-          <Text style={styles.quickText}>View Inventory</Text>
-          <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.quickRow}
-          onPress={() => navigation.navigate("BuildHistory")}
-        >
-          <Text style={styles.quickText}>See Build History</Text>
-          <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.quickRow}
-          onPress={() => navigation.navigate("AddPart")}
-        >
-          <Text style={styles.quickText}>Add New Part</Text>
-          <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
-        </TouchableOpacity>
-      </View>
-
-      {/* POPUP - only show when user taps the button */}
-      <AddCarModal visible={showAddCar} onClose={() => setShowAddCar(false)} />
-
-      {/* Tier Limit Modal */}
-      <TierLimitModal
-        visible={showLimitModal}
-        onClose={() => setShowLimitModal(false)}
-        onUpgrade={() => {
-          setShowLimitModal(false);
-          navigation.navigate("Upgrade");
-        }}
-        title={limitModalConfig.title}
-        message={limitModalConfig.message}
-        currentTier={tier}
-      />
+      <TouchableOpacity
+        style={styles.primaryButton}
+        onPress={handleAddNewCar}
+      >
+        <Ionicons name="add-circle-outline" size={20} color="#000" style={styles.buttonIcon} />
+        <Text style={styles.primaryButtonText}>Add Your Own Car</Text>
+      </TouchableOpacity>
     </View>
+
+
+
+    {/* QUICK ACTIONS */ }
+    <View style={styles.quickActions}>
+      <Text style={styles.quickTitle}>Quick Actions</Text>
+
+      <TouchableOpacity
+        style={styles.quickRow}
+        onPress={() => navigation.navigate("InventoryTab")}
+      >
+        <Text style={styles.quickText}>View Inventory</Text>
+        <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.quickRow}
+        onPress={() => navigation.navigate("BuildHistory")}
+      >
+        <Text style={styles.quickText}>See Build History</Text>
+        <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.quickRow}
+        onPress={() => navigation.navigate("AddPart")}
+      >
+        <Text style={styles.quickText}>Add New Part</Text>
+        <Ionicons name="chevron-forward" size={20} color="#a0a0a0" />
+      </TouchableOpacity>
+    </View>
+
+    {/* POPUP - only show when user taps the button */ }
+    <AddCarModal visible={showAddCar} onClose={() => setShowAddCar(false)} />
+
+    {/* Tier Limit Modal */ }
+    <TierLimitModal
+      visible={showLimitModal}
+      onClose={() => setShowLimitModal(false)}
+      onUpgrade={() => {
+        setShowLimitModal(false);
+        navigation.navigate("Upgrade");
+      }}
+      title={limitModalConfig.title}
+      message={limitModalConfig.message}
+      currentTier={tier}
+    />
+    </View >
   );
 }
 

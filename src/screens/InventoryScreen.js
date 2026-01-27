@@ -17,6 +17,7 @@ import {
 import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
 import { db } from "../services/firebaseConfig";
+import { getPlanConfig } from "../services/plans";
 import standardCarLibraryService from "../services/StandardCarLibraryService";
 
 const FILTER_CATEGORIES = [

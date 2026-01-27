@@ -176,9 +176,16 @@ export async function saveCarForUser({ uid, carId = null, data }) {
   let newId = carId;
 
   if (!carId) {
-    carData.createdAt = serverTimestamp();
-    const docRef = await addDoc(carsRef, carData);
-    newId = docRef.id;
+    try {
+      carData.createdAt = serverTimestamp();
+      console.log('Sending to Firestore:', uid, carData);
+      const docRef = await addDoc(carsRef, carData);
+      console.log('Document written with ID: ', docRef.id);
+      newId = docRef.id;
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      throw e;
+    }
   } else {
     const carRef = doc(db, "users", uid, "cars", carId);
     await updateDoc(carRef, carData);
