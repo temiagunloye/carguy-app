@@ -12,12 +12,16 @@ import {
     View,
 } from 'react-native';
 import Viewer360Component from '../components/Viewer360Component';
+import { createBuild, setActiveBuild } from '../services/buildService';
+import { useCarContext } from '../services/carContext';
+import { getAllCarsForUser, saveCarForUser, setActiveCar } from '../services/carService';
+import { canAddCar, getPlanLimitMessage } from '../services/plans';
 import standardCarLibraryService, {
     StandardCar,
     StandardCarVariant,
 } from '../services/StandardCarLibraryService';
 import { variantFadeController } from '../services/VariantFadeController';
-import { createVehicle } from '../services/vehicles';
+import { createVehicle, getUserVehicles } from '../services/vehicles';
 
 interface RouteParams {
     carId: string;
@@ -39,12 +43,41 @@ const StandardCarDetailScreen: React.FC = () => {
     const [currentAngle, setCurrentAngle] = useState<string>('');
     const [showEnrichedSpecs, setShowEnrichedSpecs] = useState(false);
     const [addingToGarage, setAddingToGarage] = useState(false);
+    const [isNavigatingToAddPart, setIsNavigatingToAddPart] = useState(false);
+
+    const context = useCarContext() as any;
+    const user = context?.user;
+    const refreshActiveCar = context?.refreshActiveCar;
+    const setActiveCarState = context?.setActiveCarState;
+    const demoMode = context?.demoMode;
+    const addDemoCar = context?.addDemoCar;
+    const plan = context?.plan || 'free';
 
     /**
      * Handle "Add to Garage"
      */
     const handleAddToGarage = useCallback(async () => {
         if (!car || !selectedVariant) return;
+
+        // Check limits if not in demo mode
+        if (!demoMode && user) {
+            try {
+                const vehicles = await getUserVehicles();
+                if (!canAddCar(plan, vehicles.length)) {
+                    Alert.alert(
+                        'Limit Reached',
+                        getPlanLimitMessage(plan, 'car'),
+                        [
+                            { text: 'Cancel', style: 'cancel' },
+                            { text: 'Upgrade', onPress: () => (navigation as any).navigate('Upgrade') },
+                        ]
+                    );
+                    return;
+                }
+            } catch (e) {
+                console.warn('Failed to check vehicle limits:', e);
+            }
+        }
 
         setAddingToGarage(true);
         try {
@@ -63,7 +96,7 @@ const StandardCarDetailScreen: React.FC = () => {
                 [
                     {
                         text: 'Go to Shop',
-                        onPress: () => (navigation as any).navigate('Shop'),
+                        onPress: () => (navigation as any).navigate('MainTabs', { screen: 'ShopTab' }),
                     },
                     {
                         text: 'Keep Browsing',
@@ -154,6 +187,110 @@ const StandardCarDetailScreen: React.FC = () => {
     }, [car, selectedVariant, navigation]);
 
     /**
+     * Handle "Add Part to Build"
+     * Ensures car is in garage/context first
+     */
+    const handleAddPartToBuild = useCallback(async () => {
+        if (!car || !selectedVariant) return;
+
+        // Check limits if not in demo mode
+        if (!demoMode && user) {
+            try {
+                const existingCars = await getAllCarsForUser(user.uid);
+                if (!canAddCar(plan, existingCars.length)) {
+                    Alert.alert(
+                        'Limit Reached',
+                        getPlanLimitMessage(plan, 'car'),
+                        [
+                            { text: 'Cancel', style: 'cancel' },
+                            { text: 'Upgrade', onPress: () => (navigation as any).navigate('Upgrade') },
+                        ]
+                    );
+                    return;
+                }
+            } catch (e) {
+                console.warn('Failed to check inventory limits:', e);
+            }
+        }
+
+        setIsNavigatingToAddPart(true);
+
+        try {
+            let targetCarId = car.id;
+            let targetBuildId = null;
+
+            // Prepare car data for user inventory
+            const userCarData = {
+                nickname: car.displayName,
+                year: car.year.toString(),
+                make: car.make,
+                model: car.model,
+                trim: car.trim || '',
+                paintColor: selectedVariant.colorName,
+                dealerImageUrl: car.heroAssetPath || null,
+                imageUrl: car.heroAssetPath || null, // Best fallback
+                standardCarId: car.id,
+                activeVariantId: selectedVariant.id,
+            };
+
+            if (demoMode) {
+                // Save locally for demo
+                const newCar = addDemoCar(userCarData);
+                targetCarId = newCar.id;
+
+                const defaultBuild = {
+                    id: `build_${Date.now()}`,
+                    vehicleId: targetCarId,
+                    name: "Primary Build",
+                    isActive: true,
+                    parts: [],
+                    folders: [],
+                };
+
+                const updatedCar = { ...newCar, builds: [defaultBuild], activeBuildId: defaultBuild.id };
+                setActiveCarState(updatedCar);
+                targetBuildId = defaultBuild.id;
+            } else if (user) {
+                // Save to Firebase
+                const carIdInInventory = await saveCarForUser({
+                    uid: user.uid,
+                    data: userCarData,
+                });
+
+                if (!carIdInInventory) {
+                    throw new Error("Failed to save car to inventory");
+                }
+
+                targetCarId = carIdInInventory;
+
+                // Create build and set active
+                targetBuildId = await createBuild(user.uid, carIdInInventory, "Primary Build");
+                await setActiveBuild(user.uid, targetBuildId);
+                await setActiveCar(user.uid, carIdInInventory);
+
+                // Refresh global context
+                await refreshActiveCar();
+            }
+
+            // Navigate to Add Part
+            if (targetBuildId) {
+                (navigation as any).navigate('AddPart', {
+                    fromShop: true,
+                    buildId: targetBuildId
+                });
+            } else {
+                throw new Error("Target build ID not generated");
+            }
+
+        } catch (error) {
+            console.error('Failed to prepare add part flow:', error);
+            Alert.alert('Error', 'Failed to prepare car for adding parts');
+        } finally {
+            setIsNavigatingToAddPart(false);
+        }
+    }, [car, selectedVariant, user, demoMode, addDemoCar, setActiveCarState, refreshActiveCar, navigation]);
+
+    /**
      * Loading state
      */
     if (loading) {
@@ -207,12 +344,12 @@ const StandardCarDetailScreen: React.FC = () => {
                 )}
             </View>
 
-            {/* Commented out until features are ready
             <View style={styles.actionButtonsContainer}>
                 <TouchableOpacity
                     style={styles.primaryButton}
                     onPress={handleAddToGarage}
                     activeOpacity={0.8}
+                    disabled={addingToGarage}
                 >
                     {addingToGarage ? (
                         <ActivityIndicator color="#fff" />
@@ -220,11 +357,23 @@ const StandardCarDetailScreen: React.FC = () => {
                         <Text style={styles.primaryButtonText}>Add to My Garage</Text>
                     )}
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.secondaryButton}
+                    onPress={handleAddPartToBuild}
+                    activeOpacity={0.8}
+                    disabled={isNavigatingToAddPart}
+                >
+                    {isNavigatingToAddPart ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <Text style={styles.secondaryButtonText}>Add Part to Build +</Text>
+                    )}
+                </TouchableOpacity>
                 <Text style={styles.actionHelperText}>
-                    Start a new build with this car
+                    Save this car and start customizing with parts
                 </Text>
             </View>
-            */}
 
             {/* Paint Color Selector */}
             <View style={styles.section}>
@@ -296,15 +445,14 @@ const StandardCarDetailScreen: React.FC = () => {
                 )
             }
 
-            {/* Commented out until features are ready
             <TouchableOpacity
                 style={styles.ctaButton}
                 onPress={handleTryParts}
                 activeOpacity={0.8}
             >
-                <Text style={styles.ctaButtonText}>Try Parts & Customize</Text>
+                <Text style={styles.ctaButtonText}>Try Sandbox Preview</Text>
                 <Text style={styles.ctaButtonSubtext}>
-                    Free sandbox mode • Max 3 saved parts
+                    Instant preview • No car registration required
                 </Text>
             </TouchableOpacity>
 
@@ -319,7 +467,6 @@ const StandardCarDetailScreen: React.FC = () => {
                     <Text style={styles.upgradeButtonText}>Upgrade to Pro</Text>
                 </TouchableOpacity>
             </View>
-            */}
         </ScrollView>
     );
 };
@@ -544,6 +691,21 @@ const styles = StyleSheet.create({
     },
     primaryButtonText: {
         color: '#fff',
+        fontSize: 18,
+        fontWeight: '700',
+    },
+    secondaryButton: {
+        backgroundColor: '#1a1a1a',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 12,
+        borderWidth: 1,
+        borderColor: '#333',
+    },
+    secondaryButtonText: {
+        color: '#007AFF',
         fontSize: 18,
         fontWeight: '700',
     },

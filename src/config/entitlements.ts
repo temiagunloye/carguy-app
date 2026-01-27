@@ -15,7 +15,7 @@ export interface TierLimits {
 
 export const TIER_LIMITS: Record<TierName, TierLimits> = {
     free: {
-        maxVehicles: 0, // Demo only
+        maxVehicles: 1, // Allow one car for free users
         maxBuildsPerVehicle: 1,
         maxActiveParts: 3,
         requiresAuth: false,

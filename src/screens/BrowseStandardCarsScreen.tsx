@@ -38,8 +38,7 @@ const BrowseStandardCarsScreen: React.FC = () => {
     const loadCars = useCallback(async (reset = false) => {
         try {
             if (reset) {
-                setLoading(true);
-                setCars([]);
+                setLoading(cars.length === 0); // Only show full screen loader if we have NO cars
                 setLastDoc(null);
                 setHasMore(true);
             }
@@ -96,6 +95,9 @@ const BrowseStandardCarsScreen: React.FC = () => {
      * Handle search input change with debounce
      */
     useEffect(() => {
+        // Skip search on initial mount to avoid double-loading with loadCars(true)
+        if (!searchQuery.trim()) return;
+
         const timer = setTimeout(() => {
             handleSearch(searchQuery);
         }, 500);

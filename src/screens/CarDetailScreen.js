@@ -111,7 +111,9 @@ export default function CarDetailScreen({ navigation, route }) {
     }
 
     try {
-      setLoading(true);
+      if (parts.length === 0) {
+        setLoading(true);
+      }
 
       // Check demo mode first
       if (demoMode) {

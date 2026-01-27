@@ -40,8 +40,10 @@ export default function InventoryScreen({ navigation }) {
   }, [user, demoCars, activeCar]);
 
   const loadCars = async () => {
-    // Set loading immediately to show UI
-    setLoading(true);
+    // Only set buffering UI if we have no data yet
+    if (cars.length === 0) {
+      setLoading(true);
+    }
 
     // Quick return if no user (demo mode will have user)
     if (!user) {

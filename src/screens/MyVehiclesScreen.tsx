@@ -29,7 +29,9 @@ export default function MyVehiclesScreen({ navigation }: Props) {
     }, []);
 
     const loadVehicles = async () => {
-        setLoading(true);
+        if (vehicles.length === 0) {
+            setLoading(true);
+        }
         const data = await getUserVehicles();
         setVehicles(data);
         setLoading(false);

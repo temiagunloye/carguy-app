@@ -116,7 +116,13 @@ export function CarProvider({ children }) {
     }
 
     if (!user) return;
-    setLoading(true);
+
+    // Only set loading to true if we don't have an active car yet
+    // Otherwise, refresh in the background to avoid buffering UI
+    if (!activeCar) {
+      setLoading(true);
+    }
+
     try {
       const { getActiveCar, getUserDoc } = await import("./carService");
       const car = await getActiveCar(user.uid);

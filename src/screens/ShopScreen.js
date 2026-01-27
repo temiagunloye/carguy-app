@@ -99,7 +99,10 @@ export default function ShopScreen({ navigation }) {
       return;
     }
 
-    setLoading(true);
+    // Background refresh if data already exists
+    if (savedParts.length === 0 || !currentBuild) {
+      setLoading(true);
+    }
 
     try {
       // Load parts
@@ -289,7 +292,7 @@ export default function ShopScreen({ navigation }) {
           <View style={{ width: 24 }} />
           <Text style={styles.headerTitle}>THE SHOP</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate("PartTryOn", { buildId: currentBuild?.id })}
+            onPress={() => navigation.navigate("AddPart", { fromShop: true, buildId: currentBuild?.id || activeCar?.activeBuildId })}
             style={styles.addButton}
           >
             <Ionicons name="add" size={24} color="#ffffff" />
@@ -423,7 +426,8 @@ export default function ShopScreen({ navigation }) {
             <View style={styles.partsHeader}>
               <Text style={styles.partsTitle}>Parts</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate("PartTryOn", {
+                onPress={() => navigation.navigate("AddPart", {
+                  fromShop: true,
                   buildId: currentBuild?.id || activeCar?.activeBuildId,
                 })}
                 style={styles.addPartButton}
