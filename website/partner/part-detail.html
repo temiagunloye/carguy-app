@@ -86,7 +86,7 @@
         <!-- Header -->
         <header class="dash-header">
             <div class="dash-title">
-                <a href="/shop/marketplace.html"
+                <a href="/partner/marketplace.html"
                     style="color:var(--text-muted); text-decoration:none; display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:13px;">
                     <i data-lucide="arrow-left" style="width:14px; height:14px;"></i> Back to Marketplace
                 </a>
@@ -97,10 +97,10 @@
             </div>
             <div class="dash-actions">
                 <div class="nav-links-inline">
-                    <a href="/shop/dashboard.html" class="nav-link">Dashboard</a>
-                    <a href="/shop/marketplace.html" class="nav-link-current"
+                    <a href="/partner/dashboard.html" class="nav-link">Dashboard</a>
+                    <a href="/partner/marketplace.html" class="nav-link-current"
                         style="color:var(--accent-primary); font-weight:600;">Marketplace</a>
-                    <a href="/shop/builds.html" class="nav-link">Builds</a>
+                    <a href="/partner/builds.html" class="nav-link">Builds</a>
                 </div>
             </div>
         </header>
@@ -180,16 +180,16 @@
         </div>
     </div>
 
-    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module" src="/js/partnerAuth.js"></script>
     <script type="module">
-        import { checkAuth, signOut } from '/js/shopAuth.js';
+        import { checkAuth, signOut } from '/js/partnerAuth.js';
         (async () => {
             const user = await checkAuth();
             if (user) document.getElementById('user-email').textContent = user.email;
         })();
         window.signOutUser = async () => {
             await signOut();
-            window.location.href = '/shop/login.html';
+            window.location.href = '/partner/login.html';
         };
         lucide.createIcons();
     </script>

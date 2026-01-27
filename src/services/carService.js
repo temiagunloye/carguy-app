@@ -1,7 +1,7 @@
 // src/services/carService.js
 
 // Demo mode flag - matches carContext
-const DEMO_MODE = true;
+const DEMO_MODE = false;
 
 // Lazy Firebase imports - only load when actually needed (not in demo mode)
 

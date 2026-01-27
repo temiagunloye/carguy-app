@@ -45,6 +45,15 @@ export default function HomeScreen({ navigation }) {
     resolvePath();
   }, [activeCar?.imageUrl]);
 
+  // Refresh active car when screen comes into focus
+  const { refreshActiveCar } = useCarContext();
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      refreshActiveCar();
+    });
+    return unsubscribe;
+  }, [navigation, refreshActiveCar]);
+
   // Simple tier from plan (defaults to 'free' if no user/plan)
   const tier = plan || 'free';
 

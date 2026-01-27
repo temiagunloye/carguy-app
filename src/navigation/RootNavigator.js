@@ -199,6 +199,11 @@ export default function RootNavigator() {
         options={{ title: "Build Studio" }}
       />
       <Stack.Screen
+        name="DemoSandbox"
+        component={require("../screens/DemoSandboxScreen").default}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="BrowseStandardCars"
         component={BrowseStandardCarsScreen}
         options={{ title: "Browse Cars" }}

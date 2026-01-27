@@ -39,6 +39,14 @@ export default function InventoryScreen({ navigation }) {
     loadCars();
   }, [user, demoCars, activeCar]);
 
+  // Force refresh when screen comes into focus
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadCars();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const loadCars = async () => {
     // Only set buffering UI if we have no data yet
     if (cars.length === 0) {
@@ -101,7 +109,21 @@ export default function InventoryScreen({ navigation }) {
       }
 
       // Firebase mode - load cars first, then stats
-      const list = await getAllCarsForUser(user.uid);
+      let list = await getAllCarsForUser(user.uid);
+
+      // Resolve images for Firebase list too
+      list = await Promise.all(list.map(async (car) => {
+        if (car.imageUrl && !car.imageUrl.startsWith('http')) {
+          try {
+            const url = await standardCarLibraryService.resolveStoragePath(car.imageUrl);
+            return { ...car, imageUrl: url };
+          } catch (e) {
+            console.warn('Failed to resolve image for car', car.id, e);
+          }
+        }
+        return car;
+      }));
+
       setCars(list); // Show cars immediately
 
       // Load stats in background (non-blocking)

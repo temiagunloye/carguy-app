@@ -428,5 +428,68 @@ window.setBackground = function (mode) {
     console.log(`Environment changed to ${mode}`);
 }
 
+// Button Handlers
+window.saveLocalBuild = function () {
+    if (!currentCar) return alert("Please select a vehicle first.");
+
+    const buildData = {
+        id: Date.now().toString(),
+        carId: currentCar.id,
+        carName: currentCar.displayName || currentCar.id,
+        wrapId: selections.wrapId,
+        wheelId: selections.wheelId,
+        date: new Date().toLocaleDateString(),
+        status: 'Draft',
+        cost: Math.floor(Math.random() * 5000) + 2000 // Mock cost
+    };
+
+    const saved = JSON.parse(localStorage.getItem('partner_builds') || '[]');
+    saved.push(buildData);
+    localStorage.setItem('partner_builds', JSON.stringify(saved));
+
+    // Update UI
+    const statusEl = document.getElementById('save-status');
+    if (statusEl) {
+        statusEl.style.opacity = '1';
+        setTimeout(() => statusEl.style.opacity = '0', 2000);
+    }
+
+    renderLocalBuilds();
+};
+
+window.generateShareLink = function () {
+    if (!currentCar) return;
+    alert("Share link copied to clipboard! (Mock)");
+};
+
+window.clearBuild = function () {
+    selections = { wrapId: null, wheelId: null };
+    currentBuild = null;
+    document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+    renderSelectors();
+    updateVisualizer();
+};
+
+function renderLocalBuilds() {
+    const list = document.getElementById('local-builds-list');
+    if (!list) return;
+
+    const saved = JSON.parse(localStorage.getItem('partner_builds') || '[]');
+    if (saved.length === 0) {
+        list.innerHTML = '<p>No saved builds</p>';
+        return;
+    }
+
+    list.innerHTML = saved.slice(-5).reverse().map(b => `
+        <div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:4px;">
+            <div style="font-weight:bold;">${b.carName}</div>
+            <div style="font-size:10px;">${b.date} • ${b.status}</div>
+        </div>
+    `).join('');
+}
+
+// Init local builds on load
+document.addEventListener('DOMContentLoaded', renderLocalBuilds);
+
 // Boot
 init();

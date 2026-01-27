@@ -81,14 +81,14 @@
             </div>
             <div class="dash-actions">
                 <div class="nav-links-inline">
-                    <a href="/shop/dashboard.html" class="nav-link">Dashboard</a>
-                    <a href="/shop/marketplace.html" class="nav-link">Marketplace</a>
-                    <a href="/shop/builds.html" class="nav-link-current"
+                    <a href="/partner/dashboard.html" class="nav-link">Dashboard</a>
+                    <a href="/partner/marketplace.html" class="nav-link">Marketplace</a>
+                    <a href="/partner/builds.html" class="nav-link-current"
                         style="color:var(--accent-primary); font-weight:600;">Builds</a>
                 </div>
                 <button class="btn btn-secondary btn-sm" style="margin-right:10px; border-color:#333;">Add New
                     Car</button>
-                <button class="btn btn-primary btn-sm" onclick="window.location.href='/shop/simulator.html'">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='/partner/simulator.html'">
                     <i data-lucide="wrench" style="width:14px; height:14px; margin-right:4px;"></i> New Build
                 </button>
             </div>
@@ -129,7 +129,7 @@
                         <td style="padding:16px;">$12,400</td>
                         <td style="padding:16px;">
                             <button class="btn btn-sm btn-secondary"
-                                onclick="window.location.href='/shop/simulator.html?buildId=123'">Open</button>
+                                onclick="window.location.href='/partner/simulator.html?buildId=123'">Open</button>
                         </td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -140,7 +140,7 @@
                         <td style="padding:16px;">$8,200</td>
                         <td style="padding:16px;">
                             <button class="btn btn-sm btn-secondary"
-                                onclick="window.location.href='/shop/simulator.html?buildId=456'">Open</button>
+                                onclick="window.location.href='/partner/simulator.html?buildId=456'">Open</button>
                         </td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -151,7 +151,7 @@
                         <td style="padding:16px;">$15,100</td>
                         <td style="padding:16px;">
                             <button class="btn btn-sm btn-secondary"
-                                onclick="window.location.href='/shop/simulator.html?buildId=789'">Open</button>
+                                onclick="window.location.href='/partner/simulator.html?buildId=789'">Open</button>
                         </td>
                     </tr>
                 </tbody>
@@ -161,18 +161,53 @@
     </div>
 
     <!-- Auth Script -->
-    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module" src="/js/partnerAuth.js"></script>
     <script type="module">
-        import { checkAuth, signOut } from '/js/shopAuth.js';
+        import { checkAuth, signOut } from '/js/partnerAuth.js';
         (async () => {
             const user = await checkAuth();
             if (user) document.getElementById('user-email').textContent = user.email;
+            renderBuilds();
         })();
+
         window.signOutUser = async () => {
             await signOut();
-            window.location.href = '/shop/login.html';
+            window.location.href = '/partner/login.html';
         };
         lucide.createIcons();
+
+        function renderBuilds() {
+            const tbody = document.querySelector('tbody');
+            const saved = JSON.parse(localStorage.getItem('partner_builds') || '[]');
+
+            if (saved.length === 0) {
+                // Keep default demo data or clear? Let's keep one demo row if empty, or just show empty.
+                // For "Repair", showing real data + demo data is safest.
+                // Let's prepend real data to existing hardcoded rows.
+            }
+
+            // Simple render: Prepend saved builds
+            const rows = saved.map(b => `
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:16px; font-weight:500;">${b.carName} Custom</td>
+                    <td style="padding:16px;">(You)</td>
+                    <td style="padding:16px;">${b.carName}</td>
+                    <td style="padding:16px;"><span class="status-pill draft">${b.status}</span></td>
+                    <td style="padding:16px;">$${b.cost}</td>
+                    <td style="padding:16px;">
+                        <button class="btn btn-sm btn-secondary"
+                            onclick="window.location.href='/partner/simulator.html?buildId=${b.id}'">Open</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            if (rows) {
+                // Insert after the existing static rows or replace? 
+                // Let's replace the body content with the dynamic + static mix or just dynamic if we want to be clean.
+                // Let's just prepend to innerHTML.
+                tbody.innerHTML = rows + tbody.innerHTML;
+            }
+        }
     </script>
 </body>
 

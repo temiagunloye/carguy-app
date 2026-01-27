@@ -230,9 +230,9 @@
     </div>
 
     <!-- Firebase -->
-    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module" src="/js/partnerAuth.js"></script>
     <script type="module">
-        import { signIn, signUp } from '/js/shopAuth.js';
+        import { signIn, signUp } from '/js/partnerAuth.js';
 
         let isLoginMode = true;
 
@@ -286,7 +286,7 @@
                     await signUp(email, password);
                 }
                 // Redirect on success
-                window.location.href = '/shop/dashboard.html';
+                window.location.href = '/partner/dashboard.html';
             } catch (error) {
                 alert((isLoginMode ? 'Login' : 'Signup') + ' failed: ' + error.message);
                 submitBtn.textContent = isLoginMode ? 'Sign In' : 'Create Account';

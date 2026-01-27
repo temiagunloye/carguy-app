@@ -241,10 +241,10 @@
     <script type="module" src="/js/partnerAuth.js"></script>
     <script type="module">
         import { checkAuth, signOut } from '/js/partnerAuth.js';
+
         (async () => {
             const user = await checkAuth();
             if (user) document.getElementById('user-email').textContent = user.email;
-            renderInventory();
         })();
 
         window.signOutUser = async () => {
@@ -252,34 +252,6 @@
             window.location.href = '/partner/login.html';
         };
         lucide.createIcons();
-
-        function renderInventory() {
-            const grid = document.getElementById('listings-grid');
-            const saved = JSON.parse(localStorage.getItem('partner_inventory') || '[]');
-
-            if (saved.length === 0) return;
-
-            const cards = saved.map(p => `
-                <div class="listing-card" onclick="alert('Details for ${p.name} coming soon')">
-                    <div style="position:relative;">
-                        <img src="https://placehold.co/400x300/333/FFF?text=${p.name.replace(/\s+/g, '+')}" class="listing-image" alt="Part">
-                        <span class="badge badge-primary" style="position:absolute; top:8px; left:8px;">New</span>
-                    </div>
-                    <div class="listing-content">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="listing-title text-white font-bold" style="margin:0;">${p.name}</h3>
-                            <span class="text-white font-bold">$${p.price}</span>
-                        </div>
-                        <p class="text-xs text-muted mb-2">${p.category}</p>
-                        <p class="text-xs text-secondary flex items-center gap-1"><i data-lucide="map-pin"
-                                style="width:12px;"></i> Your Shop</p>
-                    </div>
-                </div>
-            `).join('');
-
-            // Prepend
-            grid.innerHTML = cards + grid.innerHTML;
-        }
     </script>
 </body>
 
