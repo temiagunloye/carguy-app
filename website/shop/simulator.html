@@ -25,7 +25,11 @@
             </div>
 
             <div class="hud-panel-content">
+<<<<<<< HEAD
                 <!-- Vehicle -->
+=======
+                <!-- Vehicle Selection (Sticky at top of content) -->
+>>>>>>> 26e6121 (feat: enhance simulator UI with tabs, wheels, and builds gallery)
                 <div class="control-group">
                     <label class="control-label">Vehicle</label>
                     <select id="vehicle-selector" class="vehicle-select">
@@ -34,6 +38,7 @@
                     </select>
                 </div>
 
+<<<<<<< HEAD
                 <!-- Wrap -->
                 <div class="control-group">
                     <label class="control-label">Wrap / Paint</label>
@@ -50,18 +55,68 @@
                         <div class="part-toggle-item">
                             <span>Front Lip</span>
                             <input type="checkbox" data-part="lip" onchange="updateVisualizer()">
+=======
+                <!-- Config Tabs -->
+                <div class="config-tabs">
+                    <div class="config-tab active" onclick="switchTab('wrap')">Paint</div>
+                    <div class="config-tab" onclick="switchTab('wheels')">Wheels</div>
+                    <div class="config-tab" onclick="switchTab('parts')">Parts</div>
+                    <div class="config-tab" onclick="switchTab('builds')">Builds</div>
+                </div>
+
+                <!-- Tab Content: Wrap -->
+                <div id="tab-wrap" class="tab-content active">
+                    <div class="control-group">
+                        <label class="control-label">WRAP / PAINT</label>
+                        <div id="wrap-selector" class="color-grid">
+                            <!-- Populated by JS -->
                         </div>
-                        <div class="part-toggle-item">
-                            <span>Side Skirts</span>
-                            <input type="checkbox" data-part="skirts" onchange="updateVisualizer()">
+                    </div>
+                </div>
+
+                <!-- Tab Content: Wheels -->
+                <div id="tab-wheels" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">WHEELS</label>
+                        <div id="wheels-selector" class="wheels-grid">
+                            <!-- Populated by JS -->
+>>>>>>> 26e6121 (feat: enhance simulator UI with tabs, wheels, and builds gallery)
                         </div>
-                        <div class="part-toggle-item">
-                            <span>Rear Wing</span>
-                            <input type="checkbox" data-part="wing" onchange="updateVisualizer()">
+                    </div>
+                </div>
+
+                <!-- Tab Content: Parts -->
+                <div id="tab-parts" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">INSTALLED PARTS</label>
+                        <div id="parts-list">
+                            <div class="part-toggle-item">
+                                <span>Front Lip</span>
+                                <input type="checkbox" data-part="lip" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Side Skirts</span>
+                                <input type="checkbox" data-part="skirts" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Rear Wing</span>
+                                <input type="checkbox" data-part="wing" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Lowering Springs</span>
+                                <input type="checkbox" data-part="lowered" onchange="updateVisualizer()">
+                            </div>
                         </div>
-                        <div class="part-toggle-item">
-                            <span>Lowering Springs</span>
-                            <input type="checkbox" data-part="lowered" onchange="updateVisualizer()">
+                    </div>
+                </div>
+
+                <!-- Tab Content: Builds -->
+                <div id="tab-builds" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">FEATURED BUILDS</label>
+                        <div id="builds-gallery" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <!-- Populated by JS -->
+                            <p class="text-xs text-muted">Select high-performance builds...</p>
                         </div>
                     </div>
                 </div>
