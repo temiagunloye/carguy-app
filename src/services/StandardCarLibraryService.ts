@@ -71,6 +71,7 @@ export interface StandardCar {
     stockNumber?: string;
     createdAt: any;
     updatedAt: any;
+    displayUrl?: string; // Resolved URL for UI
 }
 
 export interface StandardCarVariant {
@@ -105,7 +106,7 @@ class StandardCarLibraryService {
     private storage = getStorageInstance();
 
     /**
-     * List all approved standard cars with pagination
+     * List all approved standard cars with pagination AND resolved URLs
      */
     async listApprovedStandardCars(
         pageSize = 20,
@@ -114,7 +115,7 @@ class StandardCarLibraryService {
         if (!this.db) throw new Error('Firestore not initialized');
 
         const carsRef = collection(this.db, 'standardCars');
-        // Simplified query - removed status filter to avoid composite index requirement
+        // Simplified query
         let q = query(
             carsRef,
             orderBy('createdAt', 'desc'),
@@ -126,17 +127,27 @@ class StandardCarLibraryService {
         }
 
         const snapshot = await getDocs(q);
-        const cars: StandardCar[] = [];
 
-        snapshot.forEach((doc) => {
+        const explicitCars = await Promise.all(snapshot.docs.map(async (doc) => {
             const data = { id: doc.id, ...doc.data() } as StandardCar;
-            cars.push(data);
-            // Cache the car
+            try {
+                if (data.heroAssetPath) {
+                    data.displayUrl = await this.resolveStoragePath(data.heroAssetPath);
+                } else if (data.defaultVariantId) {
+                    const variant = await this.getVariantById(data.defaultVariantId);
+                    if (variant && variant.thumbPath) {
+                        data.displayUrl = await this.resolveStoragePath(variant.thumbPath);
+                    }
+                }
+            } catch (e) {
+                console.warn(`Failed to resolve for ${data.id}`);
+            }
             carCache.set(doc.id, { data, timestamp: Date.now() });
-        });
+            return data;
+        }));
 
         const lastVisible = snapshot.docs[snapshot.docs.length - 1] || null;
-        return { cars, lastDoc: lastVisible };
+        return { cars: explicitCars, lastDoc: lastVisible };
     }
 
     /**

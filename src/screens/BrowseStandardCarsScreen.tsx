@@ -141,19 +141,14 @@ const BrowseStandardCarsScreen: React.FC = () => {
                 onPress={() => handleCarPress(item)}
                 activeOpacity={0.7}
             >
-                {/* Direct image - uses heroAssetPath, no async, no flash */}
+                {/* Direct image - uses pre-resolved displayUrl, no async, no flash */}
                 <View style={styles.thumbnail}>
-                    {item.heroAssetPath ? (
-                        <Image
-                            source={{ uri: item.heroAssetPath }}
-                            style={styles.thumbnailImage}
-                            contentFit="cover"
-                        />
-                    ) : (
-                        <View style={styles.thumbnailPlaceholder}>
-                            <Text style={styles.placeholderText}>{item.make} {item.model}</Text>
-                        </View>
-                    )}
+                    <Image
+                        source={{ uri: item.displayUrl || `https://via.placeholder.com/400x300.png?text=${item.make}+${item.model}` }}
+                        style={styles.thumbnailImage}
+                        contentFit="cover"
+                        transition={200} // Smooth fade in
+                    />
                 </View>
                 <View style={styles.carInfo}>
                     <Text style={styles.carName}>{item.displayName}</Text>
