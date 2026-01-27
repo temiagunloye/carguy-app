@@ -21,7 +21,6 @@ import standardCarLibraryService, {
     StandardCarVariant,
 } from '../services/StandardCarLibraryService';
 import { variantFadeController } from '../services/VariantFadeController';
-import { createVehicle, getUserVehicles } from '../services/vehicles';
 
 interface RouteParams {
     carId: string;
@@ -62,8 +61,8 @@ const StandardCarDetailScreen: React.FC = () => {
         // Check limits if not in demo mode
         if (!demoMode && user) {
             try {
-                const vehicles = await getUserVehicles();
-                if (!canAddCar(plan, vehicles.length)) {
+                const existingCars = await getAllCarsForUser(user.uid);
+                if (!canAddCar(plan, existingCars.length)) {
                     Alert.alert(
                         'Limit Reached',
                         getPlanLimitMessage(plan, 'car'),
@@ -81,14 +80,46 @@ const StandardCarDetailScreen: React.FC = () => {
 
         setAddingToGarage(true);
         try {
-            await createVehicle({
-                displayName: `${car.year} ${car.make} ${car.model}`,
-                year: car.year,
+            // Prepare car data for user inventory
+            const userCarData = {
+                nickname: car.displayName,
+                year: car.year.toString(),
                 make: car.make,
                 model: car.model,
+                trim: car.trim || '',
+                paintColor: selectedVariant.colorName,
+                dealerImageUrl: car.heroAssetPath || null,
+                imageUrl: car.heroAssetPath || null,
                 standardCarId: car.id,
                 activeVariantId: selectedVariant.id,
-            });
+            };
+
+            // Save to Firebase (or demo mode)
+            let newCarId: string | null = null;
+            if (demoMode) {
+                const newCar = addDemoCar(userCarData);
+                newCarId = newCar.id;
+            } else if (user) {
+                const savedId = await saveCarForUser({
+                    uid: user.uid,
+                    data: userCarData,
+                });
+                newCarId = savedId;
+            }
+
+            if (!newCarId) {
+                throw new Error("Failed to obtain car ID");
+            }
+
+            if (!demoMode && user) {
+                // Create default build
+                const buildId = await createBuild(user.uid, newCarId, "Primary Build");
+                await setActiveBuild(user.uid, buildId);
+                await setActiveCar(user.uid, newCarId);
+
+                // Refresh global context
+                await refreshActiveCar();
+            }
 
             Alert.alert(
                 'Success',
@@ -110,7 +141,7 @@ const StandardCarDetailScreen: React.FC = () => {
         } finally {
             setAddingToGarage(false);
         }
-    }, [car, selectedVariant, navigation]);
+    }, [car, selectedVariant, navigation, user, demoMode, addDemoCar, refreshActiveCar]);
 
     /**
      * Load car data

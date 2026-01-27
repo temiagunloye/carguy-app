@@ -1,6 +1,7 @@
 // src/screens/InventoryScreen.js
 
 import { Ionicons } from "@expo/vector-icons";
+import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -15,6 +16,7 @@ import {
 } from "react-native";
 import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
+import { db } from "../services/firebaseConfig";
 import { getPlanConfig } from "../services/plans";
 
 const FILTER_CATEGORIES = [
@@ -31,7 +33,7 @@ export default function InventoryScreen({ navigation }) {
   const { user, plan, activeCar, loading: contextLoading, refreshActiveCar, demoCars, demoMode } = useCarContext();
   const [cars, setCars] = useState([]);
   const [carStats, setCarStats] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Background by default
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -55,10 +57,16 @@ export default function InventoryScreen({ navigation }) {
 
     try {
       // Check if demo mode first (faster check)
-      if (demoMode || user.isAnonymous || user.uid.startsWith("demo_") || user.uid.startsWith("guest_")) {
+      if (demoMode || user?.uid?.startsWith("demo_") || user?.uid?.startsWith("guest_")) {
         // In demo mode, get cars from context
         const list = demoCars || [];
         setCars(list);
+
+        // If we have an active car but it's not in the list (race condition), add it
+        if (activeCar && !list.find(c => c.id === activeCar.id)) {
+          setCars(prev => [activeCar, ...prev]);
+        }
+
         const demoStats = {};
         list.forEach(car => {
           // Count parts from car.parts array if it exists

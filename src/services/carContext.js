@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 // Demo mode flag - set to true to skip Firebase entirely
-const DEMO_MODE = false; // ✅ FALSE = Use real Firebase Auth (required for Storage uploads!)
+const DEMO_MODE = true; // ✅ TRUE = New free version every time (Ephemeral)
 
 const CarContext = createContext(null);
 
@@ -11,7 +11,7 @@ export function CarProvider({ children }) {
   const [user, setUser] = useState(null);
   const [plan, setPlan] = useState("free");
   const [activeCar, setActiveCarState] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start as false to prevent immediate buffer flash
   const [isGuest, setIsGuest] = useState(false);
   const [demoCars, setDemoCars] = useState([]);
 
@@ -117,12 +117,7 @@ export function CarProvider({ children }) {
 
     if (!user) return;
 
-    // Only set loading to true if we don't have an active car yet
-    // Otherwise, refresh in the background to avoid buffering UI
-    if (!activeCar) {
-      setLoading(true);
-    }
-
+    // Background refresh only - do not block global UI
     try {
       const { getActiveCar, getUserDoc } = await import("./carService");
       const car = await getActiveCar(user.uid);
@@ -134,7 +129,6 @@ export function CarProvider({ children }) {
     } catch (error) {
       console.error("Error refreshing car:", error);
     }
-    setLoading(false);
   }, [user]);
 
   // Sync activeCar changes to demoCars array in demo mode

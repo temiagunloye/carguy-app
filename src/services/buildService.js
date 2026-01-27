@@ -13,13 +13,13 @@ const DEMO_MODE = true;
  */
 export async function createBuild(userId, vehicleId, name = null) {
   if (DEMO_MODE) return `build_${Date.now()}`;
-  
+
   const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
   const { db } = await import("./firebaseConfig");
   if (!db) return `build_${Date.now()}`;
-  
+
   const buildsRef = collection(db, "users", userId, "builds");
-  
+
   const buildData = {
     vehicleId,
     name: name || "Main build",
@@ -40,18 +40,18 @@ export async function createBuild(userId, vehicleId, name = null) {
  */
 export async function getBuildsForVehicle(userId, vehicleId) {
   if (DEMO_MODE) return [];
-  
+
   const { collection, query, where, orderBy, getDocs } = await import("firebase/firestore");
   const { db } = await import("./firebaseConfig");
   if (!db) return [];
-  
+
   const buildsRef = collection(db, "users", userId, "builds");
   const q = query(
     buildsRef,
     where("vehicleId", "==", vehicleId),
     orderBy("createdAt", "desc")
   );
-  
+
   const snapshot = await getDocs(q);
   return snapshot.docs.map(doc => ({
     id: doc.id,
@@ -78,11 +78,11 @@ export async function getActiveBuild(userId, vehicleId) {
  */
 export async function setActiveBuild(userId, buildId) {
   if (DEMO_MODE) return;
-  
+
   const { doc, updateDoc, serverTimestamp } = await import("firebase/firestore");
   const { db } = await import("./firebaseConfig");
   if (!db) return;
-  
+
   const buildRef = doc(db, "users", userId, "builds", buildId);
   await updateDoc(buildRef, {
     isActive: true,
@@ -99,13 +99,13 @@ export async function setActiveBuild(userId, buildId) {
  */
 export async function createInventoryFolder(userId, buildId, name) {
   if (DEMO_MODE) return `folder_${Date.now()}`;
-  
+
   const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
   const { db } = await import("./firebaseConfig");
   if (!db) return `folder_${Date.now()}`;
-  
+
   const foldersRef = collection(db, "users", userId, "builds", buildId, "folders");
-  
+
   const folderData = {
     name: name.trim(),
     sortOrder: 0,
@@ -124,14 +124,14 @@ export async function createInventoryFolder(userId, buildId, name) {
  */
 export async function getFoldersForBuild(userId, buildId) {
   if (DEMO_MODE) return [];
-  
+
   const { collection, query, orderBy, getDocs } = await import("firebase/firestore");
   const { db } = await import("./firebaseConfig");
   if (!db) return [];
-  
+
   const foldersRef = collection(db, "users", userId, "builds", buildId, "folders");
   const q = query(foldersRef, orderBy("sortOrder"));
-  
+
   const snapshot = await getDocs(q);
   return snapshot.docs.map(doc => ({
     id: doc.id,
@@ -149,11 +149,11 @@ export async function getFoldersForBuild(userId, buildId) {
 export async function getOrCreateFolder(userId, buildId, folderName) {
   const folders = await getFoldersForBuild(userId, buildId);
   const existing = folders.find(f => f.name.toLowerCase() === folderName.toLowerCase());
-  
+
   if (existing) {
     return existing.id;
   }
-  
+
   return await createInventoryFolder(userId, buildId, folderName);
 }
 
@@ -176,7 +176,7 @@ export function categoryToFolderName(category) {
     "maintenance": "Maintenance",
     "other": "Other",
   };
-  
+
   return mapping[category?.toLowerCase()] || "Other";
 }
 

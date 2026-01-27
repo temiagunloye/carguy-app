@@ -41,7 +41,7 @@ const CATEGORY_ICONS = {
 export default function ShopScreen({ navigation }) {
   const { activeCar, user, demoMode, plan, demoCars, setActiveCarState } = useCarContext();
   const [savedParts, setSavedParts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start as false to prevent immediate buffer flash
   const [currentBuild, setCurrentBuild] = useState(null);
   const [builds, setBuilds] = useState([]);
   const [activePlacements, setActivePlacements] = useState([]);
