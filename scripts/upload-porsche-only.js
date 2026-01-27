@@ -86,17 +86,41 @@ async function uploadImages() {
     // The viewer loop might break if keys are missing from the array it expects.
     // Let's just update with what we have. API usually handles partials or we can check the viewing logic later.
 
-    // Using setDoc with merge: true ensures we don't overwrite other fields (like display name, year)
-    // but also creates the doc if it's missing (though it shouldn't be).
+    // 1. Update Main Car Doc (Website Compatibility)
+    // Website uses 'photoAnglesHttp'
     await setDoc(carRef, {
-        images: uploadMap,
+        photoAnglesHttp: uploadMap, // Web Visualizer expects this
+        images: uploadMap,          // Legacy/Backup
         updatedAt: new Date().toISOString(),
         styleVersion: 'v2_neutral_gradient',
-        // Ensuring metadata aligning with Body Shop Simulator needs
-        simulatorReady: true
+        simulatorReady: true,
+        defaultVariantId: `${DOC_ID}_default` // Point to the variant we are about to create
     }, { merge: true });
 
-    console.log('🎉 Body Shop Database updated successfully!');
+    console.log('✅ Updated Main Car Doc (Website)');
+
+    // 2. Update/Create Variant Doc (Mobile App Compatibility)
+    // Mobile App looks for 'standardCarVariants' collection
+    const variantId = `${DOC_ID}_default`;
+    const variantRef = doc(db, 'standardCarVariants', variantId);
+
+    const variantData = {
+        id: variantId,
+        standardCarId: DOC_ID,
+        variantType: 'dealer_paint',
+        colorName: 'Chalk Grey Metallic', // Matching our generation
+        colorKey: 'chalk_grey',
+        status: 'approved',
+        angleAssets: uploadMap, // Mobile App expects this
+        thumbPath: uploadMap['driver_front'] || Object.values(uploadMap)[0],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+
+    await setDoc(variantRef, variantData, { merge: true });
+    console.log('✅ Updated Variant Doc (Mobile App)');
+
+    console.log('🎉 Database synced for BOTH Website and Mobile App!');
 }
 
 uploadImages().catch(console.error);
