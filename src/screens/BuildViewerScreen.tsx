@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -146,14 +145,14 @@ export default function BuildViewerScreen() {
     return (
         <View style={styles.container}>
             {/* Custom Header */}
-            <SafeAreaView style={styles.header}>
+            <View style={[styles.header, { paddingTop: 40 }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Text style={styles.backText}>Close</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleAddToGarage} style={styles.addButton}>
                     <Text style={styles.addButtonText}>+ Add to Garage</Text>
                 </TouchableOpacity>
-            </SafeAreaView>
+            </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
 

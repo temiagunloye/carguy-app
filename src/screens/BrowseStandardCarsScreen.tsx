@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     carCard: {
-        flex: 1,
+        width: '46%', // Force ~half width minus margins
         margin: 8,
         backgroundColor: '#1a1a1a',
         borderRadius: 12,

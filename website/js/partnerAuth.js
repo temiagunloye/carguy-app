@@ -46,7 +46,7 @@ export function checkAuth() {
                     // For "Skip Password Lock" request:
                     // We could auto-login here, OR just redirect.
                     // Let's Redirect, but `login.html` will have a helper to strictly bypass.
-                    window.location.href = '/shop/login.html';
+                    window.location.href = '/partner/login.html';
                 }
                 resolve(null);
             }
@@ -66,5 +66,5 @@ export function getCurrentUser() {
 // Force a demo session if needed (call from console window.forceDemo())
 window.forceDemo = () => {
     localStorage.setItem(SESSION_KEY, JSON.stringify({ email: 'demo@carguy.app', uid: 'demo' }));
-    location.href = '/shop/dashboard.html';
+    location.href = '/partner/dashboard.html';
 };

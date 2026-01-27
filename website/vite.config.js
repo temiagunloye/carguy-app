@@ -18,14 +18,14 @@ export default defineConfig({
                 viewer: resolve(__dirname, 'viewer.html'),
                 visualizer: resolve(__dirname, 'visualizer-preview.html'),
                 sharedBuild: resolve(__dirname, 'shared-build.html'),
-                // Shop Portal
-                shopLogin: resolve(__dirname, 'shop/login.html'),
-                shopDashboard: resolve(__dirname, 'shop/dashboard.html'),
-                shopSimulator: resolve(__dirname, 'shop/simulator.html'),
-                shopMarketplace: resolve(__dirname, 'shop/marketplace.html'),
-                shopPartDetail: resolve(__dirname, 'shop/part-detail.html'),
-                shopInventoryAdd: resolve(__dirname, 'shop/inventory-add.html'),
-                shopBuilds: resolve(__dirname, 'shop/builds.html'),
+                // Shop Portal -> Partner Portal
+                partnerLogin: resolve(__dirname, 'partner/login.html'),
+                partnerDashboard: resolve(__dirname, 'partner/dashboard.html'),
+                partnerSimulator: resolve(__dirname, 'partner/simulator.html'),
+                partnerMarketplace: resolve(__dirname, 'partner/marketplace.html'),
+                partnerPartDetail: resolve(__dirname, 'partner/part-detail.html'),
+                partnerInventoryAdd: resolve(__dirname, 'partner/inventory-add.html'),
+                partnerBuilds: resolve(__dirname, 'partner/builds.html'),
                 // Body Shop pages
                 bodyshop: resolve(__dirname, 'bodyshop/index.html'),
             },
