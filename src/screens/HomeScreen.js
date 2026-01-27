@@ -99,7 +99,22 @@ export default function HomeScreen({ navigation }) {
       {/* HERO IMAGE */}
       <View style={styles.heroImageWrapper}>
         {heroImageSource ? (
-          <Image source={heroImageSource} style={styles.heroImage} resizeMode="cover" />
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.heroImageContainer}
+            onPress={() => {
+              if (activeCar.standardCarId) {
+                navigation.navigate("StandardCarDetail", {
+                  carId: activeCar.standardCarId,
+                  inventoryCarId: activeCar.id
+                });
+              } else {
+                navigation.navigate("CarDetail", { car: activeCar });
+              }
+            }}
+          >
+            <Image source={heroImageSource} style={styles.heroImage} resizeMode="cover" />
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={styles.heroPlaceholder}

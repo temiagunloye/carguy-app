@@ -17,7 +17,6 @@ import {
 import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
 import { db } from "../services/firebaseConfig";
-import { getPlanConfig } from "../services/plans";
 import standardCarLibraryService from "../services/StandardCarLibraryService";
 
 const FILTER_CATEGORIES = [
@@ -210,6 +209,55 @@ export default function InventoryScreen({ navigation }) {
     const { maxCars } = getPlanConfig(plan || "free");
     const canEdit = cars.length <= maxCars || isActive;
 
+    const handleLongPress = () => {
+      if (!user) return;
+
+      Alert.alert(
+        item.year + ' ' + item.make + ' ' + item.model,
+        "Select an action for this vehicle:",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Delete Vehicle",
+            style: "destructive",
+            onPress: () => confirmDelete(item)
+          },
+          {
+            text: "Set as Active",
+            onPress: () => handleSelectCar(item.id)
+          }
+        ]
+      );
+    };
+
+    const confirmDelete = (car) => {
+      Alert.alert(
+        "Delete Vehicle",
+        `Are you sure you want to delete the ${car.year} ${car.make} ${car.model}? This cannot be undone.`,
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Delete",
+            style: "destructive",
+            onPress: async () => {
+              setLoading(true);
+              try {
+                const { deleteCarForUser } = await import("../services/carService");
+                await deleteCarForUser(user.uid, car.id);
+                await refreshActiveCar();
+                loadCars(); // reload list
+              } catch (e) {
+                console.error(e);
+                Alert.alert("Error", "Failed to delete vehicle");
+              } finally {
+                setLoading(false);
+              }
+            }
+          }
+        ]
+      );
+    }
+
     return (
       <TouchableOpacity
         style={[styles.card, !canEdit && styles.cardReadOnly]}
@@ -227,7 +275,7 @@ export default function InventoryScreen({ navigation }) {
             handleViewCarDetail(item);
           }
         }}
-        onLongPress={() => canEdit && handleSelectCar(item.id)}
+        onLongPress={handleLongPress}
       >
         {/* Car Image */}
         {imgSource ? (

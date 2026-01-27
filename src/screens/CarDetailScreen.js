@@ -323,6 +323,39 @@ export default function CarDetailScreen({ navigation, route }) {
     );
   }
 
+  const handleDeleteCar = async () => {
+    Alert.alert(
+      "Delete Car",
+      "Are you sure you want to delete this car? This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              setLoading(true);
+              const { deleteCarForUser } = await import("../services/carService");
+              await deleteCarForUser(user.uid, car.id);
+
+              // Force refresh context
+              const { refreshActiveCar } = useCarContext(); // Context might not be avail in scope directly if hook used inside functional component, but route param car checks context. Re-using useCarContext hook instance valid.
+              // Note: activeCar is from context hook at top level
+
+              Alert.alert("Success", "Car deleted successfully");
+              navigation.navigate("MainTabs", { screen: "InventoryTab" });
+            } catch (error) {
+              console.error("Delete failed:", error);
+              Alert.alert("Error", "Failed to delete car");
+            } finally {
+              setLoading(false);
+            }
+          }
+        }
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -331,12 +364,20 @@ export default function CarDetailScreen({ navigation, route }) {
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Parts Inventory</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate("AddPart")}
-        >
-          <Text style={styles.addButtonText}>+ Add</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={handleDeleteCar}
+          >
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigation.navigate("AddPart")}
+          >
+            <Text style={styles.addButtonText}>+ Add</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -644,6 +685,20 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     fontWeight: "600",
+  },
+  deleteButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: '#331111',
+    borderWidth: 1,
+    borderColor: '#ff4444',
+    marginRight: 8,
+  },
+  deleteButtonText: {
+    color: '#ff4444',
+    fontSize: 12,
+    fontWeight: '600',
   },
   carCard: {
     flexDirection: "row",

@@ -168,6 +168,8 @@ export async function saveCarForUser({ uid, carId = null, data }) {
     renderJobStatus: data.renderJobStatus || 'idle',
     renderLastUpdatedAt: data.renderLastUpdatedAt || null,
     anglePhotos: data.anglePhotos || getDefaultAnglePhotos(),
+    standardCarId: data.standardCarId || null,
+    activeVariantId: data.activeVariantId || null,
     updatedAt: serverTimestamp(),
   };
 
@@ -259,4 +261,32 @@ export async function getActiveCar(uid) {
   if (!snap.exists()) return null;
 
   return { id: snap.id, ...snap.data() };
+}
+
+export async function deleteCarForUser(uid, carId) {
+  if (DEMO_MODE) return;
+
+  const { doc, deleteDoc, getDocs, collection } = await import("firebase/firestore");
+  const { db } = await import("./firebaseConfig");
+  if (!db) return;
+
+  // 1. Delete the car document
+  const carRef = doc(db, "users", uid, "cars", carId);
+  await deleteDoc(carRef);
+
+  // 2. Check if user has other cars to set as active
+  const carsRef = collection(db, "users", uid, "cars");
+  const snap = await getDocs(carsRef);
+
+  const userRef = doc(db, "users", uid);
+  const { updateDoc } = await import("firebase/firestore"); // ensure updateDoc imported
+
+  if (snap.empty) {
+    // No cars left
+    await updateDoc(userRef, { activeCarId: null });
+  } else {
+    // Set first available car as active
+    const nextCarId = snap.docs[0].id;
+    await updateDoc(userRef, { activeCarId: nextCarId });
+  }
 }
