@@ -112,7 +112,7 @@ export default function BuildViewerScreen() {
                         // TODO: Implement actual cloning via carService
                         // For now, just navigate to home as if added
                         Alert.alert("Success", "Build added to your garage!");
-                        navigation.navigate("Home" as never);
+                        (navigation as any).navigate('MainTabs', { screen: 'HomeTab' });
                     }
                 }
             ]

@@ -195,25 +195,34 @@ export async function getHeroBuilds(vehicleId = null) {
 
   try {
     const buildsRef = collection(db, "builds");
-    // Query for isHero == true, order by heroOrder
-    // Base query constraints
-    const constraints = [
-      where("isHero", "==", true),
-      orderBy("heroOrder", "asc")
-    ];
 
-    // Add vehicle filter if provided
+    // Simplification: Query ONLY by vehicleId to avoid compound index issues during dev
+    // We will filter isHero and sort in memory
+    let q;
+
     if (vehicleId) {
-      constraints.unshift(where("vehicleId", "==", vehicleId));
+      q = query(buildsRef, where("vehicleId", "==", vehicleId));
+    } else {
+      q = query(buildsRef, where("isHero", "==", true)); // Fallback for global list if used
     }
 
-    const q = query(buildsRef, ...constraints);
-
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({
+
+    let builds = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    // Filter and sort in memory
+    if (vehicleId) {
+      builds = builds
+        .filter(b => b.isHero === true)
+        .sort((a, b) => (a.heroOrder || 999) - (b.heroOrder || 999));
+    } else {
+      builds = builds.sort((a, b) => (a.heroOrder || 999) - (b.heroOrder || 999));
+    }
+
+    return builds;
   } catch (error) {
     console.error("Error fetching hero builds:", error);
     return [];

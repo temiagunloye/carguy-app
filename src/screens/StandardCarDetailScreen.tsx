@@ -5,6 +5,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
+    FlatList,
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -12,7 +14,7 @@ import {
     View,
 } from 'react-native';
 import Viewer360Component from '../components/Viewer360Component';
-import { createBuild, setActiveBuild } from '../services/buildService';
+import { createBuild, getHeroBuilds, setActiveBuild } from '../services/buildService';
 import { useCarContext } from '../services/carContext';
 import { getAllCarsForUser, saveCarForUser, setActiveCar } from '../services/carService';
 import { canAddCar, getPlanLimitMessage } from '../services/plans';
@@ -42,6 +44,8 @@ const StandardCarDetailScreen: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [currentAngle, setCurrentAngle] = useState<string>('');
     const [showEnrichedSpecs, setShowEnrichedSpecs] = useState(false);
+    const [activeTab, setActiveTab] = useState<'overview' | 'builds'>('overview'); // Tab state
+    const [heroBuilds, setHeroBuilds] = useState<any[]>([]);
     const [addingToGarage, setAddingToGarage] = useState(false);
     const [isNavigatingToAddPart, setIsNavigatingToAddPart] = useState(false);
 
@@ -199,7 +203,23 @@ const StandardCarDetailScreen: React.FC = () => {
         };
 
         loadCarData();
+        loadCarData();
     }, [carId, navigation]);
+
+    /**
+     * Load Featured Builds for this car
+     */
+    useEffect(() => {
+        const loadBuilds = async () => {
+            if (activeTab === 'builds' && carId) {
+                // Fetch builds relevant to THIS specific car
+                // We trust getHeroBuilds to handle filtering via vehicleId now
+                const builds = await getHeroBuilds(carId);
+                setHeroBuilds(builds);
+            }
+        };
+        loadBuilds();
+    }, [activeTab, carId]);
 
     /**
      * Handle variant (paint color) change
@@ -404,104 +424,166 @@ const StandardCarDetailScreen: React.FC = () => {
                 )}
             </View>
 
-            <View style={styles.actionButtonsContainer}>
-                {!inventoryCarId && (
-                    <TouchableOpacity
-                        style={styles.primaryButton}
-                        onPress={handleAddToGarage}
-                        activeOpacity={0.8}
-                        disabled={addingToGarage}
-                    >
-                        {addingToGarage ? (
-                            <ActivityIndicator color="#fff" />
-                        ) : (
-                            <Text style={styles.primaryButtonText}>Add to My Garage</Text>
-                        )}
-                    </TouchableOpacity>
-                )}
 
+
+            {/* Tab Control */}
+            <View style={styles.tabContainer}>
                 <TouchableOpacity
-                    style={styles.secondaryButton}
-                    onPress={handleAddPartToBuild}
-                    activeOpacity={0.8}
-                    disabled={isNavigatingToAddPart}
+                    style={[styles.tabButton, activeTab === 'overview' && styles.activeTabButton]}
+                    onPress={() => setActiveTab('overview')}
                 >
-                    {isNavigatingToAddPart ? (
-                        <ActivityIndicator color="#fff" />
-                    ) : (
-                        <Text style={styles.secondaryButtonText}>Add Part to Build +</Text>
-                    )}
+                    <Text style={[styles.tabText, activeTab === 'overview' && styles.activeTabText]}>Overview</Text>
                 </TouchableOpacity>
-                <Text style={styles.actionHelperText}>
-                    {inventoryCarId ? 'Customize your owned vehicle with more parts' : 'Save this car and start customizing with parts'}
-                </Text>
-            </View>
-
-            {/* Paint Color Selector */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Paint Color</Text>
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.colorScroll}
+                <TouchableOpacity
+                    style={[styles.tabButton, activeTab === 'builds' && styles.activeTabButton]}
+                    onPress={() => setActiveTab('builds')}
                 >
-                    {variants.map((variant) => (
-                        <TouchableOpacity
-                            key={variant.id}
-                            style={[
-                                styles.colorChip,
-                                variant.id === selectedVariant.id && styles.colorChipSelected,
-                            ]}
-                            onPress={() => handleVariantChange(variant)}
-                            activeOpacity={0.7}
-                        >
-                            <View style={styles.colorChipInner}>
-                                <Text style={styles.colorChipText}>{variant.colorName}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
+                    <Text style={[styles.tabText, activeTab === 'builds' && styles.activeTabText]}>Featured Builds</Text>
+                </TouchableOpacity>
             </View>
 
-            {/* Enriched Specs (if available) */}
+            {/* TAB CONTENT: OVERVIEW */}
             {
-                car.enrichedSpecs && (
-                    <View style={styles.section}>
-                        <TouchableOpacity
-                            style={styles.specsHeader}
-                            onPress={() => setShowEnrichedSpecs(!showEnrichedSpecs)}
-                            activeOpacity={0.7}
-                        >
-                            <Text style={styles.sectionTitle}>Vehicle Specifications</Text>
-                            <Text style={styles.toggleIcon}>
-                                {showEnrichedSpecs ? '▼' : '▶'}
-                            </Text>
-                        </TouchableOpacity>
+                activeTab === 'overview' && (
+                    <>
+                        <View style={styles.actionButtonsContainer}>
+                            {!inventoryCarId && (
+                                <TouchableOpacity
+                                    style={styles.primaryButton}
+                                    onPress={handleAddToGarage}
+                                    activeOpacity={0.8}
+                                    disabled={addingToGarage}
+                                >
+                                    {addingToGarage ? (
+                                        <ActivityIndicator color="#fff" />
+                                    ) : (
+                                        <Text style={styles.primaryButtonText}>Add to My Garage</Text>
+                                    )}
+                                </TouchableOpacity>
+                            )}
 
-                        {showEnrichedSpecs && (
-                            <View style={styles.specsContent}>
-                                <SpecRow label="Trim" value={car.enrichedSpecs.trim} />
-                                <SpecRow label="Engine" value={car.enrichedSpecs.engine} />
-                                <SpecRow label="Drivetrain" value={car.enrichedSpecs.drivetrain} />
-                                <SpecRow label="MPG" value={car.enrichedSpecs.mpg} />
-                                <SpecRow label="Exterior Color" value={car.enrichedSpecs.exteriorColor} />
-                                <SpecRow label="Interior Color" value={car.enrichedSpecs.interiorColor} />
-
-                                {car.enrichedSpecs.features.length > 0 && (
-                                    <>
-                                        <Text style={styles.featuresTitle}>Features</Text>
-                                        {car.enrichedSpecs.features.map((feature, idx) => (
-                                            <Text key={idx} style={styles.featureItem}>
-                                                • {feature}
-                                            </Text>
-                                        ))}
-                                    </>
+                            <TouchableOpacity
+                                style={styles.secondaryButton}
+                                onPress={handleAddPartToBuild}
+                                activeOpacity={0.8}
+                                disabled={isNavigatingToAddPart}
+                            >
+                                {isNavigatingToAddPart ? (
+                                    <ActivityIndicator color="#fff" />
+                                ) : (
+                                    <Text style={styles.secondaryButtonText}>Add Part to Build +</Text>
                                 )}
+                            </TouchableOpacity>
+                            <Text style={styles.actionHelperText}>
+                                {inventoryCarId ? 'Customize your owned vehicle with more parts' : 'Save this car and start customizing with parts'}
+                            </Text>
+                        </View>
 
-                                <Text style={styles.specsSource}>
-                                    Source: {car.enrichedSpecs.provenance}
-                                </Text>
+                        {/* Paint Color Selector */}
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Paint Color</Text>
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={styles.colorScroll}
+                            >
+                                {variants.map((variant) => (
+                                    <TouchableOpacity
+                                        key={variant.id}
+                                        style={[
+                                            styles.colorChip,
+                                            variant.id === selectedVariant.id && styles.colorChipSelected,
+                                        ]}
+                                        onPress={() => handleVariantChange(variant)}
+                                        activeOpacity={0.7}
+                                    >
+                                        <View style={styles.colorChipInner}>
+                                            <Text style={styles.colorChipText}>{variant.colorName}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                ))}
+                            </ScrollView>
+                        </View>
+
+                        {/* Enriched Specs (if available) */}
+                        {
+                            car.enrichedSpecs && (
+                                <View style={styles.section}>
+                                    <TouchableOpacity
+                                        style={styles.specsHeader}
+                                        onPress={() => setShowEnrichedSpecs(!showEnrichedSpecs)}
+                                        activeOpacity={0.7}
+                                    >
+                                        <Text style={styles.sectionTitle}>Vehicle Specifications</Text>
+                                        <Text style={styles.toggleIcon}>
+                                            {showEnrichedSpecs ? '▼' : '▶'}
+                                        </Text>
+                                    </TouchableOpacity>
+
+                                    {showEnrichedSpecs && (
+                                        <View style={styles.specsContent}>
+                                            <SpecRow label="Trim" value={car.enrichedSpecs.trim} />
+                                            <SpecRow label="Engine" value={car.enrichedSpecs.engine} />
+                                            <SpecRow label="Drivetrain" value={car.enrichedSpecs.drivetrain} />
+                                            <SpecRow label="MPG" value={car.enrichedSpecs.mpg} />
+                                            <SpecRow label="Exterior Color" value={car.enrichedSpecs.exteriorColor} />
+                                            <SpecRow label="Interior Color" value={car.enrichedSpecs.interiorColor} />
+
+                                            {car.enrichedSpecs.features.length > 0 && (
+                                                <>
+                                                    <Text style={styles.featuresTitle}>Features</Text>
+                                                    {car.enrichedSpecs.features.map((feature, idx) => (
+                                                        <Text key={idx} style={styles.featureItem}>
+                                                            • {feature}
+                                                        </Text>
+                                                    ))}
+                                                </>
+                                            )}
+
+                                            <Text style={styles.specsSource}>
+                                                Source: {car.enrichedSpecs.provenance}
+                                            </Text>
+                                        </View>
+                                    )}
+                                </View>
+                            )
+                        }
+                    </>
+                )
+            }
+
+            {/* TAB CONTENT: BUILD */}
+            {
+                activeTab === 'builds' && (
+                    <View style={styles.section}>
+                        {heroBuilds.length === 0 ? (
+                            <View style={styles.emptyState}>
+                                <Text style={styles.emptyStateText}>No featured builds found for {car.displayName}.</Text>
+                                <Text style={styles.emptyStateSubtext}>Be the first to build one!</Text>
                             </View>
+                        ) : (
+                            <FlatList
+                                data={heroBuilds}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item) => item.id}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity
+                                        style={styles.buildCard}
+                                        onPress={() => navigation.navigate('BuildViewer', { buildId: item.id })}
+                                    >
+                                        <Image
+                                            source={{ uri: item.thumbUrl || item.renderSet?.angles?.[0]?.url || 'https://via.placeholder.com/150' }}
+                                            style={styles.buildThumb}
+                                            contentFit="cover"
+                                        />
+                                        <View style={styles.buildInfo}>
+                                            <Text style={styles.buildName} numberOfLines={1}>{item.name || 'Build'}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                                contentContainerStyle={styles.buildsList}
+                            />
                         )}
                     </View>
                 )
@@ -529,7 +611,7 @@ const StandardCarDetailScreen: React.FC = () => {
                     <Text style={styles.upgradeButtonText}>Upgrade to Pro</Text>
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 };
 
@@ -596,8 +678,50 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 20,
         paddingBottom: 16,
+        // Removed border bottom, handled by tab
+    },
+    tabContainer: {
+        flexDirection: 'row',
         borderBottomWidth: 1,
         borderBottomColor: '#333',
+        marginBottom: 0,
+    },
+    tabButton: {
+        flex: 1,
+        paddingVertical: 14,
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: 'transparent',
+    },
+    activeTabButton: {
+        borderBottomColor: '#007AFF',
+    },
+    tabText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#888',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    activeTabText: {
+        color: '#fff',
+    },
+    emptyState: {
+        padding: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyStateText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center',
+        marginBottom: 8,
+    },
+    emptyStateSubtext: {
+        color: '#666',
+        fontSize: 14,
+        textAlign: 'center',
     },
     carTitle: {
         fontSize: 24,
