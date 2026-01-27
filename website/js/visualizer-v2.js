@@ -17,7 +17,15 @@ const db = getFirestore(app);
 
 // Data State
 let standardCars = [];
+let wheels = [];
+let wraps = [];
+let builds = []; // Full car builds (10 angles each)
 let currentCar = null;
+let currentBuild = null;
+let selections = {
+    wrapId: null,
+    wheelId: null
+};
 let currentAngleIndex = 0;
 let preloadedImages = {}; // Cache for instant rotation
 
@@ -45,11 +53,20 @@ async function init() {
     els.spinner.style.display = 'block';
 
     try {
-        // 1. Fetch Standard Cars
-        const snap = await getDocs(collection(db, "standardCars"));
-        standardCars = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        // 1. Fetch Data in Parallel
+        const [carsSnap, wheelsSnap, wrapsSnap, buildsSnap] = await Promise.all([
+            getDocs(collection(db, "standardCars")),
+            getDocs(collection(db, "wheels")),
+            getDocs(collection(db, "wraps")),
+            getDocs(collection(db, "builds"))
+        ]);
 
-        // 2. Populate Dropdown
+        standardCars = carsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        wheels = wheelsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        wraps = wrapsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        builds = buildsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        // 2. Populate Vehicle Dropdown
         els.select.innerHTML = '<option value="" disabled selected>Select Base Car...</option>';
         standardCars.forEach(car => {
             const opt = document.createElement('option');
@@ -67,28 +84,17 @@ async function init() {
 
         // 4. Auto-select Porsche 911 (Showcase) or first
         const showcaseId = 'porsche_911_2024';
-        const target = standardCars.find(c => c.id === showcaseId) ? showcaseId : standardCars[0]?.id;
+        const target = standardCars.find(c => c.id === showcaseId) ? showcaseId : (standardCars[0]?.id || null);
 
         if (target) {
-            loadCar(target);
             els.select.value = target;
+            loadCar(target);
         }
 
     } catch (e) {
         console.warn("Init Warning:", e);
-        // Fallback: Continue loading even if Auth fails (Public Mode)
-        if (e.code === 'auth/unauthorized-domain') {
-            console.log("Domain not whitelisted, proceeding in Guest Mode via Public access.");
-        } else {
-            console.error(e);
-        }
     } finally {
         els.spinner.style.display = 'none';
-
-        // Auto-load first car if available
-        if (!currentCar && standardCars.length > 0) {
-            loadCar(standardCars[0].id);
-        }
     }
 }
 
@@ -96,14 +102,150 @@ function loadCar(id) {
     currentCar = standardCars.find(c => c.id === id);
     if (!currentCar) return;
 
+    // Reset Selections
+    selections = { wrapId: null, wheelId: null };
+    currentBuild = null;
+
     // Update Summary
     els.summaryName.innerText = currentCar.displayName || id;
+
+    // Populate Selectors for this car
+    renderSelectors();
+    populateBuildsGallery();
 
     // Preload all angles for instant rotation
     preloadCarAngles();
 
     // Reset Angle
     setAngle(0);
+}
+
+function renderSelectors() {
+    // 1. Wrap Selector
+    const wrapGrid = document.getElementById('wrap-selector');
+    if (wrapGrid) {
+        wrapGrid.innerHTML = '';
+
+        // Add "Factory" option
+        const factory = createWrapOption('factory', 'Factory', '#333');
+        if (!selections.wrapId) factory.classList.add('active');
+        wrapGrid.appendChild(factory);
+
+        wraps.filter(w => w.vehicles.includes(currentCar.id)).forEach(wrap => {
+            const opt = createWrapOption(wrap.id, wrap.product_name, wrap.hex_code || '#555');
+            if (selections.wrapId === wrap.id) opt.classList.add('active');
+            wrapGrid.appendChild(opt);
+        });
+    }
+
+    // 2. Wheels Selector
+    const wheelsGrid = document.getElementById('wheels-selector');
+    if (wheelsGrid) {
+        wheelsGrid.innerHTML = '';
+
+        // Add "Stock" radio
+        const stock = createWheelOptionItem('stock', 'Stock Wheels', !selections.wheelId);
+        wheelsGrid.appendChild(stock);
+
+        wheels.filter(w => w.vehicle === currentCar.id).forEach(wheel => {
+            const opt = createWheelOptionItem(wheel.id, `${wheel.brand} ${wheel.product_name}`, selections.wheelId === wheel.id);
+            wheelsGrid.appendChild(opt);
+        });
+    }
+}
+
+function createWrapOption(id, name, color) {
+    const div = document.createElement('div');
+    div.className = 'color-swatch';
+    div.style.backgroundColor = color;
+    div.title = name;
+    div.onclick = () => {
+        document.querySelectorAll('#wrap-selector .color-swatch').forEach(el => el.classList.remove('active'));
+        div.classList.add('active');
+        window.selectWrap(id);
+    };
+    return div;
+}
+
+function createWheelOptionItem(id, name, isActive = false) {
+    const div = document.createElement('div');
+    div.className = `wheel-option-item ${isActive ? 'active' : ''}`;
+    div.innerHTML = `<span>${name}</span>`;
+    div.onclick = () => {
+        document.querySelectorAll('.wheel-option-item').forEach(el => el.classList.remove('active'));
+        div.classList.add('active');
+        window.selectWheel(id);
+    };
+    return div;
+}
+
+function populateBuildsGallery() {
+    const gallery = document.getElementById('builds-gallery');
+    if (!gallery) return;
+
+    gallery.innerHTML = '';
+    const carBuilds = builds.filter(b => b.carId === currentCar.id);
+
+    if (carBuilds.length === 0) {
+        gallery.innerHTML = '<p class="text-xs text-muted">No custom builds available for this model yet.</p>';
+        return;
+    }
+
+    carBuilds.forEach(build => {
+        const wrap = wraps.find(w => w.id === build.wrapId);
+        const wheel = wheels.find(w => w.id === build.wheelId);
+
+        const card = document.createElement('div');
+        card.className = 'build-preset-card';
+        card.style.background = 'rgba(255,255,255,0.05)';
+        card.style.padding = '10px';
+        card.style.borderRadius = '8px';
+        card.style.cursor = 'pointer';
+        card.style.border = '1px solid var(--hud-border)';
+
+        // Show the first angle as a thumbnail
+        const thumbUrl = build.photoAnglesHttp?.driver_front || '';
+
+        card.innerHTML = `
+            <img src="${thumbUrl}" style="width:100%; border-radius:4px; margin-bottom:8px;">
+            <div style="font-size:10px; font-weight:600; color:white; line-height:1.2;">
+                ${wrap ? wrap.product_name : 'Factory Paint'}<br>
+                <span style="color:var(--hud-accent)">${wheel ? wheel.brand : ''}</span>
+            </div>
+        `;
+
+        card.onclick = () => {
+            selections.wrapId = build.wrapId;
+            selections.wheelId = build.wheelId;
+            updateVisualizer();
+            renderSelectors();
+        };
+
+        gallery.appendChild(card);
+    });
+}
+
+window.switchTab = function (tabId) {
+    // 1. Toggle Tab Buttons
+    document.querySelectorAll('.config-tab').forEach(tab => {
+        const isActive = tab.getAttribute('onclick').includes(`'${tabId}'`);
+        tab.classList.toggle('active', isActive);
+    });
+
+    // 2. Toggle Content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === `tab-${tabId}`);
+    });
+}
+
+function createWheelOption(id, name, isActive = false) {
+    const div = document.createElement('div');
+    div.className = 'part-toggle-item';
+    div.innerHTML = `
+        <span>${name}</span>
+        <input type="radio" name="wheel-selection" ${isActive ? 'checked' : ''} onchange="window.selectWheel('${id}')">
+    `;
+    return div;
 }
 
 // Preload all car angles into browser cache for instant rotation
@@ -135,24 +277,20 @@ function setAngle(index) {
 
     const key = ANGLE_KEYS[index];
 
-    // DEBUG UPDATE (with null safety)
-    const dbgCar = document.getElementById('dbg-car');
-    const dbgAngle = document.getElementById('dbg-angle');
-    const dbgStatus = document.getElementById('dbg-status');
-    const dbgUrl = document.getElementById('dbg-url');
-
-    if (dbgCar) dbgCar.innerText = currentCar ? currentCar.id : 'None';
-    if (dbgAngle) dbgAngle.innerText = key;
-    if (dbgStatus) dbgStatus.innerText = 'Loading...';
-
     // Update Dots UI
     els.dots.forEach((d, i) => {
         d.classList.toggle('active', i === index);
     });
 
-    // Update Main Image
-    const urlMap = currentCar.photoAnglesHttp || {};
+    // Determine target image set
+    const source = currentBuild || currentCar;
+    const urlMap = source.photoAnglesHttp || {};
     let url = urlMap[key];
+
+    // Fallback to base car if build angle is missing
+    if (!url && currentBuild) {
+        url = currentCar.photoAnglesHttp?.[key];
+    }
 
     if (dbgUrl) dbgUrl.innerText = url || 'UNDEFINED';
 
@@ -204,36 +342,53 @@ function setAngle(index) {
 // Global scope for onclicks in HTML (if any remain)
 window.setAngle = setAngle;
 
+window.selectWrap = function (id) {
+    console.log(`Selected Wrap: ${id}`);
+    selections.wrapId = (id === 'factory') ? null : id;
+
+    // Update UI
+    const swatches = document.querySelectorAll('.color-swatch');
+    swatches.forEach(s => s.classList.remove('active'));
+    // Find correctly (naive match by title or data-id if we added it)
+    // Actually simpler to just redo selection in updateVisualizer
+
+    updateVisualizer();
+}
+
+window.selectWheel = function (id) {
+    console.log(`Selected Wheel: ${id}`);
+    selections.wheelId = (id === 'stock') ? null : id;
+    updateVisualizer();
+}
+
 window.updateVisualizer = function () {
-    console.log("Updating Visualizer Configuration...");
+    console.log("Updating Visualizer Configuration...", selections);
 
-    // 1. Get Part States
-    const isLowered = document.querySelector('input[data-part="lowered"]')?.checked;
-    const hasLip = document.querySelector('input[data-part="lip"]')?.checked;
-    const hasWing = document.querySelector('input[data-part="wing"]')?.checked;
+    // 1. Find matching build
+    const match = builds.find(b =>
+        b.carId === currentCar.id &&
+        b.wrapId === selections.wrapId &&
+        b.wheelId === selections.wheelId
+    );
 
-    // 2. Update UI Summary
-    let count = 0;
-    if (isLowered) count++;
-    if (hasLip) count++;
-    if (hasWing) count++;
+    currentBuild = match || null;
+
+    // 2. Update Summary Panel
+    const wrapEl = document.getElementById('summary-wrap');
+    if (wrapEl) {
+        const wrap = wraps.find(w => w.id === selections.wrapId);
+        wrapEl.innerText = wrap ? wrap.product_name : 'Factory';
+    }
 
     const countEl = document.getElementById('summary-parts-count');
-    if (countEl) countEl.innerText = `${count} installed`;
-
-    // 3. Simple Visual Feedback (Simulation Preview)
-    // "Lowering" effect via CSS
-    if (isLowered) {
-        els.img.style.transform = "translateY(15px) scale(1.02)"; // Drop and slight zoom
-        els.img.style.transition = "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-    } else {
-        els.img.style.transform = "none";
+    if (countEl) {
+        const wheel = wheels.find(w => w.id === selections.wheelId);
+        countEl.innerText = wheel ? wheel.brand + ' ' + wheel.product_name : 'Stock';
     }
 
-    // "Wing" effect (Dummy alert for now or console)
-    if (hasWing) {
-        console.log("Wing enabled - Waiting for Part Mask");
-    }
+    // 3. Preload and Update View
+    preloadCarAngles();
+    setAngle(currentAngleIndex);
 }
 
 window.nextAngle = function () {

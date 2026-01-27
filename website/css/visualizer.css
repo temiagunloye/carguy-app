@@ -125,17 +125,68 @@ body {
     color: var(--hud-accent);
 }
 
-/* Parts List */
-.part-toggle-item {
+/* Wheels Grid */
+.wheels-grid {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-direction: column;
+    gap: 8px;
 }
 
-.part-toggle-item:last-child {
-    border-bottom: none;
+.wheel-option-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--hud-border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: var(--text-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wheel-option-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.wheel-option-item.active {
+    border-color: var(--hud-accent);
+    background: rgba(59, 130, 246, 0.1);
+    color: white;
+}
+
+/* Tabs */
+.config-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--hud-border);
+    margin: calc(var(--space-lg) * -1) calc(var(--space-lg) * -1) var(--space-lg);
+}
+
+.config-tab {
+    flex: 1;
+    padding: var(--space-md);
+    text-align: center;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--hud-text-muted);
+    transition: all 0.2s;
+}
+
+.config-tab.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid var(--hud-accent);
+}
+
+/* Tab Content Visibility */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
 }
 
 /* Center Panel: Viewer */
