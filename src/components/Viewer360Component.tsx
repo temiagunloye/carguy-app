@@ -6,11 +6,10 @@ import {
     ActivityIndicator,
     Animated,
     Dimensions,
-    PanResponder,
-    PanResponderGestureState,
     StyleSheet,
     Text,
-    View,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import standardCarLibraryService from '../services/StandardCarLibraryService';
 
@@ -61,8 +60,8 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
     const rotationAnim = useRef(new Animated.Value(currentAngleIndex)).current;
     const isDragging = useRef(false);
 
-    // Constants
-    const DRAG_SENSITIVITY = SCREEN_WIDTH / angleNames.length; // Pixels per angle
+    // Constants - Increased sensitivity for faster, smoother rotation
+    const DRAG_SENSITIVITY = SCREEN_WIDTH / 3; // Much faster rotation (was SCREEN_WIDTH / angleNames.length)
     const SNAP_DURATION = 200; // ms
 
     /**
@@ -209,61 +208,20 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
     );
 
     /**
-     * Pan Responder for drag gestures
+     * Navigate to previous angle
      */
-    const panResponder = useRef(
-        PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponder: () => true,
+    const goToPreviousAngle = useCallback(() => {
+        const newIndex = (currentAngleIndex - 1 + angleNames.length) % angleNames.length;
+        snapToAngle(newIndex);
+    }, [currentAngleIndex, angleNames.length, snapToAngle]);
 
-            onPanResponderGrant: () => {
-                isDragging.current = true;
-                dragOffset.current = 0;
-            },
-
-            onPanResponderMove: (_, gestureState: PanResponderGestureState) => {
-                const { dx } = gestureState;
-                dragOffset.current = dx;
-
-                // Calculate angle change based on drag distance
-                const angleChange = -dx / DRAG_SENSITIVITY; // Negative for natural direction
-                const totalAngles = angleNames.length;
-
-                // Calculate target index with wraparound
-                const rawIndex = currentAngleIndex + angleChange;
-                const targetIndex = ((rawIndex % totalAngles) + totalAngles) % totalAngles;
-
-                rotationAnim.setValue(targetIndex);
-
-                // Update current index discretely
-                const discreteIndex = Math.round(targetIndex);
-                const normalizedIndex = ((discreteIndex % totalAngles) + totalAngles) % totalAngles;
-
-                if (normalizedIndex !== currentAngleIndex) {
-                    setCurrentAngleIndex(normalizedIndex);
-                    // Load this angle if not already loaded
-                    loadAngleAsset(normalizedIndex);
-                }
-            },
-
-            onPanResponderRelease: () => {
-                isDragging.current = false;
-
-                // Snap to nearest angle
-                const currentValue = (rotationAnim as any)._value;
-                const totalAngles = angleNames.length;
-                const nearestIndex = Math.round(currentValue);
-                const normalizedIndex = ((nearestIndex % totalAngles) + totalAngles) % totalAngles;
-
-                snapToAngle(normalizedIndex);
-            },
-
-            onPanResponderTerminate: () => {
-                isDragging.current = false;
-                snapToAngle(currentAngleIndex);
-            },
-        })
-    ).current;
+    /**
+     * Navigate to next angle
+     */
+    const goToNextAngle = useCallback(() => {
+        const newIndex = (currentAngleIndex + 1) % angleNames.length;
+        snapToAngle(newIndex);
+    }, [currentAngleIndex, angleNames.length, snapToAngle]);
 
     /**
      * Get current angle URL
@@ -293,35 +251,52 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
     const displayUrl = currentAngleUrl || getFallbackAngleUrl();
 
     return (
-        <View style={styles.container} {...panResponder.panHandlers}>
+        <View style={styles.container}>
             {isInitialLoading ? (
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color="#007AFF" />
                     <Text style={styles.loadingText}>Loading 360° viewer...</Text>
                 </View>
             ) : displayUrl ? (
-                <Image
-                    source={{ uri: displayUrl }}
-                    style={styles.image}
-                    contentFit="contain"
-                    transition={100}
-                    priority="high"
-                />
+                <>
+                    <Image
+                        source={{ uri: displayUrl }}
+                        style={styles.image}
+                        contentFit="contain"
+                        transition={100}
+                        priority="high"
+                    />
+
+                    {/* Left Arrow Button */}
+                    <TouchableOpacity
+                        style={[styles.arrowButton, styles.leftArrow]}
+                        onPress={goToPreviousAngle}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.arrowText}>←</Text>
+                    </TouchableOpacity>
+
+                    {/* Right Arrow Button */}
+                    <TouchableOpacity
+                        style={[styles.arrowButton, styles.rightArrow]}
+                        onPress={goToNextAngle}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.arrowText}>→</Text>
+                    </TouchableOpacity>
+                </>
             ) : (
                 <View style={styles.errorContainer}>
                     <Text style={styles.errorText}>Unable to load image</Text>
                 </View>
             )}
 
-            {/* Debug info (optional - can remove in production) */}
-            {__DEV__ && (
-                <View style={styles.debugInfo}>
-                    <Text style={styles.debugText}>
-                        Angle: {angleNames[currentAngleIndex]} ({currentAngleIndex + 1}/{angleNames.length})
-                    </Text>
-                    <Text style={styles.debugText}>Loaded: {loadedAngles.size} angles</Text>
-                </View>
-            )}
+            {/* Angle Indicator */}
+            <View style={styles.debugInfo}>
+                <Text style={styles.debugText}>
+                    {currentAngleIndex + 1}/{angleNames.length}
+                </Text>
+            </View>
         </View>
     );
 };
@@ -370,6 +345,28 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 10,
         fontFamily: 'monospace',
+    },
+    arrowButton: {
+        position: 'absolute',
+        top: '50%',
+        transform: [{ translateY: -25 }],
+        width: 50,
+        height: 50,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25,
+    },
+    leftArrow: {
+        left: 16,
+    },
+    rightArrow: {
+        right: 16,
+    },
+    arrowText: {
+        color: '#fff',
+        fontSize: 28,
+        fontWeight: 'bold',
     },
 });
 

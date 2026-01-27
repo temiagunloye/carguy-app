@@ -99,27 +99,13 @@ export default function HomeScreen({ navigation }) {
 
       {/* MAIN ACTIONS */}
       <View style={styles.actionSection}>
-        <Text style={styles.sectionTitle}>Start Building (Demos)</Text>
-        <View style={styles.demoRow}>
-          <TouchableOpacity
-            style={styles.demoButton}
-            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-911" })}
-          >
-            <Text style={styles.demoButtonText}>Porsche 911</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.demoButton}
-            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-m3" })}
-          >
-            <Text style={styles.demoButtonText}>BMW M3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.demoButton}
-            onPress={() => navigation.navigate("SpinCarDetail", { carId: "demo-brz" })}
-          >
-            <Text style={styles.demoButtonText}>Subaru BRZ</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.libraryButton}
+          onPress={() => navigation.navigate("BrowseStandardCars")}
+        >
+          <Ionicons name="grid-outline" size={20} color="#fff" style={styles.buttonIcon} />
+          <Text style={styles.libraryButtonText}>Browse Car Library</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.primaryButton}
@@ -256,6 +242,20 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     fontWeight: "600",
+  },
+  libraryButton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+    alignItems: "center",
+    paddingVertical: 16,
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 12,
+  },
+  libraryButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "700",
   },
   primaryButton: {
     backgroundColor: "#ffffff",

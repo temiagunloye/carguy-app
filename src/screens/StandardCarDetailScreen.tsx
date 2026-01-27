@@ -175,6 +175,15 @@ const StandardCarDetailScreen: React.FC = () => {
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+            {/* Back Button */}
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+                activeOpacity={0.7}
+            >
+                <Text style={styles.backButtonText}>← Back</Text>
+            </TouchableOpacity>
+
             {/* 360 Viewer */}
             <View style={styles.viewerContainer}>
                 <Viewer360Component
@@ -198,7 +207,7 @@ const StandardCarDetailScreen: React.FC = () => {
                 )}
             </View>
 
-            {/* Main Action Buttons */}
+            {/* Commented out until features are ready
             <View style={styles.actionButtonsContainer}>
                 <TouchableOpacity
                     style={styles.primaryButton}
@@ -215,6 +224,7 @@ const StandardCarDetailScreen: React.FC = () => {
                     Start a new build with this car
                 </Text>
             </View>
+            */}
 
             {/* Paint Color Selector */}
             <View style={styles.section}>
@@ -286,7 +296,7 @@ const StandardCarDetailScreen: React.FC = () => {
                 )
             }
 
-            {/* Try Parts CTA */}
+            {/* Commented out until features are ready
             <TouchableOpacity
                 style={styles.ctaButton}
                 onPress={handleTryParts}
@@ -298,7 +308,6 @@ const StandardCarDetailScreen: React.FC = () => {
                 </Text>
             </TouchableOpacity>
 
-            {/* Upgrade Hint */}
             <View style={styles.upgradeHint}>
                 <Text style={styles.upgradeHintText}>
                     Want to upload your own car with 360° photos?
@@ -310,7 +319,8 @@ const StandardCarDetailScreen: React.FC = () => {
                     <Text style={styles.upgradeButtonText}>Upgrade to Pro</Text>
                 </TouchableOpacity>
             </View>
-        </ScrollView >
+            */}
+        </ScrollView>
     );
 };
 
@@ -336,6 +346,16 @@ const styles = StyleSheet.create({
     content: {
         paddingBottom: 40,
     },
+    backButton: {
+        paddingHorizontal: 20,
+        paddingTop: 60,
+        paddingBottom: 12,
+    },
+    backButtonText: {
+        fontSize: 16,
+        color: '#007AFF',
+        fontWeight: '600',
+    },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -359,7 +379,9 @@ const styles = StyleSheet.create({
     },
     viewerContainer: {
         width: '100%',
+        height: 300,
         backgroundColor: '#000',
+        marginBottom: 20,
     },
     infoSection: {
         paddingHorizontal: 20,

@@ -114,9 +114,9 @@ class StandardCarLibraryService {
         if (!this.db) throw new Error('Firestore not initialized');
 
         const carsRef = collection(this.db, 'standardCars');
+        // Simplified query - removed status filter to avoid composite index requirement
         let q = query(
             carsRef,
-            where('status', '==', 'approved'),
             orderBy('createdAt', 'desc'),
             firestoreLimit(pageSize)
         );

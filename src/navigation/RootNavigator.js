@@ -29,6 +29,7 @@ import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import SpinBuildScreen from "../screens/SpinBuildScreen";
 import SpinCarDetailScreen from "../screens/SpinCarDetailScreen";
+import StandardCarDetailScreen from "../screens/StandardCarDetailScreen";
 import TermsPrivacyScreen from "../screens/TermsPrivacyScreen";
 import TryModsScreen from "../screens/TryModsScreen";
 import UpgradeScreen from "../screens/UpgradeScreen";
@@ -199,6 +200,11 @@ export default function RootNavigator() {
         name="BrowseStandardCars"
         component={BrowseStandardCarsScreen}
         options={{ title: "Browse Cars" }}
+      />
+      <Stack.Screen
+        name="StandardCarDetail"
+        component={StandardCarDetailScreen}
+        options={{ title: "Car Details" }}
       />
     </Stack.Navigator>
   );

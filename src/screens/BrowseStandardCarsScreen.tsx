@@ -26,7 +26,7 @@ const BrowseStandardCarsScreen: React.FC = () => {
     const navigation = useNavigation();
 
     const [cars, setCars] = useState<StandardCar[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); // Start as FALSE - load in background
     const [refreshing, setRefreshing] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
@@ -141,7 +141,20 @@ const BrowseStandardCarsScreen: React.FC = () => {
                 onPress={() => handleCarPress(item)}
                 activeOpacity={0.7}
             >
-                <CarThumbnail car={item} />
+                {/* Direct image - uses heroAssetPath, no async, no flash */}
+                <View style={styles.thumbnail}>
+                    {item.heroAssetPath ? (
+                        <Image
+                            source={{ uri: item.heroAssetPath }}
+                            style={styles.thumbnailImage}
+                            contentFit="cover"
+                        />
+                    ) : (
+                        <View style={styles.thumbnailPlaceholder}>
+                            <Text style={styles.placeholderText}>{item.make} {item.model}</Text>
+                        </View>
+                    )}
+                </View>
                 <View style={styles.carInfo}>
                     <Text style={styles.carName}>{item.displayName}</Text>
                     <Text style={styles.carDetails}>
@@ -193,9 +206,16 @@ const BrowseStandardCarsScreen: React.FC = () => {
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Browse Dealer Cars</Text>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.goBack()}
+                    activeOpacity={0.7}
+                >
+                    <Text style={styles.backButtonText}>← Back</Text>
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Car Library</Text>
                 <Text style={styles.headerSubtitle}>
-                    Explore our standard car library
+                    Browse our 360° car collection
                 </Text>
             </View>
 
@@ -226,59 +246,6 @@ const BrowseStandardCarsScreen: React.FC = () => {
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
                 }
             />
-
-            {/* Initial Loader */}
-            {loading && cars.length === 0 && (
-                <View style={styles.initialLoader}>
-                    <ActivityIndicator size="large" color="#007AFF" />
-                    <Text style={styles.loadingText}>Loading cars...</Text>
-                </View>
-            )}
-        </View>
-    );
-};
-
-/**
- * Car Thumbnail Component
- */
-const CarThumbnail: React.FC<{ car: StandardCar }> = ({ car }) => {
-    const [thumbUrl, setThumbUrl] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const loadThumb = async () => {
-            try {
-                // Get default variant and resolve its thumbnail
-                const variant = await standardCarLibraryService.getVariantById(
-                    car.defaultVariantId
-                );
-                if (variant) {
-                    const url = await standardCarLibraryService.resolveVariantThumb(
-                        variant.id
-                    );
-                    setThumbUrl(url);
-                }
-            } catch (error) {
-                console.error('Failed to load thumbnail:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadThumb();
-    }, [car]);
-
-    return (
-        <View style={styles.thumbnail}>
-            {loading ? (
-                <ActivityIndicator size="small" color="#007AFF" />
-            ) : thumbUrl ? (
-                <Image source={{ uri: thumbUrl }} style={styles.thumbnailImage} contentFit="cover" />
-            ) : (
-                <View style={styles.thumbnailPlaceholder}>
-                    <Text style={styles.placeholderText}>No Image</Text>
-                </View>
-            )}
         </View>
     );
 };
@@ -294,6 +261,16 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#333',
+    },
+    backButton: {
+        paddingVertical: 8,
+        marginBottom: 12,
+        alignSelf: 'flex-start',
+    },
+    backButtonText: {
+        fontSize: 16,
+        color: '#007AFF',
+        fontWeight: '600',
     },
     headerTitle: {
         fontSize: 28,
@@ -388,12 +365,8 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         alignItems: 'center',
     },
-    initialLoader: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+    loadingContainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000',
