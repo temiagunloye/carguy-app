@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Simulator | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/visualizer.css">
+</head>
+
+<body>
+
+    <div class="visualizer-container">
+
+        <!-- Left Panel: Configuration -->
+        <div class="hud-panel hud-left">
+            <div class="hud-panel-header">
+                <span style="display:flex; align-items:center; gap:8px;"><i data-lucide="sliders-horizontal"
+                        style="width:16px;"></i> CONFIGURATION</span>
+                <a href="/shop/builds.html" class="text-xs text-muted"
+                    style="text-decoration:none; color: #a1a1aa; display:flex; align-items:center; gap:4px;">
+                    <i data-lucide="arrow-left" style="width:12px;"></i> EXIT
+                </a>
+            </div>
+
+            <div class="hud-panel-content">
+                <!-- Vehicle Selection (Sticky at top of content) -->
+                <div class="control-group">
+                    <label class="control-label">VEHICLE</label>
+                    <select id="vehicle-selector" class="vehicle-select">
+                        <option value="" disabled selected>Select Base Car...</option>
+                    </select>
+                </div>
+
+                <!-- Config Tabs -->
+                <div class="config-tabs">
+                    <div class="config-tab active" onclick="switchTab('wrap')">Paint</div>
+                    <div class="config-tab" onclick="switchTab('wheels')">Wheels</div>
+                    <div class="config-tab" onclick="switchTab('parts')">Parts</div>
+                    <div class="config-tab" onclick="switchTab('builds')">Builds</div>
+                </div>
+
+                <!-- Tab Content: Wrap -->
+                <div id="tab-wrap" class="tab-content active">
+                    <div class="control-group">
+                        <label class="control-label">WRAP / PAINT</label>
+                        <div id="wrap-selector" class="color-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Wheels -->
+                <div id="tab-wheels" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">WHEELS</label>
+                        <div id="wheels-selector" class="wheels-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Parts -->
+                <div id="tab-parts" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">INSTALLED PARTS</label>
+                        <div id="parts-list">
+                            <div class="part-toggle-item">
+                                <span>Front Lip</span>
+                                <input type="checkbox" data-part="lip" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Side Skirts</span>
+                                <input type="checkbox" data-part="skirts" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Rear Wing</span>
+                                <input type="checkbox" data-part="wing" onchange="updateVisualizer()">
+                            </div>
+                            <div class="part-toggle-item">
+                                <span>Lowering Springs</span>
+                                <input type="checkbox" data-part="lowered" onchange="updateVisualizer()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Builds -->
+                <div id="tab-builds" class="tab-content">
+                    <div class="control-group">
+                        <label class="control-label">FEATURED BUILDS</label>
+                        <div id="builds-gallery" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <!-- Populated by JS -->
+                            <p class="text-xs text-muted">Select high-performance builds...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Panel: Viewer -->
+        <div class="hud-center">
+            <div class="viewer-canvas">
+                <img id="main-vehicle-image" src="https://via.placeholder.com/1600x900?text=Select+Vehicle+to+Start"
+                    alt="Vehicle Preview" class="vehicle-image">
+
+                <button class="nav-arrow nav-prev" onclick="prevAngle()">❮</button>
+                <button class="nav-arrow nav-next" onclick="nextAngle()">❯</button>
+
+                <!-- Loading Spinner -->
+                <div id="loading-spinner"
+                    style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); display:none;">
+                    <svg class="animate-spin" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-dasharray="30 60">
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Angle Navigation Dots -->
+            <div class="angle-nav">
+                <div class="angle-dot active" onclick="setAngle(0)"></div>
+                <div class="angle-dot" onclick="setAngle(1)"></div>
+                <div class="angle-dot" onclick="setAngle(2)"></div>
+                <div class="angle-dot" onclick="setAngle(3)"></div>
+                <div class="angle-dot" onclick="setAngle(4)"></div>
+                <div class="angle-dot" onclick="setAngle(5)"></div>
+                <div class="angle-dot" onclick="setAngle(6)"></div>
+                <div class="angle-dot" onclick="setAngle(7)"></div>
+                <div class="angle-dot" onclick="setAngle(8)"></div>
+                <div class="angle-dot" onclick="setAngle(9)"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Build Summary -->
+        <div class="hud-panel hud-right">
+            <div class="hud-panel-header">
+                <span style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-text"
+                        style="width:16px;"></i> BUILD SUMMARY</span>
+                <span id="save-status" class="text-xs text-green-500" style="opacity:0;">Saved</span>
+            </div>
+
+            <div class="hud-panel-content">
+                <div class="build-summary-card">
+                    <h3 id="summary-vehicle-name" style="margin-bottom:var(--space-md);">Select a vehicle</h3>
+
+                    <div class="summary-row">
+                        <span class="text-muted">Wrap</span>
+                        <span id="summary-wrap">None</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="text-muted">Parts</span>
+                        <span id="summary-parts-count">0 installed</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <div class="summary-row" style="margin-bottom:0;">
+                            <span>Est. Total</span>
+                            <span id="summary-cost">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-viz btn-viz-primary" onclick="generateShareLink()">
+                        Share Build
+                    </button>
+                    <button class="btn-viz btn-viz-secondary" onclick="saveLocalBuild()">
+                        Save to Device
+                    </button>
+                    <button class="btn-viz btn-viz-secondary" onclick="clearBuild()"
+                        style="border-color: #ef4444; color: #ef4444;">
+                        Clear
+                    </button>
+                </div>
+
+                <div style="margin-top: var(--space-xl);">
+                    <label class="control-label">LOCAL BUILDS</label>
+                    <div id="local-builds-list" style="font-size: 0.8rem; color: var(--text-muted);">
+                        <p>No saved builds</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hud-panel-footer">
+                <div style="display:flex; gap: 10px; align-items:center;">
+                    <img src="/brand/garage-manager/v1/mark.svg" width="24" height="24" alt="GM">
+                    <span style="font-weight:600; font-size:12px;">Garage Manager</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
+    <script type="module" src="/js/visualizer-v2.js"></script>
+</body>
+
+</html>
