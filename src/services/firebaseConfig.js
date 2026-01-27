@@ -52,11 +52,9 @@ const initializeFirebase = () => {
         persistence: getReactNativePersistence(ReactNativeAsyncStorage),
       });
 
-      // Enable offline persistence
-      firebaseState.db = initializeFirestore(firebaseState.app, {
-        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
-        experimentalForceLongPolling: true,
-      });
+      // Enable offline persistence (React Native compatible)
+      firebaseState.db = initializeFirestore(firebaseState.app, {});
+
 
       firebaseState.storage = getFirebaseStorage(firebaseState.app);
 

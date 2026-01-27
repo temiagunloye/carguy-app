@@ -3,7 +3,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 // Demo mode flag - set to true to skip Firebase entirely
-const DEMO_MODE = true; // ✅ TRUE = New free version every time (Ephemeral)
+// Demo mode flag - set to true to skip Firebase entirely
+const DEMO_MODE = false; // ✅ FALSE = Production / Firebase Mode
 
 const CarContext = createContext(null);
 

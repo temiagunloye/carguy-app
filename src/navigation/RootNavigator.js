@@ -12,6 +12,8 @@ import AddCarScreen from "../screens/AddCarScreen";
 import AddPartScreen from "../screens/AddPartScreen";
 import BrowseStandardCarsScreen from "../screens/BrowseStandardCarsScreen";
 import BuildHistoryScreen from "../screens/BuildHistoryScreen";
+import BuildsScreen from "../screens/BuildsScreen";
+import BuildViewerScreen from "../screens/BuildViewerScreen";
 import CarDetailScreen from "../screens/CarDetailScreen";
 import ContactUsScreen from "../screens/ContactUsScreen";
 import CreateVehicleScreen from "../screens/CreateVehicleScreen";
@@ -205,6 +207,16 @@ export default function RootNavigator() {
         name="StandardCarDetail"
         component={StandardCarDetailScreen}
         options={{ title: "Car Details" }}
+      />
+      <Stack.Screen
+        name="Builds"
+        component={BuildsScreen}
+        options={{ title: "Featured Builds", headerShown: false }}
+      />
+      <Stack.Screen
+        name="BuildViewer"
+        component={BuildViewerScreen}
+        options={{ title: "Build Viewer", headerShown: false }}
       />
     </Stack.Navigator>
   );

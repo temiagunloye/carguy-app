@@ -5,11 +5,20 @@ import { CarProvider } from "./src/services/carContext";
 import { ThemeProvider } from "./src/services/themeContext";
 
 export default function App() {
+  const linking = {
+    prefixes: ["carguy://", "https://carguyapp.com"],
+    config: {
+      screens: {
+        BuildViewer: "build/:buildId",
+      },
+    },
+  };
+
   return (
     <AppModeProvider>
       <ThemeProvider>
         <CarProvider>
-          <NavigationContainer>
+          <NavigationContainer linking={linking}>
             <RootNavigator />
           </NavigationContainer>
         </CarProvider>

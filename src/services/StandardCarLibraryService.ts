@@ -101,6 +101,17 @@ export interface StyleProfile {
     updatedAt: any;
 }
 
+export interface CustomBuild {
+    id: string;
+    carId: string;
+    wrapId: string | null;
+    wheelId: string | null;
+    photoAnglesHttp: Record<string, string>;
+    renderStatus: string;
+    createdAt: any;
+    updatedAt: any;
+}
+
 class StandardCarLibraryService {
     private db = getDb();
     private storage = getStorageInstance();
@@ -170,6 +181,16 @@ class StandardCarLibraryService {
         }
 
         const car = { id: carSnap.id, ...carSnap.data() } as StandardCar;
+
+        // Resolve display URL if heroAssetPath exists
+        if (car.heroAssetPath) {
+            try {
+                car.displayUrl = await this.resolveStoragePath(car.heroAssetPath);
+            } catch (e) {
+                console.warn(`Failed to resolve for ${car.id}:`, e);
+            }
+        }
+
         carCache.set(carId, { data: car, timestamp: Date.now() });
         return car;
     }
@@ -357,6 +378,25 @@ class StandardCarLibraryService {
         }
 
         return { id: profileSnap.id, ...profileSnap.data() } as StyleProfile;
+    }
+
+    /**
+     * Get all custom high-fidelity builds for a specific standard car
+     */
+    async getBuildsForCar(carId: string): Promise<CustomBuild[]> {
+        if (!this.db) throw new Error('Firestore not initialized');
+
+        const buildsRef = collection(this.db, 'builds');
+        const q = query(
+            buildsRef,
+            where('carId', '==', carId)
+        );
+
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        } as CustomBuild));
     }
 
     /**

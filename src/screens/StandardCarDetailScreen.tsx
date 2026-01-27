@@ -24,6 +24,7 @@ import { variantFadeController } from '../services/VariantFadeController';
 
 interface RouteParams {
     carId: string;
+    inventoryCarId?: string; // Optional: provided if navigating from inventory
 }
 
 /**
@@ -33,7 +34,7 @@ interface RouteParams {
 const StandardCarDetailScreen: React.FC = () => {
     const route = useRoute();
     const navigation = useNavigation();
-    const { carId } = route.params as RouteParams;
+    const { carId, inventoryCarId } = route.params as any;
 
     const [car, setCar] = useState<StandardCar | null>(null);
     const [variants, setVariants] = useState<StandardCarVariant[]>([]);
@@ -57,6 +58,7 @@ const StandardCarDetailScreen: React.FC = () => {
      */
     const handleAddToGarage = useCallback(async () => {
         if (!car || !selectedVariant) return;
+        if (inventoryCarId) return; // Already added
 
         // Check limits if not in demo mode
         if (!demoMode && user) {
@@ -88,8 +90,8 @@ const StandardCarDetailScreen: React.FC = () => {
                 model: car.model,
                 trim: car.trim || '',
                 paintColor: selectedVariant.colorName,
-                dealerImageUrl: car.heroAssetPath || null,
-                imageUrl: car.heroAssetPath || null,
+                dealerImageUrl: car.displayUrl || car.heroAssetPath || null,
+                imageUrl: car.displayUrl || car.heroAssetPath || null,
                 standardCarId: car.id,
                 activeVariantId: selectedVariant.id,
             };
@@ -130,6 +132,10 @@ const StandardCarDetailScreen: React.FC = () => {
                         onPress: () => (navigation as any).navigate('MainTabs', { screen: 'ShopTab' }),
                     },
                     {
+                        text: 'View in Inventory',
+                        onPress: () => (navigation as any).navigate('MainTabs', { screen: 'InventoryTab' }),
+                    },
+                    {
                         text: 'Keep Browsing',
                         style: 'cancel',
                     },
@@ -159,6 +165,15 @@ const StandardCarDetailScreen: React.FC = () => {
                     Alert.alert('Error', 'Car not found');
                     navigation.goBack();
                     return;
+                }
+
+                // Resolve hero image URL for preview and saving
+                if (carData.heroAssetPath) {
+                    try {
+                        carData.displayUrl = await standardCarLibraryService.resolveStoragePath(carData.heroAssetPath);
+                    } catch (e) {
+                        console.warn('Failed to resolve hero image:', e);
+                    }
                 }
 
                 setCar(carData);
@@ -258,13 +273,27 @@ const StandardCarDetailScreen: React.FC = () => {
                 model: car.model,
                 trim: car.trim || '',
                 paintColor: selectedVariant.colorName,
-                dealerImageUrl: car.heroAssetPath || null,
-                imageUrl: car.heroAssetPath || null, // Best fallback
+                dealerImageUrl: car.displayUrl || car.heroAssetPath || null,
+                imageUrl: car.displayUrl || car.heroAssetPath || null, // Best fallback
                 standardCarId: car.id,
                 activeVariantId: selectedVariant.id,
             };
 
-            if (demoMode) {
+            if (inventoryCarId) {
+                targetCarId = inventoryCarId;
+
+                // Fetch the car from context to get activeBuildId
+                const existingCar = context?.demoMode
+                    ? context?.demoCars?.find((c: any) => c.id === inventoryCarId)
+                    : null;
+
+                if (existingCar) {
+                    targetBuildId = existingCar.activeBuildId;
+                    setActiveCarState(existingCar);
+                } else if (!demoMode) {
+                    // Firebase fallback logic could go here if needed
+                }
+            } else if (demoMode) {
                 // Save locally for demo
                 const newCar = addDemoCar(userCarData);
                 targetCarId = newCar.id;
@@ -376,18 +405,20 @@ const StandardCarDetailScreen: React.FC = () => {
             </View>
 
             <View style={styles.actionButtonsContainer}>
-                <TouchableOpacity
-                    style={styles.primaryButton}
-                    onPress={handleAddToGarage}
-                    activeOpacity={0.8}
-                    disabled={addingToGarage}
-                >
-                    {addingToGarage ? (
-                        <ActivityIndicator color="#fff" />
-                    ) : (
-                        <Text style={styles.primaryButtonText}>Add to My Garage</Text>
-                    )}
-                </TouchableOpacity>
+                {!inventoryCarId && (
+                    <TouchableOpacity
+                        style={styles.primaryButton}
+                        onPress={handleAddToGarage}
+                        activeOpacity={0.8}
+                        disabled={addingToGarage}
+                    >
+                        {addingToGarage ? (
+                            <ActivityIndicator color="#fff" />
+                        ) : (
+                            <Text style={styles.primaryButtonText}>Add to My Garage</Text>
+                        )}
+                    </TouchableOpacity>
+                )}
 
                 <TouchableOpacity
                     style={styles.secondaryButton}
@@ -402,7 +433,7 @@ const StandardCarDetailScreen: React.FC = () => {
                     )}
                 </TouchableOpacity>
                 <Text style={styles.actionHelperText}>
-                    Save this car and start customizing with parts
+                    {inventoryCarId ? 'Customize your owned vehicle with more parts' : 'Save this car and start customizing with parts'}
                 </Text>
             </View>
 

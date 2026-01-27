@@ -35,21 +35,21 @@
                     Welcome back, <span id="user-email-display">Partner</span>
                 </div>
             </div>
-            <div>
-                <a href="/shop/marketplace.html" class="btn btn-secondary btn-sm"
-                    style="border-color: #333; margin-right: 10px;">
-                    <i data-lucide="shopping-bag" style="width:14px; height:14px; margin-right:4px;"></i> Marketplace
-                </a>
-                <a href="/shop/builds.html" class="btn btn-secondary btn-sm"
-                    style="border-color: #333; margin-right: 10px;">
-                    <i data-lucide="wrench" style="width:14px; height:14px; margin-right:4px;"></i> Simulator
-                </a>
+            <div class="dash-actions">
+                <div class="nav-links-inline">
+                    <a href="/shop/dashboard.html" class="nav-link-current"
+                        style="color:var(--accent-primary); font-weight:600; text-decoration:none;">Dashboard</a>
+                    <a href="/shop/marketplace.html" class="nav-link"
+                        style="color:var(--text-muted); text-decoration:none;">Marketplace</a>
+                    <a href="/shop/builds.html" class="nav-link"
+                        style="color:var(--text-muted); text-decoration:none;">Builds</a>
+                </div>
                 <button onclick="window.location.href='/shop/inventory-add.html'" class="btn btn-secondary btn-sm"
                     style="border-color: #333; margin-right: 10px;">
-                    Add Inventory
+                    <i data-lucide="plus-circle" style="width:14px; height:14px; margin-right:4px;"></i> Add Inventory
                 </button>
-                <button onclick="window.location.href='/shop/builds.html'" class="btn btn-primary btn-sm">
-                    + New Quote
+                <button onclick="window.location.href='/shop/simulator.html'" class="btn btn-primary btn-sm">
+                    <i data-lucide="wrench" style="width:14px; height:14px; margin-right:4px;"></i> New Quote
                 </button>
             </div>
         </header>
@@ -91,18 +91,14 @@
                         <tr>
                             <td>Alex Chen</td>
                             <td>BMW M3 Carbon Lip</td>
-                            <td><span class="status-badge live"
-                                    style="color:#3b82f6; background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.3)">New</span>
-                            </td>
+                            <td><span class="status-badge new">New</span></td>
                             <td>Today, 10:23 AM</td>
                             <td><button class="text-accent hover:underline">Reply</button></td>
                         </tr>
                         <tr>
                             <td>Sarah Miller</td>
                             <td>911 Wrap Quote</td>
-                            <td><span class="status-badge demo"
-                                    style="color:#a1a1aa; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2)">Pending</span>
-                            </td>
+                            <td><span class="status-badge pending">Pending</span></td>
                             <td>Yesterday</td>
                             <td><button class="text-accent hover:underline">View</button></td>
                         </tr>

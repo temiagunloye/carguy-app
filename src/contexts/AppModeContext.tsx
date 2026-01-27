@@ -22,8 +22,8 @@ interface Props {
 }
 
 export function AppModeProvider({ children }: Props) {
-    const [mode, setModeState] = useState<AppMode>('live');
-    const [isLoading, setIsLoading] = useState(true);
+    const [mode, setModeState] = useState<AppMode>('demo');
+    const [isLoading, setIsLoading] = useState(false); // Skip async load for immediate demo access
 
     // Load persisted mode on mount
     useEffect(() => {

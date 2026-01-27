@@ -89,7 +89,7 @@ export async function createVehicle(data: CreateVehicleData): Promise<string> {
  */
 export async function getUserVehicles(): Promise<Vehicle[]> {
     const user = auth?.currentUser;
-    if (!user || !db) return [];
+    if (!user || !db || user.uid.startsWith('demo_') || user.uid.startsWith('guest_')) return [];
 
     const vehiclesRef = collection(db, 'vehicles');
     const snapshot = await getDocs(

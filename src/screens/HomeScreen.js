@@ -14,6 +14,7 @@ import AddCarModal from "../components/AddCarModal";
 import TierLimitModal from "../components/TierLimitModal";
 import { useAppMode } from "../contexts/AppModeContext";
 import { useCarContext } from "../services/carContext";
+import standardCarLibraryService from "../services/StandardCarLibraryService";
 
 export default function HomeScreen({ navigation }) {
   const { activeCar, loading, user, plan } = useCarContext();
@@ -24,6 +25,25 @@ export default function HomeScreen({ navigation }) {
     title: '',
     message: '',
   });
+
+  const [resolvedImageUrl, setResolvedImageUrl] = useState(null);
+
+  // Attempt to resolve imageUrl if it's a storage path
+  React.useEffect(() => {
+    const resolvePath = async () => {
+      if (activeCar?.imageUrl && !activeCar.imageUrl.startsWith('http')) {
+        try {
+          const url = await standardCarLibraryService.resolveStoragePath(activeCar.imageUrl);
+          setResolvedImageUrl(url);
+        } catch (e) {
+          console.warn('Failed to resolve home car image:', e);
+        }
+      } else {
+        setResolvedImageUrl(null);
+      }
+    };
+    resolvePath();
+  }, [activeCar?.imageUrl]);
 
   // Simple tier from plan (defaults to 'free' if no user/plan)
   const tier = plan || 'free';
@@ -61,8 +81,8 @@ export default function HomeScreen({ navigation }) {
   const hasCar = !!activeCar;
 
   const heroImageSource =
-    activeCar && activeCar.imageUrl
-      ? { uri: activeCar.imageUrl }
+    (activeCar && (resolvedImageUrl || activeCar.imageUrl))
+      ? { uri: resolvedImageUrl || activeCar.imageUrl }
       : null;
 
   return (
@@ -111,7 +131,7 @@ export default function HomeScreen({ navigation }) {
           style={styles.primaryButton}
           onPress={handleAddNewCar}
         >
-          <Ionicons name="add-circle-outline" size={20} color="#fff" style={styles.buttonIcon} />
+          <Ionicons name="add-circle-outline" size={20} color="#000" style={styles.buttonIcon} />
           <Text style={styles.primaryButtonText}>Add Your Own Car</Text>
         </TouchableOpacity>
       </View>

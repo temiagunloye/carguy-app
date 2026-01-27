@@ -2,7 +2,8 @@
 // Build management service - handles builds, folders, and inventory organization
 
 // Demo mode flag - matches carContext
-const DEMO_MODE = true;
+// Demo mode flag - matches carContext
+const DEMO_MODE = false;
 
 /**
  * Create a new build for a vehicle
@@ -178,5 +179,114 @@ export function categoryToFolderName(category) {
   };
 
   return mapping[category?.toLowerCase()] || "Other";
+}
+
+/**
+ * Get hero builds (featured)
+ * @param {string} [vehicleId] - Optional vehicle ID filter
+ * @returns {Promise<Array>}
+ */
+export async function getHeroBuilds(vehicleId = null) {
+  if (DEMO_MODE) return [];
+
+  const { collection, query, where, orderBy, getDocs } = await import("firebase/firestore");
+  const { db } = await import("./firebaseConfig");
+  if (!db) return [];
+
+  try {
+    const buildsRef = collection(db, "builds");
+    // Query for isHero == true, order by heroOrder
+    // Base query constraints
+    const constraints = [
+      where("isHero", "==", true),
+      orderBy("heroOrder", "asc")
+    ];
+
+    // Add vehicle filter if provided
+    if (vehicleId) {
+      constraints.unshift(where("vehicleId", "==", vehicleId));
+    }
+
+    const q = query(buildsRef, ...constraints);
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error fetching hero builds:", error);
+    return [];
+  }
+}
+
+/**
+ * Get build by ID (Global builds collection)
+ * @param {string} buildId
+ * @returns {Promise<Object|null>}
+ */
+export async function getBuildById(buildId) {
+  if (DEMO_MODE) return null;
+
+  const { doc, getDoc } = await import("firebase/firestore");
+  const { db } = await import("./firebaseConfig");
+  if (!db) return null;
+
+  try {
+    const docRef = doc(db, "builds", buildId);
+    const snapshot = await getDoc(docRef);
+
+    if (snapshot.exists()) {
+      return { id: snapshot.id, ...snapshot.data() };
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching build:", error);
+    return null;
+  }
+}
+
+/**
+ * Resolve render URLs for a build
+ * @param {Object} build
+ * @returns {Promise<Object>} Build with resolved render URLs
+ */
+export async function resolveBuildRenderUrls(build) {
+  if (DEMO_MODE) return build;
+  if (!build || !build.renderSet || !build.renderSet.angles) return build;
+
+  const { ref, getDownloadURL } = await import("firebase/storage");
+  const { storage } = await import("./firebaseConfig");
+
+  if (!storage) return build;
+
+  try {
+    const resolvedAngles = await Promise.all(build.renderSet.angles.map(async (angle) => {
+      // Use URL if exists, otherwise resolve storagePath
+      if (angle.url) return angle;
+      if (angle.storagePath) {
+        try {
+          const fileRef = ref(storage, angle.storagePath);
+          const url = await getDownloadURL(fileRef);
+          return { ...angle, url };
+        } catch (e) {
+          console.warn(`Failed to resolve render ${angle.index}:`, e);
+          return angle;
+        }
+      }
+      return angle;
+    }));
+
+    return {
+      ...build,
+      renderSet: {
+        ...build.renderSet,
+        angles: resolvedAngles
+      }
+    };
+  } catch (e) {
+    console.error("Error resolving build renders:", e);
+    return build;
+  }
 }
 

@@ -18,15 +18,13 @@ import { useCarContext } from "../services/carContext";
 import { getAllCarsForUser, setActiveCar } from "../services/carService";
 import { db } from "../services/firebaseConfig";
 import { getPlanConfig } from "../services/plans";
+import standardCarLibraryService from "../services/StandardCarLibraryService";
 
 const FILTER_CATEGORIES = [
-  { id: "all", name: "All Parts" },
-  { id: "wheels", name: "Wheels & Tires" },
-  { id: "suspension", name: "Suspension" },
-  { id: "engine", name: "Engine" },
-  { id: "exhaust", name: "Exhaust" },
-  { id: "exterior", name: "Exterior" },
-  { id: "interior", name: "Interior" },
+  { id: "all", name: "All Vehicles" },
+  { id: "saved", name: "Saved Builds" },
+  { id: "active", name: "Active Selection" },
+  { id: "shared", name: "Shared with Me" },
 ];
 
 export default function InventoryScreen({ navigation }) {
@@ -58,17 +56,31 @@ export default function InventoryScreen({ navigation }) {
     try {
       // Check if demo mode first (faster check)
       if (demoMode || user?.uid?.startsWith("demo_") || user?.uid?.startsWith("guest_")) {
-        // In demo mode, get cars from context
-        const list = demoCars || [];
-        setCars(list);
+        let listArr = [...(demoCars || [])];
 
-        // If we have an active car but it's not in the list (race condition), add it
-        if (activeCar && !list.find(c => c.id === activeCar.id)) {
-          setCars(prev => [activeCar, ...prev]);
+        // Ensure activeCar is represented even if state sync is pending
+        if (activeCar && !listArr.find(c => c.id === activeCar.id)) {
+          listArr = [activeCar, ...listArr];
         }
 
+        // Map through list and resolve image URLs if they are storage paths
+        const resolvedList = await Promise.all(listArr.map(async (car) => {
+          if (car.imageUrl && !car.imageUrl.startsWith('http')) {
+            try {
+              const url = await standardCarLibraryService.resolveStoragePath(car.imageUrl);
+              return { ...car, imageUrl: url };
+            } catch (e) {
+              console.warn('Failed to resolve image for car', car.id, e);
+            }
+          }
+          return car;
+        }));
+
+        setCars(resolvedList);
+        listArr = resolvedList; // Ensure stats use resolved list icons if needed
+
         const demoStats = {};
-        list.forEach(car => {
+        listArr.forEach(car => {
           // Count parts from car.parts array if it exists
           const parts = car.parts || [];
           let totalValue = 0;
@@ -148,7 +160,14 @@ export default function InventoryScreen({ navigation }) {
   };
 
   const handleViewCarDetail = (car) => {
-    navigation.navigate("CarDetail", { car });
+    if (car.standardCarId) {
+      navigation.navigate("StandardCarDetail", {
+        carId: car.standardCarId,
+        inventoryCarId: car.id
+      });
+    } else {
+      navigation.navigate("CarDetail", { car });
+    }
   };
 
   if (contextLoading || loading) {

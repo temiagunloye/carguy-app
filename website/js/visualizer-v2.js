@@ -292,8 +292,6 @@ function setAngle(index) {
         url = currentCar.photoAnglesHttp?.[key];
     }
 
-    if (dbgUrl) dbgUrl.innerText = url || 'UNDEFINED';
-
     if (url) {
         // Use preloaded image if available for instant display
         const preloaded = preloadedImages[currentCar.id]?.[key];
@@ -301,10 +299,6 @@ function setAngle(index) {
         if (preloaded && preloaded.complete) {
             // Instant swap - no loading needed!
             els.img.src = url;
-            if (dbgStatus) {
-                dbgStatus.innerText = 'LOADED (Cached)';
-                dbgStatus.style.color = '#0f0';
-            }
         } else {
             // Fallback: Show spinner for first load
             els.spinner.style.display = 'block';
@@ -313,26 +307,17 @@ function setAngle(index) {
 
             els.img.onload = () => {
                 els.spinner.style.display = 'none';
-                if (dbgStatus) {
-                    dbgStatus.innerText = 'LOADED (Success)';
-                    dbgStatus.style.color = '#0f0';
-                }
             };
 
             els.img.onerror = () => {
                 console.warn("Image Check Failed:", url);
                 els.spinner.style.display = 'none';
-                if (dbgStatus) {
-                    dbgStatus.innerText = 'ERROR (Failed)';
-                    dbgStatus.style.color = '#fff';
-                }
                 // Fallback to local asset if remote fails
                 els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
             };
         }
     } else {
         console.warn(`Angle ${key} not found for car ${currentCar.id}`);
-        if (dbgStatus) dbgStatus.innerText = 'MISSING KEY';
         els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
     }
 
@@ -365,11 +350,31 @@ window.updateVisualizer = function () {
     console.log("Updating Visualizer Configuration...", selections);
 
     // 1. Find matching build
-    const match = builds.find(b =>
+    // Relaxed Logic: 
+    // A. Exact Match (Car + Wrap + Wheel)
+    // B. Best Match (Car + Wheel + implied Wrap) -> Auto-switch wrap if needed
+
+    let match = builds.find(b =>
         b.carId === currentCar.id &&
         b.wrapId === selections.wrapId &&
         b.wheelId === selections.wheelId
     );
+
+    // Fallback: If we have a wheel selected but no exact build match, 
+    // check if this wheel belongs to a unique build for this car.
+    if (!match && selections.wheelId && selections.wheelId !== 'stock') {
+        const potentialBuild = builds.find(b =>
+            b.carId === currentCar.id &&
+            b.wheelId === selections.wheelId
+        );
+
+        if (potentialBuild) {
+            console.log("Auto-switching to match Best Build:", potentialBuild.id);
+            match = potentialBuild;
+            // Optionally update the wrap selection state to match visual
+            // selections.wrapId = potentialBuild.wrapId; 
+        }
+    }
 
     currentBuild = match || null;
 
