@@ -75,14 +75,16 @@ def render_angles(glb_path, output_dir):
     # Define 10 Angles (Orbit around 0,0,0)
     # Logic: Move camera in circle
     angles = {
-        'front': 0,
-        'front_left': 45,
-        'left': 90,
-        'rear_left': 135,
-        'rear': 180,
-        'rear_right': 225,
-        'right': 270,
-        'front_right': 315
+        'angle_01': 0,
+        'angle_02': 36,
+        'angle_03': 72,
+        'angle_04': 108,
+        'angle_05': 144,
+        'angle_06': 180,
+        'angle_07': 216,
+        'angle_08': 252,
+        'angle_09': 288,
+        'angle_10': 324
     }
     
     radius = 6.5

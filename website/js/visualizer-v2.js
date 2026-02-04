@@ -26,6 +26,7 @@ let selections = {
     wrapId: null,
     wheelId: null
 };
+let currentManifest = null;
 let currentAngleIndex = 0;
 let preloadedImages = {}; // Cache for instant rotation
 
@@ -55,13 +56,13 @@ async function init() {
     try {
         // 1. Fetch Data in Parallel
         const [carsSnap, wheelsSnap, wrapsSnap, buildsSnap] = await Promise.all([
-            getDocs(collection(db, "standardCars")),
+            getDocs(collection(db, "baseModels")), // Updated to baseModels
             getDocs(collection(db, "wheels")),
             getDocs(collection(db, "wraps")),
             getDocs(collection(db, "builds"))
         ]);
 
-        standardCars = carsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        standardCars = carsSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(c => c.active !== false); // Filter active
         wheels = wheelsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         wraps = wrapsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         builds = buildsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -71,7 +72,7 @@ async function init() {
         standardCars.forEach(car => {
             const opt = document.createElement('option');
             opt.value = car.id;
-            opt.innerText = car.displayName || car.id.replace(/_/g, ' ').toUpperCase();
+            opt.innerText = car.displayName || car.name || car.id.replace(/_/g, ' ').toUpperCase();
             els.select.appendChild(opt);
         });
 
@@ -204,7 +205,7 @@ function populateBuildsGallery() {
         card.style.border = '1px solid var(--hud-border)';
 
         // Show the first angle as a thumbnail
-        const thumbUrl = build.photoAnglesHttp?.driver_front || '';
+        const thumbUrl = build.renderUrls?.angle_01 || '';
 
         card.innerHTML = `
             <img src="${thumbUrl}" style="width:100%; border-radius:4px; margin-bottom:8px;">
@@ -250,74 +251,149 @@ function createWheelOption(id, name, isActive = false) {
 
 // Preload all car angles into browser cache for instant rotation
 function preloadCarAngles() {
-    if (!currentCar || !currentCar.photoAnglesHttp) return;
+    if (!currentCar) return;
 
-    console.log(`🔄 Preloading ${currentCar.id} angles...`);
-    const urlMap = currentCar.photoAnglesHttp;
-    preloadedImages[currentCar.id] = {};
+    // Manifest Mode Preload
+    if (currentManifest && currentManifest.angles) {
+        console.log(`🔄 Preloading Manifest Angles for ${currentManifest.sourceModel}...`);
+        if (!preloadedImages[currentCar.id]) preloadedImages[currentCar.id] = {};
 
-    ANGLE_KEYS.forEach(key => {
-        const url = urlMap[key];
-        if (url) {
+        currentManifest.angles.forEach(angle => {
+            const key = `manifest_${currentManifest.sourceModel}_${angle.angleId}`;
+            const url = currentManifest.baseUrl + '/' + angle.filename;
             const img = new Image();
             img.src = url;
             preloadedImages[currentCar.id][key] = img;
+        });
+        console.log(`✅ Preloaded ${currentManifest.angles.length} manifest angles`);
+        return;
+    }
+
+    if (!currentCar.renderUrls && !currentCar.photoAnglesHttp) return;
+
+    console.log(`🔄 Preloading ${currentCar.id} angles...`);
+    const urlMap = currentCar.renderUrls || currentCar.photoAnglesHttp || currentCar.images || {};
+    preloadedImages[currentCar.id] = {};
+
+    ANGLE_KEYS.forEach((key, idx) => {
+        // Try Legacy
+        let url = urlMap[key];
+
+        // Try New
+        if (!url) {
+            const angleNum = idx + 1;
+            const angleKey = `angle_${angleNum < 10 ? '0' + angleNum : angleNum}`;
+            url = urlMap[angleKey];
+        }
+
+        if (url) {
+            const img = new Image();
+            img.src = url;
+            preloadedImages[currentCar.id][key] = img; // Key by semantic index for lookup
         }
     });
 
     console.log(`✅ Preloaded ${Object.keys(preloadedImages[currentCar.id]).length} angles`);
 }
 
+// Manifest Loader
+const manifestCache = {};
+async function fetchManifest(url) {
+    if (manifestCache[url]) return manifestCache[url];
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        manifestCache[url] = data;
+        return data;
+    } catch (e) {
+        console.error("Manifest Load Failed:", e);
+        return null;
+    }
+}
+
 function setAngle(index) {
     if (!currentCar) return;
 
+    // Determine Source & Mode
+    // Priority: Manifest (Build) > Legacy Build > Legacy Car
+    let anglesList = ANGLE_KEYS; // Default legacy
+    let isManifestMode = false;
+
+    if (currentManifest && currentManifest.angles) {
+        isManifestMode = true;
+        anglesList = currentManifest.angles; // Array of objects
+    }
+
     // Bounds check
     if (index < 0) index = 0;
-    if (index >= ANGLE_KEYS.length) index = ANGLE_KEYS.length - 1;
-
-    const key = ANGLE_KEYS[index];
+    if (index >= anglesList.length) index = anglesList.length - 1;
 
     // Update Dots UI
+    // Ensure we have enough dots? For now assume 10 matches UI.
+    // Ideally we regenerate dots if counts mismatch, but sticking to 10 for now.
     els.dots.forEach((d, i) => {
         d.classList.toggle('active', i === index);
     });
 
-    // Determine target image set
-    const source = currentBuild || currentCar;
-    const urlMap = source.photoAnglesHttp || {};
-    let url = urlMap[key];
+    // Determine URL
+    let url = '';
+    let key = '';
 
-    // Fallback to base car if build angle is missing
-    if (!url && currentBuild) {
-        url = currentCar.photoAnglesHttp?.[key];
+    if (isManifestMode) {
+        const angleData = anglesList[index]; // { filename: "angle_01.png", ... }
+        // Remote path construction? 
+        // Manifest doesn't strictly have full URL, usually relative.
+        // We need the base URL of the manifest.
+        // Quick hack: store baseUrl in currentManifest when fetching
+        url = currentManifest.baseUrl + '/' + angleData.filename;
+        key = angleData.angleId;
+    } else {
+        key = ANGLE_KEYS[index]; // e.g., 'driver_front'
+        const source = currentBuild || currentCar;
+        const urlMap = source.renderUrls || source.photoAnglesHttp || source.images || {};
+
+        // 1. Try Legacy Key (driver_front)
+        url = urlMap[key];
+
+        // 2. Try New Angle Key (angle_01)
+        if (!url) {
+            const angleNum = index + 1;
+            const angleKey = `angle_${angleNum < 10 ? '0' + angleNum : angleNum}`;
+            url = urlMap[angleKey];
+        }
+
+        // Fallback for Builds relying on Base Car
+        if (!url && currentBuild) {
+            const carMap = currentCar.renderUrls || currentCar.photoAnglesHttp || currentCar.images || {};
+            url = carMap[key];
+            if (!url) {
+                const angleNum = index + 1;
+                const angleKey = `angle_${angleNum < 10 ? '0' + angleNum : angleNum}`;
+                url = carMap[angleKey];
+            }
+        }
     }
 
     if (url) {
         // Use preloaded image if available for instant display
-        const preloaded = preloadedImages[currentCar.id]?.[key];
+        // Cache key logic needs to match
+        const cacheKey = isManifestMode ? `manifest_${currentManifest.sourceModel}_${key}` : key;
+        const preloaded = preloadedImages[currentCar.id]?.[cacheKey];
 
         if (preloaded && preloaded.complete) {
-            // Instant swap - no loading needed!
             els.img.src = url;
         } else {
-            // Fallback: Show spinner for first load
             els.spinner.style.display = 'block';
-
             els.img.src = url;
-
-            els.img.onload = () => {
-                els.spinner.style.display = 'none';
-            };
-
+            els.img.onload = () => els.spinner.style.display = 'none';
             els.img.onerror = () => {
                 console.warn("Image Check Failed:", url);
                 els.spinner.style.display = 'none';
-                // Fallback to local asset if remote fails
                 els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
             };
         }
     } else {
-        console.warn(`Angle ${key} not found for car ${currentCar.id}`);
+        console.warn(`Angle ${index} not found for car ${currentCar.id}`);
         els.img.src = "/assets/hero-visualizer-DnLwM_OV.png";
     }
 
@@ -346,7 +422,7 @@ window.selectWheel = function (id) {
     updateVisualizer();
 }
 
-window.updateVisualizer = function () {
+window.updateVisualizer = async function () {
     console.log("Updating Visualizer Configuration...", selections);
 
     // 1. Find matching build
@@ -377,6 +453,21 @@ window.updateVisualizer = function () {
     }
 
     currentBuild = match || null;
+
+    // Manifest Handling
+    if (currentBuild && currentBuild.manifestUrl) {
+        console.log("Fetching Manifest:", currentBuild.manifestUrl);
+        const manifest = await fetchManifest(currentBuild.manifestUrl);
+        if (manifest) {
+            // Attach baseUrl for relative asset loading
+            manifest.baseUrl = currentBuild.manifestUrl.substring(0, currentBuild.manifestUrl.lastIndexOf('/'));
+            currentManifest = manifest;
+        } else {
+            currentManifest = null;
+        }
+    } else {
+        currentManifest = null;
+    }
 
     // 2. Update Summary Panel
     const wrapEl = document.getElementById('summary-wrap');

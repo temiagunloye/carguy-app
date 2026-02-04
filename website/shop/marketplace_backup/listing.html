@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Details | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .shop-nav {
+            background: #000;
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--space-md) 0;
+        }
+
+        .listing-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--space-2xl);
+        }
+
+        .listing-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--space-2xl);
+        }
+
+        .listing-gallery {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: #222;
+        }
+
+        .thumbnail-strip {
+            display: flex;
+            gap: 8px;
+            padding: 8px;
+            background: var(--bg-card);
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail.active {
+            border-color: var(--accent-primary);
+        }
+
+        .listing-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            height: fit-content;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: var(--space-md);
+        }
+
+        .seller-info {
+            padding-top: var(--space-lg);
+            margin-top: var(--space-lg);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Nav -->
+    <nav class="shop-nav">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <a href="/shop/dashboard.html" style="text-decoration:none; color:white;">&larr; Back</a>
+                <span class="font-bold text-lg">Marketplace</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <span class="text-sm text-muted" id="user-email">Loading...</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="listing-container">
+        <div class="listing-grid">
+            <!-- Left: Gallery & Details -->
+            <div>
+                <div class="listing-gallery">
+                    <img src="https://placehold.co/800x600/333/FFF?text=Listing+Image" class="main-image" id="main-img">
+                    <div class="thumbnail-strip">
+                        <img src="https://placehold.co/800x600/333/FFF?text=Front" class="thumbnail active">
+                        <img src="https://placehold.co/800x600/333/FFF?text=Side" class="thumbnail">
+                        <img src="https://placehold.co/800x600/333/FFF?text=Detail" class="thumbnail">
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-2xl);">
+                    <h1 class="text-3xl font-bold mb-4" id="listing-title">Loading Listing...</h1>
+                    <div class="flex gap-2 mb-6">
+                        <span class="badge badge-secondary">Wheels</span>
+                        <span class="badge badge-secondary">BMW</span>
+                        <span class="badge badge-secondary">Used - Like New</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2">Description</h3>
+                    <p class="text-muted leading-relaxed" id="listing-desc">
+                        Full set of BBS LM wheels. Specs: 20x9.5 +22 / 20x10.5 +35.
+                        Perfect fitment for G80 M3 / G82 M4. Ceramic coated last month.
+                        No curb rash, tires included (PS4S with 70% tread).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Sidebar -->
+            <div class="listing-sidebar">
+                <div class="price" id="listing-price">$3,400</div>
+                <button class="btn btn-primary btn-lg btn-block mb-4" onclick="openInquiryModal()">
+                    Request This Part
+                </button>
+                <p class="text-xs text-center text-muted">Secure transaction via Garage Manager</p>
+
+                <div class="seller-info">
+                    <p class="text-sm text-muted uppercase font-bold mb-2">Sold By</p>
+                    <div class="flex items-center gap-3">
+                        <div style="width:40px; height:40px; background:#333; border-radius:50%;"></div>
+                        <div>
+                            <p class="font-bold text-white">Apex Performance</p>
+                            <p class="text-xs text-green-500">Verified Dealer</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-muted mt-2">Los Angeles, CA</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Script -->
+    <script type="module" src="/js/shopAuth.js"></script>
+    <script type="module">
+        import { checkAuth } from '/js/shopAuth.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+        // Placeholder config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEFvcV4MKlxtXOiZXRFTL8xVSGuKsPme8",
+            authDomain: "carguy-app-demo.firebaseapp.com",
+            projectId: "carguy-app-demo",
+            storageBucket: "carguy-app-demo.firebasestorage.app",
+            messagingSenderId: "869343833766",
+            appId: "1:869343833766:web:d80b4034b146525a588e67"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        (async () => {
+            const user = await checkAuth();
+            if (user) document.getElementById('user-email').textContent = user.email;
+
+            // Mock data load
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id === '2') {
+                document.getElementById('listing-title').textContent = "Vorsteiner Carbon Lip - G80 M3";
+                document.getElementById('listing-price').textContent = "$1,200";
+            } else if (id === '3') {
+                document.getElementById('listing-title').textContent = "Akrapovic Titanium Exhaust";
+                document.getElementById('listing-price').textContent = "$2,800";
+            } else {
+                document.getElementById('listing-title').textContent = "BBS LM - 20\" - BMW Spec";
+                document.getElementById('listing-price').textContent = "$3,400";
+            }
+        })();
+
+        window.openInquiryModal = async () => {
+            const msg = prompt("Message to seller:");
+            if (msg) {
+                try {
+                    await addDoc(collection(db, "partInquiries"), {
+                        listingId: new URLSearchParams(window.location.search).get('id') || "1",
+                        message: msg,
+                        createdAt: serverTimestamp(),
+                        status: 'pending'
+                    });
+                    alert("Request submitted! We'll email you when the seller responds.");
+                } catch (e) {
+                    console.error(e);
+                    alert("Request sent! (Mock)");
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

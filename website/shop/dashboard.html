@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Dashboard | Garage Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <!-- Top Nav -->
+    <nav class="shop-nav">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="/brand/garage-manager/v1/mark.svg" width="32" height="32" alt="GM">
+                <span class="font-bold text-lg" style="color: white; font-weight: 700;">Garage Manager</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <span class="text-sm text-muted" id="user-email">Loading...</span>
+                <button onclick="signOutUser()" class="text-sm text-accent hover:underline">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dash-container">
+        <!-- Header -->
+        <header class="dash-header">
+            <div class="dash-title">
+                <h1>Shop Command Center</h1>
+                <div class="dash-status">
+                    Welcome back, <span id="user-email-display">Partner</span>
+                </div>
+            </div>
+            <div class="dash-actions">
+                <div class="nav-links-inline">
+                    <a href="/partner/dashboard.html" class="nav-link-current"
+                        style="color:var(--accent-primary); font-weight:600; text-decoration:none;">Dashboard</a>
+                    <a href="/partner/marketplace.html" class="nav-link"
+                        style="color:var(--text-muted); text-decoration:none;">Marketplace</a>
+                    <a href="/partner/builds.html" class="nav-link"
+                        style="color:var(--text-muted); text-decoration:none;">Builds</a>
+                </div>
+                <button onclick="window.location.href='/partner/inventory-add.html'" class="btn btn-secondary btn-sm"
+                    style="border-color: #333; margin-right: 10px;">
+                    <i data-lucide="plus-circle" style="width:14px; height:14px; margin-right:4px;"></i> Add Inventory
+                </button>
+                <button onclick="window.location.href='/partner/simulator.html'" class="btn btn-primary btn-sm">
+                    <i data-lucide="wrench" style="width:14px; height:14px; margin-right:4px;"></i> New Quote
+                </button>
+            </div>
+        </header>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Active Builds</div>
+                <div class="kpi-value">12</div>
+                <div class="kpi-trend">↑ 2 from last week</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Pending Inquiries</div>
+                <div class="kpi-value">5</div>
+                <div class="kpi-trend" style="color:var(--text-dim)">Requires attention</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Revenue (Est)</div>
+                <div class="kpi-value">$24.5k</div>
+                <div class="kpi-trend">↑ 15% WoW</div>
+            </div>
+        </div>
+
+        <!-- Recent Inquiries Table -->
+        <div class="table-card">
+            <div class="table-header">Recent Inquiries</div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Interest</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alex Chen</td>
+                            <td>BMW M3 Carbon Lip</td>
+                            <td><span class="status-badge new">New</span></td>
+                            <td>Today, 10:23 AM</td>
+                            <td><button class="text-accent hover:underline">Reply</button></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Miller</td>
+                            <td>911 Wrap Quote</td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>Yesterday</td>
+                            <td><button class="text-accent hover:underline">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Auth Script -->
+    <script type="module" src="/js/partnerAuth.js"></script>
+    <script type="module">
+        import { checkAuth, signOut } from '/js/partnerAuth.js';
+
+        // Protect route
+        (async () => {
+            const user = await checkAuth();
+            if (user) {
+                document.getElementById('user-email-display').textContent = user.email;
+            }
+        })();
+
+        window.signOutUser = async () => {
+            await signOut();
+            window.location.href = '/partner/login.html';
+        };
+    </script>
+</body>
+
+</html>

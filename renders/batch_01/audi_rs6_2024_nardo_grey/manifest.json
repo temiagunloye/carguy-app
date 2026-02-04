@@ -1,0 +1,109 @@
+{
+  "createdAt": "2026-01-28T02:05:27.643Z",
+  "sourceModel": "Legacy Import",
+  "angleCount": 10,
+  "specVersion": "2.0 (Normalized)",
+  "paintConfig": "legacy",
+  "angles": [
+    {
+      "angleId": "01",
+      "filename": "angle_01.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "02",
+      "filename": "angle_02.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "03",
+      "filename": "angle_03.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "04",
+      "filename": "angle_04.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "05",
+      "filename": "angle_05.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "06",
+      "filename": "angle_06.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "07",
+      "filename": "angle_07.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "08",
+      "filename": "angle_08.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "09",
+      "filename": "angle_09.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    },
+    {
+      "angleId": "10",
+      "filename": "angle_10.png",
+      "label": "Legacy Normalized",
+      "camera": {
+        "azimuth": 0,
+        "elevation": 0,
+        "distance": 0
+      }
+    }
+  ]
+}

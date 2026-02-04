@@ -43,6 +43,7 @@ export interface StandardCar {
     model: string;
     year: number;
     trim: string;
+    manifestUrl?: string; // Optional canonical manifest for base car
     dealerName?: string;
     sourceType: 'dealer';
     status: 'draft' | 'review' | 'approved' | 'archived';
@@ -107,6 +108,7 @@ export interface CustomBuild {
     wrapId: string | null;
     wheelId: string | null;
     photoAnglesHttp: Record<string, string>;
+    manifestUrl?: string; // Canonical 10-angle manifest
     renderStatus: string;
     createdAt: any;
     updatedAt: any;
@@ -298,13 +300,6 @@ class StandardCarLibraryService {
      * Prefetch adjacent angle assets for smooth rotation
      * @param variantId - The variant ID
      * @param currentAngleName - Current angle being viewed
-     * @param radius - Number of angles to prefetch on each side (default 2)
-     */
-    async prefetchAdjacentAngles(
-        variantId: string,
-        currentAngleName: string,
-        angleNames: string[],
-        radius = 2
     ): Promise<void> {
         const currentIndex = angleNames.indexOf(currentAngleName);
         if (currentIndex === -1) return;
@@ -326,6 +321,25 @@ class StandardCarLibraryService {
 
         // Fire all prefetch requests in parallel
         await Promise.all(prefetchPromises);
+    }
+
+    /**
+     * Get the URL for the first angle of a car (used for previews)
+     */
+    async getFirstAngleUrl(car: StandardCar, variantId?: string): Promise<string | null> {
+        if (!car || !car.angleNames || car.angleNames.length === 0) return null;
+
+        const targetVariantId = variantId || car.defaultVariantId;
+        if (!targetVariantId) return null;
+
+        const firstAngleName = car.angleNames[0];
+
+        try {
+            return await this.resolveAngleAsset(targetVariantId, firstAngleName);
+        } catch (e) {
+            console.warn(`Failed to resolve first angle for ${car.id}`, e);
+            return null;
+        }
     }
 
     /**
@@ -406,6 +420,40 @@ class StandardCarLibraryService {
         carCache.clear();
         variantCache.clear();
         urlCache.clear();
+        urlCache.clear();
+    }
+
+    /**
+     * Resolve angles for a custom build (Manifest or Legacy)
+     */
+    async getAnglesForBuild(build: CustomBuild): Promise<string[]> {
+        // 1. Try Manifest
+        if (build.manifestUrl) {
+            try {
+                const manifest = await this.fetchManifest(build.manifestUrl);
+                const baseUrl = build.manifestUrl.substring(0, build.manifestUrl.lastIndexOf('/'));
+                // Sort or respect order? Manifest usually ordered.
+                return manifest.angles.map((a: any) => `${baseUrl}/${a.filename}`);
+            } catch (e) {
+                console.warn("Manifest load failed, falling back to legacy", e);
+            }
+        }
+
+        // 2. Fallback to Legacy Map
+        // We need a standard order for legacy...
+        // This is tricky. The app usually relies on StandardCar's angleNames.
+        // But for a build, we might default to a fixed list?
+        // Let's assume the build matches the ANGLE_KEYS from visualizer-v2.js for now?
+        // Or if we call this, we expect normalized output.
+        // For now, return empty or let global fallback handle it.
+        return Object.values(build.photoAnglesHttp || {});
+    }
+
+    private async fetchManifest(url: string): Promise<any> {
+        // Simple fetch with cache check via urlCache? No, urlCache is for strings.
+        // Use a separate memory cache or just fetch.
+        const res = await fetch(url);
+        return await res.json();
     }
 }
 

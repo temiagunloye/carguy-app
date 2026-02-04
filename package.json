@@ -63,6 +63,7 @@
     "@types/three": "^0.182.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "firebase-tools": "^15.4.0",
     "metro-config": "^0.76.0",
     "puppeteer": "^24.36.0",
     "typescript": "~5.9.2"

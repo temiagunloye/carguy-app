@@ -16,8 +16,9 @@ import standardCarLibraryService from '../services/StandardCarLibraryService';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface Viewer360Props {
-    variantId: string;
-    angleNames: string[];
+    variantId?: string;
+    angleNames?: string[];
+    imageUrls?: string[]; // Direct URL mode (Overrides variantId/angleNames)
     initialAngle?: string;
     onAngleChange?: (angleName: string, angleIndex: number) => void;
     enablePreload?: boolean;
@@ -37,14 +38,17 @@ interface Viewer360Props {
 const Viewer360Component: React.FC<Viewer360Props> = ({
     variantId,
     angleNames,
+    imageUrls,
     initialAngle,
     onAngleChange,
     enablePreload = true,
     preloadRadius = 2,
 }) => {
     // State
+    const totalAngles = imageUrls?.length || angleNames?.length || 0;
+
     const [currentAngleIndex, setCurrentAngleIndex] = useState<number>(() => {
-        if (initialAngle) {
+        if (initialAngle && angleNames) {
             const index = angleNames.indexOf(initialAngle);
             return index >= 0 ? index : 0;
         }
@@ -61,7 +65,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
     const isDragging = useRef(false);
 
     // Constants - Increased sensitivity for faster, smoother rotation
-    const DRAG_SENSITIVITY = SCREEN_WIDTH / 3; // Much faster rotation (was SCREEN_WIDTH / angleNames.length)
+    const DRAG_SENSITIVITY = SCREEN_WIDTH / 3;
     const SNAP_DURATION = 200; // ms
 
     /**
@@ -73,19 +77,31 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
                 return loadedAngles.get(angleIndex) || null;
             }
 
-            const angleName = angleNames[angleIndex];
-            if (!angleName) return null;
-
-            try {
-                const url = await standardCarLibraryService.resolveAngleAsset(variantId, angleName);
+            // Mode 1: Direct URLs (Manifest)
+            if (imageUrls && imageUrls.length > angleIndex) {
+                const url = imageUrls[angleIndex];
                 setLoadedAngles((prev) => new Map(prev).set(angleIndex, url));
                 return url;
-            } catch (error) {
-                console.error(`Failed to load angle ${angleName}:`, error);
-                return null;
             }
+
+            // Mode 2: Legacy Variant/AngleNames
+            if (angleNames && variantId) {
+                const angleName = angleNames[angleIndex];
+                if (!angleName) return null;
+
+                try {
+                    const url = await standardCarLibraryService.resolveAngleAsset(variantId, angleName);
+                    setLoadedAngles((prev) => new Map(prev).set(angleIndex, url));
+                    return url;
+                } catch (error) {
+                    console.error(`Failed to load angle ${angleName}:`, error);
+                    return null;
+                }
+            }
+
+            return null;
         },
-        [variantId, angleNames, loadedAngles]
+        [variantId, angleNames, imageUrls, loadedAngles]
     );
 
     /**
@@ -93,9 +109,8 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
      */
     const preloadAdjacentAngles = useCallback(
         async (centerIndex: number) => {
-            if (!enablePreload) return;
+            if (!enablePreload || totalAngles === 0) return;
 
-            const totalAngles = angleNames.length;
             const anglesToLoad: number[] = [];
 
             for (let offset = -preloadRadius; offset <= preloadRadius; offset++) {
@@ -128,7 +143,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
                 })
             );
         },
-        [angleNames.length, loadedAngles, loadingAngles, enablePreload, preloadRadius, loadAngleAsset]
+        [totalAngles, loadedAngles, loadingAngles, enablePreload, preloadRadius, loadAngleAsset]
     );
 
     /**
@@ -136,7 +151,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
      */
     const unloadDistantAngles = useCallback(
         (centerIndex: number) => {
-            const totalAngles = angleNames.length;
+            if (totalAngles === 0) return;
             const maxDistance = preloadRadius + 1;
 
             setLoadedAngles((prev) => {
@@ -158,7 +173,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
                 return next;
             });
         },
-        [angleNames.length, preloadRadius]
+        [totalAngles, preloadRadius]
     );
 
     /**
@@ -166,6 +181,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
      */
     useEffect(() => {
         const init = async () => {
+            if (totalAngles === 0) return;
             setIsInitialLoading(true);
             await loadAngleAsset(currentAngleIndex);
             await preloadAdjacentAngles(currentAngleIndex);
@@ -174,14 +190,14 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
 
         init();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [variantId]); // Re-init when variant changes
+    }, [variantId, imageUrls]); // Re-init when variant or URLs changes
 
     /**
      * Snap to nearest angle with animation
      */
     const snapToAngle = useCallback(
         (targetIndex: number) => {
-            const totalAngles = angleNames.length;
+            if (totalAngles === 0) return;
             const normalizedIndex = ((targetIndex % totalAngles) + totalAngles) % totalAngles;
 
             setCurrentAngleIndex(normalizedIndex);
@@ -195,7 +211,9 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
 
             // Callback
             if (onAngleChange) {
-                onAngleChange(angleNames[normalizedIndex], normalizedIndex);
+                // If using imageUrls, we don't really have angleNames. Pass empty or URL?
+                const name = angleNames ? angleNames[normalizedIndex] : String(normalizedIndex);
+                onAngleChange(name, normalizedIndex);
             }
 
             // Preload adjacent angles
@@ -204,24 +222,26 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
             // Unload distant angles
             unloadDistantAngles(normalizedIndex);
         },
-        [angleNames, rotationAnim, onAngleChange, preloadAdjacentAngles, unloadDistantAngles]
+        [totalAngles, angleNames, rotationAnim, onAngleChange, preloadAdjacentAngles, unloadDistantAngles]
     );
 
     /**
      * Navigate to previous angle
      */
     const goToPreviousAngle = useCallback(() => {
-        const newIndex = (currentAngleIndex - 1 + angleNames.length) % angleNames.length;
+        if (totalAngles === 0) return;
+        const newIndex = (currentAngleIndex - 1 + totalAngles) % totalAngles;
         snapToAngle(newIndex);
-    }, [currentAngleIndex, angleNames.length, snapToAngle]);
+    }, [currentAngleIndex, totalAngles, snapToAngle]);
 
     /**
      * Navigate to next angle
      */
     const goToNextAngle = useCallback(() => {
-        const newIndex = (currentAngleIndex + 1) % angleNames.length;
+        if (totalAngles === 0) return;
+        const newIndex = (currentAngleIndex + 1) % totalAngles;
         snapToAngle(newIndex);
-    }, [currentAngleIndex, angleNames.length, snapToAngle]);
+    }, [currentAngleIndex, totalAngles, snapToAngle]);
 
     /**
      * Get current angle URL
@@ -232,10 +252,9 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
      * Find closest loaded angle if current is missing (fallback)
      */
     const getFallbackAngleUrl = useCallback((): string | null => {
-        if (loadedAngles.size === 0) return null;
+        if (loadedAngles.size === 0 || totalAngles === 0) return null;
 
         // Try to find closest loaded angle
-        const totalAngles = angleNames.length;
         for (let radius = 1; radius < totalAngles; radius++) {
             const index1 = (currentAngleIndex + radius) % totalAngles;
             const index2 = (currentAngleIndex - radius + totalAngles) % totalAngles;
@@ -246,7 +265,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
 
         // Return any loaded angle
         return Array.from(loadedAngles.values())[0] || null;
-    }, [loadedAngles, currentAngleIndex, angleNames.length]);
+    }, [loadedAngles, currentAngleIndex, totalAngles]);
 
     const displayUrl = currentAngleUrl || getFallbackAngleUrl();
 
@@ -294,7 +313,7 @@ const Viewer360Component: React.FC<Viewer360Props> = ({
             {/* Angle Indicator */}
             <View style={styles.debugInfo}>
                 <Text style={styles.debugText}>
-                    {currentAngleIndex + 1}/{angleNames.length}
+                    {currentAngleIndex + 1}/{totalAngles}
                 </Text>
             </View>
         </View>

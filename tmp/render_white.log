@@ -1,0 +1,162 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_porsche_hq.py:15: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+00:03:16 | INFO: Data are loaded, start creating Blender stuff
+00:03:16 | INFO: Blender create Mesh node boot_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot_0
+00:03:16 | INFO: Blender create Mesh node boot.001_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.001_0
+00:03:16 | INFO: Blender create Mesh node boot.002_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.002_0
+00:03:16 | INFO: Blender create Mesh node boot.003_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.003_0
+00:03:16 | INFO: Blender create Mesh node boot.004_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.004_0
+00:03:16 | INFO: Blender create Mesh node boot.005_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.005_0
+00:03:16 | INFO: Blender create Mesh node boot.006_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.006_0
+00:03:16 | INFO: Blender create Mesh node boot.007_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.007_0
+00:03:16 | INFO: Blender create Mesh node boot.008_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.008_0
+00:03:16 | INFO: Blender create Mesh node boot.009_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.009_0
+00:03:16 | INFO: Blender create Mesh node boot.010_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.010_0
+00:03:16 | INFO: Blender create Mesh node boot.011_0
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.011_0
+00:03:16 | INFO: Blender create Mesh node boot.011_0.001
+00:03:16 | INFO: Draco Decoder: Decode primitive boot.011_0.001
+00:03:16 | INFO: Blender create Mesh node bumper_front.001_0
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.001_0
+00:03:16 | INFO: Blender create Mesh node bumper_front.001_1
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.001_1
+00:03:16 | INFO: Blender create Mesh node bumper_front.001_2
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.001_2
+00:03:16 | INFO: Blender create Mesh node bumper_front.003_0
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.003_0
+00:03:16 | INFO: Blender create Mesh node bumper_front.003_1
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.003_1
+00:03:16 | INFO: Blender create Mesh node bumper_front.004_0
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.004_0
+00:03:16 | INFO: Blender create Mesh node bumper_front.004_1
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.004_1
+00:03:16 | INFO: Blender create Mesh node bumper_front.004_2
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.004_2
+00:03:16 | INFO: Blender create Mesh node bumper_front.007_0
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.007_0
+00:03:16 | INFO: Blender create Mesh node bumper_front.009_0
+00:03:16 | INFO: Draco Decoder: Decode primitive bumper_front.009_0
+00:03:16 | INFO: Blender create Mesh node Cube.001_0
+00:03:16 | INFO: Draco Decoder: Decode primitive Cube.001_0
+00:03:16 | INFO: Blender create Mesh node Cube.002_0
+00:03:16 | INFO: Draco Decoder: Decode primitive Cube.002_0
+00:03:16 | INFO: Blender create Mesh node Cylinder.000_0
+00:03:16 | INFO: Draco Decoder: Decode primitive Cylinder.000_0
+00:03:17 | INFO: Blender create Mesh node Cylinder.000_1
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.000_1
+00:03:17 | INFO: Blender create Mesh node Cylinder.000_2
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.000_2
+00:03:17 | INFO: Blender create Mesh node Cylinder.000_3
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.000_3
+00:03:17 | INFO: Blender create Mesh node Cylinder.001_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.001_0
+00:03:17 | INFO: Blender create Mesh node Cylinder.001_1
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.001_1
+00:03:17 | INFO: Blender create Mesh node Cylinder.001_2
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.001_2
+00:03:17 | INFO: Blender create Mesh node Cylinder.001_3
+00:03:17 | INFO: Draco Decoder: Decode primitive Cylinder.001_3
+00:03:17 | INFO: Blender create Mesh node Plane_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane_0
+00:03:17 | INFO: Blender create Mesh node Plane.001_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.001_0
+00:03:17 | INFO: Blender create Mesh node Plane.002_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.002_0
+00:03:17 | INFO: Blender create Mesh node Plane.003_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.003_0
+00:03:17 | INFO: Blender create Mesh node Plane.004_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.004_0
+00:03:17 | INFO: Blender create Mesh node Plane.005_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.005_0
+00:03:17 | INFO: Blender create Mesh node Plane.006_0
+00:03:17 | INFO: Draco Decoder: Decode primitive Plane.006_0
+00:03:17 | INFO: Blender create Mesh node underbody_0
+00:03:17 | INFO: Draco Decoder: Decode primitive underbody_0
+00:03:17 | INFO: Blender create Mesh node window_rear_0
+00:03:17 | INFO: Draco Decoder: Decode primitive window_rear_0
+00:03:17 | INFO: Blender create Mesh node window_rear.001_0
+00:03:17 | INFO: Draco Decoder: Decode primitive window_rear.001_0
+00:03:17 | INFO: Blender create Mesh node windshield_0
+00:03:17 | INFO: Draco Decoder: Decode primitive windshield_0
+00:03:17 | INFO: Blender create Mesh node windshield_1
+00:03:17 | INFO: Draco Decoder: Decode primitive windshield_1
+00:03:17 | INFO: glTF import finished in 0.26s
+02:23.673  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_01.png'
+05:05.038  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_02.png'
+07:46.968  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_03.png'
+10:25.054  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_04.png'
+12:57.666  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_05.png'
+15:17.193  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_06.png'
+17:50.045  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_07.png'
+20:30.348  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_08.png'
+23:15.806  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_09.png'
+25:56.472  render           | Saved: 'tmp/final_staging/porsche_911_2024/angle_10.png'
+Rendering angle_01...
+Rendering angle_02...
+Rendering angle_03...
+Rendering angle_04...
+Rendering angle_05...
+Rendering angle_06...
+Rendering angle_07...
+Rendering angle_08...
+Rendering angle_09...
+Rendering angle_10...
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+DracoDecoder | Decoded 635 vertices, 3330 indices
+DracoDecoder | Decoded 1762 vertices, 6096 indices
+DracoDecoder | Decoded 4136 vertices, 14418 indices
+DracoDecoder | Decoded 297 vertices, 1536 indices
+DracoDecoder | Decoded 669 vertices, 3414 indices
+DracoDecoder | Decoded 3098 vertices, 13473 indices
+DracoDecoder | Decoded 681 vertices, 3330 indices
+DracoDecoder | Decoded 6 vertices, 12 indices
+DracoDecoder | Decoded 8539 vertices, 29541 indices
+DracoDecoder | Decoded 1463 vertices, 6315 indices
+DracoDecoder | Decoded 3222 vertices, 15264 indices
+DracoDecoder | Decoded 7836 vertices, 37689 indices
+DracoDecoder | Decoded 3727 vertices, 15588 indices
+DracoDecoder | Decoded 448 vertices, 2304 indices
+DracoDecoder | Decoded 630 vertices, 3330 indices
+DracoDecoder | Decoded 720 vertices, 3330 indices
+DracoDecoder | Decoded 192 vertices, 768 indices
+DracoDecoder | Decoded 314 vertices, 1680 indices
+DracoDecoder | Decoded 1051 vertices, 4044 indices
+DracoDecoder | Decoded 609 vertices, 3330 indices
+DracoDecoder | Decoded 742 vertices, 3333 indices
+DracoDecoder | Decoded 609 vertices, 3330 indices
+DracoDecoder | Decoded 582 vertices, 2808 indices
+DracoDecoder | Decoded 961 vertices, 3333 indices
+DracoDecoder | Decoded 2286 vertices, 3282 indices
+DracoDecoder | Decoded 2174 vertices, 5427 indices
+DracoDecoder | Decoded 1629 vertices, 5928 indices
+DracoDecoder | Decoded 787 vertices, 3333 indices
+DracoDecoder | Decoded 1308 vertices, 3333 indices
+DracoDecoder | Decoded 2468 vertices, 5580 indices
+DracoDecoder | Decoded 1527 vertices, 5928 indices
+DracoDecoder | Decoded 795 vertices, 3333 indices
+DracoDecoder | Decoded 1349 vertices, 3330 indices
+DracoDecoder | Decoded 4 vertices, 6 indices
+DracoDecoder | Decoded 962 vertices, 3330 indices
+DracoDecoder | Decoded 653 vertices, 3330 indices
+DracoDecoder | Decoded 653 vertices, 3330 indices
+DracoDecoder | Decoded 659 vertices, 3330 indices
+DracoDecoder | Decoded 8 vertices, 18 indices
+DracoDecoder | Decoded 10 vertices, 24 indices
+DracoDecoder | Decoded 583 vertices, 2976 indices
+DracoDecoder | Decoded 553 vertices, 2640 indices
+DracoDecoder | Decoded 180 vertices, 720 indices
+DracoDecoder | Decoded 147 vertices, 720 indices
+DracoDecoder | Decoded 388 vertices, 2004 indices
+
+Blender quit

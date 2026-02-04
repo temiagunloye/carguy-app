@@ -1,0 +1,169 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_porsche_hq.py:15: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+01:21:34 | INFO: Data are loaded, start creating Blender stuff
+01:21:34 | INFO: Blender create Mesh node boot_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot_0
+01:21:34 | INFO: Blender create Mesh node boot.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.001_0
+01:21:34 | INFO: Blender create Mesh node boot.002_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.002_0
+01:21:34 | INFO: Blender create Mesh node boot.003_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.003_0
+01:21:34 | INFO: Blender create Mesh node boot.004_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.004_0
+01:21:34 | INFO: Blender create Mesh node boot.005_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.005_0
+01:21:34 | INFO: Blender create Mesh node boot.006_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.006_0
+01:21:34 | INFO: Blender create Mesh node boot.007_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.007_0
+01:21:34 | INFO: Blender create Mesh node boot.008_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.008_0
+01:21:34 | INFO: Blender create Mesh node boot.009_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.009_0
+01:21:34 | INFO: Blender create Mesh node boot.010_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.010_0
+01:21:34 | INFO: Blender create Mesh node boot.011_0
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.011_0
+01:21:34 | INFO: Blender create Mesh node boot.011_0.001
+01:21:34 | INFO: Draco Decoder: Decode primitive boot.011_0.001
+01:21:34 | INFO: Blender create Mesh node bumper_front.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.001_0
+01:21:34 | INFO: Blender create Mesh node bumper_front.001_1
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.001_1
+01:21:34 | INFO: Blender create Mesh node bumper_front.001_2
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.001_2
+01:21:34 | INFO: Blender create Mesh node bumper_front.003_0
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.003_0
+01:21:34 | INFO: Blender create Mesh node bumper_front.003_1
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.003_1
+01:21:34 | INFO: Blender create Mesh node bumper_front.004_0
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.004_0
+01:21:34 | INFO: Blender create Mesh node bumper_front.004_1
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.004_1
+01:21:34 | INFO: Blender create Mesh node bumper_front.004_2
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.004_2
+01:21:34 | INFO: Blender create Mesh node bumper_front.007_0
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.007_0
+01:21:34 | INFO: Blender create Mesh node bumper_front.009_0
+01:21:34 | INFO: Draco Decoder: Decode primitive bumper_front.009_0
+01:21:34 | INFO: Blender create Mesh node Cube.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Cube.001_0
+01:21:34 | INFO: Blender create Mesh node Cube.002_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Cube.002_0
+01:21:34 | INFO: Blender create Mesh node Cylinder.000_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.000_0
+01:21:34 | INFO: Blender create Mesh node Cylinder.000_1
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.000_1
+01:21:34 | INFO: Blender create Mesh node Cylinder.000_2
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.000_2
+01:21:34 | INFO: Blender create Mesh node Cylinder.000_3
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.000_3
+01:21:34 | INFO: Blender create Mesh node Cylinder.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.001_0
+01:21:34 | INFO: Blender create Mesh node Cylinder.001_1
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.001_1
+01:21:34 | INFO: Blender create Mesh node Cylinder.001_2
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.001_2
+01:21:34 | INFO: Blender create Mesh node Cylinder.001_3
+01:21:34 | INFO: Draco Decoder: Decode primitive Cylinder.001_3
+01:21:34 | INFO: Blender create Mesh node Plane_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane_0
+01:21:34 | INFO: Blender create Mesh node Plane.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.001_0
+01:21:34 | INFO: Blender create Mesh node Plane.002_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.002_0
+01:21:34 | INFO: Blender create Mesh node Plane.003_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.003_0
+01:21:34 | INFO: Blender create Mesh node Plane.004_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.004_0
+01:21:34 | INFO: Blender create Mesh node Plane.005_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.005_0
+01:21:34 | INFO: Blender create Mesh node Plane.006_0
+01:21:34 | INFO: Draco Decoder: Decode primitive Plane.006_0
+01:21:34 | INFO: Blender create Mesh node underbody_0
+01:21:34 | INFO: Draco Decoder: Decode primitive underbody_0
+01:21:34 | INFO: Blender create Mesh node window_rear_0
+01:21:34 | INFO: Draco Decoder: Decode primitive window_rear_0
+01:21:34 | INFO: Blender create Mesh node window_rear.001_0
+01:21:34 | INFO: Draco Decoder: Decode primitive window_rear.001_0
+01:21:34 | INFO: Blender create Mesh node windshield_0
+01:21:34 | INFO: Draco Decoder: Decode primitive windshield_0
+01:21:34 | INFO: Blender create Mesh node windshield_1
+01:21:34 | INFO: Draco Decoder: Decode primitive windshield_1
+01:21:34 | INFO: glTF import finished in 0.45s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_porsche_hq.py:173: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat.use_nodes:
+02:49.447  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_01.png'
+08:00.980  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_03.png'
+10:55.917  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_04.png'
+13:37.087  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_05.png'
+16:22.579  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_06.png'
+19:17.011  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_07.png'
+22:14.103  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_08.png'
+25:21.043  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_09.png'
+28:21.296  render           | Saved: 'tmp/final_staging/porsche_911_manthey_build/angle_10.png'
+   [INFO] Applied paint to material: coat
+   [INFO] Applied paint to material: paint
+   [INFO] Applied paint to material: silver
+   [INFO] Updated 3 materials with new color.
+Rendering Angle 1 to tmp/final_staging/porsche_911_manthey_build/angle_01.png...
+Rendering Angle 2 to tmp/final_staging/porsche_911_manthey_build/angle_02.png...
+Rendering Angle 3 to tmp/final_staging/porsche_911_manthey_build/angle_03.png...
+Rendering Angle 4 to tmp/final_staging/porsche_911_manthey_build/angle_04.png...
+Rendering Angle 5 to tmp/final_staging/porsche_911_manthey_build/angle_05.png...
+Rendering Angle 6 to tmp/final_staging/porsche_911_manthey_build/angle_06.png...
+Rendering Angle 7 to tmp/final_staging/porsche_911_manthey_build/angle_07.png...
+Rendering Angle 8 to tmp/final_staging/porsche_911_manthey_build/angle_08.png...
+Rendering Angle 9 to tmp/final_staging/porsche_911_manthey_build/angle_09.png...
+Rendering Angle 10 to tmp/final_staging/porsche_911_manthey_build/angle_10.png...
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+DracoDecoder | Decoded 635 vertices, 3330 indices
+DracoDecoder | Decoded 1762 vertices, 6096 indices
+DracoDecoder | Decoded 4136 vertices, 14418 indices
+DracoDecoder | Decoded 297 vertices, 1536 indices
+DracoDecoder | Decoded 669 vertices, 3414 indices
+DracoDecoder | Decoded 3098 vertices, 13473 indices
+DracoDecoder | Decoded 681 vertices, 3330 indices
+DracoDecoder | Decoded 6 vertices, 12 indices
+DracoDecoder | Decoded 8539 vertices, 29541 indices
+DracoDecoder | Decoded 1463 vertices, 6315 indices
+DracoDecoder | Decoded 3222 vertices, 15264 indices
+DracoDecoder | Decoded 7836 vertices, 37689 indices
+DracoDecoder | Decoded 3727 vertices, 15588 indices
+DracoDecoder | Decoded 448 vertices, 2304 indices
+DracoDecoder | Decoded 630 vertices, 3330 indices
+DracoDecoder | Decoded 720 vertices, 3330 indices
+DracoDecoder | Decoded 192 vertices, 768 indices
+DracoDecoder | Decoded 314 vertices, 1680 indices
+DracoDecoder | Decoded 1051 vertices, 4044 indices
+DracoDecoder | Decoded 609 vertices, 3330 indices
+DracoDecoder | Decoded 742 vertices, 3333 indices
+DracoDecoder | Decoded 609 vertices, 3330 indices
+DracoDecoder | Decoded 582 vertices, 2808 indices
+DracoDecoder | Decoded 961 vertices, 3333 indices
+DracoDecoder | Decoded 2286 vertices, 3282 indices
+DracoDecoder | Decoded 2174 vertices, 5427 indices
+DracoDecoder | Decoded 1629 vertices, 5928 indices
+DracoDecoder | Decoded 787 vertices, 3333 indices
+DracoDecoder | Decoded 1308 vertices, 3333 indices
+DracoDecoder | Decoded 2468 vertices, 5580 indices
+DracoDecoder | Decoded 1527 vertices, 5928 indices
+DracoDecoder | Decoded 795 vertices, 3333 indices
+DracoDecoder | Decoded 1349 vertices, 3330 indices
+DracoDecoder | Decoded 4 vertices, 6 indices
+DracoDecoder | Decoded 962 vertices, 3330 indices
+DracoDecoder | Decoded 653 vertices, 3330 indices
+DracoDecoder | Decoded 653 vertices, 3330 indices
+DracoDecoder | Decoded 659 vertices, 3330 indices
+DracoDecoder | Decoded 8 vertices, 18 indices
+DracoDecoder | Decoded 10 vertices, 24 indices
+DracoDecoder | Decoded 583 vertices, 2976 indices
+DracoDecoder | Decoded 553 vertices, 2640 indices
+DracoDecoder | Decoded 180 vertices, 720 indices
+DracoDecoder | Decoded 147 vertices, 720 indices
+DracoDecoder | Decoded 388 vertices, 2004 indices
+
+Sent an internal break event. Press ^C again to kill Blender
+
+Blender quit
