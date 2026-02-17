@@ -1,0 +1,24 @@
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+Traceback (most recent call last):
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py", line 541, in <module>
+    main()
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py", line 513, in main
+    setup_world_background()
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py", line 45, in setup_world_background
+    if not world.node_tree:
+           ^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'node_tree'
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_2023_stock_alpine_white.json
+================================================================================
+Build ID: m3_2023_stock_alpine_white
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+
+Blender quit

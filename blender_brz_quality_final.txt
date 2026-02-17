@@ -1,0 +1,20 @@
+JSON-SPEC BLENDER BATCH RENDERER
+Matches PDF quality reference
+
+✓ Blender: Blender 5.0.1
+
+Found 4 spec files:
+
+  - render_specs/c63_2024_stock_obsidian_black.json
+  - render_specs/gt3_stock_guards_red.json
+  - render_specs/m3_2023_stock_alpine_white.json
+  - render_specs/rs6_2024_stock_nardo_grey.json
+
+================================================================================
+RENDERING: c63_2024_stock_obsidian_black
+================================================================================
+Spec: render_specs/c63_2024_stock_obsidian_black.json
+GLB: source_models/base_glb/mercedes_c63_2019.glb
+Paint: obsidian_black
+Engine: EEVEE
+================================================================================

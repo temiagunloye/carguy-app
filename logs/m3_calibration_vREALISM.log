@@ -1,0 +1,31 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:116: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:135: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:173: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+Traceback (most recent call last):
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 630, in <module>
+    main()
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 591, in main
+    lights = setup_studio_lighting()
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 226, in setup_studio_lighting
+    rim_light.size_x = 20.0
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'AreaLight' object has no attribute 'size_x'
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG
+================================================================================
+GLB: source_models/base_glb/bmw_m3.glb
+Build ID: m3_calibration_vREALISM
+Color: alpine_white
+Output: base_model_renders/m3_calibration_vREALISM
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Studio backdrop gradient created
+✓ Studio floor created (subtle reflection)
+
+Blender quit

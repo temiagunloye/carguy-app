@@ -1,0 +1,273 @@
+{
+  "models": {
+    "audi_rs6": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/audi_rs6",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 89182
+    },
+    "audi_rs6_custom": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/audi_rs6_custom",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 541825
+    },
+    "audi_rs6_standard": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/audi_rs6_standard",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 108010
+    },
+    "bmw_m3": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/bmw_m3",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 133934
+    },
+    "bmw_m3_custom": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/bmw_m3_custom",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 133934
+    },
+    "bmw_m3_stock": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/bmw_m3_stock",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 294489
+    },
+    "mercedes_c63": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/mercedes_c63",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png",
+        "driver_front.png",
+        "driver_rear.png",
+        "front_center.png",
+        "front_low.png",
+        "full_driver_side.png",
+        "full_passenger_side.png",
+        "mercedes_c63_driver_front_1769352697239.png",
+        "mercedes_c63_full_driver_side_1769352728036.png",
+        "mercedes_c63_full_passenger_side_1769352743473.png",
+        "mercedes_c63_initial_1769320184790.png",
+        "mercedes_c63_passenger_front_1769352712492.png",
+        "passenger_front.png",
+        "passenger_rear.png",
+        "rear_center.png",
+        "rear_low.png"
+      ],
+      "count": 25,
+      "isGeminiLikely": false,
+      "sampleSize": 542721
+    },
+    "porsche_911_stock": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/porsche_911_stock",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png"
+      ],
+      "count": 8,
+      "isGeminiLikely": false,
+      "sampleSize": 425525
+    },
+    "porsche_manthey": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/porsche_manthey",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 843784
+    },
+    "subaru_brz_blue": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/subaru_brz_blue",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png",
+        "driver_front.png",
+        "driver_rear.png",
+        "front_center.png",
+        "front_low.png",
+        "full_driver_side.png",
+        "full_passenger_side.png",
+        "passenger_front.png",
+        "passenger_rear.png",
+        "rear_center.png",
+        "rear_low.png",
+        "subaru_brz_driver_front_1769334531869.png",
+        "subaru_brz_driver_rear_1769334593703.png",
+        "subaru_brz_front_center_1769334620607.png",
+        "subaru_brz_front_low_1769352490174.png",
+        "subaru_brz_full_driver_side_1769334557740.png",
+        "subaru_brz_full_passenger_side_1769334575449.png",
+        "subaru_brz_initial_1769320118356.png",
+        "subaru_brz_passenger_front_1769334543245.png",
+        "subaru_brz_passenger_rear_1769334606663.png",
+        "subaru_brz_rear_center_1769348339065.png",
+        "subaru_brz_rear_low_1769352507236.png"
+      ],
+      "count": 31,
+      "isGeminiLikely": false,
+      "sampleSize": 507478
+    },
+    "subaru_brz_custom": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/subaru_brz_custom",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 94227
+    },
+    "subaru_brz_grey": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/subaru_brz_grey",
+      "angles": [
+        "angle_01.png",
+        "angle_02.png",
+        "angle_03.png",
+        "angle_04.png",
+        "angle_05.png",
+        "angle_06.png",
+        "angle_07.png",
+        "angle_08.png",
+        "angle_09.png",
+        "angle_10.png"
+      ],
+      "count": 10,
+      "isGeminiLikely": false,
+      "sampleSize": 94227
+    },
+    "subaru_brz_stock": {
+      "source": "website/public",
+      "path": "website/public/assets/cars/subaru_brz_stock",
+      "angles": [],
+      "count": 0,
+      "isGeminiLikely": false
+    }
+  }
+}

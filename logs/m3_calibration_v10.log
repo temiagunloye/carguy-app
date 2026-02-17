@@ -1,0 +1,40 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:63: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_calibration.json
+================================================================================
+Build ID: m3_calibration
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Simple world background created
+✓ Simple floor plane created
+✓ Lights disabled (debug)
+✓ Camera created (lens: 85mm)
+
+[DEBUG] Rendering cube instead of car...
+
+[5/5] Rendering all angles...
+DEBUG: Inside render_all_angles
+DEBUG: Setting camera distance
+  ✓ Camera distance: 8.0 units (optimized for 4.5m scaled cars)
+DEBUG: Switching to CYCLES...
+DEBUG: Device setup...
+  ✓ Render: Cycles 128 samples + GPU (Metal)
+DEBUG: Starting angle loop
+  → Calibration mode: rendering only 3 angles
+
+Rendering angle_01: Front 3/4 driver
+  → Blender Render Starting (Path: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png)...
+00:43.572  render           | Saved: '/Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png'
+  ✓ Saved: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png
+
+Rendering angle_04: Side passenger
+  → Blender Render Starting (Path: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_04.png)...

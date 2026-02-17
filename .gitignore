@@ -98,3 +98,4 @@ serviceAccountKey.json
 *.secret.json
 .env
 .env.*
+.vercel

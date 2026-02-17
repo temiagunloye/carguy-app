@@ -1,0 +1,287 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:97: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/c63_2024_stock_obsidian_black.json
+================================================================================
+Build ID: c63_2024_stock_obsidian_black
+GLB: source_models/base_glb/mercedes_c63_2019.glb
+Paint: obsidian_black
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Gemini premium dark gradient background
+✓ Gemini premium curved cyclorama created
+✓ Gemini premium 4-point studio lighting (4 lights)
+✓ Camera created (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/mercedes_c63_2019.glb
+13:40:07 | INFO: Data are loaded, start creating Blender stuff
+13:40:08 | INFO: Blender create Mesh node polySurface1_whee:MercedesAMG_S63CoupeRewardRecycled_2020_Wheel1A_3D_3DWh_c96cb19_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Brake_FL_0000_001_SM_Brake_FL_0000_MAT_Tire_Brake_c63:MAT_Tire_Brake1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Hub_L_0000_001_SM_Hub_L_0000_MAT_Tire_Hub_c63:MAT_Tire_Hub1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Disk_L_0000_001_SM_Disk_L_0000_MAT_Tire_Disk_c63:MAT_Tire_Disk1_0
+13:40:08 | INFO: Blender create Mesh node polySurface237_whee:MercedesAMG_S63CoupeRewardRecycled_2020_Wheel1A_3D_3DWh_c96cb19_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Hub_R_0000_001_SM_Hub_R_0000_MAT_Tire_Hub_001_c63:MAT_Tire_Hub1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Brake_FR_0000_001_SM_Brake_FR_0000_MAT_Tire_Brake_001_c63:MAT_Tire_Brake1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Disk_R_0000_001_SM_Disk_R_0000_MAT_Tire_Disk_001_c63:MAT_Tire_Disk1_0
+13:40:08 | INFO: Blender create Mesh node polySurface473_whee:MercedesAMG_S63CoupeRewardRecycled_2020_Wheel1A_3D_3DWh_c96cb19_0
+13:40:08 | INFO: Blender create Mesh node SM_Hub_L_0000_001_SM_Hub_L_0000_MAT_Tire_Hub_c63:MAT_Tire_Hub1_0
+13:40:08 | INFO: Blender create Mesh node SM_Disk_L_0000_001_SM_Disk_L_0000_MAT_Tire_Disk_c63:MAT_Tire_Disk1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Brake_RL_0000_001_SM_Brake_RL_0000_MAT_Tire_Brake_002_c63:MAT_Tire_Brake1_0
+13:40:08 | INFO: Blender create Mesh node polySurface671_whee:MercedesAMG_S63CoupeRewardRecycled_2020_Wheel1A_3D_3DWh_c96cb19_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Brake_RR_0000_001_SM_Brake_RR_0000_MAT_Tire_Brake_003_c63:MAT_Tire_Brake1_0
+13:40:08 | INFO: Blender create Mesh node SM_Hub_R_0000_001_SM_Hub_R_0000_MAT_Tire_Hub_001_c63:MAT_Tire_Hub1_0
+13:40:08 | INFO: Blender create Mesh node SM_Disk_R_0000_001_SM_Disk_R_0000_MAT_Tire_Disk_001_c63:MAT_Tire_Disk1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_00_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_00_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_01_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_01_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_02_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_02_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_03_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_03_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_04_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_04_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_05_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_05_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_06_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_06_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_07_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_07_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_08_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_08_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_09_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_09_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_10_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_10_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_11_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_11_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_12_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT1_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_12_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_13_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_13_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_14_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_14_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_15_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_15_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT2_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_16_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT3_c63:MAT_Details_EXT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_17_c63:MAT_Details_EXT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT4_light_glass_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Base_0000_001_SM_Base_0000_MAT_Details_MAT4_c63:MAT_Glass1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_16_c63:MAT_Glass1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_16_light_glass_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_001_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_002_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_003_c63:MAT_Details_Chassis_0000_002_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_004_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_005_c63:MAT_Details_EXT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_006_c63:MAT_Details_Grid03_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_FrontKit_0000_001_SM_FrontKit_0000_MAT_Details_MAT_007_light_glass_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Hood_0000_001_SM_Hood_0000_MAT_Details_MAT_002_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Hood_0000_001_SM_Hood_0000_MAT_Details_MAT_003_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Hood_0000_001_SM_Hood_0000_MAT_Details_MAT_004_c63:MAT_Details_EXT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_003_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_00_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_00_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_01_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_01_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_17_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_18_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_02_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_02_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_03_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_03_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_04_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_18_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_19_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_05_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_04_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_06_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_19_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_20_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_07_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_05_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_08_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_06_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_09_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_20_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_21_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_10_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_07_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_11_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_21_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_22_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_12_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_08_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_13_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_22_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_23_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_14_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_09_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_15_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_23_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_24_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_16_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_10_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_17_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_24_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_25_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_18_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_11_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_19_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_25_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_26_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_20_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_12_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_21_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_26_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_27_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_22_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_13_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_27_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_28_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_23_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_14_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_28_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_29_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_15_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_24_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_29_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_30_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_25_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_16_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_30_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_31_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_31_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_32_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_17_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_004_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_32_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_33_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_26_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_33_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_27_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_34_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_28_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_35_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_29_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_36_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_30_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_37_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_31_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_38_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_32_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_34_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_33_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_35_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_34_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_36_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_35_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_37_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_36_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_38_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_37_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_39_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_38_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_40_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_39_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_39_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_41_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_40_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_40_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_42_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_41_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_43_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_42_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_44_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_41_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_005_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_43_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_45_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_44_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_46_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_006_c63:MAT_Details_Grid04_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_007_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_18_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_42_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_45_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_47_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_43_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_19_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_46_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_48_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_44_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_20_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_45_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_21_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_46_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_22_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_47_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_49_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_47_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_48_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_50_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_48_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_23_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:D_Body_49_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_24_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_49_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_51_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_SteeringWheel_25_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_L_50_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:ANC_Door_R_52_c63:MAT_Details_INT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Interior_0000_001_SM_Interior_0000_MAT_Details_MAT_008_c63:MAT_AMG_C63_Carbon1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_004_c63:MAT_Details_MAT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_005_c63:MAT_AMG_C63_Base_004_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_006_c63:MAT_Details_Chassis_0000_002_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_007_c63:MAT_Lights1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_008_c63:MAT_Details_Grid01_002_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_009_c63:MAT_Details_EXT1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_010_light_glass_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_RearKit_0000_001_SM_RearKit_0000_MAT_Details_MAT_010_c63:MAT_Glass1_0
+13:40:08 | INFO: Blender create Mesh node c63:SM_Root_AMG_C63_001_SM_Root_AMG_C63_MAT_AMG_C63_Base_005_c63:MAT_AMG_C63_Base_004_0
+13:40:09 | INFO: glTF import finished in 1.07s
+✓ Imported 462 objects
+
+[3/5] Centering car...
+✓ Car scaled 2.25x to 4.5m (was 2.00m)
+✓ Car centered (final dims: 4.28 x 4.50 x 4.50)
+
+[4/5] Applying paint override...
+DEBUG: Starting paint override for 462 objects
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:303: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+DEBUG: Finding body panels...
+✓ Gemini automotive clearcoat paint applied (196 materials)
+
+[5/5] Rendering all angles...
+DEBUG: Inside render_all_angles
+DEBUG: Setting camera distance
+  ✓ Camera distance: 8.0 units (optimized for 4.5m scaled cars)
+DEBUG: Switching to CYCLES...
+DEBUG: Skipping GPU override for CPU stability check...
+  ✓ Render: Cycles 32 samples CPU
+DEBUG: Starting angle loop
+
+Rendering angle_01: Front 3/4 driver
+  → Blender Render Starting...
+03:28.609  render           | Saved: 'base_model_renders/c63_2024_stock_obsidian_black/angle_01.png'
+  ✓ Saved: base_model_renders/c63_2024_stock_obsidian_black/angle_01.png
+
+Rendering angle_02: Front direct
+  → Blender Render Starting...
+05:00.772  render           | Saved: 'base_model_renders/c63_2024_stock_obsidian_black/angle_02.png'
+  ✓ Saved: base_model_renders/c63_2024_stock_obsidian_black/angle_02.png
+
+Rendering angle_03: Front 3/4 passenger
+  → Blender Render Starting...

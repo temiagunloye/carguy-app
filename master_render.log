@@ -1,0 +1,119 @@
+JSON-SPEC BLENDER BATCH RENDERER
+Matches PDF quality reference
+
+✓ Blender: Blender 5.0.1
+
+Found 4 spec files:
+
+  - render_specs/c63_2024_stock_obsidian_black.json
+  - render_specs/gt3_stock_guards_red.json
+  - render_specs/m3_2023_stock_alpine_white.json
+  - render_specs/rs6_2024_stock_nardo_grey.json
+
+================================================================================
+RENDERING: c63_2024_stock_obsidian_black
+================================================================================
+Spec: render_specs/c63_2024_stock_obsidian_black.json
+GLB: source_models/base_glb/mercedes_c63_2019.glb
+Paint: obsidian_black
+Engine: CYCLES
+================================================================================
+
+✗ Render failed: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/c63_2024_stock_obsidian_black.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+
+================================================================================
+RENDERING: gt3_stock_guards_red
+================================================================================
+Spec: render_specs/gt3_stock_guards_red.json
+GLB: source_models/base_glb/porsche_gt3_2022.glb
+Paint: guards_red
+Engine: CYCLES
+================================================================================
+
+✗ Render failed: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/gt3_stock_guards_red.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+
+================================================================================
+RENDERING: m3_2023_stock_alpine_white
+================================================================================
+Spec: render_specs/m3_2023_stock_alpine_white.json
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+✗ Render failed: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/m3_2023_stock_alpine_white.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+
+================================================================================
+RENDERING: rs6_2024_stock_nardo_grey
+================================================================================
+Spec: render_specs/rs6_2024_stock_nardo_grey.json
+GLB: source_models/base_glb/audi_rs6_2020.glb
+Paint: nardo_grey
+Engine: CYCLES
+================================================================================
+
+✗ Render failed: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/rs6_2024_stock_nardo_grey.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:97: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:303: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+
+================================================================================
+BATCH RENDER SUMMARY
+================================================================================
+
+✓ Successful: 0/4
+
+✗ Failed: 4/4
+  - c63_2024_stock_obsidian_black: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/c63_2024_stock_obsidian_black.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+  - gt3_stock_guards_red: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/gt3_stock_guards_red.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+  - m3_2023_stock_alpine_white: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/m3_2023_stock_alpine_white.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+  - rs6_2024_stock_nardo_grey: Command failed: /opt/homebrew/bin/blender --background --python /Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py -- render_specs/rs6_2024_stock_nardo_grey.json
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:97: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:303: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+
+
+Total render time: 0.0s
+
+Next steps:
+1. Review renders in base_model_renders/
+2. Compare angles 01/04/07 against PDF quality reference
+3. Upload to Firebase Storage
+4. Update Firestore mappings

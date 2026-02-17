@@ -1,0 +1,518 @@
+[
+  {
+    "buildId": "audi_rs6_stock_grey",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "audi rs6 stock grey. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_stock_grey",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "audi rs6 stock grey. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_stock_grey",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "audi rs6 stock grey. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_stock_grey",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "audi rs6 stock grey. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "audi rs6 bbs mesh. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "audi rs6 bbs mesh. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "audi rs6 bbs mesh. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "audi rs6 bbs mesh. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "audi rs6 bbs mesh. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "audi rs6 bbs mesh. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "audi rs6 bbs mesh. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "audi rs6 bbs mesh. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "audi rs6 bbs mesh. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "audi_rs6_bbs_mesh",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "audi rs6 bbs mesh. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "bmw m3 toronto red bbs fir. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "bmw m3 toronto red bbs fir. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "bmw m3 toronto red bbs fir. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "bmw m3 toronto red bbs fir. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "bmw m3 toronto red bbs fir. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "bmw m3 toronto red bbs fir. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "bmw m3 toronto red bbs fir. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "bmw m3 toronto red bbs fir. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "bmw m3 toronto red bbs fir. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "bmw m3 toronto red bbs fir. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "mercedes c63 rohana matte coal. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "mercedes c63 rohana matte coal. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "mercedes c63 rohana matte coal. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "mercedes c63 rohana matte coal. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "mercedes c63 rohana matte coal. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "mercedes c63 rohana matte coal. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "mercedes c63 rohana matte coal. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "mercedes c63 rohana matte coal. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "mercedes c63 rohana matte coal. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "mercedes c63 rohana matte coal. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "brz_stock_blue",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "brz stock blue. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "brz_stock_blue",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "brz stock blue. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "subaru brz te37 matte coal. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "subaru brz te37 matte coal. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "subaru brz te37 matte coal. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "subaru brz te37 matte coal. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "subaru brz te37 matte coal. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "subaru brz te37 matte coal. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "subaru brz te37 matte coal. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "subaru brz te37 matte coal. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "subaru brz te37 matte coal. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "subaru brz te37 matte coal. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "porsche gt3 stock red. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "porsche gt3 stock red. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "porsche gt3 stock red. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "porsche gt3 stock red. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "porsche gt3 stock red. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "porsche gt3 stock red. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "porsche gt3 stock red. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "porsche gt3 stock red. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "porsche gt3 stock red. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_gt3_stock_red",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "porsche gt3 stock red. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "porsche 911 stock. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "porsche 911 stock. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "porsche 911 stock. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "porsche 911 stock. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "porsche 911 stock. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "porsche 911 stock. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "porsche 911 stock. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "porsche 911 stock. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "porsche 911 stock. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_stock",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "porsche 911 stock. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "porsche 911 manthey carbon disc. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "porsche 911 manthey carbon disc. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "porsche 911 manthey carbon disc. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "porsche 911 manthey carbon disc. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "porsche 911 manthey carbon disc. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "porsche 911 manthey carbon disc. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "porsche 911 manthey carbon disc. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "porsche 911 manthey carbon disc. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "porsche 911 manthey carbon disc. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "porsche 911 manthey carbon disc. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_01",
+    "filename": "angle_01.png",
+    "prompt": "porsche 911 camo green. front three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_02",
+    "filename": "angle_02.png",
+    "prompt": "porsche 911 camo green. front three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_03",
+    "filename": "angle_03.png",
+    "prompt": "porsche 911 camo green. full driver side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_04",
+    "filename": "angle_04.png",
+    "prompt": "porsche 911 camo green. full passenger side profile view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_05",
+    "filename": "angle_05.png",
+    "prompt": "porsche 911 camo green. rear three-quarter driver side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_06",
+    "filename": "angle_06.png",
+    "prompt": "porsche 911 camo green. rear three-quarter passenger side view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_07",
+    "filename": "angle_07.png",
+    "prompt": "porsche 911 camo green. front center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_08",
+    "filename": "angle_08.png",
+    "prompt": "porsche 911 camo green. rear center view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_09",
+    "filename": "angle_09.png",
+    "prompt": "porsche 911 camo green. high angle front three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  },
+  {
+    "buildId": "porsche_911_camo_green",
+    "angle": "angle_10",
+    "filename": "angle_10.png",
+    "prompt": "porsche 911 camo green. high angle rear three-quarter view. Professional automotive studio photography in a dark dramatic studio. \nDark matte black floor with subtle reflections. \nDeep charcoal gradient background (dark grey to black). \nSubtle rim lighting highlighting car curves and edges. \nHigh-end commercial aesthetic, ultra-realistic, 8K resolution."
+  }
+]

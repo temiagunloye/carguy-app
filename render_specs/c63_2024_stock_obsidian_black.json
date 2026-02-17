@@ -1,0 +1,34 @@
+{
+    "buildId": "c63_2024_stock_obsidian_black",
+    "glbPath": "source_models/base_glb/mercedes_c63_2019.glb",
+    "outputDir": "base_model_renders/c63_2024_stock_obsidian_black",
+    "paint": {
+        "name": "obsidian_black",
+        "baseColor": [
+            0.05,
+            0.05,
+            0.05,
+            1.0
+        ],
+        "metallic": 0.8,
+        "roughness": 0.1,
+        "clearcoat": 0.7
+    },
+    "metadata": {
+        "year": "2024",
+        "make": "Mercedes-AMG",
+        "model": "C63",
+        "trim": "S Coupe"
+    },
+    "renderSettings": {
+        "engine": "CYCLES",
+        "resolutionX": 1920,
+        "resolutionY": 1080,
+        "samples": 128,
+        "useDenoising": true
+    },
+    "camera": {
+        "lens": 85,
+        "distance": 7.5
+    }
+}

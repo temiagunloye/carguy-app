@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini Render Approval</title>
+    <style>
+        body { background: #111; color: #eee; font-family: sans-serif; padding: 20px; }
+        .model-section { border: 1px solid #333; margin-bottom: 30px; padding: 20px; border-radius: 8px; background: #1a1a1a; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .title { font-size: 1.2em; font-weight: bold; color: #00ff88; }
+        .badge { padding: 5px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        .badge.high { background: #1b5e20; color: #a5d6a7; }
+        .badge.partial { background: #e65100; color: #ffcc80; }
+        .badge.missing { background: #b71c1c; color: #ffcdd2; }
+        
+        .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 10px; }
+        .card { background: #000; border: 1px solid #333; aspect-ratio: 16/9; position: relative; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .card.missing { display: flex; align-items: center; justify-content: center; color: #555; font-size: 0.8em; border: 1px dashed #444; }
+        .meta { font-size: 0.7em; color: #888; margin-top: 5px; }
+        
+        .path-info { font-family: monospace; font-size: 0.8em; color: #666; margin-bottom: 10px; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <h1>Gemini Render Verification Gallery</h1>
+    <p>Review the identified "Dark Studio" renders below. Only "High Confidence" sets will be processed for upload.</p>
+
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Subaru BRZ Stock (Blue)</div>
+            <div class="badge high">HIGH (10/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_driver_front_1769334531869.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_driver_front_1769334531869.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_front_1769334543245.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_front_1769334543245.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_full_driver_side_1769334557740.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_full_driver_side_1769334557740.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_full_passenger_side_1769334575449.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_full_passenger_side_1769334575449.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_driver_rear_1769334593703.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_driver_rear_1769334593703.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_rear_1769334606663.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_rear_1769334606663.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_front_center_1769334620607.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_front_center_1769334620607.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_rear_center_1769348339065.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_rear_center_1769348339065.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_front_low_1769352490174.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_front_low_1769352490174.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/subaru_brz_2024/subaru_brz_rear_low_1769352507236.png" title="tmp/final-renders/subaru_brz_2024/subaru_brz_rear_low_1769352507236.png">
+            </div>
+        </div>
+        <div class="path-info">Source: tmp/final-renders/subaru_brz_2024</div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Subaru BRZ Custom (Matte)</div>
+            <div class="badge high">HIGH (10/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_01.png" title="website/public/assets/cars/subaru_brz_custom/angle_01.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_02.png" title="website/public/assets/cars/subaru_brz_custom/angle_02.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_03.png" title="website/public/assets/cars/subaru_brz_custom/angle_03.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_04.png" title="website/public/assets/cars/subaru_brz_custom/angle_04.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_05.png" title="website/public/assets/cars/subaru_brz_custom/angle_05.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_06.png" title="website/public/assets/cars/subaru_brz_custom/angle_06.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_07.png" title="website/public/assets/cars/subaru_brz_custom/angle_07.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_08.png" title="website/public/assets/cars/subaru_brz_custom/angle_08.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_09.png" title="website/public/assets/cars/subaru_brz_custom/angle_09.png">
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_10.png" title="website/public/assets/cars/subaru_brz_custom/angle_10.png">
+            </div>
+        </div>
+        <div class="path-info">Source: website/public/assets/cars/subaru_brz_custom</div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Audi RS6 Custom (Blue)</div>
+            <div class="badge high">HIGH (10/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_driver_front_1769352523016.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_driver_front_1769352523016.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_front_1769352535692.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_front_1769352535692.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_full_driver_side_1769352553117.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_full_driver_side_1769352553117.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_full_passenger_side_1769352569898.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_full_passenger_side_1769352569898.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_driver_rear_1769352585208.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_driver_rear_1769352585208.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_rear_1769352599542.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_rear_1769352599542.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_front_center_1769352614181.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_front_center_1769352614181.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_rear_center_1769352628309.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_rear_center_1769352628309.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_front_low_1769352640775.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_front_low_1769352640775.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/audi_rs6_2024/audi_rs6_rear_low_1769352656737.png" title="tmp/final-renders/audi_rs6_2024/audi_rs6_rear_low_1769352656737.png">
+            </div>
+        </div>
+        <div class="path-info">Source: tmp/final-renders/audi_rs6_2024</div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Mercedes C63 Stock (Black)</div>
+            <div class="badge partial">PARTIAL (4/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../tmp/final-renders/mercedes_c63_2024/mercedes_c63_driver_front_1769352697239.png" title="tmp/final-renders/mercedes_c63_2024/mercedes_c63_driver_front_1769352697239.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/mercedes_c63_2024/mercedes_c63_passenger_front_1769352712492.png" title="tmp/final-renders/mercedes_c63_2024/mercedes_c63_passenger_front_1769352712492.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_driver_side_1769352728036.png" title="tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_driver_side_1769352728036.png">
+            </div>
+            <div class="card">
+                <img src="../tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_passenger_side_1769352743473.png" title="tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_passenger_side_1769352743473.png">
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        <div class="path-info">Source: tmp/final-renders/mercedes_c63_2024</div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">BMW M3 Stock (White)</div>
+            <div class="badge missing">MISSING (0/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card missing">
+                MISSING<br>angle_01
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_02
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_03
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_04
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">BMW M3 Custom (Red)</div>
+            <div class="badge missing">MISSING (0/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card missing">
+                MISSING<br>angle_01
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_02
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_03
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_04
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Audi RS6 Stock (Grey)</div>
+            <div class="badge missing">MISSING (0/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card missing">
+                MISSING<br>angle_01
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_02
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_03
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_04
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Porsche 911 GT3 Stock (Red)</div>
+            <div class="badge missing">MISSING (0/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card missing">
+                MISSING<br>angle_01
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_02
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_03
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_04
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">Porsche Manthey (Green)</div>
+            <div class="badge missing">MISSING (0/10)</div>
+        </div>
+        <div class="grid">
+
+            <div class="card missing">
+                MISSING<br>angle_01
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_02
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_03
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_04
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_05
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_06
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_07
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_08
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_09
+            </div>
+            <div class="card missing">
+                MISSING<br>angle_10
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

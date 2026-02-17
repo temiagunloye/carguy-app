@@ -1,0 +1,546 @@
+{
+  "canonical": {
+    "audi_rs6_custom": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/audi_rs6_custom"
+    },
+    "audi_rs6_stock_grey": {
+      "count": 6,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/audi_rs6_stock_grey"
+    },
+    "brz_custom_matte": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/brz_custom_matte"
+    },
+    "m3_custom_red": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/m3_custom_red"
+    },
+    "m3_stock_white": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/m3_stock_white"
+    },
+    "mercedes_c63": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/mercedes_c63"
+    },
+    "porsche_manthey": {
+      "count": 10,
+      "angles": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/porsche_manthey"
+    },
+    "subaru_brz_blue": {
+      "count": 0,
+      "angles": [],
+      "path": "/Users/temiagunloye/Desktop/carguy-app/assets/cars/subaru_brz_blue"
+    }
+  },
+  "legacy": {
+    "assets/cars": {},
+    "tmp/final-renders": {
+      "audi_rs6_2024": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/audi_rs6_2024"
+      },
+      "audi_rs6_2024_nardo_grey": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/audi_rs6_2024_nardo_grey"
+      },
+      "bmw_m3_2023_toronto_red": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/bmw_m3_2023_toronto_red"
+      },
+      "bmw_m3_2024": {
+        "count": 1,
+        "angles": [
+          "angle_01"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/bmw_m3_2024"
+      },
+      "mercedes_c63_2024": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/mercedes_c63_2024"
+      },
+      "mercedes_c63_2024_matte_coal": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/mercedes_c63_2024_matte_coal"
+      },
+      "mercedes_c63_rohana": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/mercedes_c63_rohana"
+      },
+      "porsche_911_2024": {
+        "count": 1,
+        "angles": [
+          "angle_01"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/porsche_911_2024"
+      },
+      "porsche_911_2024_army_green": {
+        "count": 8,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/porsche_911_2024_army_green"
+      },
+      "porsche_911_manthey": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/porsche_911_manthey"
+      },
+      "subaru_brz_2022_matte_black": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/subaru_brz_2022_matte_black"
+      },
+      "subaru_brz_2024": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/subaru_brz_2024"
+      },
+      "subaru_brz_te37": {
+        "count": 0,
+        "angles": [],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/final-renders/subaru_brz_te37"
+      }
+    },
+    "tmp/production_staging": {
+      "audi_rs6_2024": {
+        "count": 26,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10",
+          "angle_11",
+          "angle_12",
+          "angle_13",
+          "angle_14",
+          "angle_15",
+          "angle_16",
+          "angle_17",
+          "angle_18",
+          "angle_19",
+          "angle_20",
+          "angle_21",
+          "angle_22",
+          "angle_23",
+          "angle_24",
+          "angle_25",
+          "angle_26"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/audi_rs6_2024"
+      },
+      "audi_rs6_2024_nardo_grey": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/audi_rs6_2024_nardo_grey"
+      },
+      "bmw_m3_2023_toronto_red": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/bmw_m3_2023_toronto_red"
+      },
+      "bmw_m3_2024": {
+        "count": 11,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10",
+          "angle_11"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/bmw_m3_2024"
+      },
+      "mercedes_c63_2024": {
+        "count": 19,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10",
+          "angle_11",
+          "angle_12",
+          "angle_13",
+          "angle_14",
+          "angle_15",
+          "angle_16",
+          "angle_17",
+          "angle_18",
+          "angle_19"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/mercedes_c63_2024"
+      },
+      "mercedes_c63_2024_matte_coal": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/mercedes_c63_2024_matte_coal"
+      },
+      "mercedes_c63_rohana": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/mercedes_c63_rohana"
+      },
+      "porsche_911": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911"
+      },
+      "porsche_911_2024": {
+        "count": 17,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10",
+          "angle_11",
+          "angle_12",
+          "angle_13",
+          "angle_14",
+          "angle_15",
+          "angle_16",
+          "angle_17"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911_2024"
+      },
+      "porsche_911_2024_army_green": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911_2024_army_green"
+      },
+      "porsche_911_2024_white_corrected": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911_2024_white_corrected"
+      },
+      "porsche_911_manthey": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911_manthey"
+      },
+      "porsche_911_manthey_yellow_corrected": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/porsche_911_manthey_yellow_corrected"
+      },
+      "subaru_brz_2022_matte_black": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/subaru_brz_2022_matte_black"
+      },
+      "subaru_brz_2024": {
+        "count": 21,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10",
+          "angle_11",
+          "angle_12",
+          "angle_13",
+          "angle_14",
+          "angle_15",
+          "angle_16",
+          "angle_17",
+          "angle_18",
+          "angle_19",
+          "angle_20",
+          "angle_21"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/subaru_brz_2024"
+      },
+      "subaru_brz_te37": {
+        "count": 10,
+        "angles": [
+          "angle_01",
+          "angle_02",
+          "angle_03",
+          "angle_04",
+          "angle_05",
+          "angle_06",
+          "angle_07",
+          "angle_08",
+          "angle_09",
+          "angle_10"
+        ],
+        "path": "/Users/temiagunloye/Desktop/carguy-app/tmp/production_staging/subaru_brz_te37"
+      }
+    }
+  }
+}

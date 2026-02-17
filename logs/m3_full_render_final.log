@@ -1,0 +1,42 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:121: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:140: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:178: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+
+[1/5] Setting up studio rig...
+✓ Studio backdrop gradient created
+✓ Studio floor created (subtle reflection)
+✓ Premium 3-point softbox rig created (3 lights)
+✓ Camera rig created (85mm, Auto-track)
+
+[2/5] Importing car model...
+14:28:58 | INFO: Data are loaded, start creating Blender stuff
+14:28:58 | INFO: Blender create Mesh node Object_0
+14:28:58 | INFO: Blender create Mesh node Object_1
+14:28:58 | INFO: Blender create Mesh node Object_2
+14:28:58 | INFO: Blender create Mesh node Object_3
+14:28:58 | INFO: Blender create Mesh node Object_4
+14:28:58 | INFO: Blender create Mesh node Object_5
+14:28:58 | INFO: Blender create Mesh node Object_6
+14:28:58 | INFO: Blender create Mesh node Object_7
+14:28:58 | INFO: Blender create Mesh node Object_8
+14:28:58 | INFO: Blender create Mesh node Object_9
+14:28:58 | INFO: Blender create Mesh node Object_10
+14:28:58 | INFO: Blender create Mesh node Object_11
+14:28:58 | INFO: Blender create Mesh node Object_12
+14:28:58 | INFO: Blender create Mesh node Object_13
+14:28:58 | INFO: Blender create Mesh node Object_14
+14:28:58 | INFO: Blender create Mesh node Object_15
+14:28:58 | INFO: Blender create Mesh node Object_16
+14:28:58 | INFO: glTF import finished in 0.06s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:384: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+00:27.531  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_01.png'
+00:56.086  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_02.png'
+01:28.959  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_03.png'
+01:53.392  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_04.png'
+02:18.792  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_05.png'
+02:40.966  render           | Saved: 'base_model_renders/m3_2023_stock_alpine_white/angle_06.png'
+/opt/homebrew/bin/blender: line 2: 64511 Terminated: 15          '/Applications/Blender.app/Contents/MacOS/Blender' "$@"

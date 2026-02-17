@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Guy App - Final Curated Gallery</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #222;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #222;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            background: #333;
+            min-height: 150px;
+        }
+
+        .label {
+            display: block;
+            margin-top: 8px;
+            font-size: 11px;
+            color: #888;
+            word-break: break-all;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .status.complete {
+            background: #1b5e20;
+            color: #a5d6a7;
+        }
+
+        .status.curated {
+            background: #0277bd;
+            color: #81d4fa;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🏎️ Final Curated Render Gallery</h1>
+    <p>Last Updated: ${new Date().toLocaleString()}</p>
+
+    <!-- WEBSITE STANDARD MODELS -->
+    <h2 id="website-section">🌐 WEBSITE MODELS (Final 5)</h2>
+
+    <div id="models-container">
+        <!-- Audi Grey -->
+        <h3>Audi RS6 (Standard Grey)</h3>
+        <div class="status complete">✅ Nardo Grey (Custom Style)</div>
+        <div class="grid" id="website-audi-grey"></div>
+
+        <!-- Subaru Blue -->
+        <h3>Subaru BRZ (Standard Blue)</h3>
+        <div class="status complete">✅ Blue (White Background)</div>
+        <div class="grid" id="website-subaru-blue"></div>
+
+        <!-- BMW White -->
+        <h3>BMW M3 (White)</h3>
+        <div class="status curated">⭐ Angles 4-10 (Verified Realism)</div>
+        <div class="grid" id="website-bmw-white"></div>
+
+        <!-- Subaru Grey -->
+        <h3>Subaru BRZ (Grey)</h3>
+        <div class="status curated">⭐ Matte Coal (Dark Studio)</div>
+        <div class="grid" id="website-subaru-grey"></div>
+
+        <!-- Mercedes C63 -->
+        <h3>Mercedes-AMG C63</h3>
+        <div class="status curated">⭐ Dark Studio (Overhead Panel)</div>
+        <div class="grid" id="website-mercedes-c63"></div>
+    </div>
+
+
+    <!-- EXTRA CURATED BUILDS -->
+    <h2>🔧 SPECIAL CUSTOM BUILDS</h2>
+
+    <h3>Audi RS6 Avant (Custom Blue)</h3>
+    <div class="status curated">⭐ Blue (Website Version)</div>
+    <div class="grid" id="audi-custom-blue"></div>
+
+    <h3>Porsche 911 GT3 MR (Green)</h3>
+    <div class="status curated">⭐ Forest Green (Website Version)</div>
+    <div class="grid" id="porsche-custom-green"></div>
+
+
+    <script>
+        function addImages(containerId, folder, images) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            images.forEach(img => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                // Bulletproof absolute paths with file:// prefix for local browsing
+                const basePath = 'file:///Users/temiagunloye/Desktop/carguy-app/';
+                const fullUrl = basePath + folder + '/' + img;
+                div.innerHTML = `<img src="${fullUrl}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Missing'"><span class="label">${img}</span>`;
+                container.appendChild(div);
+            });
+        }
+
+        const angles = ['angle_01.png', 'angle_02.png', 'angle_03.png', 'angle_04.png', 'angle_05.png',
+            'angle_06.png', 'angle_07.png', 'angle_08.png', 'angle_09.png', 'angle_10.png'];
+
+        // --- WEBSITE MODELS ---
+        addImages('website-audi-grey', 'assets/cars/audi_rs6_standard', angles);
+
+        addImages('website-subaru-blue', 'assets/cars/subaru_brz_blue', [
+            'subaru_brz_driver_front_1769334531869.png', 'subaru_brz_passenger_front_1769334543245.png',
+            'subaru_brz_full_driver_side_1769334557740.png', 'subaru_brz_full_passenger_side_1769334575449.png',
+            'subaru_brz_driver_rear_1769334593703.png', 'subaru_brz_passenger_rear_1769334606663.png',
+            'subaru_brz_front_center_1769334620607.png', 'subaru_brz_rear_center_1769348339065.png',
+            'subaru_brz_front_low_1769352490174.png', 'subaru_brz_rear_low_1769352507236.png'
+        ]);
+
+        addImages('website-bmw-white', 'assets/cars/bmw_m3', [
+            'angle_04.png', 'angle_05.png', 'angle_06.png', 'angle_07.png', 'angle_08.png', 'angle_09.png', 'angle_10.png'
+        ]);
+
+        addImages('website-subaru-grey', 'assets/cars/subaru_brz_grey', angles);
+        addImages('website-mercedes-c63', 'assets/cars/mercedes_c63', angles);
+
+        // --- SPECIAL CUSTOMS ---
+        addImages('audi-custom-blue', 'assets/cars/audi_rs6_custom', ['angle_01.png', 'angle_02.png', 'angle_03.png', 'angle_04.png', 'angle_05.png', 'angle_06.png']);
+        addImages('porsche-custom-green', 'assets/cars/porsche_manthey', angles);
+
+    </script>
+</body>
+
+</html>

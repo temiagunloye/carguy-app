@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Asset Check v3</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .item {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .name {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #888;
+            word-break: break-all;
+        }
+
+        .guess {
+            color: #0f0;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Identify New Assets (Latest 15)</h1>
+    <div id="gallery" class="grid"></div>
+    <script>
+        const files = [
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679242215.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679230328.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679218462.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679208983.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679201315.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679189729.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679178977.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679168545.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679157496.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679155137.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679147725.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679141370.png',
+            'media_23c8213d-1fa0-485f-950e-b5e69947ec56_1770679131194.png'
+        ];
+
+        const gallery = document.getElementById('gallery');
+        files.forEach(file => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+                <img src="/Users/temiagunloye/.gemini/antigravity/brain/23c8213d-1fa0-485f-950e-b5e69947ec56/.tempmediaStorage/${file}">
+                <div class="name">${file}</div>
+            `;
+            gallery.appendChild(div);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:109: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:156: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG
+================================================================================
+GLB: source_models/base_glb/bmw_m3.glb
+Build ID: m3_calibration_v2
+Color: alpine_white
+Output: base_model_renders/m3_calibration_v2
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ World background gradient created (dark studio)
+✓ Studio floor created (subtle reflection)
+✓ Studio lighting rig created (3 lights)
+✓ Camera created (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/bmw_m3.glb
+13:54:15 | INFO: Data are loaded, start creating Blender stuff
+13:54:15 | INFO: Blender create Mesh node Object_0
+13:54:15 | INFO: Blender create Mesh node Object_1
+13:54:15 | INFO: Blender create Mesh node Object_2
+13:54:15 | INFO: Blender create Mesh node Object_3
+13:54:15 | INFO: Blender create Mesh node Object_4
+13:54:15 | INFO: Blender create Mesh node Object_5
+13:54:15 | INFO: Blender create Mesh node Object_6
+13:54:15 | INFO: Blender create Mesh node Object_7
+13:54:15 | INFO: Blender create Mesh node Object_8
+13:54:15 | INFO: Blender create Mesh node Object_9
+13:54:15 | INFO: Blender create Mesh node Object_10
+13:54:15 | INFO: Blender create Mesh node Object_11
+13:54:15 | INFO: Blender create Mesh node Object_12
+13:54:15 | INFO: Blender create Mesh node Object_13
+13:54:15 | INFO: Blender create Mesh node Object_14
+13:54:15 | INFO: Blender create Mesh node Object_15
+13:54:15 | INFO: Blender create Mesh node Object_16
+13:54:15 | INFO: glTF import finished in 0.05s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:321: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+Traceback (most recent call last):
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 555, in <module>
+    main()
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 542, in main
+    apply_paint_override(car_objects, color_name)
+  File "/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py", line 341, in apply_paint_override
+    bsdf.inputs['Clearcoat Roughness'].default_value = 0.1
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'bpy_prop_collection[key]: key "Clearcoat Roughness" not found'
+✓ Imported 19 objects
+
+[3/5] Centering car...
+✓ Car centered (dims: 4.61 x 1.99 x 2.01)
+
+[4/5] Applying paint override...
+
+Blender quit

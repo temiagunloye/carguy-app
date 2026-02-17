@@ -1,0 +1,80 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:121: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:140: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:178: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+
+[1/5] Setting up studio rig...
+✓ Studio backdrop gradient created
+✓ Studio floor created (subtle reflection)
+✓ Premium 3-point softbox rig created (3 lights)
+✓ Camera rig created (85mm, Auto-track)
+
+[2/5] Importing car model...
+14:52:59 | INFO: Data are loaded, start creating Blender stuff
+14:52:59 | INFO: Blender create Mesh node Object_0
+14:52:59 | INFO: Blender create Mesh node Object_1
+14:52:59 | INFO: Blender create Mesh node Object_2
+14:52:59 | INFO: Blender create Mesh node Object_3
+14:52:59 | INFO: Blender create Mesh node Object_4
+14:52:59 | INFO: Blender create Mesh node Object_5
+14:52:59 | INFO: Blender create Mesh node Object_6
+14:52:59 | INFO: Blender create Mesh node Object_7
+14:52:59 | INFO: Blender create Mesh node Object_8
+14:52:59 | INFO: Blender create Mesh node Object_9
+14:52:59 | INFO: Blender create Mesh node Object_10
+14:52:59 | INFO: Blender create Mesh node Object_11
+14:52:59 | INFO: Blender create Mesh node Object_12
+14:52:59 | INFO: Blender create Mesh node Object_13
+14:52:59 | INFO: Blender create Mesh node Object_14
+14:52:59 | INFO: Blender create Mesh node Object_15
+14:52:59 | INFO: Blender create Mesh node Object_16
+14:52:59 | INFO: glTF import finished in 0.07s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:468: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+00:33.524  render           | Saved: 'base_model_renders/m3_calibration_v5/angle_01.png'
+01:06.855  render           | Saved: 'base_model_renders/m3_calibration_v5/angle_04.png'
+01:40.429  render           | Saved: 'base_model_renders/m3_calibration_v5/angle_07.png'
+
+Scanning for watermarks/trash...
+  → Deleting bad object: p3dm.ru_BMW.obj.cleaner.materialmerger.gles
+✓ Trash cleanup complete (1 items removed)
+
+[3/5] Performing Geometric Normalization...
+  → Detected UP direction: z- (Area: 15.19)
+  → Geometry Check: Top Spread: 1.74 | Bottom Spread: 0.32
+    → TOP is wider than BOTTOM. Model is UPSIDE DOWN. Triggering flip.
+  → Normalizing scale (0.98x to 4.5m)
+✓ Normalization Complete. Length: 4.50m, Height: 1.96m
+
+[4/5] Applying surgical paint override...
+  → No keyword matches, calculating top material slots by surface area...
+    → Targeting high-area slot: b37fa7e0_dds (11.24 sqm)
+    → Targeting high-area slot: 81fecb75_dds (10.21 sqm)
+    → Targeting high-area slot: 9ef62307_dds (10.06 sqm)
+    → Targeting high-area slot: 46fd4642_dds (6.10 sqm)
+    → Targeting high-area slot: 3fc110e0_dds (4.73 sqm)
+    → Targeting high-area slot: 49adcd3d_dds (3.86 sqm)
+    → Targeting high-area slot: d87383d3_dds (3.68 sqm)
+    → Targeting high-area slot: 246fa580_dds (2.17 sqm)
+✓ Surgical paint applied to 8 slots.
+
+[5/5] Rendering all angles...
+⚠ Calibration mode: rendering only 3 angles
+
+Rendering angle_01: Front 3/4 driver
+✓ Saved: base_model_renders/m3_calibration_v5/angle_01.png
+
+Rendering angle_04: Side passenger
+✓ Saved: base_model_renders/m3_calibration_v5/angle_04.png
+
+Rendering angle_07: Rear 3/4 driver
+✓ Saved: base_model_renders/m3_calibration_v5/angle_07.png
+
+================================================================================
+RENDER COMPLETE ✓
+================================================================================
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+
+Blender quit

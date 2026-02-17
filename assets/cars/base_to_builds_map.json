@@ -1,0 +1,24 @@
+{
+    "audi_rs6": [
+        "audi_rs6_custom_blue",
+        "audi_rs6_bbs_mesh"
+    ],
+    "bmw_m3": [
+        "bmw_m3_custom_red",
+        "bmw_m3_toronto_red_bbs_fir"
+    ],
+    "mercedes_c63": [
+        "mercedes_c63_rohana_matte_coal"
+    ],
+    "subaru_brz": [
+        "brz_custom_matte",
+        "subaru_brz_te37_matte_coal"
+    ],
+    "porsche_gt3": [
+        "gt3_manthey_green"
+    ],
+    "porsche_911": [
+        "porsche_911_manthey_carbon_disc",
+        "porsche_911_camo_green"
+    ]
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curated Render Gallery - Internal Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .warning {
+            background: #ff3333;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .build-section {
+            margin-bottom: 40px;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            background: #111;
+        }
+
+        .build-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .build-title {
+            font-size: 18px;
+            color: #00ff88;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-ready {
+            background: #1b5e20;
+            color: #a5d6a7;
+        }
+
+        .status-partial {
+            background: #e65100;
+            color: #ffcc80;
+        }
+
+        .spec {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .angle-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .angle-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .angle-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .angle-card.missing {
+            background: #2a0000;
+            border-color: #ff3333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .angle-label {
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            background: #0a0a0a;
+        }
+
+        .missing-text {
+            color: #ff6666;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎨 CURATED RENDER GALLERY</h1>
+    <div class="warning">⚠️ INTERNAL ONLY — DO NOT DEPLOY TO PRODUCTION</div>
+
+    <!-- A) Subaru BRZ Custom -->
+    <div class="build-section">
+        <div class="build-header">
+            <div class="build-title">A) Subaru BRZ Custom</div>
+            <span class="status-badge status-ready">10/10 READY</span>
+        </div>
+        <div class="spec">Matte Coal Wrap, Bronze TE37s</div>
+        <div class="angle-grid" id="brz-grid"></div>
+    </div>
+
+    <!-- B) Porsche Manthey Racing -->
+    <div class="build-section">
+        <div class="build-header">
+            <div class="build-title">B) Porsche Manthey Racing</div>
+            <span class="status-badge status-ready">10/10 READY</span>
+        </div>
+        <div class="spec">Green, Racing Kit</div>
+        <div class="angle-grid" id="manthey-grid"></div>
+    </div>
+
+    <!-- C) Audi RS6 Custom -->
+    <div class="build-section">
+        <div class="build-header">
+            <div class="build-title">C) Audi RS6 Custom</div>
+            <span class="status-badge status-ready">10/10 READY</span>
+        </div>
+        <div class="spec">Ultra Blue, BBS Super RS</div>
+        <div class="angle-grid" id="rs6-grid"></div>
+    </div>
+
+    <!-- D) Mercedes C63 Stock -->
+    <div class="build-section">
+        <div class="build-header">
+            <div class="build-title">D) Mercedes-AMG C63 Stock</div>
+            <span class="status-badge status-partial">6/10 PARTIAL</span>
+        </div>
+        <div class="spec">Obsidian Black, Stock Wheels</div>
+        <div class="angle-grid" id="c63-grid"></div>
+    </div>
+
+    <script>
+        const BUILDS = {
+            brz: { path: 'tmp/final-renders/subaru_brz_2022_matte_black', count: 10 },
+            manthey: { path: 'renders/batch_01/porsche_911_2024_army_green', count: 10 },
+            rs6: { path: 'renders/batch_01/audi_rs6_2024_nardo_grey', count: 10 },
+            c63: { path: 'tmp/final-renders/mercedes_c63_2024', count: 6 }
+        };
+
+        function renderGrid(gridId, build) {
+            const grid = document.getElementById(gridId);
+            for (let i = 1; i <= 10; i++) {
+                const card = document.createElement('div');
+                const angleNum = String(i).padStart(2, '0');
+
+                if (i <= build.count) {
+                    card.className = 'angle-card';
+                    card.innerHTML = `
+                        <img src="../../${build.path}/angle_${angleNum}.png" alt="Angle ${angleNum}" onerror="this.parentElement.classList.add('missing'); this.style.display='none';">
+                        <div class="angle-label">Angle ${angleNum}</div>
+                    `;
+                } else {
+                    card.className = 'angle-card missing';
+                    card.innerHTML = `
+                        <div class="missing-text">MISSING<br>Angle ${angleNum}</div>
+                    `;
+                }
+                grid.appendChild(card);
+            }
+        }
+
+        renderGrid('brz-grid', BUILDS.brz);
+        renderGrid('manthey-grid', BUILDS.manthey);
+        renderGrid('rs6-grid', BUILDS.rs6);
+        renderGrid('c63-grid', BUILDS.c63);
+    </script>
+</body>
+
+</html>

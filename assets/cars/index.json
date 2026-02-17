@@ -1,0 +1,51 @@
+{
+  "audi_rs6_custom_blue": {
+    "buildId": "audi_rs6_custom_blue",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.607Z"
+  },
+  "bmw_m3_stock_white": {
+    "buildId": "bmw_m3_stock_white",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T01:04:29.219Z"
+  },
+  "bmw_m3_custom_red": {
+    "buildId": "bmw_m3_custom_red",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T01:04:29.194Z"
+  },
+  "c63_stock_black": {
+    "buildId": "c63_stock_black",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.751Z"
+  },
+  "brz_stock_blue": {
+    "buildId": "brz_stock_blue",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T02:31:22.537Z"
+  },
+  "brz_custom_matte": {
+    "buildId": "brz_custom_matte",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-09T21:42:32.531Z"
+  },
+  "gt3_manthey_green": {
+    "buildId": "gt3_manthey_green",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.894Z"
+  }
+}

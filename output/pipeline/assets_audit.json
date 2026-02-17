@@ -1,0 +1,291 @@
+{
+  "audi_rs6_stock_grey": {
+    "exists": true,
+    "complete": false,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06"
+    ],
+    "missing": [
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 6
+  },
+  "audi_rs6_custom_blue": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "audi_rs6_bbs_mesh": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "bmw_m3_stock_white": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "bmw_m3_custom_red": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "bmw_m3_toronto_red_bbs_fir": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "c63_stock_black": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "mercedes_c63_rohana_matte_coal": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "brz_stock_blue": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "brz_custom_matte": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "subaru_brz_te37_matte_coal": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "porsche_gt3_stock_red": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "gt3_manthey_green": {
+    "exists": true,
+    "complete": true,
+    "angles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "missing": [],
+    "count": 10
+  },
+  "porsche_911_stock": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "porsche_911_manthey_carbon_disc": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  },
+  "porsche_911_camo_green": {
+    "exists": true,
+    "complete": false,
+    "angles": [],
+    "missing": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "count": 0
+  }
+}

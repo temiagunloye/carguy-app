@@ -1,0 +1,16 @@
+{
+  "buildId": "m3_val_v2",
+  "year": "",
+  "make": "",
+  "model": "",
+  "trim": "",
+  "paint": "alpine_white",
+  "wheels": "Stock",
+  "angleCount": 2,
+  "filenames": [
+    "angle_01.png",
+    "angle_10.png"
+  ],
+  "renderEngine": "eevee",
+  "createdAt": "2026-02-04 19:56:11.102499"
+}

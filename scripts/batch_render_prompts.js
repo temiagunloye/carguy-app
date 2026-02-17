@@ -2,136 +2,64 @@
  * BATCH CAR RENDER GENERATOR
  * Run this after quota resets (8:45 AM / 14:45 UTC)
  * 
- * This script provides all prompts for the remaining 22 car images.
- * Copy each prompt into Gemini's image generation, then update the 
- * GENERATED_FILES mapping below and run the upload function.
+ * This script provides prompts for the HIGH PRIORITY Custom Builds.
+ * 
+ * BATCH A (Total 29 Images):
+ * 1. BMW M3 Custom (10 angles)
+ * 2. Mercedes C63 Custom (10 angles)
+ * 3. Porsche GT3 Camo (9 angles - skipping angle_01)
  */
 
-// ========================================================================
-// PROMPTS FOR REMAINING IMAGES (22 total)
-// ========================================================================
-
 const PROMPTS = {
-    // Subaru BRZ - 2 remaining angles
-    'Subaru BRZ': [
-        {
-            angle: 'front_low',
-            prompt: '2024 Subaru BRZ in WR Blue Pearl, professional automotive photography, dramatic low angle front view, white seamless studio background, epic cinematic lighting, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, sports coupe, heroic angle'
-        },
-        {
-            angle: 'rear_low',
-            prompt: '2024 Subaru BRZ in WR Blue Pearl, professional automotive photography, dramatic low angle rear view, white seamless studio background, epic cinematic lighting, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, sports coupe, heroic angle'
-        }
+    // 1. BMW M3 Custom (Toronto Red + BBS FI-R)
+    'BMW M3 Custom': [
+        { angle: 'angle_01', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, driver front three-quarter view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_02', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, straight front view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_03', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, passenger front three-quarter view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_04', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, full passenger side profile view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_05', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, passenger rear three-quarter view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_06', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, straight rear view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_07', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, driver rear three-quarter view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_08', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, full driver side profile view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_09', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, low angle front view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' },
+        { angle: 'angle_10', prompt: '2023 BMW M3 Competition in Toronto Red Metallic, modified with BBS FI-R wheels in platinum silver, professional automotive photography, low angle rear view, neutral gradient studio background, dramatic lighting, sharp focus, 8k resolution, photorealistic' }
     ],
 
-    // Audi RS6 - 10 new angles
-    'Audi RS6 Avant': [
-        {
-            angle: 'driver_front',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, driver front three-quarter view (315 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'passenger_front',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, passenger front three-quarter view (45 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'full_driver_side',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, full driver side profile view (270 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'full_passenger_side',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, full passenger side profile view (90 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'driver_rear',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, driver rear three-quarter view (225 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'passenger_rear',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, passenger rear three-quarter view (135 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'front_center',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, straight front center view (0 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon, showing Audi grille'
-        },
-        {
-            angle: 'rear_center',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, straight rear center view (180 degree angle), neutral gradient studio background, dramatic cinematic lighting with rim lights, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, performance wagon'
-        },
-        {
-            angle: 'front_low',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, dramatic low angle front view, neutral gradient studio background, epic cinematic lighting with strong rim lights, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, performance wagon, heroic angle'
-        },
-        {
-            angle: 'rear_low',
-            prompt: '2024 Audi RS6 Avant in Daytona Grey Pearl, professional automotive photography, dramatic low angle rear view, neutral gradient studio background, epic cinematic lighting with strong rim lights, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, performance wagon, heroic angle'
-        }
+    // 2. Mercedes C63 Custom (Matte Coal + Rohana RFX17)
+    'Mercedes C63 Custom': [
+        { angle: 'angle_01', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, driver front three-quarter view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_02', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, straight front view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_03', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, passenger front three-quarter view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_04', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, full passenger side profile view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_05', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, passenger rear three-quarter view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_06', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, straight rear view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_07', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, driver rear three-quarter view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_08', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, full driver side profile view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_09', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, low angle front view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' },
+        { angle: 'angle_10', prompt: '2024 Mercedes-AMG C63 in Matte Coal Dark Grey wrap, modified with 19" Rohana RFX17 Titanium wheels, professional automotive photography, low angle rear view, moody dark studio background, cinematic lighting, sharp focus, 8k resolution, photorealistic, aggressive stance' }
     ],
 
-    // Mercedes-AMG C63 - 10 new angles
-    'Mercedes-AMG C63': [
-        {
-            angle: 'driver_front',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, driver front three-quarter view (315 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, AMG Panamericana grille'
-        },
-        {
-            angle: 'passenger_front',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, passenger front three-quarter view (45 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, AMG Panamericana grille'
-        },
-        {
-            angle: 'full_driver_side',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, full driver side profile view (270 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography'
-        },
-        {
-            angle: 'full_passenger_side',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, full passenger side profile view (90 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography'
-        },
-        {
-            angle: 'driver_rear',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, driver rear three-quarter view (225 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, quad exhaust'
-        },
-        {
-            angle: 'passenger_rear',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, passenger rear three-quarter view (135 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, quad exhaust'
-        },
-        {
-            angle: 'front_center',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, straight front center view (0 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, showing AMG Panamericana grille'
-        },
-        {
-            angle: 'rear_center',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, straight rear center view (180 degree angle), dark gradient gray studio background, dramatic cinematic lighting, ultra-sharp details, photorealistic, studio quality, subtle floor shadows, premium car photography, showing quad exhaust pipes'
-        },
-        {
-            angle: 'front_low',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, dramatic low angle front view, dark gradient gray studio background, epic cinematic lighting with strong rim lights, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, heroic perspective, AMG grille'
-        },
-        {
-            angle: 'rear_low',
-            prompt: '2024 Mercedes-AMG C63 in Obsidian Black Metallic, professional automotive photography, dramatic low angle rear view, dark gradient gray studio background, epic cinematic lighting with strong rim lights, ultra-sharp details, photorealistic, studio quality, ground-level perspective, subtle floor shadows, premium car photography, showing quad exhaust, heroic perspective'
-        }
+    // 3. Porsche GT3 Camo (Camouflage Green Wrap) - 9 missing angles
+    'Porsche GT3 Camo': [
+        { angle: 'angle_02', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, straight front view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_03', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, passenger front three-quarter view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_04', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, full passenger side profile view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_05', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, passenger rear three-quarter view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_06', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, straight rear view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_07', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, driver rear three-quarter view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_08', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, full driver side profile view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_09', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, low angle front view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' },
+        { angle: 'angle_10', prompt: '2024 Porsche 911 GT3 wrapped in Camouflage Green, professional automotive photography, low angle rear view, white studio background, bright lighting, sharp focus, 8k resolution, photorealistic, track car aesthetic' }
     ]
 };
 
-// ========================================================================
-// INSTRUCTIONS
-// ========================================================================
-
-console.log('🎨 BATCH CAR RENDER GENERATION GUIDE');
+console.log('🎨 CUSTOM BUILD RENDER GUIDE');
 console.log('='.repeat(70));
-console.log('\n📋 TOTAL IMAGES TO GENERATE: 22');
-console.log('   • Subaru BRZ: 2 images');
-console.log('   • Audi RS6 Avant: 10 images');
-console.log('   • Mercedes-AMG C63: 10 images\n');
+console.log('Total Images: 29 (May need split batch)');
+console.log('1. BMW M3 Custom (10)');
+console.log('2. Mercedes C63 Custom (10)');
+console.log('3. Porsche GT3 Camo (9)');
 console.log('='.repeat(70));
-console.log('\n📝 STEP-BY-STEP PROCESS:\n');
-console.log('1. Wait for quota to reset (8:45 AM / 14:45 UTC)');
-console.log('2. Use the prompts below in Gemini image generation');
-console.log('3. Save each generated image with the suggested name');
-console.log('4. After all 22 images are generated, run:');
-console.log('   node scripts/upload_all_remaining.js\n');
-console.log('='.repeat(70));
-console.log('\n🚗 PROMPTS BY CAR:\n');
 
 let count = 1;
 for (const [carName, angles] of Object.entries(PROMPTS)) {
@@ -139,16 +67,9 @@ for (const [carName, angles] of Object.entries(PROMPTS)) {
     console.log('-'.repeat(70));
 
     for (const { angle, prompt } of angles) {
-        console.log(`\n[${count}/22] ${angle}:`);
-        console.log(`Suggested filename: ${carName.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_${angle}.png`);
-        console.log(`\nPrompt:`);
-        console.log(`"${prompt}"`);
-        console.log('');
+        console.log(`\n[${count}/29] ${angle}:`);
+        console.log(`Filename: ${carName.toLowerCase().replace(/[^a-z0-9]+/g, '_')}_${angle}.png`);
+        console.log(`Prompt: "${prompt}"`);
         count++;
     }
 }
-
-console.log('\n' + '='.repeat(70));
-console.log('💡 TIP: Copy prompts into Gemini one at a time for best results');
-console.log('='.repeat(70));
-console.log('\n✅ After generation, update GENERATED_FILES in upload_all_remaining.js\n');

@@ -1,0 +1,91 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:63: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_calibration.json
+================================================================================
+Build ID: m3_calibration
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Simple world background created
+✓ Simple floor plane created
+✓ Gemini GOLD STANDARD 3-point studio lighting (3 lights)
+✓ Camera ready (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/bmw_m3.glb
+13:53:45 | INFO: Data are loaded, start creating Blender stuff
+13:53:45 | INFO: Blender create Mesh node Object_0
+13:53:45 | INFO: Blender create Mesh node Object_1
+13:53:45 | INFO: Blender create Mesh node Object_2
+13:53:45 | INFO: Blender create Mesh node Object_3
+13:53:45 | INFO: Blender create Mesh node Object_4
+13:53:45 | INFO: Blender create Mesh node Object_5
+13:53:45 | INFO: Blender create Mesh node Object_6
+13:53:45 | INFO: Blender create Mesh node Object_7
+13:53:45 | INFO: Blender create Mesh node Object_8
+13:53:45 | INFO: Blender create Mesh node Object_9
+13:53:45 | INFO: Blender create Mesh node Object_10
+13:53:45 | INFO: Blender create Mesh node Object_11
+13:53:45 | INFO: Blender create Mesh node Object_12
+13:53:45 | INFO: Blender create Mesh node Object_13
+13:53:45 | INFO: Blender create Mesh node Object_14
+13:53:46 | INFO: Blender create Mesh node Object_15
+13:53:46 | INFO: Blender create Mesh node Object_16
+13:53:46 | INFO: glTF import finished in 0.05s
+✓ Imported 19 objects
+
+[3/5] Centering car...
+✓ Car scaled 0.98x to 4.5m (was 4.61m)
+✓ Car centered (final dims: 4.50 x 1.94 x 1.96)
+
+[4/5] Applying paint override...
+DEBUG: Starting paint override for 19 objects
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:246: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+DEBUG: Finding body panels...
+  ! Warning: No body materials found by keyword, applying to all non-skipped materials
+✓ Gemini automotive clearcoat paint applied (17 materials)
+
+[5/5] Rendering all angles...
+DEBUG: Inside render_all_angles
+DEBUG: Setting camera distance
+  ✓ Camera distance: 8.0 units (optimized for 4.5m scaled cars)
+DEBUG: Switching to EEVEE for calibration...
+  ✓ Render: EEVEE 64 samples
+DEBUG: Forcing CPU for calibration stability...
+  ✓ Render: Cycles 48 samples CPU + OIDN
+DEBUG: Starting angle loop
+  → Calibration mode: rendering only 3 angles
+
+Rendering angle_01: Front 3/4 driver
+  → Blender Render Starting (Path: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png)...
+00:07.180  render           | Saved: '/Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png'
+  ✓ Saved: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_01.png
+
+Rendering angle_04: Side passenger
+  → Blender Render Starting (Path: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_04.png)...
+00:13.813  render           | Saved: '/Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_04.png'
+  ✓ Saved: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_04.png
+
+Rendering angle_07: Rear 3/4 driver
+  → Blender Render Starting (Path: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_07.png)...
+00:18.448  render           | Saved: '/Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_07.png'
+  ✓ Saved: /Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_calibration/angle_07.png
+
+✓ Manifest saved: base_model_renders/m3_calibration/manifest.json
+✓ All 3 angles rendered
+
+================================================================================
+RENDER COMPLETE ✓
+================================================================================
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+
+Blender quit

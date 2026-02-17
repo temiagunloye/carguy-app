@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "public": true,
+    "github": {
+        "silent": true
+    },
+    "ignoreCommand": "exit 0",
+    "framework": null,
+    "installCommand": "echo 'No build needed'",
+    "buildCommand": "echo 'Static site'",
+    "outputDirectory": "website"
+}

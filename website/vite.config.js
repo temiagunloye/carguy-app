@@ -27,13 +27,7 @@ export default defineConfig({
                 partnerInventoryAdd: resolve(__dirname, 'partner/inventory-add.html'),
                 partnerBuilds: resolve(__dirname, 'partner/builds.html'),
                 // Shop Portal (duplicate of partner for URL flexibility)
-                shopLogin: resolve(__dirname, 'shop/login.html'),
-                shopDashboard: resolve(__dirname, 'shop/dashboard.html'),
                 shopSimulator: resolve(__dirname, 'shop/simulator.html'),
-                shopMarketplace: resolve(__dirname, 'shop/marketplace.html'),
-                shopPartDetail: resolve(__dirname, 'shop/part-detail.html'),
-                shopInventoryAdd: resolve(__dirname, 'shop/inventory-add.html'),
-                shopBuilds: resolve(__dirname, 'shop/builds.html'),
                 // Body Shop pages
                 bodyshop: resolve(__dirname, 'bodyshop/index.html'),
             },

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Quality Comparison - BRZ Stock vs Gold Standards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: #fff;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 30px 0 15px;
+            color: #ccc;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .image-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-label {
+            padding: 15px;
+            font-weight: 500;
+            color: #fff;
+            background: #222;
+        }
+
+        .observations {
+            background: #1a1a1a;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .observations.warning {
+            border-left-color: #FF9800;
+        }
+
+        .observations ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .observations li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .observations li:before {
+            content: '✓';
+            position: absolute;
+            left: 5px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .observations.warning li:before {
+            content: '⚠';
+            color: #FF9800;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background: #222;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        td {
+            color: #ccc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge.excellent {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .badge.good {
+            background: #2196F3;
+            color: white;
+        }
+
+        .badge.fair {
+            background: #FF9800;
+            color: white;
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+            color: white;
+        }
+
+        .recommendation h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .container {
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .image-card {
+                page-break-inside: avoid;
+                border: 1px solid #ddd;
+                background: white !important;
+            }
+
+            .grid {
+                display: block;
+                /* Stack for PDF usually better, or grid if it fits */
+                page-break-inside: avoid;
+            }
+
+            .image-label {
+                color: black !important;
+                background: #f0f0f0 !important;
+                border-top: 1px solid #ddd;
+            }
+
+            h1,
+            h2,
+            h3 {
+                color: black !important;
+                page-break-after: avoid;
+            }
+
+            .badge {
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Render Quality Comparison</h1>
+        <p class="subtitle">Gold Standard Benchmarks (PDF Report)</p>
+
+        <!-- BRZ SECTION UNTOUCHED -->
+        <h2>GOLD STANDARD: Subaru BRZ Custom (Matte Coal)</h2>
+        <p>Existing verified renders (Benchmark)</p>
+
+        <div class="grid">
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/production_renders/subaru_brz/angle_01.png"
+                    alt="BRZ Custom Angle 01">
+                <div class="image-label">Angle 01 - Front 3/4 Driver</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/production_renders/subaru_brz/angle_03.png"
+                    alt="BRZ Custom Angle 03">
+                <div class="image-label">Angle 03 - Front 3/4 Passenger</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/production_renders/subaru_brz/angle_05.png"
+                    alt="BRZ Custom Angle 05">
+                <div class="image-label">Angle 05 - Rear 3/4 Passenger</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/production_renders/subaru_brz/angle_07.png"
+                    alt="BRZ Custom Angle 07">
+                <div class="image-label">Angle 07 - Rear 3/4 Driver</div>
+            </div>
+        </div>
+
+        <div class="observations">
+            <h3>Observations - BRZ Custom</h3>
+            <ul>
+                <li>Perfect matte coal finish consistency</li>
+                <li>Bronze TE37 wheels with excellent detail</li>
+                <li>Dark gradient studio perfectly consistent</li>
+                <li>Benchmark premium quality</li>
+            </ul>
+        </div>
+
+        <!-- NEW M3 SECTION WITH FINAL PATHS -->
+        <h2>GOLD STANDARD: BMW M3 (Production Final)</h2>
+        <p>Verified Z-Up, Forward-Facing, 1.75x Zoom (Matches Porsche Ref)</p>
+
+        <div class="grid">
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_01.png"
+                    alt="BMW M3 Angle 01">
+                <div class="image-label">Angle 01 - Front 3/4 Driver</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_02.png"
+                    alt="BMW M3 Angle 02">
+                <div class="image-label">Angle 02 - Front Direct</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_03.png"
+                    alt="BMW M3 Angle 03">
+                <div class="image-label">Angle 03 - Front 3/4 Passenger</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_04.png"
+                    alt="BMW M3 Angle 04">
+                <div class="image-label">Angle 04 - Side Passenger</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_05.png"
+                    alt="BMW M3 Angle 05">
+                <div class="image-label">Angle 05 - Rear 3/4 Passenger</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_06.png"
+                    alt="BMW M3 Angle 06">
+                <div class="image-label">Angle 06 - Rear Direct</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_07.png"
+                    alt="BMW M3 Angle 07">
+                <div class="image-label">Angle 07 - Rear 3/4 Driver</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_08.png"
+                    alt="BMW M3 Angle 08">
+                <div class="image-label">Angle 08 - Side Driver</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_09.png"
+                    alt="BMW M3 Angle 09">
+                <div class="image-label">Angle 09 - High Front 3/4</div>
+            </div>
+            <div class="image-card">
+                <img src="file:///Users/temiagunloye/Desktop/carguy-app/base_model_renders/m3_gold_standard_production_final/angle_10.png"
+                    alt="BMW M3 Angle 10">
+                <div class="image-label">Angle 10 - Low Rear 3/4</div>
+            </div>
+        </div>
+
+        <div class="observations">
+            <h3>Observations - BMW M3</h3>
+            <ul>
+                <li><strong>Orientation Fixed:</strong> Verified Z-Up + Forward (+Y)</li>
+                <li><strong>Framing:</strong> Adjusted to 1.75x distance to match Porsche breathing room</li>
+                <li><strong>Material:</strong> Surgical paint targeting (glass/tires preserved)</li>
+            </ul>
+        </div>
+
+        <h2>Quality Assessment</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>BRZ Stock (NEW)</th>
+                    <th>Porsche Manthey</th>
+                    <th>BRZ Custom</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Background consistency</td>
+                    <td><span class="badge good">Good</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Color accuracy</td>
+                    <td><span class="badge good">Good</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Lighting consistency</td>
+                    <td><span class="badge fair">Fair</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Wheel detail</td>
+                    <td><span class="badge good">Good</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Overall framing</td>
+                    <td><span class="badge good">Good</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                    <td><span class="badge excellent">Excellent</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="recommendation">
+            <h3>Recommendation</h3>
+            <p>The new BRZ Stock renders are <strong>usable</strong> but <strong>not as premium</strong> as the Porsche
+                Manthey/BRZ Custom gold standards.</p>
+            <br>
+            <p><strong>Key Differences:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>BRZ Stock shows background/lighting variation across angles</li>
+                <li>Gold standards have perfect consistency (same background tone, same lighting throughout)</li>
+                <li>Gold standards look like professional automotive photography</li>
+            </ul>
+            <br>
+            <p><strong>Options:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Accept these renders and continue (good enough for MVP)</li>
+                <li>Regenerate with tighter prompts to match gold standard quality</li>
+                <li>Switch to alternative service (DALL-E 3, Midjourney, or Blender) for more consistent results</li>
+            </ol>
+        </div>
+
+        <p style="text-align: center; color: #666; margin-top: 60px; padding: 20px; border-top: 1px solid #333;">
+            Generated: 2026-02-04 | GarageManager Render Quality Comparison
+        </p>
+    </div>
+</body>
+
+</html>

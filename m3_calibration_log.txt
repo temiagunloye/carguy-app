@@ -1,0 +1,39 @@
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_calibration.json
+================================================================================
+Build ID: m3_calibration
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Gemini premium dark gradient background
+✓ Gemini premium floor (subtle reflection)
+✓ Gemini premium 3-point studio lighting (3 lights)
+✓ Camera created (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/bmw_m3.glb
+13:12:36 | INFO: Data are loaded, start creating Blender stuff
+13:12:36 | INFO: Blender create Mesh node Object_0
+13:12:36 | INFO: Blender create Mesh node Object_1
+13:12:36 | INFO: Blender create Mesh node Object_2
+13:12:36 | INFO: Blender create Mesh node Object_3
+13:12:36 | INFO: Blender create Mesh node Object_4
+13:12:36 | INFO: Blender create Mesh node Object_5
+13:12:36 | INFO: Blender create Mesh node Object_6
+13:12:36 | INFO: Blender create Mesh node Object_7
+13:12:36 | INFO: Blender create Mesh node Object_8
+13:12:36 | INFO: Blender create Mesh node Object_9
+13:12:36 | INFO: Blender create Mesh node Object_10
+13:12:36 | INFO: Blender create Mesh node Object_11
+13:12:36 | INFO: Blender create Mesh node Object_12
+13:12:36 | INFO: Blender create Mesh node Object_13
+13:12:36 | INFO: Blender create Mesh node Object_14
+13:12:36 | INFO: Blender create Mesh node Object_15
+13:12:36 | INFO: Blender create Mesh node Object_16
+13:12:36 | INFO: glTF import finished in 0.10s
+02:23.992  render           | Saved: 'base_model_renders/m3_calibration/angle_01.png'

@@ -1,0 +1,68 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:120: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:139: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:177: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+
+[1/5] Setting up studio rig...
+✓ Studio backdrop gradient created
+✓ Studio floor created (subtle reflection)
+✓ Premium 3-point softbox rig created (3 lights)
+✓ Camera rig created (85mm, Auto-track)
+
+[2/5] Importing car model...
+14:18:09 | INFO: Data are loaded, start creating Blender stuff
+14:18:09 | INFO: Blender create Mesh node Object_0
+14:18:09 | INFO: Blender create Mesh node Object_1
+14:18:09 | INFO: Blender create Mesh node Object_2
+14:18:09 | INFO: Blender create Mesh node Object_3
+14:18:09 | INFO: Blender create Mesh node Object_4
+14:18:09 | INFO: Blender create Mesh node Object_5
+14:18:09 | INFO: Blender create Mesh node Object_6
+14:18:09 | INFO: Blender create Mesh node Object_7
+14:18:09 | INFO: Blender create Mesh node Object_8
+14:18:09 | INFO: Blender create Mesh node Object_9
+14:18:09 | INFO: Blender create Mesh node Object_10
+14:18:09 | INFO: Blender create Mesh node Object_11
+14:18:09 | INFO: Blender create Mesh node Object_12
+14:18:09 | INFO: Blender create Mesh node Object_13
+14:18:09 | INFO: Blender create Mesh node Object_14
+14:18:09 | INFO: Blender create Mesh node Object_15
+14:18:09 | INFO: Blender create Mesh node Object_16
+14:18:09 | INFO: glTF import finished in 0.05s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_base_models.py:377: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+00:25.872  render           | Saved: 'base_model_renders/m3_calibration_eevee/angle_01.png'
+00:46.109  render           | Saved: 'base_model_renders/m3_calibration_eevee/angle_04.png'
+01:05.256  render           | Saved: 'base_model_renders/m3_calibration_eevee/angle_07.png'
+
+Scanning for watermarks/trash...
+  → Deleting bad object: p3dm.ru_BMW.obj.cleaner.materialmerger.gles
+✓ Trash cleanup complete (1 items removed)
+
+[3/5] Normalizing car geometry...
+  → Scaling car by 0.98x to reach 4.5m length
+
+[4/5] Applying surgical paint override...
+  → No keyword matches, calculating top surface area meshes...
+✓ Surgical paint applied to 2 slots.
+
+[5/5] Rendering all angles...
+⚠ Calibration mode: rendering only 3 angles
+
+Rendering angle_01: Front 3/4 driver
+✓ Saved: base_model_renders/m3_calibration_eevee/angle_01.png
+
+Rendering angle_04: Side passenger
+✓ Saved: base_model_renders/m3_calibration_eevee/angle_04.png
+
+Rendering angle_07: Rear 3/4 driver
+✓ Saved: base_model_renders/m3_calibration_eevee/angle_07.png
+
+================================================================================
+RENDER COMPLETE ✓
+================================================================================
+Blender 5.0.1 (hash a3db93c5b259 built 2025-12-16 01:51:40)
+
+Blender quit

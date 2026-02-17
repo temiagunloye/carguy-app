@@ -1,0 +1,362 @@
+{
+  "models": {
+    "subaru_brz_blue": {
+      "name": "Subaru BRZ Stock (Blue)",
+      "angles": {
+        "angle_01": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_driver_front_1769334531869.png",
+          "filename": "subaru_brz_driver_front_1769334531869.png",
+          "size": 507478,
+          "mtime": "2026-01-28T15:24:41.329Z",
+          "timestamp": 1769334531869
+        },
+        "angle_05": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_driver_rear_1769334593703.png",
+          "filename": "subaru_brz_driver_rear_1769334593703.png",
+          "size": 463428,
+          "mtime": "2026-01-28T15:24:41.331Z",
+          "timestamp": 1769334593703
+        },
+        "angle_07": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_front_center_1769334620607.png",
+          "filename": "subaru_brz_front_center_1769334620607.png",
+          "size": 475929,
+          "mtime": "2026-01-28T15:24:41.333Z",
+          "timestamp": 1769334620607
+        },
+        "angle_09": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_front_low_1769352490174.png",
+          "filename": "subaru_brz_front_low_1769352490174.png",
+          "size": 492934,
+          "mtime": "2026-01-28T15:24:41.335Z",
+          "timestamp": 1769352490174
+        },
+        "angle_03": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_full_driver_side_1769334557740.png",
+          "filename": "subaru_brz_full_driver_side_1769334557740.png",
+          "size": 516369,
+          "mtime": "2026-01-28T15:24:41.340Z",
+          "timestamp": 1769334557740
+        },
+        "angle_04": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_full_passenger_side_1769334575449.png",
+          "filename": "subaru_brz_full_passenger_side_1769334575449.png",
+          "size": 494044,
+          "mtime": "2026-01-28T15:24:41.343Z",
+          "timestamp": 1769334575449
+        },
+        "angle_02": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_front_1769334543245.png",
+          "filename": "subaru_brz_passenger_front_1769334543245.png",
+          "size": 506196,
+          "mtime": "2026-01-28T15:24:41.350Z",
+          "timestamp": 1769334543245
+        },
+        "angle_06": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_passenger_rear_1769334606663.png",
+          "filename": "subaru_brz_passenger_rear_1769334606663.png",
+          "size": 489106,
+          "mtime": "2026-01-28T15:24:41.354Z",
+          "timestamp": 1769334606663
+        },
+        "angle_08": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_rear_center_1769348339065.png",
+          "filename": "subaru_brz_rear_center_1769348339065.png",
+          "size": 537200,
+          "mtime": "2026-01-28T15:24:41.360Z",
+          "timestamp": 1769348339065
+        },
+        "angle_10": {
+          "path": "tmp/final-renders/subaru_brz_2024/subaru_brz_rear_low_1769352507236.png",
+          "filename": "subaru_brz_rear_low_1769352507236.png",
+          "size": 517367,
+          "mtime": "2026-01-28T15:24:41.382Z",
+          "timestamp": 1769352507236
+        }
+      },
+      "missing": [],
+      "confidence": "high"
+    },
+    "subaru_brz_custom": {
+      "name": "Subaru BRZ Custom (Matte)",
+      "angles": {
+        "angle_01": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_01.png",
+          "filename": "angle_01.png",
+          "size": 94227,
+          "mtime": "2026-02-05T05:12:36.205Z",
+          "timestamp": 1770268356204.9167
+        },
+        "angle_02": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_02.png",
+          "filename": "angle_02.png",
+          "size": 100186,
+          "mtime": "2026-02-05T05:12:36.198Z",
+          "timestamp": 1770268356197.8364
+        },
+        "angle_03": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_03.png",
+          "filename": "angle_03.png",
+          "size": 96740,
+          "mtime": "2026-02-05T05:12:36.195Z",
+          "timestamp": 1770268356195.1035
+        },
+        "angle_04": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_04.png",
+          "filename": "angle_04.png",
+          "size": 102182,
+          "mtime": "2026-02-05T05:12:36.180Z",
+          "timestamp": 1770268356180.2893
+        },
+        "angle_05": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_05.png",
+          "filename": "angle_05.png",
+          "size": 93136,
+          "mtime": "2026-02-05T05:12:36.176Z",
+          "timestamp": 1770268356176.386
+        },
+        "angle_06": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_06.png",
+          "filename": "angle_06.png",
+          "size": 101022,
+          "mtime": "2026-02-05T05:12:36.184Z",
+          "timestamp": 1770268356184.2014
+        },
+        "angle_07": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_07.png",
+          "filename": "angle_07.png",
+          "size": 99446,
+          "mtime": "2026-02-05T05:12:36.194Z",
+          "timestamp": 1770268356193.7666
+        },
+        "angle_08": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_08.png",
+          "filename": "angle_08.png",
+          "size": 102978,
+          "mtime": "2026-02-05T05:12:36.173Z",
+          "timestamp": 1770268356172.5835
+        },
+        "angle_09": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_09.png",
+          "filename": "angle_09.png",
+          "size": 101942,
+          "mtime": "2026-02-05T05:12:36.163Z",
+          "timestamp": 1770268356163.2454
+        },
+        "angle_10": {
+          "path": "website/public/assets/cars/subaru_brz_custom/angle_10.png",
+          "filename": "angle_10.png",
+          "size": 104839,
+          "mtime": "2026-02-05T05:12:36.178Z",
+          "timestamp": 1770268356177.528
+        }
+      },
+      "missing": [],
+      "confidence": "high"
+    },
+    "mercedes_c63_stock": {
+      "name": "Mercedes C63 Stock (Black)",
+      "angles": {
+        "angle_01": {
+          "path": "tmp/final-renders/mercedes_c63_2024/mercedes_c63_driver_front_1769352697239.png",
+          "filename": "mercedes_c63_driver_front_1769352697239.png",
+          "size": 542721,
+          "mtime": "2026-01-28T15:24:40.715Z",
+          "timestamp": 1769352697239
+        },
+        "angle_03": {
+          "path": "tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_driver_side_1769352728036.png",
+          "filename": "mercedes_c63_full_driver_side_1769352728036.png",
+          "size": 505980,
+          "mtime": "2026-01-28T15:24:40.718Z",
+          "timestamp": 1769352728036
+        },
+        "angle_04": {
+          "path": "tmp/final-renders/mercedes_c63_2024/mercedes_c63_full_passenger_side_1769352743473.png",
+          "filename": "mercedes_c63_full_passenger_side_1769352743473.png",
+          "size": 576569,
+          "mtime": "2026-01-28T15:24:40.720Z",
+          "timestamp": 1769352743473
+        },
+        "angle_02": {
+          "path": "tmp/final-renders/mercedes_c63_2024/mercedes_c63_passenger_front_1769352712492.png",
+          "filename": "mercedes_c63_passenger_front_1769352712492.png",
+          "size": 578778,
+          "mtime": "2026-01-28T15:24:40.729Z",
+          "timestamp": 1769352712492
+        }
+      },
+      "missing": [
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "partial"
+    },
+    "bmw_m3_stock": {
+      "name": "BMW M3 Stock (White)",
+      "angles": {},
+      "missing": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "missing"
+    },
+    "bmw_m3_custom": {
+      "name": "BMW M3 Custom (Red)",
+      "angles": {},
+      "missing": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "missing"
+    },
+    "audi_rs6_stock": {
+      "name": "Audi RS6 Stock (Grey)",
+      "angles": {},
+      "missing": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "missing"
+    },
+    "audi_rs6_custom": {
+      "name": "Audi RS6 Custom (Blue)",
+      "angles": {
+        "angle_01": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_driver_front_1769352523016.png",
+          "filename": "audi_rs6_driver_front_1769352523016.png",
+          "size": 541825,
+          "mtime": "2026-01-28T15:24:40.979Z",
+          "timestamp": 1769352523016
+        },
+        "angle_05": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_driver_rear_1769352585208.png",
+          "filename": "audi_rs6_driver_rear_1769352585208.png",
+          "size": 507775,
+          "mtime": "2026-01-28T15:24:40.980Z",
+          "timestamp": 1769352585208
+        },
+        "angle_07": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_front_center_1769352614181.png",
+          "filename": "audi_rs6_front_center_1769352614181.png",
+          "size": 537166,
+          "mtime": "2026-01-28T15:24:40.983Z",
+          "timestamp": 1769352614181
+        },
+        "angle_09": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_front_low_1769352640775.png",
+          "filename": "audi_rs6_front_low_1769352640775.png",
+          "size": 586127,
+          "mtime": "2026-01-28T15:24:40.985Z",
+          "timestamp": 1769352640775
+        },
+        "angle_03": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_full_driver_side_1769352553117.png",
+          "filename": "audi_rs6_full_driver_side_1769352553117.png",
+          "size": 579362,
+          "mtime": "2026-01-28T15:24:40.987Z",
+          "timestamp": 1769352553117
+        },
+        "angle_04": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_full_passenger_side_1769352569898.png",
+          "filename": "audi_rs6_full_passenger_side_1769352569898.png",
+          "size": 511509,
+          "mtime": "2026-01-28T15:24:40.990Z",
+          "timestamp": 1769352569898
+        },
+        "angle_02": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_front_1769352535692.png",
+          "filename": "audi_rs6_passenger_front_1769352535692.png",
+          "size": 531850,
+          "mtime": "2026-01-28T15:24:41.011Z",
+          "timestamp": 1769352535692
+        },
+        "angle_06": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_passenger_rear_1769352599542.png",
+          "filename": "audi_rs6_passenger_rear_1769352599542.png",
+          "size": 518427,
+          "mtime": "2026-01-28T15:24:41.013Z",
+          "timestamp": 1769352599542
+        },
+        "angle_08": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_rear_center_1769352628309.png",
+          "filename": "audi_rs6_rear_center_1769352628309.png",
+          "size": 482014,
+          "mtime": "2026-01-28T15:24:41.015Z",
+          "timestamp": 1769352628309
+        },
+        "angle_10": {
+          "path": "tmp/final-renders/audi_rs6_2024/audi_rs6_rear_low_1769352656737.png",
+          "filename": "audi_rs6_rear_low_1769352656737.png",
+          "size": 602594,
+          "mtime": "2026-01-28T15:24:41.019Z",
+          "timestamp": 1769352656737
+        }
+      },
+      "missing": [],
+      "confidence": "high"
+    },
+    "porsche_gt3_stock": {
+      "name": "Porsche 911 GT3 Stock (Red)",
+      "angles": {},
+      "missing": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "missing"
+    },
+    "porsche_manthey": {
+      "name": "Porsche Manthey (Green)",
+      "angles": {},
+      "missing": [
+        "angle_01",
+        "angle_02",
+        "angle_03",
+        "angle_04",
+        "angle_05",
+        "angle_06",
+        "angle_07",
+        "angle_08",
+        "angle_09",
+        "angle_10"
+      ],
+      "confidence": "missing"
+    }
+  }
+}

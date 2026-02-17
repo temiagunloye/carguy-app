@@ -1,0 +1,207 @@
+{
+  "audi_rs6_stock_grey": {
+    "buildId": "audi_rs6_stock_grey",
+    "complete": false,
+    "availableAngles": 6,
+    "missingAngles": [
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-09T22:39:51.493Z"
+  },
+  "audi_rs6_custom_blue": {
+    "buildId": "audi_rs6_custom_blue",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.607Z"
+  },
+  "audi_rs6_bbs_mesh": {
+    "buildId": "audi_rs6_bbs_mesh",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.751Z"
+  },
+  "bmw_m3_stock_white": {
+    "buildId": "bmw_m3_stock_white",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T01:04:29.219Z"
+  },
+  "bmw_m3_custom_red": {
+    "buildId": "bmw_m3_custom_red",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T01:04:29.194Z"
+  },
+  "bmw_m3_toronto_red_bbs_fir": {
+    "buildId": "bmw_m3_toronto_red_bbs_fir",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.752Z"
+  },
+  "c63_stock_black": {
+    "buildId": "c63_stock_black",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.751Z"
+  },
+  "mercedes_c63_rohana_matte_coal": {
+    "buildId": "mercedes_c63_rohana_matte_coal",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.758Z"
+  },
+  "brz_stock_blue": {
+    "buildId": "brz_stock_blue",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T02:31:22.537Z"
+  },
+  "brz_custom_matte": {
+    "buildId": "brz_custom_matte",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-09T21:42:32.531Z"
+  },
+  "subaru_brz_te37_matte_coal": {
+    "buildId": "subaru_brz_te37_matte_coal",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.759Z"
+  },
+  "porsche_gt3_stock_red": {
+    "buildId": "porsche_gt3_stock_red",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.759Z"
+  },
+  "gt3_manthey_green": {
+    "buildId": "gt3_manthey_green",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T00:48:25.894Z"
+  },
+  "porsche_911_stock": {
+    "buildId": "porsche_911_stock",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.760Z"
+  },
+  "porsche_911_manthey_carbon_disc": {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.761Z"
+  },
+  "porsche_911_camo_green": {
+    "buildId": "porsche_911_camo_green",
+    "complete": false,
+    "availableAngles": 0,
+    "missingAngles": [
+      "angle_01",
+      "angle_02",
+      "angle_03",
+      "angle_04",
+      "angle_05",
+      "angle_06",
+      "angle_07",
+      "angle_08",
+      "angle_09",
+      "angle_10"
+    ],
+    "updatedAt": "2026-02-17T00:47:33.761Z"
+  }
+}

@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIVE Website Asset Viewer</title>
+    <style>
+        body { background: #111; color: #eee; font-family: monospace; padding: 20px; }
+        .model-section { border: 1px solid #333; margin-bottom: 30px; padding: 20px; border-radius: 8px; background: #1a1a1a; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .title { font-size: 1.2em; font-weight: bold; color: #00ff88; }
+        .badge { padding: 5px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        .badge.gemini { background: #1b5e20; color: #a5d6a7; }
+        .badge.stock { background: #b71c1c; color: #ffcdd2; }
+        .badge.mixed { background: #e65100; color: #ffcc80; }
+        
+        .grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 10px; }
+        .card { background: #000; border: 1px solid #333; aspect-ratio: 16/9; position: relative; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: contain; }
+        .card.missing { display: flex; align-items: center; justify-content: center; color: #555; font-size: 0.8em; border: 1px dashed #444; }
+        .info { font-size: 0.7em; color: #666; margin-top: 5px; text-align: center; }
+        
+        .path-info { font-family: monospace; font-size: 0.8em; color: #666; margin-bottom: 10px; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <h1>👀 LIVE Website Asset Viewer</h1>
+    <p>Loading images directly from: <code>website/public/assets/cars/...</code></p>
+    <div style="margin-bottom: 20px; color: #888; font-size: 0.9em;">
+        <strong>Legend:</strong> <br>
+        <span style="color: #a5d6a7">GREEN</span> = High Res (>200KB, Likely Gemini) <br>
+        <span style="color: #ffcdd2">RED</span> = Low Res (<150KB, Likely Stock/Placeholder)
+    </div>
+
+    <div class="model-section">
+        <div class="header">
+            <div class="title">audi_rs6</div>
+            <div class="badge stock">LOW RES (Avg: 87KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/audi_rs6</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">audi_rs6_custom</div>
+            <div class="badge gemini">HIGH RES (Avg: 529KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/audi_rs6_custom</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_custom/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">audi_rs6_standard</div>
+            <div class="badge stock">LOW RES (Avg: 105KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/audi_rs6_standard</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/audi_rs6_standard/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">bmw_m3</div>
+            <div class="badge stock">LOW RES (Avg: 131KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/bmw_m3</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">bmw_m3_custom</div>
+            <div class="badge stock">LOW RES (Avg: 131KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/bmw_m3_custom</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_custom/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">bmw_m3_stock</div>
+            <div class="badge gemini">HIGH RES (Avg: 288KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/bmw_m3_stock</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/bmw_m3_stock/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">mercedes_c63</div>
+            <div class="badge gemini">HIGH RES (Avg: 530KB) - 25 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/mercedes_c63</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/mercedes_c63_driver_front_1769352697239.png" title="mercedes_c63_driver_front_1769352697239.png">
+                <div class="info">mercedes_c63_driver_front_1769352697239.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/passenger_front.png" title="passenger_front.png">
+                <div class="info">passenger_front.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/mercedes_c63/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">porsche_911_stock</div>
+            <div class="badge gemini">HIGH RES (Avg: 416KB) - 8 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/porsche_911_stock</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_911_stock/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card missing">
+                MISSING<br>Slot 9
+            </div>
+            <div class="card missing">
+                MISSING<br>Slot 10
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">porsche_manthey</div>
+            <div class="badge gemini">HIGH RES (Avg: 824KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/porsche_manthey</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/porsche_manthey/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">subaru_brz_blue</div>
+            <div class="badge gemini">HIGH RES (Avg: 496KB) - 31 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/subaru_brz_blue</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/subaru_brz_driver_front_1769334531869.png" title="subaru_brz_driver_front_1769334531869.png">
+                <div class="info">subaru_brz_driver_front_1769334531869.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/subaru_brz_passenger_front_1769334543245.png" title="subaru_brz_passenger_front_1769334543245.png">
+                <div class="info">subaru_brz_passenger_front_1769334543245.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_blue/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">subaru_brz_custom</div>
+            <div class="badge stock">LOW RES (Avg: 92KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/subaru_brz_custom</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_custom/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+    <div class="model-section">
+        <div class="header">
+            <div class="title">subaru_brz_grey</div>
+            <div class="badge stock">LOW RES (Avg: 92KB) - 10 files</div>
+        </div>
+        <div class="path-info">website/public/assets/cars/subaru_brz_grey</div>
+        <div class="grid">
+
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_01.png" title="angle_01.png">
+                <div class="info">angle_01.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_02.png" title="angle_02.png">
+                <div class="info">angle_02.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_03.png" title="angle_03.png">
+                <div class="info">angle_03.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_04.png" title="angle_04.png">
+                <div class="info">angle_04.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_05.png" title="angle_05.png">
+                <div class="info">angle_05.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_06.png" title="angle_06.png">
+                <div class="info">angle_06.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_07.png" title="angle_07.png">
+                <div class="info">angle_07.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_08.png" title="angle_08.png">
+                <div class="info">angle_08.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_09.png" title="angle_09.png">
+                <div class="info">angle_09.png</div>
+            </div>
+            <div class="card">
+                <img src="../website/public/assets/cars/subaru_brz_grey/angle_10.png" title="angle_10.png">
+                <div class="info">angle_10.png</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

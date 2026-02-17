@@ -1,0 +1,42 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:88: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_2023_stock_alpine_white.json
+================================================================================
+Build ID: m3_2023_stock_alpine_white
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Gemini premium dark gradient background
+✓ Gemini premium floor created
+✓ Gemini premium 3-point studio lighting (3 lights)
+✓ Camera created (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/bmw_m3.glb
+13:22:54 | INFO: Data are loaded, start creating Blender stuff
+13:22:54 | INFO: Blender create Mesh node Object_0
+13:22:54 | INFO: Blender create Mesh node Object_1
+13:22:54 | INFO: Blender create Mesh node Object_2
+13:22:54 | INFO: Blender create Mesh node Object_3
+13:22:54 | INFO: Blender create Mesh node Object_4
+13:22:54 | INFO: Blender create Mesh node Object_5
+13:22:54 | INFO: Blender create Mesh node Object_6
+13:22:54 | INFO: Blender create Mesh node Object_7
+13:22:54 | INFO: Blender create Mesh node Object_8
+13:22:54 | INFO: Blender create Mesh node Object_9
+13:22:54 | INFO: Blender create Mesh node Object_10
+13:22:54 | INFO: Blender create Mesh node Object_11
+13:22:54 | INFO: Blender create Mesh node Object_12
+13:22:54 | INFO: Blender create Mesh node Object_13
+13:22:54 | INFO: Blender create Mesh node Object_14
+13:22:54 | INFO: Blender create Mesh node Object_15
+13:22:54 | INFO: Blender create Mesh node Object_16
+13:22:54 | INFO: glTF import finished in 0.09s
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:283: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True

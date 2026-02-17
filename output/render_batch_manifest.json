@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-02-09T22:36:52.904Z",
+  "targets": [
+    {
+      "key": "audi_rs6_stock_grey",
+      "spec": "rs6_2024_stock_nardo_grey.json",
+      "description": "Audi RS6 Avant 2024 Nardo Grey"
+    },
+    {
+      "key": "porsche_gt3_stock_red",
+      "spec": "gt3_stock_guards_red.json",
+      "description": "Porsche 911 GT3 Guards Red"
+    },
+    {
+      "key": "bmw_m3_toronto_red_bbs_fir",
+      "spec": "m3_2023_stock_alpine_white.json",
+      "description": "BMW M3 Toronto Red with BBS FI-R Platinum Silver",
+      "paint": "Toronto Red",
+      "wheels": "BBS FI-R Platinum Silver"
+    },
+    {
+      "key": "audi_rs6_bbs_mesh",
+      "spec": "rs6_2024_stock_nardo_grey.json",
+      "description": "Audi RS6 with BBS Mesh Wheels",
+      "wheels": "BBS Mesh"
+    },
+    {
+      "key": "mercedes_c63_rohana_matte_coal",
+      "spec": "c63_2024_stock_obsidian_black.json",
+      "description": "Mercedes-AMG C63 with Rohana RFX17 Matte Coal Wrap",
+      "paint": "Teckwrap Matte Coal MT01",
+      "wheels": "Rohana RFX17 19\" Titanium"
+    },
+    {
+      "key": "subaru_brz_te37_matte_coal",
+      "spec": null,
+      "description": "Subaru BRZ with TE37 Bronze & Matte Coal Wrap",
+      "paint": "Teckwrap Matte Coal MT01",
+      "wheels": "Volk Racing TE37 Saga S-Plus 17x9.5 +46 5x100 Bronze"
+    },
+    {
+      "key": "porsche_911_manthey_carbon_disc",
+      "spec": "gt3_stock_guards_red.json",
+      "description": "Porsche 911 with Manthey Racing Carbon Aero Disc",
+      "wheels": "Manthey Racing Carbon Aero Disc"
+    },
+    {
+      "key": "porsche_911_camo_green",
+      "spec": "gt3_stock_guards_red.json",
+      "description": "Porsche 911 Camouflage Green Wrap",
+      "paint": "Teck Wrap Camouflage Green (CG51-HD)"
+    }
+  ],
+  "status": "READY_FOR_API_INTEGRATION"
+}

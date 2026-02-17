@@ -1,0 +1,63 @@
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:47: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:97: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+================================================================================
+BLENDER GOLD STANDARD STUDIO RIG (JSON-SPEC)
+================================================================================
+Spec: render_specs/m3_2023_stock_alpine_white.json
+================================================================================
+Build ID: m3_2023_stock_alpine_white
+GLB: source_models/base_glb/bmw_m3.glb
+Paint: alpine_white
+Engine: CYCLES
+================================================================================
+
+[1/5] Setting up studio rig...
+✓ Gemini premium dark gradient background
+✓ Gemini premium curved cyclorama created
+✓ Gemini premium 4-point studio lighting (4 lights)
+✓ Camera created (lens: 85mm)
+
+[2/5] Importing car model...
+Importing GLB: source_models/base_glb/bmw_m3.glb
+13:34:22 | INFO: Data are loaded, start creating Blender stuff
+13:34:22 | INFO: Blender create Mesh node Object_0
+13:34:22 | INFO: Blender create Mesh node Object_1
+13:34:22 | INFO: Blender create Mesh node Object_2
+13:34:22 | INFO: Blender create Mesh node Object_3
+13:34:22 | INFO: Blender create Mesh node Object_4
+13:34:22 | INFO: Blender create Mesh node Object_5
+13:34:22 | INFO: Blender create Mesh node Object_6
+13:34:22 | INFO: Blender create Mesh node Object_7
+13:34:22 | INFO: Blender create Mesh node Object_8
+13:34:22 | INFO: Blender create Mesh node Object_9
+13:34:22 | INFO: Blender create Mesh node Object_10
+13:34:22 | INFO: Blender create Mesh node Object_11
+13:34:22 | INFO: Blender create Mesh node Object_12
+13:34:22 | INFO: Blender create Mesh node Object_13
+13:34:22 | INFO: Blender create Mesh node Object_14
+13:34:22 | INFO: Blender create Mesh node Object_15
+13:34:22 | INFO: Blender create Mesh node Object_16
+13:34:22 | INFO: glTF import finished in 0.05s
+✓ Imported 19 objects
+
+[3/5] Centering car...
+✓ Car scaled 0.98x to 4.5m (was 4.61m)
+✓ Car centered (final dims: 4.50 x 1.94 x 1.96)
+
+[4/5] Applying paint override...
+DEBUG: Starting paint override for 19 objects
+/Users/temiagunloye/Desktop/carguy-app/scripts/blender/render_from_json.py:303: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  paint_mat.use_nodes = True
+DEBUG: Finding body panels...
+  ! Warning: No body materials found by keyword, applying to all non-skipped materials
+✓ Gemini automotive clearcoat paint applied (17 materials)
+
+[5/5] Rendering all angles...
+DEBUG: Inside render_all_angles
+DEBUG: Setting camera distance
+  ✓ Camera distance: 8.0 units (optimized for 4.5m scaled cars)
+DEBUG: Switching to CYCLES...
+DEBUG: Device setup...
+  ✓ Render: Cycles 64 samples + GPU

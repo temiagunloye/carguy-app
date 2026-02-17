@@ -1,0 +1,34 @@
+{
+    "buildId": "rs6_2024_stock_nardo_grey",
+    "glbPath": "source_models/base_glb/audi_rs6_2020.glb",
+    "outputDir": "base_model_renders/rs6_2024_stock_nardo_grey",
+    "paint": {
+        "name": "nardo_grey",
+        "baseColor": [
+            0.5,
+            0.5,
+            0.52,
+            1.0
+        ],
+        "metallic": 0.1,
+        "roughness": 0.4,
+        "clearcoat": 0.2
+    },
+    "metadata": {
+        "year": "2024",
+        "make": "Audi",
+        "model": "RS6 Avant",
+        "trim": ""
+    },
+    "renderSettings": {
+        "engine": "CYCLES",
+        "resolutionX": 1920,
+        "resolutionY": 1080,
+        "samples": 128,
+        "useDenoising": true
+    },
+    "camera": {
+        "lens": 85,
+        "distance": 8.5
+    }
+}
