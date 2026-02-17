@@ -1,3 +1,11 @@
+/*
+CANONICAL RENDER CONTRACT
+- ONLY source: /assets/cars/<buildId>/angle_01..angle_10.png
+- NO manifest.json (never)
+- NO fallback to currentCar.renderUrls (never)
+- Missing angles => Render Pending (blank)
+- currentBuildId is the single source of truth
+*/
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { collection, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -297,51 +305,19 @@ function createWheelOption(id, name, isActive = false) {
     return div;
 }
 
-// Preload all car angles into browser cache for instant rotation
+// Preload car angles into browser cache for instant rotation
 function preloadCarAngles() {
-    if (!currentCar) return;
+    if (!currentBuildId) return;
 
-    // Manifest Mode Preload
-    if (currentManifest && currentManifest.angles) {
-        console.log(`🔄 Preloading Manifest Angles for ${currentManifest.sourceModel}...`);
-        if (!preloadedImages[currentCar.id]) preloadedImages[currentCar.id] = {};
+    console.log(`🔄 Preloading angles for ${currentBuildId}...`);
 
-        currentManifest.angles.forEach(angle => {
-            const key = `manifest_${currentManifest.sourceModel}_${angle.angleId}`;
-            const url = currentManifest.baseUrl + '/' + angle.filename;
-            const img = new Image();
-            img.src = url;
-            preloadedImages[currentCar.id][key] = img;
-        });
-        console.log(`✅ Preloaded ${currentManifest.angles.length} manifest angles`);
-        return;
+    // Preload all 10 angles for current buildId
+    for (let i = 1; i <= 10; i++) {
+        const angleKey = `angle_${i.toString().padStart(2, '0')}`;
+        const url = `/assets/cars/${currentBuildId}/${angleKey}.png`;
+        const img = new Image();
+        img.src = url; // Browser will cache
     }
-
-    if (!currentCar.renderUrls && !currentCar.photoAnglesHttp) return;
-
-    console.log(`🔄 Preloading ${currentCar.id} angles...`);
-    const urlMap = currentCar.renderUrls || currentCar.photoAnglesHttp || currentCar.images || {};
-    preloadedImages[currentCar.id] = {};
-
-    ANGLE_KEYS.forEach((key, idx) => {
-        // Try Legacy
-        let url = urlMap[key];
-
-        // Try New
-        if (!url) {
-            const angleNum = idx + 1;
-            const angleKey = `angle_${angleNum < 10 ? '0' + angleNum : angleNum}`;
-            url = urlMap[angleKey];
-        }
-
-        if (url) {
-            const img = new Image();
-            img.src = url;
-            preloadedImages[currentCar.id][key] = img; // Key by semantic index for lookup
-        }
-    });
-
-    console.log(`✅ Preloaded ${Object.keys(preloadedImages[currentCar.id]).length} angles`);
 }
 
 // Manifest Loader

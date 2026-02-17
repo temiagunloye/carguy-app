@@ -1,0 +1,170 @@
+[
+    {
+        "buildId": "audi_rs6_stock_grey",
+        "angleKey": "angle_07",
+        "angleDescription": "Front 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a 2024 Audi RS6 Avant, Nardo Grey paint, stock wheels. Angle: Front 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "audi_rs6_stock_grey",
+        "angleKey": "angle_08",
+        "angleDescription": "Side Profile Passenger Side",
+        "prompt": "Dark Studio photography of a 2024 Audi RS6 Avant, Nardo Grey paint, stock wheels. Angle: Side Profile Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "audi_rs6_stock_grey",
+        "angleKey": "angle_09",
+        "angleDescription": "Rear 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a 2024 Audi RS6 Avant, Nardo Grey paint, stock wheels. Angle: Rear 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "audi_rs6_stock_grey",
+        "angleKey": "angle_10",
+        "angleDescription": "Rear View",
+        "prompt": "Dark Studio photography of a 2024 Audi RS6 Avant, Nardo Grey paint, stock wheels. Angle: Rear view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_01",
+        "angleDescription": "Front 3/4 Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Front 3/4 Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_02",
+        "angleDescription": "Side Profile Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Side Profile Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_03",
+        "angleDescription": "Rear 3/4 Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Rear 3/4 Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_04",
+        "angleDescription": "Rear View",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Rear view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_05",
+        "angleDescription": "Rear 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Rear 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_06",
+        "angleDescription": "Side Profile Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Side Profile Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_07",
+        "angleDescription": "Front 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Front 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_08",
+        "angleDescription": "Front View",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Front view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_09",
+        "angleDescription": "Top View",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Top/Bird's eye view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_gt3_stock_red",
+        "angleKey": "angle_10",
+        "angleDescription": "Low Front View",
+        "prompt": "Dark Studio photography of a Porsche 911 GT3 (992), Guards Red paint, stock wheels. Angle: Low Front view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_01",
+        "angleDescription": "Front 3/4 Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Front 3/4 Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_02",
+        "angleDescription": "Side Profile Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Side Profile Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_03",
+        "angleDescription": "Rear 3/4 Driver Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Rear 3/4 Driver view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_04",
+        "angleDescription": "Rear View",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Rear view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_05",
+        "angleDescription": "Rear 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Rear 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_06",
+        "angleDescription": "Side Profile Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Side Profile Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_07",
+        "angleDescription": "Front 3/4 Passenger Side",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Front 3/4 Passenger view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_08",
+        "angleDescription": "Front View",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Front view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_09",
+        "angleDescription": "Top View",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Top/Bird's eye view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_stock",
+        "angleKey": "angle_10",
+        "angleDescription": "Low Front View",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Stock/Base model, Grey/Silver paint, stock wheels. Angle: Low Front view. Lighting: Cinematic rim lighting, matte black floor, charcoal gradient backdrop. High resolution, photorealistic.",
+        "waitSeconds": 30
+    }
+]
