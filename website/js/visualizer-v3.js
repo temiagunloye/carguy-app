@@ -8,6 +8,7 @@ CANONICAL RENDER CONTRACT
 */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { collection, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { attachSpinController } from './spin360.js';
 
 // Public Config (No Auth Required for Reads)
 const firebaseConfig = {
@@ -51,6 +52,7 @@ let selections = {
 };
 let currentManifest = null;
 let currentAngleIndex = 0;
+let renderPendingActive = false;
 let preloadedImages = {}; // Cache for instant rotation
 
 // Order matches the App's camera sequence for dots
@@ -158,6 +160,16 @@ async function init() {
         let targetBaseId = params.get('carId') || 'bmw_m3';
         els.select.value = targetBaseId;
         loadCar(targetBaseId);
+
+        // 4. Initialize 360 Spin Controller
+        attachSpinController({
+            imgEl: els.img,
+            setAngleFn: setAngle,
+            getAngleIndexFn: () => currentAngleIndex,
+            isRenderPendingFn: () => renderPendingActive,
+            frameCount: 10,
+            debug: new URLSearchParams(window.location.search).get('debug') === '1'
+        });
 
     } catch (e) {
         console.warn("Init Warning:", e);
@@ -312,9 +324,10 @@ function preloadCarAngles() {
     console.log(`🔄 Preloading angles for ${currentBuildId}...`);
 
     // Preload all 10 angles for current buildId
+    const imgVersion = new URLSearchParams(window.location.search).get("imgv") || "CANONICAL_V103";
     for (let i = 1; i <= 10; i++) {
         const angleKey = `angle_${i.toString().padStart(2, '0')}`;
-        const url = `/assets/cars/${currentBuildId}/${angleKey}.png`;
+        const url = `/assets/cars/${currentBuildId}/${angleKey}.png?v=${imgVersion}`;
         const img = new Image();
         img.src = url; // Browser will cache
     }
@@ -356,7 +369,9 @@ function setAngle(index) {
     }
     // Priority 2: currentBuildId (stock default or resolved from selections)
     else if (currentBuildId) {
-        url = `/assets/cars/${currentBuildId}/${angleKey}.png`;
+        // Cache Busting: Use ?imgv= param from URL or default
+        const imgVersion = new URLSearchParams(window.location.search).get("imgv") || "CANONICAL_V103";
+        url = `/assets/cars/${currentBuildId}/${angleKey}.png?v=${imgVersion}`;
     }
 
     // If we have a URL, load it. Otherwise show Render Pending
@@ -404,6 +419,7 @@ function showRenderPending(show) {
     }
 
     overlay.style.display = show ? 'flex' : 'none';
+    renderPendingActive = show;
 }
 
 // Global scope for onclicks in HTML (if any remain)

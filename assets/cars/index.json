@@ -1,4 +1,11 @@
 {
+  "audi_rs6_stock_grey": {
+    "buildId": "audi_rs6_stock_grey",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T16:19:14.524Z"
+  },
   "audi_rs6_custom_blue": {
     "buildId": "audi_rs6_custom_blue",
     "complete": true,
@@ -41,11 +48,25 @@
     "missingAngles": [],
     "updatedAt": "2026-02-09T21:42:32.531Z"
   },
+  "porsche_gt3_stock_red": {
+    "buildId": "porsche_gt3_stock_red",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T17:36:02.098Z"
+  },
   "gt3_manthey_green": {
     "buildId": "gt3_manthey_green",
     "complete": true,
     "availableAngles": 10,
     "missingAngles": [],
     "updatedAt": "2026-02-17T00:48:25.894Z"
+  },
+  "porsche_911_stock": {
+    "buildId": "porsche_911_stock",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T18:09:50.794Z"
   }
 }

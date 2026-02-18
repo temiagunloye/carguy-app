@@ -1,13 +1,8 @@
 {
   "audi_rs6_stock_grey": {
-    "complete": false,
-    "count": 6,
-    "missing": [
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ]
+    "complete": true,
+    "count": 10,
+    "missing": []
   },
   "audi_rs6_custom_blue": {
     "complete": true,
@@ -104,20 +99,9 @@
     ]
   },
   "porsche_gt3_stock_red": {
-    "complete": false,
-    "count": 0,
-    "missing": [
-      "angle_01",
-      "angle_02",
-      "angle_03",
-      "angle_04",
-      "angle_05",
-      "angle_06",
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ]
+    "complete": true,
+    "count": 10,
+    "missing": []
   },
   "gt3_manthey_green": {
     "complete": true,
@@ -125,36 +109,14 @@
     "missing": []
   },
   "porsche_911_stock": {
-    "complete": false,
-    "count": 0,
-    "missing": [
-      "angle_01",
-      "angle_02",
-      "angle_03",
-      "angle_04",
-      "angle_05",
-      "angle_06",
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ]
+    "complete": true,
+    "count": 10,
+    "missing": []
   },
   "porsche_911_manthey_carbon_disc": {
-    "complete": false,
-    "count": 0,
-    "missing": [
-      "angle_01",
-      "angle_02",
-      "angle_03",
-      "angle_04",
-      "angle_05",
-      "angle_06",
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ]
+    "complete": true,
+    "count": 10,
+    "missing": []
   },
   "porsche_911_camo_green": {
     "complete": false,

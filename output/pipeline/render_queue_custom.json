@@ -1,0 +1,72 @@
+[
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_01",
+        "angleDescription": "Front 3/4 DRIVER (low)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Front 3/4 Driver view (Camera low to ground). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_02",
+        "angleDescription": "Front 3/4 PASSENGER (low)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Front 3/4 Passenger view (Camera low to ground). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_03",
+        "angleDescription": "Driver PROFILE (perfect 90°)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Full Driver Side Profile view (Perfectly flat 90 degrees). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_04",
+        "angleDescription": "Passenger PROFILE (perfect 90°)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Full Passenger Side Profile view (Perfectly flat 90 degrees). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_05",
+        "angleDescription": "Rear 3/4 DRIVER (low)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Rear 3/4 Driver view (Camera low to ground). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_06",
+        "angleDescription": "Rear 3/4 PASSENGER (low)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Rear 3/4 Passenger view (Camera low to ground). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_07",
+        "angleDescription": "Front CENTER (dead straight)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Direct Front view (Straight 0 degrees). Perfectly symmetrical. Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_08",
+        "angleDescription": "Rear CENTER (dead straight)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: Direct Rear view (Straight 180 degrees). Perfectly symmetrical. Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_09",
+        "angleDescription": "High Front 3/4 (higher camera, wider)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: High Front 3/4 Driver view (Elevated camera looking down). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    },
+    {
+        "buildId": "porsche_911_manthey_carbon_disc",
+        "angleKey": "angle_10",
+        "angleDescription": "High Rear 3/4 (higher camera, wider)",
+        "prompt": "Dark Studio photography of a Porsche 911 (992), Agate Grey paint, Manthey Racing Carbon Aero Disc wheels. Design: Sleek, refined, photorealistic, 8k resolution. Angle: High Rear 3/4 Passenger view (Elevated camera looking down). Lighting: Cinematic rim lighting highlighting curves, matte black floor, charcoal gradient backdrop.",
+        "waitSeconds": 30
+    }
+]
