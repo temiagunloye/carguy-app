@@ -111,3 +111,25 @@ raw_batch/
 Test_Batch_1/
 samples/
 *.log
+
+# --- python envs ---
+venv/
+.venv/
+venv311/
+venv_splat/
+
+# --- pipeline outputs / generated ---
+jobs/
+output/
+runs/
+raw_batch/
+Test_Batch_1/
+samples/
+
+# --- misc ---
+.DS_Store
+*.log
+screens/.Rhistory
+**/.Rhistory
+pipeline_prototype/
+splat_instructions.txt
