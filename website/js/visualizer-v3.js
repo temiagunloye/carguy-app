@@ -34,6 +34,25 @@ const DEFAULT_STOCK_BUILDS = {
     'porsche_gt3': 'porsche_gt3_stock_red'
 };
 
+const BUILD_NAMES = {
+    'audi_rs6_stock_grey': 'RS6 Nardo Grey (Stock)',
+    'audi_rs6_custom_blue': 'RS6 Sepang Blue',
+    'audi_rs6_bbs_mesh': 'RS6 BBS Mesh',
+    'bmw_m3_stock_white': 'M3 Alpine White (Stock)',
+    'bmw_m3_custom_red': 'M3 Toronto Red Stock',
+    'bmw_m3_toronto_red_bbs_fir': 'M3 Toronto Red BBS FI-R',
+    'c63_stock_black': 'C63 Obsidian Black (Stock)',
+    'mercedes_c63_rohana_matte_coal': 'C63 Rohana Matte Coal',
+    'brz_stock_blue': 'BRZ World Rally Blue (Stock)',
+    'brz_custom_matte': 'BRZ Volk TE37 Matte Coal',
+    'subaru_brz_te37_matte_coal': 'BRZ TE37 Matte Coal (Clean)',
+    'porsche_gt3_stock_red': 'GT3 Guard Red (Stock)',
+    'gt3_manthey_green': 'GT3 Manthey Racing Green',
+    'porsche_911_stock': '911 Agate Grey (Stock)',
+    'porsche_911_manthey_carbon_disc': '911 Manthey Carbon Disc',
+    'porsche_911_camo_green': '911 Camo Green'
+};
+
 // Data State
 let standardCars = [];
 let builds = [];
@@ -214,7 +233,7 @@ function populatePaintOptionsGrid() {
 
     wrapGrid.innerHTML = '';
 
-    paints.forEach(paint => {
+    paints.filter(paint => paint.renderKeyByVehicle && paint.renderKeyByVehicle[currentCar.id]).forEach(paint => {
         const card = createOptionCard(paint, 'wrapId');
         wrapGrid.appendChild(card);
     });
@@ -234,7 +253,7 @@ function populatePartsOptionsGrid() {
 
     if (wheelsGrid) {
         wheelsGrid.innerHTML = '';
-        wheels.forEach(wheel => {
+        wheels.filter(wheel => wheel.renderKeyByVehicle && wheel.renderKeyByVehicle[currentCar.id]).forEach(wheel => {
             wheelsGrid.appendChild(createOptionCard(wheel, 'wheelId'));
         });
     }
@@ -504,33 +523,51 @@ function populateBuildsTab(baseId) {
 
     gallery.innerHTML = '';
 
-    // Find builds related to this baseId
+    // Find custom builds related to this baseId
     const relatedBuilds = builds.filter(b => b.baseId === baseId);
 
-    if (relatedBuilds.length === 0) {
-        gallery.innerHTML = '<div class="no-builds">No custom builds found for this model yet.</div>';
+    // Create a list including the stock version
+    const stockId = DEFAULT_STOCK_BUILDS[baseId];
+    const allBuildOptions = [];
+
+    if (stockId) {
+        allBuildOptions.push({
+            id: stockId,
+            baseId: baseId,
+            isStock: true
+        });
+    }
+
+    allBuildOptions.push(...relatedBuilds);
+
+    if (allBuildOptions.length === 0) {
+        gallery.innerHTML = '<div class="no-builds">No builds found for this model.</div>';
         return;
     }
 
-    relatedBuilds.forEach(build => {
+    allBuildOptions.forEach(build => {
         const div = document.createElement('div');
         div.className = 'build-item';
+
+        // Add active state if this is the current selection
+        if (currentBuildId === build.id) div.classList.add('active');
+
         div.onclick = () => {
             console.log('[BUILD CLICK]', {
                 baseId,
                 buildId: build.id,
-                label: build.name || build.id,
-                resolvedBuildId: build.id
+                label: BUILD_NAMES[build.id] || build.id
             });
             loadCustomBuild(build.id);
         };
 
         const img = document.createElement('img');
-        img.src = build.thumbnail || build.renderUrls.angle_01 || build.renderUrls.driver_front || '';
-        img.alt = build.name;
+        img.src = build.thumbnail || `/assets/cars/${build.id}/angle_01.png`;
+        img.alt = build.name || build.id;
 
         const span = document.createElement('span');
-        span.innerText = build.name || build.id.replace(/_/g, ' ').toUpperCase();
+        const displayName = BUILD_NAMES[build.id] || build.id.replace(/_/g, ' ').toUpperCase();
+        span.innerText = displayName;
 
         div.appendChild(img);
         div.appendChild(span);
@@ -539,8 +576,19 @@ function populateBuildsTab(baseId) {
 }
 
 function loadCustomBuild(buildId) {
-    const build = builds.find(b => b.id === buildId);
-    if (!build) return;
+    let build = builds.find(b => b.id === buildId);
+
+    // Fallback for stock builds which might not be in the standard custom builds list
+    if (!build) {
+        build = {
+            id: buildId,
+            renderUrls: Array.from({ length: 10 }).reduce((acc, _, i) => {
+                const angle = `angle_${(i + 1).toString().padStart(2, '0')}`;
+                acc[angle] = `/assets/cars/${buildId}/${angle}.png`;
+                return acc;
+            }, {})
+        };
+    }
 
     currentBuild = build;
     currentBuildId = build.id; // CRITICAL: set currentBuildId
@@ -551,6 +599,7 @@ function loadCustomBuild(buildId) {
 
     // Refresh UI
     renderSelectors();
+    populateBuildsTab(currentBaseId); // Refresh builds tab to update active state
     preloadCarAngles();
     setAngle(0);
     updateDebugHUD();

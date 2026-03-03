@@ -1,0 +1,117 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ModelManifest",
+    "type": "object",
+    "required": [
+        "jobId",
+        "status",
+        "realityTwin",
+        "proxy",
+        "quality"
+    ],
+    "properties": {
+        "jobId": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "READY",
+                "FAILED",
+                "RETAKE_REQUIRED"
+            ]
+        },
+        "realityTwin": {
+            "type": "object",
+            "required": [
+                "type",
+                "assets"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "turntable",
+                        "splat"
+                    ]
+                },
+                "assets": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "proxy": {
+            "type": "object",
+            "required": [
+                "glbPath",
+                "anchorsPath"
+            ],
+            "properties": {
+                "glbPath": {
+                    "type": "string"
+                },
+                "anchorsPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "frames": {
+            "type": "object",
+            "properties": {
+                "previewPaths": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "carId": {
+            "type": "string"
+        },
+        "quality": {
+            "type": "object",
+            "properties": {
+                "blurScore": {
+                    "type": "number"
+                },
+                "exposureScore": {
+                    "type": "number"
+                },
+                "warnings": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "buildDefaults": {
+            "type": "object",
+            "properties": {
+                "wrap": {
+                    "type": "object",
+                    "properties": {
+                        "colorHex": {
+                            "type": "string"
+                        },
+                        "finish": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "tint": {
+                    "type": "object",
+                    "properties": {
+                        "vlt": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

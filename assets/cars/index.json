@@ -13,6 +13,13 @@
     "missingAngles": [],
     "updatedAt": "2026-02-17T00:48:25.607Z"
   },
+  "audi_rs6_bbs_mesh": {
+    "buildId": "audi_rs6_bbs_mesh",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-18T17:54:35.993Z"
+  },
   "bmw_m3_stock_white": {
     "buildId": "bmw_m3_stock_white",
     "complete": true,
@@ -68,5 +75,12 @@
     "availableAngles": 10,
     "missingAngles": [],
     "updatedAt": "2026-02-17T18:09:50.794Z"
+  },
+  "porsche_911_manthey_carbon_disc": {
+    "buildId": "porsche_911_manthey_carbon_disc",
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T19:06:52.980Z"
   }
 }

@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Part",
+    "type": "object",
+    "required": [
+        "partId",
+        "category",
+        "name"
+    ],
+    "properties": {
+        "partId": {
+            "type": "string"
+        },
+        "category": {
+            "type": "string",
+            "enum": [
+                "wheel",
+                "spoiler",
+                "lip",
+                "skirt",
+                "diffuser"
+            ]
+        },
+        "name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "manufacturer": {
+            "type": "string"
+        },
+        "assets": {
+            "type": "object",
+            "properties": {
+                "glbPath": {
+                    "type": "string"
+                },
+                "thumbnail": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

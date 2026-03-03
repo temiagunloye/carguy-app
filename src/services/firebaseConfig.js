@@ -29,11 +29,10 @@ const initializeFirebase = () => {
 
   try {
     const { initializeApp, getApps } = require("firebase/app");
-    const { initializeAuth, getReactNativePersistence, connectAuthEmulator } = require("firebase/auth");
+    const { initializeAuth, getAuth: getFirebaseAuth, getReactNativePersistence, connectAuthEmulator } = require("firebase/auth");
     const { initializeFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager } = require("firebase/firestore");
     const { getStorage: getFirebaseStorage, connectStorageEmulator } = require("firebase/storage");
-    const ReactNativeAsyncStorage = require("@react-native-async-storage/async-storage").default;
-    const Constants = require("expo-constants").default;
+    const { Platform } = require("react-native");
 
     // Firebase configuration from carguy-app-demo project
     const firebaseConfig = {
@@ -48,9 +47,15 @@ const initializeFirebase = () => {
 
     if (getApps().length === 0) {
       firebaseState.app = initializeApp(firebaseConfig);
-      firebaseState.auth = initializeAuth(firebaseState.app, {
-        persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-      });
+
+      if (Platform.OS === 'web') {
+        firebaseState.auth = getFirebaseAuth(firebaseState.app);
+      } else {
+        const ReactNativeAsyncStorage = require("@react-native-async-storage/async-storage").default || require("@react-native-async-storage/async-storage");
+        firebaseState.auth = initializeAuth(firebaseState.app, {
+          persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+        });
+      }
 
       // Enable offline persistence (React Native compatible)
       firebaseState.db = initializeFirestore(firebaseState.app, {});

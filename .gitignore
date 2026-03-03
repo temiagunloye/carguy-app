@@ -99,3 +99,15 @@ serviceAccountKey.json
 .env
 .env.*
 .vercel
+
+# Pipeline and Splat
+venv/
+venv311/
+venv_splat/
+jobs/
+output/
+runs/
+raw_batch/
+Test_Batch_1/
+samples/
+*.log

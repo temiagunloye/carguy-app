@@ -15,21 +15,10 @@
   },
   "audi_rs6_bbs_mesh": {
     "buildId": "audi_rs6_bbs_mesh",
-    "complete": false,
-    "availableAngles": 0,
-    "missingAngles": [
-      "angle_01",
-      "angle_02",
-      "angle_03",
-      "angle_04",
-      "angle_05",
-      "angle_06",
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ],
-    "updatedAt": "2026-02-17T00:47:33.751Z"
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-18T17:54:35.993Z"
   },
   "bmw_m3_stock_white": {
     "buildId": "bmw_m3_stock_white",
@@ -143,21 +132,10 @@
   },
   "porsche_911_manthey_carbon_disc": {
     "buildId": "porsche_911_manthey_carbon_disc",
-    "complete": false,
-    "availableAngles": 0,
-    "missingAngles": [
-      "angle_01",
-      "angle_02",
-      "angle_03",
-      "angle_04",
-      "angle_05",
-      "angle_06",
-      "angle_07",
-      "angle_08",
-      "angle_09",
-      "angle_10"
-    ],
-    "updatedAt": "2026-02-17T00:47:33.761Z"
+    "complete": true,
+    "availableAngles": 10,
+    "missingAngles": [],
+    "updatedAt": "2026-02-17T19:06:52.980Z"
   },
   "porsche_911_camo_green": {
     "buildId": "porsche_911_camo_green",

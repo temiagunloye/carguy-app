@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "BuildConfig",
+    "type": "object",
+    "properties": {
+        "wrap": {
+            "type": "object",
+            "properties": {
+                "colorHex": {
+                    "type": "string"
+                },
+                "finish": {
+                    "type": "string"
+                }
+            }
+        },
+        "tint": {
+            "type": "object",
+            "properties": {
+                "vlt": {
+                    "type": "number"
+                }
+            }
+        },
+        "wheels": {
+            "type": "object",
+            "properties": {
+                "partId": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "offset": {
+                    "type": "string"
+                }
+            }
+        },
+        "aero": {
+            "type": "object",
+            "properties": {
+                "spoilerId": {
+                    "type": "string"
+                },
+                "lipId": {
+                    "type": "string"
+                },
+                "skirtId": {
+                    "type": "string"
+                },
+                "diffuserId": {
+                    "type": "string"
+                }
+            }
+        },
+        "shopSelection": {
+            "type": "object",
+            "properties": {
+                "shopId": {
+                    "type": "string"
+                },
+                "quoteId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

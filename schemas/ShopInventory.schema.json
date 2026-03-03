@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ShopInventory",
+    "type": "object",
+    "required": [
+        "shopId",
+        "availableParts"
+    ],
+    "properties": {
+        "shopId": {
+            "type": "string"
+        },
+        "availableParts": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "wrapOptions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "colorHex": {
+                        "type": "string"
+                    },
+                    "finish": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}

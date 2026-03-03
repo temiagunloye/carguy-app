@@ -18,6 +18,7 @@ import { useCarContext } from "../../services/carContext";
 import { createOrUpdateCarDoc } from "../../services/cars";
 import { generateCarModel } from "../../services/cloudFunctions";
 import { uploadAllCarPhotos } from "../../services/photoUpload";
+import { checkBlurGate } from "./blurDetection";
 import { CAR_SCAN_SHOTS } from "./carScanConfig";
 import CarScanGlareTipModal from "./CarScanGlareTipModal";
 import { resumeIncompleteCarScanSession, saveCarScanShot, startCarScanSession } from "./carScanStorage";
@@ -31,6 +32,9 @@ export default function CarScanCaptureScreen({ navigation, route }) {
   const [loading, setLoading] = useState(true);
   const [showGlareTip, setShowGlareTip] = useState(false);
   const [processing, setProcessing] = useState(false);
+  // Blur gate: track per-angle retake counts and blur scores for session logging
+  const [blurRetakeCounts, setBlurRetakeCounts] = useState({});
+  const [blurScoreLog, setBlurScoreLog] = useState({}); // angle_id -> [scores]
 
   const currentShot = CAR_SCAN_SHOTS[currentShotIndex];
   const progress = ((currentShotIndex + 1) / CAR_SCAN_SHOTS.length) * 100;
@@ -127,6 +131,27 @@ export default function CarScanCaptureScreen({ navigation, route }) {
       if (!result.canceled && result.assets?.[0]?.uri) {
         const asset = result.assets[0];
 
+        // ── Blur Gate (on-device, before upload) ──────────────────────
+        const retakeCount = blurRetakeCounts[currentShot.id] || 0;
+        const blurResult = await checkBlurGate(asset.uri, currentShot.id, retakeCount);
+
+        // Log blur score for session audit
+        setBlurScoreLog(prev => ({
+          ...prev,
+          [currentShot.id]: [...(prev[currentShot.id] || []), blurResult.score]
+        }));
+
+        if (blurResult.shouldBlock) {
+          // Photo is too blurry and user has retakes left — block and prompt
+          setBlurRetakeCounts(prev => ({ ...prev, [currentShot.id]: retakeCount + 1 }));
+          Alert.alert(
+            '📷 Too Blurry',
+            `This photo is too blurry for a quality 3D render.\n\nRetakes remaining: ${blurResult.retakesLeft}\n\nTip: Hold still and tap the car to lock focus before shooting.`,
+            [{ text: 'Retake', style: 'default' }]
+          );
+          return; // Do not save or advance
+        }
+
         const shot = {
           id: currentShot.id,
           label: currentShot.label,
@@ -134,6 +159,9 @@ export default function CarScanCaptureScreen({ navigation, route }) {
           width: asset.width,
           height: asset.height,
           createdAt: new Date().toISOString(),
+          // Blur metadata for server-side logging and quality review
+          blurScore: blurResult.score,
+          mayFail: blurResult.mayFail || false,
         };
 
         // Save shot
